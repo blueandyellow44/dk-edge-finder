@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK Edge Finder — March 15, 2026</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e4e4e7;
+    --muted: #9ca3af;
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.12);
+    --yellow: #eab308;
+    --yellow-bg: rgba(234,179,8,0.12);
+    --orange: #f97316;
+    --orange-bg: rgba(249,115,22,0.12);
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --accent: #8b5cf6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.5rem; font-weight: 700; }
+  h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left h1 { margin-bottom: 4px; }
+  .header-left .subtitle { color: var(--muted); font-size: 0.9rem; }
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    min-width: 140px;
+    text-align: center;
+  }
+  .stat-card .label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-card .value { font-size: 1.4rem; font-weight: 700; margin-top: 2px; }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.yellow { color: var(--yellow); }
+  .stat-card .value.blue { color: var(--blue); }
+  .stat-card .value.accent { color: var(--accent); }
+
+  .alert-banner {
+    background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15));
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .alert-banner .icon { font-size: 1.5rem; }
+  .alert-banner .content { flex: 1; }
+  .alert-banner .title { font-weight: 600; font-size: 0.95rem; }
+  .alert-banner .desc { color: var(--muted); font-size: 0.85rem; }
+
+  .section { margin-bottom: 28px; }
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  thead th:hover { color: var(--text); }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td {
+    padding: 12px;
+    vertical-align: top;
+  }
+  .tier-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .tier-high { background: var(--green-bg); color: var(--green); }
+  .tier-medium { background: var(--yellow-bg); color: var(--yellow); }
+  .tier-low { background: var(--orange-bg); color: var(--orange); }
+
+  .edge-val { font-weight: 700; }
+  .edge-positive { color: var(--green); }
+  .edge-negative { color: var(--muted); }
+
+  .pick-cell { font-weight: 600; }
+  .odds-cell { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; }
+
+  .expandable { cursor: pointer; }
+  .expand-icon {
+    display: inline-block;
+    transition: transform 0.2s;
+    margin-right: 6px;
+    font-size: 0.75rem;
+  }
+  .expand-icon.open { transform: rotate(90deg); }
+  .detail-row { display: none; }
+  .detail-row.open { display: table-row; }
+  .detail-row td {
+    padding: 8px 12px 16px 36px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .bankroll-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .bankroll-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .bankroll-card h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .bankroll-card .big { font-size: 2rem; font-weight: 700; }
+
+  .footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .no-edge { opacity: 0.4; }
+
+  .bet-log-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .bet-log-table thead th {
+    text-align: left; padding: 10px 12px; font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  .bet-log-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .bet-log-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .bet-log-table tbody td { padding: 12px; vertical-align: middle; }
+
+  .outcome-badge {
+    display: inline-block; padding: 3px 12px; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  }
+  .outcome-win { background: var(--green-bg); color: var(--green); }
+  .outcome-loss { background: rgba(239,68,68,0.12); color: var(--red); }
+  .outcome-push { background: var(--yellow-bg); color: var(--yellow); }
+  .outcome-pending { background: rgba(59,130,246,0.12); color: var(--blue); }
+
+  .pnl-positive { color: var(--green); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .pnl-negative { color: var(--red); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .pnl-zero { color: var(--muted); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .stats-row { flex-direction: column; }
+    table { font-size: 0.8rem; }
+    td, th { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>DK Edge Finder</h1>
+    <div class="subtitle">Sunday, March 15, 2026 &bull; NBA &bull; Live picks only (games not yet started)</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="label">Bankroll</div>
+      <div class="value blue">$475</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Games Analyzed</div>
+      <div class="value accent">14</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Live Edges</div>
+      <div class="value green">1</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Lifetime ROI</div>
+      <div class="value yellow">0.0%</div>
+    </div>
+  </div>
+</div>
+
+<div class="alert-banner">
+  <div class="icon">&#9889;</div>
+  <div class="content">
+    <div class="title">Best Bet: 76ers ML +270 &mdash; 11.0% Edge (High Tier)</div>
+    <div class="desc">Home dog moved from +240 to +270 — edge increased. 3-game home win streak. Suggested: $25.00 (5% cap)</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Flagged Edges</h2>
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterPicks('all')">All (1)</button>
+    <button class="filter-btn" onclick="filterPicks('NBA')">NBA (1)</button>
+  </div>
+
+  <table id="picks-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">#</th>
+        <th onclick="sortTable(1)">Sport</th>
+        <th onclick="sortTable(2)">Event</th>
+        <th onclick="sortTable(3)">Market</th>
+        <th onclick="sortTable(4)">Pick</th>
+        <th onclick="sortTable(5)">DK Odds</th>
+        <th onclick="sortTable(6)">Implied %</th>
+        <th onclick="sortTable(7)">Model %</th>
+        <th onclick="sortTable(8)">Edge %</th>
+        <th onclick="sortTable(9)">Tier</th>
+        <th onclick="sortTable(10)">Bet Size</th>
+      </tr>
+    </thead>
+    <tbody id="picks-body">
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Bankroll &amp; Tracking</h2>
+  <div class="bankroll-section">
+    <div class="bankroll-card">
+      <h3>Current Bankroll</h3>
+      <div class="big" style="color:var(--blue)">$475.00</div>
+      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">Starting: $500.00 &bull; Change: -$25.00 (pending)</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Record</h3>
+      <div class="big" style="color:var(--text)">0-0-0</div>
+      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">W-L-P &bull; First session</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Today's Suggested Action</h3>
+      <div class="big" style="color:var(--green)">$25.00</div>
+      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">5.0% of bankroll &bull; Within 15% limit &#10003;</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Pending Bets</h3>
+      <div class="big" style="color:var(--yellow)">1</div>
+      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">76ers ML +270 &bull; $25.00</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Placed Bets</h2>
+  <table class="bet-log-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Sport</th>
+        <th>Event</th>
+        <th>Pick</th>
+        <th>Odds</th>
+        <th>Edge</th>
+        <th>Wager</th>
+        <th>Result</th>
+        <th>P/L</th>
+      </tr>
+    </thead>
+    <tbody id="bet-log-body">
+    </tbody>
+  </table>
+  <div id="bet-log-summary" style="margin-top:12px; padding:12px 16px; background:var(--card); border:1px solid var(--border); border-radius:10px; font-size:0.85rem; color:var(--muted); display:flex; gap:24px; flex-wrap:wrap;"></div>
+</div>
+
+<div class="footer">
+  All models carry uncertainty. Edge estimates are probabilistic, not guarantees. Bet responsibly.<br>
+  DK Edge Finder &bull; DraftKings Oregon &bull; Session: 2026-03-15
+</div>
+
+<script>
+const picks = [
+  {
+    rank: 1, sport: "NBA", event: "Trail Blazers @ 76ers", market: "Moneyline",
+    pick: "76ers ML", odds: "+270", implied: "27.0%", model: "38.0%",
+    edge: 11.0, tier: "High", bet: "$25.00",
+    notes: "PHI home dog at +270 (moved from +240 — even more value). 3-game home win streak. Portland 32-35 road team. Market overreacting to PHI season struggles. 76ers have won 3 of last 4 vs POR. Kelly says $37.50 but capped at 5% of bankroll.",
+    sources: "Bleacher Nation, DocsSports, Covers"
+  }
+];
+
+const tbody = document.getElementById('picks-body');
+
+function renderPicks(filter) {
+  tbody.innerHTML = '';
+  const filtered = filter === 'all' ? picks : picks.filter(p => p.sport === filter);
+  filtered.forEach((p, i) => {
+    const tierClass = p.tier === 'High' ? 'tier-high' : p.tier === 'Medium' ? 'tier-medium' : 'tier-low';
+    const edgeClass = p.edge > 0 ? 'edge-positive' : 'edge-negative';
+    const belowThreshold = (p.tier === 'Low' && p.edge < 8) || (p.tier === 'Medium' && p.edge < 5) || (p.tier === 'High' && p.edge < 3);
+    const rowClass = belowThreshold ? 'no-edge' : '';
+
+    const tr = document.createElement('tr');
+    tr.className = `expandable ${rowClass}`;
+    tr.innerHTML = `
+      <td><span class="expand-icon" id="icon-${i}">&#9654;</span>${p.rank}</td>
+      <td>${p.sport}</td>
+      <td>${p.event}</td>
+      <td>${p.market}</td>
+      <td class="pick-cell">${p.pick}</td>
+      <td class="odds-cell">${p.odds}</td>
+      <td>${p.implied}</td>
+      <td>${p.model}</td>
+      <td class="edge-val ${edgeClass}">${p.edge > 0 ? '+' : ''}${p.edge}%</td>
+      <td><span class="tier-badge ${tierClass}">${p.tier}</span></td>
+      <td class="odds-cell">${p.bet}</td>
+    `;
+    tr.onclick = () => toggleDetail(i);
+    tbody.appendChild(tr);
+
+    const detailTr = document.createElement('tr');
+    detailTr.className = 'detail-row';
+    detailTr.id = `detail-${i}`;
+    detailTr.innerHTML = `<td colspan="11"><strong>Analysis:</strong> ${p.notes}<br><strong>Sources:</strong> ${p.sources}</td>`;
+    tbody.appendChild(detailTr);
+  });
+}
+
+function toggleDetail(i) {
+  const detail = document.getElementById(`detail-${i}`);
+  const icon = document.getElementById(`icon-${i}`);
+  detail.classList.toggle('open');
+  icon.classList.toggle('open');
+}
+
+function filterPicks(sport) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderPicks(sport);
+}
+
+function sortTable(col) {
+  // Simple sort toggle
+  picks.sort((a, b) => {
+    const keys = ['rank','sport','event','market','pick','odds','implied','model','edge','tier','bet'];
+    const key = keys[col];
+    if (key === 'edge') return b.edge - a.edge;
+    if (key === 'rank') return a.rank - b.rank;
+    const va = String(a[key]), vb = String(b[key]);
+    return va.localeCompare(vb);
+  });
+  renderPicks('all');
+}
+
+renderPicks('all');
+
+// --- Placed Bets Log ---
+const bets = [
+  {
+    date: "2026-03-15",
+    sport: "NBA",
+    event: "Trail Blazers @ 76ers",
+    pick: "76ers ML",
+    odds: "+270",
+    decimal_odds: 3.70,
+    edge: "11.0%",
+    wager: 25.00,
+    outcome: "pending", // "win", "loss", "push", "pending"
+    pnl: null
+  }
+];
+
+function renderBetLog() {
+  const tbody = document.getElementById('bet-log-body');
+  const summary = document.getElementById('bet-log-summary');
+  tbody.innerHTML = '';
+
+  let totalWagered = 0, totalPnl = 0, wins = 0, losses = 0, pushes = 0, pending = 0;
+
+  bets.forEach(b => {
+    totalWagered += b.wager;
+    const tr = document.createElement('tr');
+
+    let outcomeHtml, pnlHtml;
+    if (b.outcome === 'win') {
+      const profit = b.wager * (b.decimal_odds - 1);
+      outcomeHtml = '<span class="outcome-badge outcome-win">WIN</span>';
+      pnlHtml = `<span class="pnl-positive">+$${profit.toFixed(2)}</span>`;
+      totalPnl += profit;
+      wins++;
+    } else if (b.outcome === 'loss') {
+      outcomeHtml = '<span class="outcome-badge outcome-loss">LOSS</span>';
+      pnlHtml = `<span class="pnl-negative">-$${b.wager.toFixed(2)}</span>`;
+      totalPnl -= b.wager;
+      losses++;
+    } else if (b.outcome === 'push') {
+      outcomeHtml = '<span class="outcome-badge outcome-push">PUSH</span>';
+      pnlHtml = '<span class="pnl-zero">$0.00</span>';
+      pushes++;
+    } else {
+      outcomeHtml = '<span class="outcome-badge outcome-pending">PENDING</span>';
+      pnlHtml = '<span class="pnl-zero">---</span>';
+      pending++;
+    }
+
+    tr.innerHTML = `
+      <td>${b.date}</td>
+      <td>${b.sport}</td>
+      <td>${b.event}</td>
+      <td class="pick-cell">${b.pick}</td>
+      <td class="odds-cell">${b.odds}</td>
+      <td class="edge-val edge-positive">${b.edge}</td>
+      <td class="odds-cell">$${b.wager.toFixed(2)}</td>
+      <td>${outcomeHtml}</td>
+      <td>${pnlHtml}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const roi = totalWagered > 0 ? ((totalPnl / totalWagered) * 100).toFixed(1) : '0.0';
+  const pnlClass = totalPnl > 0 ? 'pnl-positive' : totalPnl < 0 ? 'pnl-negative' : 'pnl-zero';
+  const pnlSign = totalPnl >= 0 ? '+' : '';
+
+  summary.innerHTML = `
+    <span><strong>Record:</strong> ${wins}W-${losses}L-${pushes}P${pending ? ` (${pending} pending)` : ''}</span>
+    <span><strong>Total Wagered:</strong> $${totalWagered.toFixed(2)}</span>
+    <span><strong>Net P/L:</strong> <span class="${pnlClass}">${pnlSign}$${totalPnl.toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span class="${pnlClass}">${roi}%</span></span>
+  `;
+}
+
+renderBetLog();
+</script>
+
+</body>
+</html>
