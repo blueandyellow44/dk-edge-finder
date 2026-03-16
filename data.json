@@ -1,0 +1,58 @@
+{
+  "scan_date": "2026-03-16",
+  "scan_subtitle": "Monday, March 16, 2026 — NBA, NHL",
+  "bankroll": {
+    "current": 550.23,
+    "starting": 500.00,
+    "profit": 50.23,
+    "record": { "wins": 1, "losses": 0, "pushes": 0 },
+    "pending_count": 1,
+    "pending_label": "Suns +8.5 — $18.37"
+  },
+  "games_analyzed": 10,
+  "best_bet": {
+    "title": "Suns +8.5 (-110) — 7.6% Edge (High Tier)",
+    "desc": "Multiple models flag PHX spread value. Dimers 53%, BetMGM 70% cover confidence. 7:30 PM ET tip."
+  },
+  "picks": [
+    {
+      "rank": 1,
+      "sport": "NBA",
+      "event": "Suns @ Celtics",
+      "market": "Spread",
+      "pick": "Suns +8.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "60.0%",
+      "edge": 7.6,
+      "tier": "High",
+      "bet": "$18.37",
+      "notes": "Dimers gives PHX 53% to cover +8.5, BetMGM gives 70% at +9. Consensus model ~60%. Celtics favored 76-80% to win outright but 8.5 is wide. Suns competitive on the road — Booker/KD travel well.",
+      "sources": "Dimers, BetMGM, Covers, OddsShark"
+    }
+  ],
+  "bets": [
+    {
+      "date": "2026-03-16",
+      "sport": "NBA",
+      "event": "Suns @ Celtics",
+      "pick": "Suns +8.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "7.6%",
+      "wager": 18.37,
+      "outcome": "pending"
+    },
+    {
+      "date": "2026-03-15",
+      "sport": "NBA",
+      "event": "Trail Blazers @ 76ers",
+      "pick": "76ers ML",
+      "odds": "+270",
+      "decimal_odds": 3.70,
+      "edge": "11.0%",
+      "wager": 25.00,
+      "outcome": "win"
+    }
+  ]
+}
