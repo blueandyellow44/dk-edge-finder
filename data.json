@@ -1,34 +1,64 @@
 {
-  "scan_date": "2026-03-16",
-  "scan_subtitle": "Monday, March 16, 2026 — NBA, NHL",
+  "scan_date": "2026-03-17",
+  "scan_subtitle": "Tuesday, March 17, 2026 — NBA, NHL",
   "bankroll": {
-    "current": 550.23,
+    "current": 586.60,
     "starting": 500.00,
-    "profit": 50.23,
-    "record": { "wins": 1, "losses": 0, "pushes": 0 },
-    "pending_count": 1,
-    "pending_label": "Suns +8.5 — $18.37"
+    "profit": 86.60,
+    "record": { "wins": 2, "losses": 0, "pushes": 0 },
+    "pending_count": 0,
+    "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 10,
+  "games_analyzed": 17,
   "best_bet": {
-    "title": "Suns +8.5 (-110) — 7.6% Edge (High Tier)",
-    "desc": "Multiple models flag PHX spread value. Dimers 53%, BetMGM 70% cover confidence. 7:30 PM ET tip."
+    "title": "Wizards +18.5 (-115) — 10.5% Edge (High Tier)",
+    "desc": "Dimers model gives WAS 59.4% to cover. Massive spread already prices in 6 key absences. Best edge on the board."
   },
   "picks": [
     {
       "rank": 1,
       "sport": "NBA",
-      "event": "Suns @ Celtics",
+      "event": "Pistons @ Wizards",
       "market": "Spread",
-      "pick": "Suns +8.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "60.0%",
-      "edge": 7.6,
+      "pick": "Wizards +18.5",
+      "odds": "-115",
+      "implied": "48.9%",
+      "model": "59.4%",
+      "edge": 10.5,
       "tier": "High",
-      "bet": "$18.37",
-      "notes": "Dimers gives PHX 53% to cover +8.5, BetMGM gives 70% at +9. Consensus model ~60%. Celtics favored 76-80% to win outright but 8.5 is wide. Suns competitive on the road — Booker/KD travel well.",
-      "sources": "Dimers, BetMGM, Covers, OddsShark"
+      "bet": "$29.33",
+      "notes": "Dimers model gives 59.4% cover probability. Wizards missing 6 players (Sarr, Whitmore, AD, Russell, George, Black) but 18.5 is massive — line already accounts for absences. Pistons -18.5 is historically hard to cover even against depleted rosters. 7:00 PM ET.",
+      "sources": "Dimers, ESPN, Basketball Sphere injury report"
+    },
+    {
+      "rank": 2,
+      "sport": "NBA",
+      "event": "Pacers @ Knicks",
+      "market": "Spread",
+      "pick": "Pacers +16.5",
+      "odds": "-112",
+      "implied": "47.2%",
+      "model": "57.6%",
+      "edge": 10.4,
+      "tier": "High",
+      "bet": "$22.00",
+      "notes": "CONTESTED — Dimers gives 57.6% but Pacers have 11 players on injury report including Siakam. Knicks also missing Brunson. Model may not fully capture extreme roster depletion. Edge is large enough to flag but approach with caution. 7:30 PM ET.",
+      "sources": "Dimers, ESPN, Basketball Sphere injury report"
+    },
+    {
+      "rank": 3,
+      "sport": "NBA",
+      "event": "Cavs @ Bucks",
+      "market": "Spread",
+      "pick": "Bucks +10.5",
+      "odds": "-112",
+      "implied": "47.2%",
+      "model": "54.2%",
+      "edge": 7.0,
+      "tier": "High",
+      "bet": "$18.50",
+      "notes": "Dimers gives MIL 54.2% to cover +10.5. Bucks 28-39 but playing at home. Cavs have 5 injured players. 10.5 is wide for a home team — Bucks have covered big spreads recently in Fiserv Forum. 8:00 PM ET.",
+      "sources": "Dimers, ESPN, Basketball Sphere injury report"
     }
   ],
   "bets": [
@@ -41,7 +71,7 @@
       "decimal_odds": 1.909,
       "edge": "7.6%",
       "wager": 18.37,
-      "outcome": "pending"
+      "outcome": "win"
     },
     {
       "date": "2026-03-15",
