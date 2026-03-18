@@ -4,7 +4,7 @@ on:
   schedule:
     # 6 AM Pacific = 1 PM UTC during PDT, 2 PM UTC during PST
     - cron: '0 13 * * *'
-  workflow_dispatch: # Manual trigger for testing
+  workflow_dispatch: # Manual trigger
 
 permissions:
   contents: write
@@ -21,8 +21,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Resolve any stragglers from last night
-        run: python scripts/resolve_bets.py
+      - name: Run full edge scan
+        run: python scripts/scan_edges.py
 
       - name: Check for changes
         id: changes
@@ -35,5 +35,5 @@ jobs:
           git config user.name "DK Edge Bot"
           git config user.email "max.sheahan@icloud.com"
           git add data.json bankroll.json
-          git commit -m "Morning resolve: $(date +%Y-%m-%d) — stragglers cleared"
+          git commit -m "Daily scan: $(date +%Y-%m-%d) — edges found"
           git push

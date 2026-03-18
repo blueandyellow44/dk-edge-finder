@@ -1,144 +1,79 @@
 {
   "scan_date": "2026-03-18",
-  "scan_subtitle": "Wednesday, March 18, 2026 — NBA (9 games), NHL (6 games), NCAA First Four",
+  "scan_subtitle": "Wednesday, March 18, 2026 \u2014 NBA (9 games)",
   "bankroll": {
-    "available": 501.92,
-    "starting": 500.00,
-    "profit": 83.92,
-    "record": { "wins": 3, "losses": 2, "pushes": 0 },
-    "pending_count": 4,
-    "pending_total": 82.00,
-    "pending_label": "4 bets pending ($82.00)"
+    "available": 500.0,
+    "starting": 500.0,
+    "profit": 0.0,
+    "record": {
+      "wins": 3,
+      "losses": 2,
+      "pushes": 0
+    },
+    "pending_count": 0,
+    "pending_total": 0,
+    "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 15,
-  "best_bet": {
-    "title": "Nets +19.5 (-112) — 9.2% Edge (High Tier)",
-    "desc": "DRatings projects OKC by 15.4 — 4.1 points of value on a 19.5-pt spread. 54-15 Thunder should cruise but 19.5 is a lot of points vs any NBA team. Nets at home."
-  },
-  "picks": [
+  "games_analyzed": 9,
+  "best_bet": null,
+  "picks": [],
+  "no_edge_games": [
     {
-      "rank": 1,
       "sport": "NBA",
-      "event": "Thunder @ Nets",
-      "market": "Spread",
-      "pick": "Nets +19.5",
-      "odds": "-112",
-      "implied": "52.8%",
-      "model": "62.0%",
-      "edge": 9.2,
-      "tier": "High",
-      "bet": "$29.00",
-      "status": "PLACED",
-      "result": "",
-      "notes": "DRatings: OKC 115.8, BKN 100.4 (Thunder by 15.4). One outlier model had Thunder by only 6 (dismissed — inconsistent with 54-15 vs 17-51 records). Nets at home, 19.5 pts is massive cushion.",
-      "sources": "DRatings, ESPN, Docsports"
+      "event": "GS @ BOS",
+      "line": "BOS -11.5",
+      "reason": "No model data"
     },
     {
-      "rank": 2,
       "sport": "NBA",
-      "event": "Jazz @ Timberwolves",
-      "market": "Spread",
-      "pick": "Jazz +13.5",
-      "odds": "-108",
-      "implied": "51.9%",
-      "model": "60.0%",
-      "edge": 7.9,
-      "tier": "High",
-      "bet": "$25.00",
-      "status": "PLACED",
-      "result": "",
-      "notes": "DRatings: MIN 122.4, UTA 111.6 (TWolves by 10.8). 2.7 points of spread cushion. One contradictory source (Jazz 55% win prob) dismissed as unrealistic for this matchup.",
-      "sources": "DRatings"
+      "event": "OKC @ BKN",
+      "line": "OKC -18.5",
+      "reason": "Tank penalty applied \u2014 17-51, eliminated, traded stars"
     },
     {
-      "rank": 3,
       "sport": "NBA",
-      "event": "Nuggets @ Grizzlies",
-      "market": "Spread",
-      "pick": "Grizzlies +13.5",
-      "odds": "-118",
-      "implied": "54.1%",
-      "model": "59.0%",
-      "edge": 4.6,
-      "tier": "High",
-      "bet": "$16.00",
-      "status": "PLACED",
-      "result": "",
-      "notes": "DRatings: DEN 126.6, MEM 115.5 (Nuggets by 11.1). Secondary model had Nuggets by only 4. Both agree Grizzlies cover +13.5. Medium confidence — direction consistent across sources.",
-      "sources": "DRatings, sprediction"
+      "event": "POR @ IND",
+      "line": "POR -12.5",
+      "reason": "Tank penalty applied \u2014 15-53, eliminated, traded Siakam"
     },
     {
-      "rank": 4,
       "sport": "NBA",
-      "event": "Hawks @ Mavericks",
-      "market": "Spread",
-      "pick": "Mavericks +8.5",
-      "odds": "-115",
-      "implied": "53.5%",
-      "model": "57.0%",
-      "edge": 3.7,
-      "tier": "High",
-      "bet": "$12.00",
-      "status": "",
-      "result": "",
-      "notes": "DRatings: ATL 122.7, DAL 116.2 (Hawks by 6.5). 2 points of spread cushion. Low confidence — single source only. Marginal edge.",
-      "sources": "DRatings"
+      "event": "TOR @ CHI",
+      "line": "TOR -7.5",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "UTAH @ MIN",
+      "line": "MIN -12.5",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "LAC @ NO",
+      "line": "NO -1.5",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "ATL @ DAL",
+      "line": "ATL -8.5",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "DEN @ MEM",
+      "line": "DEN -12.5",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "LAL @ HOU",
+      "line": "HOU -1.5",
+      "reason": "No model data"
     }
   ],
-  "no_edge_games": [
-    { "sport": "NBA", "event": "Warriors @ Celtics", "line": "GSW +11.5 (-112)", "reason": "DRatings projects Celtics by 10.4 — edge only 1.2%, below 3% threshold" },
-    { "sport": "NBA", "event": "Blazers @ Pacers", "line": "POR -10.5 (-112)", "reason": "Projected margin 9.6 vs 10.5 spread — 1.4% edge, below threshold" },
-    { "sport": "NBA", "event": "Raptors @ Bulls", "line": "TOR -7.5 (-110)", "reason": "Projected margin 6.8 — nearly flat, 0.1% edge" },
-    { "sport": "NBA", "event": "Clippers @ Pelicans", "line": "LAC +2.5 (-118)", "reason": "2.8% edge — close but below 3% minimum" },
-    { "sport": "NBA", "event": "Lakers @ Rockets", "line": "HOU -2.5 (-102)", "reason": "Contested — models disagree by 11 points (DRatings: HOU by 2, other: LAL by 9)" },
-    { "sport": "NHL", "event": "6 games (PIT/CAR, NJD/NYR, OTT/WSH, STL/CGY, DAL/COL, PHI/ANA)", "line": "Various", "reason": "Insufficient model probability data for confident NHL edges" },
-    { "sport": "NCAAM", "event": "First Four (2 games)", "line": "TBD", "reason": "Thin model data on First Four matchups — not enough for confident edge" }
-  ],
   "bets": [
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Thunder @ Nets",
-      "pick": "Nets +19.5",
-      "odds": "-112",
-      "decimal_odds": 1.893,
-      "edge": "9.2%",
-      "wager": 29.00,
-      "outcome": "pending"
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Jazz @ Timberwolves",
-      "pick": "Jazz +13.5",
-      "odds": "-108",
-      "decimal_odds": 1.926,
-      "edge": "7.9%",
-      "wager": 25.00,
-      "outcome": "pending"
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Nuggets @ Grizzlies",
-      "pick": "Grizzlies +13.5",
-      "odds": "-118",
-      "decimal_odds": 1.847,
-      "edge": "4.6%",
-      "wager": 16.00,
-      "outcome": "pending"
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Hawks @ Mavericks",
-      "pick": "Mavericks +8.5",
-      "odds": "-115",
-      "decimal_odds": 1.870,
-      "edge": "3.7%",
-      "wager": 12.00,
-      "outcome": "pending"
-    },
     {
       "date": "2026-03-17",
       "sport": "NBA",
@@ -147,7 +82,7 @@
       "odds": "-110",
       "decimal_odds": 1.909,
       "edge": "7.6%",
-      "wager": 24.00,
+      "wager": 24.0,
       "outcome": "win",
       "pnl": 21.82,
       "final_score": "DET 130, WSH 117"
@@ -160,9 +95,9 @@
       "odds": "-108",
       "decimal_odds": 1.926,
       "edge": "4.1%",
-      "wager": 13.00,
+      "wager": 13.0,
       "outcome": "loss",
-      "pnl": -13.00,
+      "pnl": -13.0,
       "final_score": "NYK 136, IND 110"
     },
     {
@@ -173,9 +108,9 @@
       "odds": "-112",
       "decimal_odds": 1.893,
       "edge": "3.5%",
-      "wager": 11.50,
+      "wager": 11.5,
       "outcome": "loss",
-      "pnl": -11.50,
+      "pnl": -11.5,
       "final_score": "SAS 132, SAC 104"
     },
     {
@@ -197,11 +132,11 @@
       "event": "Trail Blazers @ 76ers",
       "pick": "76ers ML",
       "odds": "+270",
-      "decimal_odds": 3.70,
+      "decimal_odds": 3.7,
       "edge": "11.0%",
-      "wager": 25.00,
+      "wager": 25.0,
       "outcome": "win",
-      "pnl": 67.50,
+      "pnl": 67.5,
       "final_score": ""
     }
   ]

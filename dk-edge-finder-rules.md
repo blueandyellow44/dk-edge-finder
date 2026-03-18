@@ -75,6 +75,49 @@ After ~15 turns in a single session, the accumulated context starts becoming a p
 - Don't present edges below the tier minimum — they're noise
 - If an edge is between 3–5%, it's marginal even at High tier. Note that explicitly.
 
+### Situational adjustments (applied AFTER base edge calculation)
+
+#### Tanking detection (critical — added 2026-03-18)
+Before flagging any spread bet on a team with a bottom-8 record:
+1. **Check if they're eliminated from playoff contention** — if yes, flag as TANK RISK
+2. **Check recent lineup patterns** — are starters getting reduced minutes? Are G-League/two-way players getting 20+ min?
+3. **Apply tank penalty**: reduce model confidence by 3% for confirmed tankers, 1.5% for suspected
+4. **If edge disappears after penalty, do NOT flag the bet**
+5. **Never bet on a tanking team to cover a large spread** — tanking teams lose by MORE than expected because they pull starters early, run developmental lineups in Q4, and actively avoid winning close games
+6. Tanking indicators: bottom-8 record after All-Star break, traded veteran starters at deadline, coach playing young players extended minutes, DNP-rest for healthy veterans
+7. **Label in notes**: "TANK RISK: [reason]" so the user can make their own call
+
+Example: Pacers (15-53) at +15.5 — model says 56% cover. But Pacers are confirmed tanking (traded Siakam, starting rookies, Haliburton DNP-rest). Apply -3% penalty → 53% cover. Implied at -108 is 51.9%. Edge drops to 1.1% — below 3% threshold. SKIP.
+
+#### Rest / back-to-back / schedule fatigue
+- **B2B penalty**: Team on second night of back-to-back gets -1.5% adjustment to cover probability (road B2B: -2.5%)
+- **3-in-4 nights**: Additional -1% on top of B2B penalty if applicable
+- **Rest advantage**: Team with 2+ days rest vs opponent on B2B gets +1.5% boost
+- **Search NBA schedule for B2B status** during each scan — one search covers all games
+- **Note in analysis**: "DEN on B2B (-1.5% adj)" or "MIL 3 days rest vs CLE on B2B (+1.5%)"
+
+#### Line movement / sharp money
+- **Check opening vs current line** during odds search. If line moved 1.5+ points, note direction.
+- **Reverse line movement (RLM)**: If public is heavily on one side but line moves the other way, sharp money is likely on the contrarian side. Flag this.
+- **If our pick conflicts with sharp action**: add warning "SHARP CONFLICT — line moving against this pick" and reduce Kelly fraction by 25%
+- **If our pick aligns with sharp action**: note "SHARP ALIGNED" — increases confidence
+- Sources for line movement: Action Network, Vegas Insider, Covers consensus
+
+#### Motivation mismatches
+- **Playoff-locked teams** (seed clinched, nothing to play for) may rest starters — model may overestimate their spread coverage
+- **Play-in tournament teams** fighting for 7-10 seed: elevated motivation, model may underestimate
+- **Elimination games**: teams facing playoff elimination tend to outperform models by 1-2%
+- Note motivation context in analysis when relevant
+
+### Closing Line Value (CLV) tracking — added 2026-03-18
+After each bet resolves, record what the closing line was (the line at game time):
+- Add `closing_line` field to each bet in data.json
+- **CLV = our_line - closing_line** (positive = we got a better number)
+- Track cumulative CLV in bankroll.json
+- **CLV is the best predictor of long-term profitability** — a bettor who consistently beats the closing line will profit over time, even if individual bets lose
+- If CLV is consistently negative (we're getting worse numbers than close), the model timing or source needs adjustment
+- Weekly CLV summary in dashboard: "Avg CLV: +1.2 pts" or "Avg CLV: -0.5 pts (model may be lagging)"
+
 ---
 
 ## File Operations
