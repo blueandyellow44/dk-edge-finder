@@ -27,9 +27,25 @@ BANKROLL_JSON = REPO_ROOT / "bankroll.json"
 # ── Config ──────────────────────────────────────────
 MIN_EDGE_HIGH = 0.03      # 3% for spreads/ML/totals
 MIN_EDGE_MEDIUM = 0.05    # 5% for props
+MAX_EDGE_CAP = 0.12       # 12% cap — above this, model is probably wrong, not the book
 KELLY_FRACTION_HIGH = 0.5
 MAX_SINGLE_BET_PCT = 0.05 # 5% max single bet
 MAX_DAILY_EXPOSURE = 0.15 # 15% max daily
+
+# Combined standard deviations (game variance + model error) by sport
+# Used for proper normal distribution probability conversion
+COMBINED_SD = {
+    "nba_spread": 15.5,    # NBA spread SD ~12, model error ~10 → combined ~15.5
+    "nba_total": 21.0,     # NBA total SD ~16, model error ~13 → combined ~21
+    "nhl_spread": 1.8,     # NHL puck line is tight (±1.5), variance ~1.5, model ~1.0
+    "nhl_total": 2.5,      # NHL totals SD ~2, model error ~1.5
+    "nfl_spread": 14.0,    # NFL spread SD ~13, model ~6 → combined ~14
+    "nfl_total": 18.0,     # NFL total SD ~14, model ~11
+    "mlb_spread": 3.5,     # MLB run line SD ~3, model ~2
+    "mlb_total": 3.0,      # MLB total SD ~2.5, model ~1.8
+    "default_spread": 12.0,
+    "default_total": 15.0,
+}
 
 # Teams confirmed tanking (update periodically)
 # Record threshold: bottom-8 teams (win% < .300 after All-Star break)
@@ -329,6 +345,38 @@ def fetch_yesterday_games(date_str: str) -> set[str]:
 
 
 # ── Edge calculation ────────────────────────────────
+def normal_cdf(x: float) -> float:
+    """Approximate the standard normal CDF using Abramowitz & Stegun formula.
+    Accurate to ~0.0005. No scipy needed."""
+    import math
+    if x < 0:
+        return 1.0 - normal_cdf(-x)
+    t = 1.0 / (1.0 + 0.2316419 * x)
+    d = 0.3989422804014327  # 1/sqrt(2*pi)
+    poly = t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 + t * (-1.821255978 + t * 1.330274429))))
+    return 1.0 - d * math.exp(-0.5 * x * x) * poly
+
+
+def cushion_to_probability(cushion: float, sport: str, market: str) -> float:
+    """Convert points of cushion to cover probability using normal distribution.
+
+    Uses sport-specific combined SD (game variance + model error).
+    More principled than linear heuristic — accounts for the fact that
+    larger cushions have diminishing marginal value.
+    """
+    key = f"{sport.lower()}_{market.lower()}"
+    sd = COMBINED_SD.get(key, COMBINED_SD.get(f"default_{market.lower()}", 15.0))
+
+    if sd <= 0 or cushion <= 0:
+        return 0.50
+
+    z = cushion / sd
+    prob = normal_cdf(z)
+
+    # Cap at 75% — beyond this we're extrapolating into unreliable territory
+    return min(0.75, prob)
+
+
 def american_to_decimal(odds: int) -> float:
     if odds < 0:
         return round(1 + 100 / abs(odds), 3)
@@ -419,20 +467,9 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if pick_spread <= 0:
         return None  # No underdog spread to bet
 
-    # Estimate cover probability from model margin vs spread
-    # Rough heuristic: each point of cushion ≈ 2-3% cover probability
-    # Base: if model exactly matches spread, ~50% cover
-    base_cover_prob = 0.50
-    # Diminishing returns: first points of cushion matter most
-    # 0-5 pts: 2.5% per point | 5-10 pts: 1.5% per point | 10+ pts: 0.5% per point
-    sc = spread_cushion
-    if sc <= 5:
-        cushion_boost = sc * 0.025
-    elif sc <= 10:
-        cushion_boost = (5 * 0.025) + ((sc - 5) * 0.015)
-    else:
-        cushion_boost = (5 * 0.025) + (5 * 0.015) + ((sc - 10) * 0.005)
-    model_prob = min(0.80, max(0.30, base_cover_prob + cushion_boost))
+    # Convert cushion to cover probability using normal distribution
+    # Uses sport-specific combined SD (game variance + model error)
+    model_prob = cushion_to_probability(spread_cushion, sport, "spread")
 
     # Standard DK juice for big spreads: -110 to -115
     # Use -110 as default if we don't have exact juice
@@ -478,6 +515,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
     if edge < MIN_EDGE_HIGH:
         return None  # Below threshold
+
+    # Cap edge — above 12%, model is probably wrong, not the book
+    capped = False
+    if edge > MAX_EDGE_CAP:
+        edge = MAX_EDGE_CAP
+        capped = True
 
     # Kelly sizing
     decimal_odds = american_to_decimal(dk_odds)
@@ -576,18 +619,8 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     if abs(cushion) < 0.5:
         return None  # Less than 0.5 pts of edge, too thin
 
-    # Estimate cover probability from model total vs line
-    # Diminishing returns: first points matter most, later points are noise
-    # 0-5 pts: 2% per point | 5-10 pts: 1% per point | 10+ pts: 0.3% per point
-    base_cover_prob = 0.50
-    c = abs(cushion)
-    if c <= 5:
-        cushion_boost = c * 0.02
-    elif c <= 10:
-        cushion_boost = (5 * 0.02) + ((c - 5) * 0.01)
-    else:
-        cushion_boost = (5 * 0.02) + (5 * 0.01) + ((c - 10) * 0.003)
-    model_prob = min(0.80, max(0.30, base_cover_prob + cushion_boost))
+    # Convert cushion to cover probability using normal distribution
+    model_prob = cushion_to_probability(abs(cushion), sport, "total")
 
     # Standard DK juice for totals: -110
     dk_odds = -110
@@ -598,6 +631,12 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
     if edge < MIN_EDGE_HIGH:
         return None  # Below 3% threshold
+
+    # Cap edge — above 12%, model is probably wrong
+    capped = False
+    if edge > MAX_EDGE_CAP:
+        edge = MAX_EDGE_CAP
+        capped = True
 
     # Kelly sizing
     decimal_odds = american_to_decimal(dk_odds)
@@ -819,11 +858,11 @@ def main():
             "desc": bp["notes"][:200],
         }
 
-    # Preserve existing bet history — NEVER delete historical bets
-    # Only remove today's unplaced picks (status empty) if re-scanning
+    # Preserve existing bet history — NEVER delete placed or resolved bets
     existing_bets = data.get("bets", [])
-    # Keep all bets that are placed/resolved or from other dates
-    existing_bets = [b for b in existing_bets if b.get("date") != today_iso or b.get("outcome") != "pending"]
+    # Keep ALL bets — placed, pending, resolved, everything. Never wipe the bets array.
+    # The scan only adds new picks to the picks[] array, it does NOT touch bets[].
+    # Bets only enter the bets[] array when the user clicks "Place" on the site.
 
     # Build subtitle with sport breakdown
     date_str = datetime.strptime(today, '%Y%m%d').strftime('%A, %B %d, %Y')
