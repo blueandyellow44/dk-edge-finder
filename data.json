@@ -1,81 +1,98 @@
 {
-  "scan_date": "2026-03-17",
-  "scan_subtitle": "Tuesday, March 17, 2026 — NBA, NHL, NCAA First Four",
+  "scan_date": "2026-03-18",
+  "scan_subtitle": "Wednesday, March 18, 2026 — NBA (9 games), NHL (6 games), NCAA First Four",
   "bankroll": {
     "available": 583.92,
     "starting": 500.00,
-    "profit": 81.51,
+    "profit": 83.92,
     "record": { "wins": 3, "losses": 2, "pushes": 0 },
     "pending_count": 0,
     "pending_total": 0,
     "pending_label": ""
   },
-  "games_analyzed": 19,
+  "games_analyzed": 15,
   "best_bet": {
-    "title": "Wizards +18 (-110) — 7.6% Edge (High Tier)",
-    "desc": "Dimers model gives WAS 60%+ to cover at +18. Line widened from +17.5 — extra half-point improves value. 18-pt NBA spreads historically brutal to lay. DET lost in Toronto Monday."
+    "title": "Nets +19.5 (-112) — 9.2% Edge (High Tier)",
+    "desc": "DRatings projects OKC by 15.4 — 4.1 points of value on a 19.5-pt spread. 54-15 Thunder should cruise but 19.5 is a lot of points vs any NBA team. Nets at home."
   },
   "picks": [
     {
       "rank": 1,
       "sport": "NBA",
-      "event": "Pistons @ Wizards",
+      "event": "Thunder @ Nets",
       "market": "Spread",
-      "pick": "Wizards +18",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "60.0%",
-      "edge": 7.6,
+      "pick": "Nets +19.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "62.0%",
+      "edge": 9.2,
       "tier": "High",
-      "bet": "$24.00",
-      "status": "WIN",
-      "result": "DET 130, WSH 117 — Pistons by 13, +18 covers",
-      "notes": "Dimers model gave 59.4% at +17.5 — line widened to +18 on DK. DET won 130-117 but +18 covered comfortably (117+18=135 > 130).",
-      "sources": "Dimers, Action Network, ESPN"
+      "bet": "$29.00",
+      "status": "",
+      "result": "",
+      "notes": "DRatings: OKC 115.8, BKN 100.4 (Thunder by 15.4). One outlier model had Thunder by only 6 (dismissed — inconsistent with 54-15 vs 17-51 records). Nets at home, 19.5 pts is massive cushion.",
+      "sources": "DRatings, ESPN, Docsports"
     },
     {
       "rank": 2,
       "sport": "NBA",
-      "event": "Pacers @ Knicks",
+      "event": "Jazz @ Timberwolves",
       "market": "Spread",
-      "pick": "Pacers +15.5",
+      "pick": "Jazz +13.5",
       "odds": "-108",
       "implied": "51.9%",
-      "model": "56.0%",
-      "edge": 4.1,
+      "model": "60.0%",
+      "edge": 7.9,
       "tier": "High",
-      "bet": "$13.00",
-      "status": "LOSS",
-      "result": "NYK 136, IND 110 — Knicks by 26, didn't cover",
-      "notes": "Knicks blew out Pacers by 26. Josh Hart 33 pts on 12-of-13. Model underweighted Pacers' extreme roster depletion as noted.",
-      "sources": "Dimers, Action Network, ESPN"
+      "bet": "$25.00",
+      "status": "",
+      "result": "",
+      "notes": "DRatings: MIN 122.4, UTA 111.6 (TWolves by 10.8). 2.7 points of spread cushion. One contradictory source (Jazz 55% win prob) dismissed as unrealistic for this matchup.",
+      "sources": "DRatings"
     },
     {
       "rank": 3,
       "sport": "NBA",
-      "event": "Spurs @ Kings",
+      "event": "Nuggets @ Grizzlies",
       "market": "Spread",
-      "pick": "Kings +13.5",
-      "odds": "-112",
-      "implied": "52.8%",
-      "model": "56.3%",
-      "edge": 3.5,
+      "pick": "Grizzlies +13.5",
+      "odds": "-118",
+      "implied": "54.1%",
+      "model": "59.0%",
+      "edge": 4.6,
       "tier": "High",
-      "bet": "$11.50",
-      "status": "LOSS",
-      "result": "SAS 132, SAC 104 — Spurs by 28, +13.5 doesn't cover",
-      "notes": "Spurs dominated wire-to-wire, winning by 28. Kings +13.5 needed to lose by 13 or fewer. Wembanyama 18pts, Fox 15pts for SAS.",
-      "sources": "Dimers, Action Network"
+      "bet": "$16.00",
+      "status": "",
+      "result": "",
+      "notes": "DRatings: DEN 126.6, MEM 115.5 (Nuggets by 11.1). Secondary model had Nuggets by only 4. Both agree Grizzlies cover +13.5. Medium confidence — direction consistent across sources.",
+      "sources": "DRatings, sprediction"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
+      "event": "Hawks @ Mavericks",
+      "market": "Spread",
+      "pick": "Mavericks +8.5",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "57.0%",
+      "edge": 3.7,
+      "tier": "High",
+      "bet": "$12.00",
+      "status": "",
+      "result": "",
+      "notes": "DRatings: ATL 122.7, DAL 116.2 (Hawks by 6.5). 2 points of spread cushion. Low confidence — single source only. Marginal edge.",
+      "sources": "DRatings"
     }
   ],
   "no_edge_games": [
-    { "sport": "NBA", "event": "Cavs @ Bucks", "line": "CLE -10.5 (-108)", "reason": "Line moved from -9.5 to -10.5. Model edge fell below 3% threshold at new juice (-112)" },
-    { "sport": "NBA", "event": "Heat @ Hornets", "line": "CHA -4 (-102)", "reason": "Model aligns with market" },
-    { "sport": "NBA", "event": "Thunder @ Magic", "line": "OKC -9.5 (-115)", "reason": "Model agrees with pricing" },
-    { "sport": "NBA", "event": "Suns @ Timberwolves", "line": "MIN -4 (-115)", "reason": "No meaningful edge" },
-    { "sport": "NBA", "event": "76ers @ Nuggets", "line": "DEN -15 (-108)", "reason": "Model doesn't flag edge" },
-    { "sport": "NHL", "event": "9 games on slate", "line": "Various", "reason": "Insufficient model probability data for confident NHL edges" },
-    { "sport": "NCAAM", "event": "First Four (UMBC/Howard, NCST/Texas)", "line": "Both -1.5", "reason": "Thin model data, volatile outcomes, no confident edge" }
+    { "sport": "NBA", "event": "Warriors @ Celtics", "line": "GSW +11.5 (-112)", "reason": "DRatings projects Celtics by 10.4 — edge only 1.2%, below 3% threshold" },
+    { "sport": "NBA", "event": "Blazers @ Pacers", "line": "POR -10.5 (-112)", "reason": "Projected margin 9.6 vs 10.5 spread — 1.4% edge, below threshold" },
+    { "sport": "NBA", "event": "Raptors @ Bulls", "line": "TOR -7.5 (-110)", "reason": "Projected margin 6.8 — nearly flat, 0.1% edge" },
+    { "sport": "NBA", "event": "Clippers @ Pelicans", "line": "LAC +2.5 (-118)", "reason": "2.8% edge — close but below 3% minimum" },
+    { "sport": "NBA", "event": "Lakers @ Rockets", "line": "HOU -2.5 (-102)", "reason": "Contested — models disagree by 11 points (DRatings: HOU by 2, other: LAL by 9)" },
+    { "sport": "NHL", "event": "6 games (PIT/CAR, NJD/NYR, OTT/WSH, STL/CGY, DAL/COL, PHI/ANA)", "line": "Various", "reason": "Insufficient model probability data for confident NHL edges" },
+    { "sport": "NCAAM", "event": "First Four (2 games)", "line": "TBD", "reason": "Thin model data on First Four matchups — not enough for confident edge" }
   ],
   "bets": [
     {
@@ -88,7 +105,8 @@
       "edge": "7.6%",
       "wager": 24.00,
       "outcome": "win",
-      "pnl": 21.82
+      "pnl": 21.82,
+      "final_score": "DET 130, WSH 117"
     },
     {
       "date": "2026-03-17",
@@ -100,7 +118,8 @@
       "edge": "4.1%",
       "wager": 13.00,
       "outcome": "loss",
-      "pnl": -13.00
+      "pnl": -13.00,
+      "final_score": "NYK 136, IND 110"
     },
     {
       "date": "2026-03-17",
@@ -112,7 +131,8 @@
       "edge": "3.5%",
       "wager": 11.50,
       "outcome": "loss",
-      "pnl": -11.50
+      "pnl": -11.50,
+      "final_score": "SAS 132, SAC 104"
     },
     {
       "date": "2026-03-16",
@@ -124,7 +144,8 @@
       "edge": "7.6%",
       "wager": 18.37,
       "outcome": "win",
-      "pnl": 16.69
+      "pnl": 16.69,
+      "final_score": ""
     },
     {
       "date": "2026-03-15",
@@ -136,7 +157,8 @@
       "edge": "11.0%",
       "wager": 25.00,
       "outcome": "win",
-      "pnl": 67.50
+      "pnl": 67.50,
+      "final_score": ""
     }
   ]
 }
