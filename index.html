@@ -5,385 +5,299 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DK Edge Finder</title>
 <style>
-  :root {
-    --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a;
-    --text: #e4e4e7; --muted: #9ca3af;
-    --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
-    --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
-    --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
-    --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
-    --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
-    --accent: #8b5cf6;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.5;
-    padding: 24px; max-width: 1200px; margin: 0 auto;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  h1 { font-size: 1.5rem; font-weight: 700; }
-  h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
-
-  /* Header */
-  .header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .header-left h1 { margin-bottom: 4px; }
-  .header-left .subtitle { color: var(--muted); font-size: 0.9rem; }
-  .stats-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .stat-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 20px; min-width: 130px; text-align: center;
-  }
-  .stat-card .label {
-    font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;
-  }
-  .stat-card .value { font-size: 1.4rem; font-weight: 700; margin-top: 2px; }
-
-  /* Alert */
-  .alert-banner {
-    background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15));
-    border: 1px solid var(--accent); border-radius: 10px; padding: 16px 20px;
-    margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
-  }
-  .alert-banner .icon { font-size: 1.5rem; }
-  .alert-banner .content { flex: 1; }
-  .alert-banner .title { font-weight: 600; font-size: 0.95rem; }
-  .alert-banner .desc { color: var(--muted); font-size: 0.85rem; }
-
-  /* No-picks message */
-  .no-picks {
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 32px; text-align: center; color: var(--muted); font-size: 0.95rem;
-  }
-
-  /* Sections */
-  .section { margin-bottom: 28px; }
-
-  /* Tables */
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  thead th {
-    text-align: left; padding: 10px 12px; font-size: 0.75rem;
-    text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
-    border-bottom: 1px solid var(--border); white-space: nowrap;
-    cursor: pointer; user-select: none;
-  }
-  thead th:hover { color: var(--text); }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-  tbody tr:hover { background: rgba(255,255,255,0.03); }
-  tbody td { padding: 12px; vertical-align: top; }
-
-  /* Badges */
-  .tier-badge {
-    display: inline-block; padding: 2px 10px; border-radius: 12px;
-    font-size: 0.75rem; font-weight: 600;
-  }
-  .tier-high { background: var(--green-bg); color: var(--green); }
-  .tier-medium { background: var(--yellow-bg); color: var(--yellow); }
-  .tier-low { background: var(--orange-bg); color: var(--orange); }
-
-  .outcome-badge {
-    display: inline-block; padding: 3px 12px; border-radius: 12px;
-    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-  }
-  .outcome-win { background: var(--green-bg); color: var(--green); }
-  .outcome-loss { background: var(--red-bg); color: var(--red); }
-  .outcome-push { background: var(--yellow-bg); color: var(--yellow); }
-  .outcome-pending { background: var(--blue-bg); color: var(--blue); }
-
-  /* Values */
-  .edge-val { font-weight: 700; }
-  .edge-positive { color: var(--green); }
-  .pick-cell { font-weight: 600; }
-  .odds-cell { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; }
-  .pnl-positive { color: var(--green); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
-  .pnl-negative { color: var(--red); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
-  .pnl-zero { color: var(--muted); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
-
-  /* Expandable rows */
-  .expandable { cursor: pointer; }
-  .expand-icon {
-    display: inline-block; transition: transform 0.2s; margin-right: 6px; font-size: 0.75rem;
-  }
-  .expand-icon.open { transform: rotate(90deg); }
-  .detail-row { display: none; }
-  .detail-row.open { display: table-row; }
-  .detail-row td {
-    padding: 8px 12px 16px 36px; color: var(--muted); font-size: 0.82rem;
-    line-height: 1.6; background: rgba(255,255,255,0.02);
-  }
-
-  /* Bankroll cards */
-  .bankroll-section {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;
-  }
-  .bankroll-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px;
-  }
-  .bankroll-card h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
-  .bankroll-card .big { font-size: 2rem; font-weight: 700; }
-
-  /* Summary bar */
-  .summary-bar {
-    margin-top: 12px; padding: 12px 16px; background: var(--card);
-    border: 1px solid var(--border); border-radius: 10px;
-    font-size: 0.85rem; color: var(--muted);
-    display: flex; gap: 24px; flex-wrap: wrap;
-  }
-
-  /* Footer */
-  .footer {
-    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 0.8rem; text-align: center; line-height: 1.8;
-  }
-
-  /* Last updated pulse */
-  .last-updated {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.78rem; color: var(--muted); margin-top: 4px;
-  }
-  .pulse {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--green);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    body { padding: 12px; }
-    .stats-row { flex-direction: column; }
-    .bankroll-section { grid-template-columns: 1fr; }
-    table { font-size: 0.8rem; }
-    td, th { padding: 8px 6px; }
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;padding:20px;max-width:1200px;margin:0 auto}
+h1{font-size:1.8rem;color:#fff;margin-bottom:4px}
+.subtitle{color:#94a3b8;font-size:0.95rem;margin-bottom:4px}
+.last-updated{display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:#64748b;margin-bottom:24px}
+.pulse{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.stat-card{background:#1e293b;border-radius:12px;padding:16px 20px;flex:1;min-width:140px;border:1px solid #334155}
+.stat-card .label{font-size:0.72rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
+.stat-card .value{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2px}
+.result-banner{border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.result-banner .title{font-weight:700;font-size:1rem;margin-bottom:4px}
+.result-banner .desc{color:#94a3b8;font-size:0.9rem}
+.result-win{background:linear-gradient(135deg,#1e293b,#052e16);border:1px solid #4ade80}
+.result-win .title{color:#4ade80}
+.result-loss{background:linear-gradient(135deg,#1e293b,#450a0a);border:1px solid #f87171}
+.result-loss .title{color:#f87171}
+.result-pending{background:linear-gradient(135deg,#1e293b,#422006);border:1px solid #f59e0b}
+.result-pending .title{color:#facc15}
+.alert-best{background:linear-gradient(135deg,#1e293b,#172554);border:1px solid #3b82f6;border-radius:12px;padding:16px 20px;margin-bottom:24px}
+.alert-best .title{font-weight:700;color:#60a5fa;font-size:1rem;margin-bottom:4px}
+.alert-best .desc{color:#94a3b8;font-size:0.9rem}
+.alert-none{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:24px;text-align:center;color:#94a3b8;margin-bottom:24px}
+h2{font-size:1.2rem;color:#fff;margin:28px 0 12px}
+table{width:100%;border-collapse:collapse;margin-bottom:8px}
+th{background:#1e293b;color:#94a3b8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;text-align:left;border-bottom:1px solid #334155}
+td{padding:10px 12px;border-bottom:1px solid rgba(51,65,85,0.5);font-size:0.9rem}
+tbody tr:hover{background:rgba(255,255,255,0.03)}
+.pick-name{color:#fff;font-weight:600}
+.odds{color:#60a5fa;font-family:'SF Mono','Fira Code',monospace;font-size:0.85rem}
+.edge{color:#a78bfa;font-weight:700}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:0.75rem;font-weight:700}
+.badge-high{background:rgba(74,222,128,0.12);color:#4ade80}
+.badge-medium{background:rgba(250,204,21,0.12);color:#facc15}
+.badge-low{background:rgba(249,115,22,0.12);color:#f97316}
+.badge-win{background:rgba(74,222,128,0.12);color:#4ade80}
+.badge-loss{background:rgba(248,113,113,0.12);color:#f87171}
+.badge-push{background:rgba(250,204,21,0.12);color:#facc15}
+.badge-pending{background:rgba(96,165,250,0.12);color:#60a5fa}
+.badge-placed{background:rgba(250,204,21,0.12);color:#facc15}
+.pnl-win{color:#4ade80;font-weight:700;font-family:'SF Mono','Fira Code',monospace}
+.pnl-loss{color:#f87171;font-weight:700;font-family:'SF Mono','Fira Code',monospace}
+.pnl-zero{color:#94a3b8;font-family:'SF Mono','Fira Code',monospace}
+.detail-row{display:none;background:#0c1222}
+.detail-row.open{display:table-row}
+.detail-row td{padding:12px 20px;color:#94a3b8;font-size:0.85rem;line-height:1.7}
+.detail-row td .src{color:#60a5fa;font-size:0.8rem}
+.toggle-btn{cursor:pointer;color:#60a5fa;font-size:0.8rem}
+.no-edge{background:#1e293b;border-radius:12px;padding:16px;margin-bottom:24px}
+.no-edge-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #334155;font-size:0.9rem;flex-wrap:wrap;gap:4px}
+.no-edge-item:last-child{border-bottom:none}
+.no-edge-item .game{color:#fff;min-width:200px}
+.no-edge-item .line{color:#94a3b8;min-width:120px}
+.no-edge-item .reason{color:#64748b;font-size:0.85rem;flex:1}
+.bankroll-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.bankroll-card{background:#1e293b;border-radius:12px;padding:18px 22px;flex:1;min-width:160px;border:1px solid #334155}
+.bankroll-card .label{font-size:0.72rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
+.bankroll-card .value{font-size:1.8rem;font-weight:700;margin-top:4px}
+.summary-bar{display:flex;gap:16px;background:#1e293b;border-radius:10px;padding:14px 20px;margin-top:12px;flex-wrap:wrap;font-size:0.9rem;color:#94a3b8}
+.summary-bar span strong{color:#e2e8f0}
+.footer{text-align:center;color:#64748b;font-size:0.8rem;margin-top:40px;padding-top:20px;border-top:1px solid #1e293b}
+@media(max-width:600px){.stats-row,.bankroll-row{flex-direction:column}.stat-card,.bankroll-card{min-width:100%}td,th{padding:8px 6px}table{font-size:0.82rem}}
 </style>
 </head>
 <body>
 
-<div class="header" id="header">
-  <div class="header-left">
-    <h1>DK Edge Finder</h1>
-    <div class="subtitle" id="subtitle">Loading...</div>
-    <div class="last-updated"><span class="pulse"></span> <span id="updated-time">...</span></div>
-  </div>
-  <div class="stats-row" id="stats-row"></div>
-</div>
+<h1>DK Edge Finder</h1>
+<p class="subtitle" id="subtitle">Loading...</p>
+<div class="last-updated"><span class="pulse"></span> <span id="updated-time">...</span></div>
 
+<div class="stats-row" id="stats-row"></div>
+<div id="result-banners"></div>
 <div id="alert-container"></div>
 
-<div class="section">
-  <h2>Flagged Edges</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th><th>Sport</th><th>Event</th><th>Market</th><th>Pick</th>
-        <th>DK Odds</th><th>Implied %</th><th>Model %</th><th>Edge %</th>
-        <th>Tier</th><th>Bet Size</th>
-      </tr>
-    </thead>
-    <tbody id="picks-body"></tbody>
-  </table>
-  <div id="no-picks" class="no-picks" style="display:none">No edges flagged for today. Check back tomorrow at 6 AM.</div>
+<div id="picks-section">
+  <h2 id="picks-header">Flagged Edges</h2>
+  <table><thead><tr>
+    <th>#</th><th>Event</th><th>Pick</th><th>DK Odds</th><th>Implied</th><th>Model</th><th>Edge</th><th>Tier</th><th>Wager</th><th>Status</th><th></th>
+  </tr></thead><tbody id="picks-body"></tbody></table>
+  <div id="no-picks" style="display:none;background:#1e293b;border:1px solid #334155;border-radius:12px;padding:24px;text-align:center;color:#94a3b8">No edges flagged today. Patience is edge.</div>
 </div>
 
-<div class="section">
-  <h2>Bankroll &amp; Tracking</h2>
-  <div class="bankroll-section" id="bankroll-cards"></div>
+<div id="no-edge-section" style="display:none">
+  <h2 id="no-edge-header">No Edge Found</h2>
+  <div class="no-edge" id="no-edge-body"></div>
 </div>
 
-<div class="section">
-  <h2>Placed Bets &mdash; All Time</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th><th>Sport</th><th>Event</th><th>Pick</th><th>Odds</th>
-        <th>Edge</th><th>Wager</th><th>Result</th><th>P/L</th>
-      </tr>
-    </thead>
-    <tbody id="bets-body"></tbody>
-  </table>
-  <div class="summary-bar" id="bets-summary"></div>
-</div>
+<h2>Bankroll</h2>
+<div class="bankroll-row" id="bankroll-cards"></div>
+
+<h2>Bet History</h2>
+<table><thead><tr>
+  <th>Date</th><th>Event</th><th>Pick</th><th>Odds</th><th>Edge</th><th>Wager</th><th>Result</th><th>P/L</th>
+</tr></thead><tbody id="bets-body"></tbody></table>
+<div class="summary-bar" id="bets-summary"></div>
 
 <div class="footer">
   All models carry uncertainty. Edge estimates are probabilistic, not guarantees. Bet responsibly.<br>
-  DK Edge Finder &bull; DraftKings Oregon &bull; Auto-updates daily at 6 AM PT
+  DK Edge Finder &bull; DraftKings Oregon &bull; Auto-updates via GitHub Actions
 </div>
 
 <script>
-async function loadData() {
-  try {
-    const resp = await fetch('data.json?' + Date.now());
-    const d = await resp.json();
-    renderAll(d);
-  } catch (e) {
-    document.getElementById('subtitle').textContent = 'Error loading data';
+async function loadData(){
+  try{
+    const resp=await fetch('data.json?'+Date.now());
+    const d=await resp.json();
+    render(d);
+  }catch(e){
+    document.getElementById('subtitle').textContent='Error loading data';
     console.error(e);
   }
 }
 
-function renderAll(d) {
-  // Subtitle & updated time
-  document.getElementById('subtitle').textContent = d.scan_subtitle;
-  document.getElementById('updated-time').textContent = 'Last scan: ' + d.scan_date;
+function render(d){
+  const b=d.bankroll;
+  const amt=b.available||b.current||0;
+  const profit=b.profit||0;
+  const rec=b.record||{wins:0,losses:0,pushes:0};
+  const pendingCount=b.pending_count||0;
+  const pendingTotal=b.pending_total||0;
 
-  // Stats
-  const b = d.bankroll;
-  const bankrollAmt = b.available || b.current || 0;
-  const profitColor = b.profit >= 0 ? 'color:var(--green)' : 'color:var(--red)';
-  const profitSign = b.profit >= 0 ? '+' : '';
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="label">Bankroll</div><div class="value" style="color:var(--blue)">$${bankrollAmt.toFixed(2)}</div></div>
-    <div class="stat-card"><div class="label">Games Analyzed</div><div class="value" style="color:var(--accent)">${d.games_analyzed}</div></div>
-    <div class="stat-card"><div class="label">Live Edges</div><div class="value" style="color:var(--green)">${d.picks.length}</div></div>
-    <div class="stat-card"><div class="label">Lifetime P/L</div><div class="value" style="${profitColor}">${profitSign}$${b.profit.toFixed(2)}</div></div>
+  // Header
+  document.getElementById('subtitle').textContent=d.scan_subtitle||'';
+  document.getElementById('updated-time').textContent='Last scan: '+d.scan_date;
+
+  // Stats row
+  const hasResults=d.bets&&d.bets.some(x=>x.outcome==='win'||x.outcome==='loss');
+  const todayBets=d.bets?d.bets.filter(x=>x.date===d.scan_date):[];
+  const todayResolved=todayBets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
+  const todayPending=todayBets.filter(x=>x.outcome==='pending');
+
+  let statsHtml=`
+    <div class="stat-card"><div class="label">Available</div><div class="value" style="color:#4ade80">$${amt.toFixed(2)}</div></div>
+    <div class="stat-card"><div class="label">Record</div><div class="value" style="color:${rec.wins>rec.losses?'#4ade80':rec.losses>rec.wins?'#f87171':'#fff'}">${rec.wins}-${rec.losses}-${rec.pushes}</div></div>
+    <div class="stat-card"><div class="label">Profit</div><div class="value" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
   `;
+  if(pendingCount>0){
+    statsHtml+=`<div class="stat-card"><div class="label">Pending</div><div class="value" style="color:#facc15">${pendingCount} ($${pendingTotal.toFixed(2)})</div></div>`;
+  }else{
+    statsHtml+=`<div class="stat-card"><div class="label">Edges</div><div class="value" style="color:#a78bfa">${d.picks?d.picks.length:0}</div></div>`;
+  }
+  document.getElementById('stats-row').innerHTML=statsHtml;
 
-  // Alert
-  const alertContainer = document.getElementById('alert-container');
-  if (d.best_bet && d.picks.length > 0) {
-    alertContainer.innerHTML = `
-      <div class="alert-banner">
-        <div class="icon">&#9889;</div>
-        <div class="content">
-          <div class="title">Best Bet: ${d.best_bet.title}</div>
-          <div class="desc">${d.best_bet.desc}</div>
-        </div>
-      </div>
-    `;
-  } else {
-    alertContainer.innerHTML = `
-      <div class="alert-banner" style="border-color:var(--yellow)">
-        <div class="icon">&#128522;</div>
-        <div class="content">
-          <div class="title">No edges today</div>
-          <div class="desc">All lines look fairly priced. Patience is edge.</div>
-        </div>
-      </div>
-    `;
+  // Result banners for resolved today's bets
+  const bannersEl=document.getElementById('result-banners');
+  let bannersHtml='';
+  todayResolved.forEach(bet=>{
+    const score=bet.final_score||'';
+    if(bet.outcome==='win'){
+      const pnl=bet.pnl||(bet.wager*(bet.decimal_odds-1));
+      bannersHtml+=`<div class="result-banner result-win"><div class="title">WIN: ${bet.pick} — ${score}</div><div class="desc">+$${pnl.toFixed(2)} profit on $${bet.wager.toFixed(2)} wager</div></div>`;
+    }else if(bet.outcome==='loss'){
+      bannersHtml+=`<div class="result-banner result-loss"><div class="title">LOSS: ${bet.pick} — ${score}</div><div class="desc">-$${bet.wager.toFixed(2)}</div></div>`;
+    }else if(bet.outcome==='push'){
+      bannersHtml+=`<div class="result-banner result-pending"><div class="title">PUSH: ${bet.pick} — ${score}</div><div class="desc">$${bet.wager.toFixed(2)} returned</div></div>`;
+    }
+  });
+  todayPending.forEach(bet=>{
+    bannersHtml+=`<div class="result-banner result-pending"><div class="title">PENDING: ${bet.pick}</div><div class="desc">$${bet.wager.toFixed(2)} at risk</div></div>`;
+  });
+  bannersEl.innerHTML=bannersHtml;
+
+  // Alert / best bet
+  const alertEl=document.getElementById('alert-container');
+  if(d.best_bet&&d.picks&&d.picks.length>0&&!hasResults){
+    alertEl.innerHTML=`<div class="alert-best"><div class="title">Best Bet: ${d.best_bet.title}</div><div class="desc">${d.best_bet.desc}</div></div>`;
+  }else if(!d.picks||d.picks.length===0){
+    alertEl.innerHTML=`<div class="alert-none">No edges today. All lines look fairly priced. Patience is edge.</div>`;
+  }else{
+    alertEl.innerHTML='';
   }
 
-  // Picks
-  const picksBody = document.getElementById('picks-body');
-  const noPicks = document.getElementById('no-picks');
-  picksBody.innerHTML = '';
+  // Picks table
+  const picksBody=document.getElementById('picks-body');
+  const noPicks=document.getElementById('no-picks');
+  picksBody.innerHTML='';
 
-  if (d.picks.length === 0) {
-    noPicks.style.display = 'block';
-  } else {
-    noPicks.style.display = 'none';
-    d.picks.forEach((p, i) => {
-      const tierClass = p.tier === 'High' ? 'tier-high' : p.tier === 'Medium' ? 'tier-medium' : 'tier-low';
-      const tr = document.createElement('tr');
-      tr.className = 'expandable';
-      tr.innerHTML = `
-        <td><span class="expand-icon" id="icon-${i}">&#9654;</span>${p.rank}</td>
-        <td>${p.sport}</td><td>${p.event}</td><td>${p.market}</td>
-        <td class="pick-cell">${p.pick}</td><td class="odds-cell">${p.odds}</td>
-        <td>${p.implied}</td><td>${p.model}</td>
-        <td class="edge-val edge-positive">+${p.edge}%</td>
-        <td><span class="tier-badge ${tierClass}">${p.tier}</span></td>
-        <td class="odds-cell">${p.bet}</td>
+  if(!d.picks||d.picks.length===0){
+    noPicks.style.display='block';
+    document.getElementById('picks-header').textContent='Flagged Edges';
+  }else{
+    noPicks.style.display='none';
+    const anyPlaced=d.picks.some(p=>p.status);
+    document.getElementById('picks-header').textContent=anyPlaced?"Today's Bets":"Flagged Edges ("+d.picks.length+")";
+
+    d.picks.forEach((p,i)=>{
+      const tierClass=p.tier==='High'?'badge-high':p.tier==='Medium'?'badge-medium':'badge-low';
+      let statusHtml='';
+      if(p.status==='WIN') statusHtml='<span class="badge badge-win">WIN</span>';
+      else if(p.status==='LOSS') statusHtml='<span class="badge badge-loss">LOSS</span>';
+      else if(p.status==='PUSH') statusHtml='<span class="badge badge-push">PUSH</span>';
+      else if(p.status==='PLACED') statusHtml='<span class="badge badge-placed">PLACED</span>';
+      else if(p.status==='PENDING') statusHtml='<span class="badge badge-pending">PENDING</span>';
+      else statusHtml='—';
+
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${p.rank}</td><td>${p.event}</td>
+        <td class="pick-name">${p.pick}</td><td class="odds">${p.odds}</td>
+        <td>${p.implied||''}</td><td>${p.model||''}</td>
+        <td class="edge">+${p.edge}%</td>
+        <td><span class="badge ${tierClass}">${p.tier}</span></td>
+        <td class="odds">${p.bet}</td>
+        <td>${statusHtml}</td>
+        <td class="toggle-btn" onclick="toggle(${i})">details</td>
       `;
-      tr.onclick = () => {
-        const det = document.getElementById('detail-'+i);
-        const ic = document.getElementById('icon-'+i);
-        det.classList.toggle('open'); ic.classList.toggle('open');
-      };
       picksBody.appendChild(tr);
 
-      const detailTr = document.createElement('tr');
-      detailTr.className = 'detail-row'; detailTr.id = 'detail-'+i;
-      detailTr.innerHTML = `<td colspan="11"><strong>Analysis:</strong> ${p.notes}<br><strong>Sources:</strong> ${p.sources}</td>`;
-      picksBody.appendChild(detailTr);
+      const det=document.createElement('tr');
+      det.className='detail-row';det.id='detail-'+i;
+      let detailContent='<strong>Analysis:</strong> '+(p.notes||'');
+      if(p.result) detailContent+='<br><strong>Result:</strong> '+p.result;
+      if(p.sources) detailContent+='<br><span class="src">Sources: '+p.sources+'</span>';
+      det.innerHTML='<td colspan="11">'+detailContent+'</td>';
+      picksBody.appendChild(det);
     });
   }
 
-  // Bankroll cards
-  const rec = b.record;
-  const recStr = `${rec.wins}-${rec.losses}-${rec.pushes}`;
-  const totalGames = rec.wins + rec.losses + rec.pushes;
-  const winRate = totalGames > 0 ? ((rec.wins / totalGames) * 100).toFixed(0) : 0;
-  const todayAction = d.picks.reduce((sum, p) => sum + parseFloat(p.bet.replace('$','')), 0);
-  const todayPct = bankrollAmt > 0 ? ((todayAction / bankrollAmt) * 100).toFixed(1) : '0.0';
+  // No-edge games
+  const noEdgeSection=document.getElementById('no-edge-section');
+  if(d.no_edge_games&&d.no_edge_games.length>0){
+    noEdgeSection.style.display='block';
+    document.getElementById('no-edge-header').textContent='No Edge Found ('+d.no_edge_games.length+')';
+    let neHtml='';
+    d.no_edge_games.forEach(g=>{
+      neHtml+=`<div class="no-edge-item"><span class="game">${g.sport} — ${g.event}</span><span class="line">${g.line}</span><span class="reason">${g.reason}</span></div>`;
+    });
+    document.getElementById('no-edge-body').innerHTML=neHtml;
+  }else{
+    noEdgeSection.style.display='none';
+  }
 
-  document.getElementById('bankroll-cards').innerHTML = `
-    <div class="bankroll-card">
-      <h3>${b.available ? 'Available Bankroll' : 'Current Bankroll'}</h3>
-      <div class="big" style="color:var(--blue)">$${bankrollAmt.toFixed(2)}</div>
-      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">Starting: $${b.starting.toFixed(2)} &bull; ${profitSign}$${b.profit.toFixed(2)}</div>
-    </div>
-    <div class="bankroll-card">
-      <h3>Record</h3>
-      <div class="big" style="color:${rec.wins > rec.losses ? 'var(--green)' : rec.losses > rec.wins ? 'var(--red)' : 'var(--text)'}">${recStr}</div>
-      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">W-L-P &bull; ${winRate}% win rate</div>
-    </div>
-    <div class="bankroll-card">
-      <h3>Today's Suggested Action</h3>
-      <div class="big" style="color:var(--green)">$${todayAction.toFixed(2)}</div>
-      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">${todayPct}% of bankroll &bull; ${parseFloat(todayPct) <= 15 ? 'Within' : 'EXCEEDS'} 15% limit ${parseFloat(todayPct) <= 15 ? '&#10003;' : '&#9888;'}</div>
-    </div>
-    <div class="bankroll-card">
-      <h3>Pending Bets</h3>
-      <div class="big" style="color:var(--yellow)">${b.pending_count}</div>
-      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">${b.pending_label || 'No unsettled bets'}</div>
-    </div>
+  // Bankroll cards
+  const cardsEl=document.getElementById('bankroll-cards');
+  let cardsHtml=`
+    <div class="bankroll-card"><div class="label">Available</div><div class="value" style="color:#4ade80">$${amt.toFixed(2)}</div></div>
+    <div class="bankroll-card"><div class="label">Starting</div><div class="value" style="color:#fff">$${(b.starting||500).toFixed(2)}</div></div>
+    <div class="bankroll-card"><div class="label">Lifetime Profit</div><div class="value" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
+    <div class="bankroll-card"><div class="label">Record</div><div class="value" style="color:${rec.wins>rec.losses?'#4ade80':'#fff'}">${rec.wins}W - ${rec.losses}L - ${rec.pushes}P</div></div>
   `;
+  cardsEl.innerHTML=cardsHtml;
 
   // Bet history
-  const betsBody = document.getElementById('bets-body');
-  const betsSummary = document.getElementById('bets-summary');
-  betsBody.innerHTML = '';
+  const betsBody=document.getElementById('bets-body');
+  const betsSummary=document.getElementById('bets-summary');
+  betsBody.innerHTML='';
+  let totalWagered=0,totalPnl=0,wins=0,losses=0,pushes=0,pending=0;
 
-  let totalWagered = 0, totalPnl = 0, wins = 0, losses = 0, pushes = 0, pending = 0;
+  if(d.bets){
+    d.bets.forEach(bet=>{
+      const tr=document.createElement('tr');
+      let resultHtml,pnlHtml;
+      if(bet.outcome==='win'){
+        const p=bet.pnl||(bet.wager*(bet.decimal_odds-1));
+        resultHtml='<span class="badge badge-win">WIN</span>';
+        pnlHtml=`<span class="pnl-win">+$${p.toFixed(2)}</span>`;
+        totalPnl+=p;wins++;totalWagered+=bet.wager;
+      }else if(bet.outcome==='loss'){
+        resultHtml='<span class="badge badge-loss">LOSS</span>';
+        pnlHtml=`<span class="pnl-loss">-$${bet.wager.toFixed(2)}</span>`;
+        totalPnl-=bet.wager;losses++;totalWagered+=bet.wager;
+      }else if(bet.outcome==='push'){
+        resultHtml='<span class="badge badge-push">PUSH</span>';
+        pnlHtml='<span class="pnl-zero">$0.00</span>';
+        pushes++;totalWagered+=bet.wager;
+      }else{
+        resultHtml='<span class="badge badge-pending">PENDING</span>';
+        pnlHtml='<span class="pnl-zero">—</span>';
+        pending++;
+      }
+      tr.innerHTML=`
+        <td>${bet.date}</td><td>${bet.event}</td>
+        <td class="pick-name">${bet.pick}</td><td class="odds">${bet.odds}</td>
+        <td class="edge">${bet.edge}</td><td class="odds">$${bet.wager.toFixed(2)}</td>
+        <td>${resultHtml}</td><td>${pnlHtml}</td>
+      `;
+      betsBody.appendChild(tr);
+    });
+  }
 
-  d.bets.forEach(bet => {
-    totalWagered += bet.wager;
-    const tr = document.createElement('tr');
-    let outcomeHtml, pnlHtml;
-
-    if (bet.outcome === 'win') {
-      const profit = bet.wager * (bet.decimal_odds - 1);
-      outcomeHtml = '<span class="outcome-badge outcome-win">WIN</span>';
-      pnlHtml = `<span class="pnl-positive">+$${profit.toFixed(2)}</span>`;
-      totalPnl += profit; wins++;
-    } else if (bet.outcome === 'loss') {
-      outcomeHtml = '<span class="outcome-badge outcome-loss">LOSS</span>';
-      pnlHtml = `<span class="pnl-negative">-$${bet.wager.toFixed(2)}</span>`;
-      totalPnl -= bet.wager; losses++;
-    } else if (bet.outcome === 'push') {
-      outcomeHtml = '<span class="outcome-badge outcome-push">PUSH</span>';
-      pnlHtml = '<span class="pnl-zero">$0.00</span>'; pushes++;
-    } else {
-      outcomeHtml = '<span class="outcome-badge outcome-pending">PENDING</span>';
-      pnlHtml = '<span class="pnl-zero">---</span>'; pending++;
-    }
-
-    tr.innerHTML = `
-      <td>${bet.date}</td><td>${bet.sport}</td><td>${bet.event}</td>
-      <td class="pick-cell">${bet.pick}</td><td class="odds-cell">${bet.odds}</td>
-      <td class="edge-val edge-positive">${bet.edge}</td>
-      <td class="odds-cell">$${bet.wager.toFixed(2)}</td>
-      <td>${outcomeHtml}</td><td>${pnlHtml}</td>
-    `;
-    betsBody.appendChild(tr);
-  });
-
-  const roi = totalWagered > 0 ? ((totalPnl / totalWagered) * 100).toFixed(1) : '0.0';
-  const pnlClass = totalPnl > 0 ? 'pnl-positive' : totalPnl < 0 ? 'pnl-negative' : 'pnl-zero';
-  const pnlSign2 = totalPnl >= 0 ? '+' : '';
-  betsSummary.innerHTML = `
-    <span><strong>Record:</strong> ${wins}W-${losses}L-${pushes}P${pending ? ` (${pending} pending)` : ''}</span>
-    <span><strong>Total Wagered:</strong> $${totalWagered.toFixed(2)}</span>
-    <span><strong>Net P/L:</strong> <span class="${pnlClass}">${pnlSign2}$${totalPnl.toFixed(2)}</span></span>
-    <span><strong>ROI:</strong> <span class="${pnlClass}">${roi}%</span></span>
+  const roi=totalWagered>0?((totalPnl/totalWagered)*100).toFixed(1):'0.0';
+  betsSummary.innerHTML=`
+    <span><strong>Record:</strong> ${wins}W-${losses}L-${pushes}P${pending?' ('+pending+' pending)':''}</span>
+    <span><strong>Wagered:</strong> $${totalWagered.toFixed(2)}</span>
+    <span><strong>Net P/L:</strong> <span class="${totalPnl>=0?'pnl-win':'pnl-loss'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span class="${totalPnl>=0?'pnl-win':'pnl-loss'}">${roi}%</span></span>
   `;
+}
+
+function toggle(i){
+  const row=document.getElementById('detail-'+i);
+  row.classList.toggle('open');
 }
 
 loadData();
