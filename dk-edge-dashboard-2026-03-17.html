@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK Edge Finder — March 17, 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;padding:20px;max-width:1200px;margin:0 auto}
+h1{font-size:1.8rem;color:#fff;margin-bottom:4px}
+.subtitle{color:#94a3b8;font-size:0.95rem;margin-bottom:24px}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.stat-card{background:#1e293b;border-radius:12px;padding:16px 20px;flex:1;min-width:140px;border:1px solid #334155}
+.stat-card .label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
+.stat-card .value{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2px}
+.stat-card .value.green{color:#4ade80}
+.stat-card .value.blue{color:#60a5fa}
+.stat-card .value.purple{color:#a78bfa}
+.stat-card .value.yellow{color:#facc15}
+.result-banner{border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.result-banner .title{font-weight:700;font-size:1rem;margin-bottom:4px}
+.result-banner .desc{color:#94a3b8;font-size:0.9rem}
+.result-win{background:linear-gradient(135deg,#1e293b,#052e16);border:1px solid #4ade80}
+.result-win .title{color:#4ade80}
+.result-loss{background:linear-gradient(135deg,#1e293b,#450a0a);border:1px solid #f87171}
+.result-loss .title{color:#f87171}
+.result-pending{background:linear-gradient(135deg,#1e293b,#422006);border:1px solid #f59e0b}
+.result-pending .title{color:#facc15}
+h2{font-size:1.2rem;color:#fff;margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+table{width:100%;border-collapse:collapse;margin-bottom:8px}
+th{background:#1e293b;color:#94a3b8;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;text-align:left;border-bottom:1px solid #334155}
+td{padding:10px 12px;border-bottom:1px solid #1e293b;font-size:0.9rem}
+tr:hover{background:#1e293b}
+.tier-high{color:#4ade80;font-weight:600}
+.edge{color:#a78bfa;font-weight:700}
+.pick-name{color:#fff;font-weight:600}
+.odds{color:#60a5fa}
+.badge-win{background:#052e16;color:#4ade80;font-weight:700;padding:2px 8px;border-radius:4px;font-size:0.8rem}
+.badge-loss{background:#450a0a;color:#f87171;font-weight:700;padding:2px 8px;border-radius:4px;font-size:0.8rem}
+.badge-pending{background:#422006;color:#facc15;font-weight:700;padding:2px 8px;border-radius:4px;font-size:0.8rem}
+.no-edge{background:#1e293b;border-radius:12px;padding:16px;margin-bottom:24px}
+.no-edge-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #334155;font-size:0.9rem;flex-wrap:wrap;gap:4px}
+.no-edge-item:last-child{border-bottom:none}
+.no-edge-item .game{color:#fff;min-width:200px}
+.no-edge-item .line{color:#94a3b8;min-width:140px}
+.no-edge-item .reason{color:#64748b;font-size:0.85rem;flex:1}
+.bankroll-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.bankroll-card{background:#1e293b;border-radius:12px;padding:18px 22px;flex:1;min-width:160px;border:1px solid #334155}
+.bankroll-card .label{font-size:0.75rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
+.bankroll-card .value{font-size:1.8rem;font-weight:700;margin-top:4px}
+.win{color:#4ade80}
+.loss{color:#f87171}
+.pending-text{color:#facc15}
+.pnl-bar{display:flex;gap:12px;background:#1e293b;border-radius:10px;padding:14px 20px;margin-bottom:24px;flex-wrap:wrap}
+.pnl-item{font-size:0.9rem}
+.pnl-item span{font-weight:700}
+.footer{text-align:center;color:#64748b;font-size:0.8rem;margin-top:40px;padding-top:20px;border-top:1px solid #1e293b}
+@media(max-width:600px){.stats-row,.bankroll-row{flex-direction:column}.stat-card,.bankroll-card{min-width:100%}}
+</style>
+</head>
+<body>
+
+<h1>DK Edge Finder</h1>
+<p class="subtitle">Tuesday, March 17, 2026 — Results updating live</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="label">Available</div><div class="value green">$583.92</div></div>
+  <div class="stat-card"><div class="label">Tonight</div><div class="value green">1W - 1L</div></div>
+  <div class="stat-card"><div class="label">Tonight P/L</div><div class="value win">+$8.82</div></div>
+  <div class="stat-card"><div class="label">Still Pending</div><div class="value yellow">1 bet</div></div>
+</div>
+
+<div class="result-banner result-win">
+  <div class="title">WIN: Wizards +18 (-110) — WAS 129, DET 125</div>
+  <div class="desc">Wizards won outright by 4. +18 covered by a mile. +$21.82 profit on $24.00 wager.</div>
+</div>
+<div class="result-banner result-loss">
+  <div class="title">LOSS: Pacers +15.5 (-108) — NYK 136, IND 110</div>
+  <div class="desc">Knicks by 26. Josh Hart 33 pts on 12-of-13. Model underweighted extreme Pacers roster depletion. -$13.00.</div>
+</div>
+<div class="result-banner result-pending">
+  <div class="title">PENDING: Kings +13.5 (-112) — SAS 114, SAC 81 (Q4)</div>
+  <div class="desc">Spurs up 33 in 4th quarter. Virtually a loss. $11.50 still at risk. Morning task will finalize.</div>
+</div>
+
+<h2>Tonight's Bets</h2>
+<table id="picks">
+<thead><tr><th>#</th><th>Event</th><th>Pick</th><th>DK Odds</th><th>Edge</th><th>Wager</th><th>Score</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Pistons @ Wizards</td><td class="pick-name">Wizards +18</td><td class="odds">-110</td><td class="edge">7.6%</td><td>$24.00</td><td>WAS 129, DET 125</td><td><span class="badge-win">WIN +$21.82</span></td></tr>
+<tr><td>2</td><td>Pacers @ Knicks</td><td class="pick-name">Pacers +15.5</td><td class="odds">-108</td><td class="edge">4.1%</td><td>$13.00</td><td>NYK 136, IND 110</td><td><span class="badge-loss">LOSS -$13.00</span></td></tr>
+<tr><td>3</td><td>Spurs @ Kings</td><td class="pick-name">Kings +13.5</td><td class="odds">-112</td><td class="edge">3.5%</td><td>$11.50</td><td>SAS 114, SAC 81 (Q4)</td><td><span class="badge-pending">PENDING</span></td></tr>
+</tbody>
+</table>
+
+<h2>Bankroll</h2>
+<div class="bankroll-row">
+  <div class="bankroll-card"><div class="label">Available</div><div class="value green">$583.92</div></div>
+  <div class="bankroll-card"><div class="label">Still Locked</div><div class="value pending-text">$11.50</div></div>
+  <div class="bankroll-card"><div class="label">Lifetime Profit</div><div class="value green">+$93.01</div></div>
+  <div class="bankroll-card"><div class="label">Record</div><div class="value green">3W - 1L - 0P</div></div>
+</div>
+
+<h2>Bet History (All Time)</h2>
+<div class="pnl-bar">
+  <div class="pnl-item">Total Wagered: <span style="color:#fff">$91.87</span></div>
+  <div class="pnl-item">Resolved P/L: <span class="win">+$93.01</span></div>
+  <div class="pnl-item">Win Rate: <span class="win">75%</span></div>
+</div>
+<table>
+<thead><tr><th>Date</th><th>Event</th><th>Pick</th><th>Odds</th><th>Edge</th><th>Wager</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Mar 17</td><td>Pistons @ Wizards</td><td class="pick-name">Wizards +18</td><td class="odds">-110</td><td>7.6%</td><td>$24.00</td><td><span class="badge-win">WIN +$21.82</span></td></tr>
+<tr><td>Mar 17</td><td>Pacers @ Knicks</td><td class="pick-name">Pacers +15.5</td><td class="odds">-108</td><td>4.1%</td><td>$13.00</td><td><span class="badge-loss">LOSS -$13.00</span></td></tr>
+<tr><td>Mar 17</td><td>Spurs @ Kings</td><td class="pick-name">Kings +13.5</td><td class="odds">-112</td><td>3.5%</td><td>$11.50</td><td><span class="badge-pending">PENDING</span></td></tr>
+<tr><td>Mar 16</td><td>Suns @ Celtics</td><td class="pick-name">Suns +8.5</td><td class="odds">-110</td><td>7.6%</td><td>$18.37</td><td><span class="badge-win">WIN +$16.69</span></td></tr>
+<tr><td>Mar 15</td><td>Trail Blazers @ 76ers</td><td class="pick-name">76ers ML</td><td class="odds">+270</td><td>11.0%</td><td>$25.00</td><td><span class="badge-win">WIN +$67.50</span></td></tr>
+</tbody>
+</table>
+
+<div class="footer">
+  All odds from DraftKings Oregon. Models carry uncertainty — edge estimates are probabilistic, not guarantees. Bet responsibly.<br>
+  DK Edge Finder — March 17, 2026 — Last updated 10:00 PM PT
+</div>
+
+<script>
+function toggle(id){
+  const row=document.getElementById(id);
+  row.style.display=row.style.display==='table-row'?'none':'table-row';
+}
+</script>
+</body>
+</html>

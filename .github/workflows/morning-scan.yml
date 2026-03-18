@@ -1,0 +1,39 @@
+name: Morning Scan
+
+on:
+  schedule:
+    # 6 AM Pacific = 1 PM UTC during PDT, 2 PM UTC during PST
+    - cron: '0 13 * * *'
+  workflow_dispatch: # Manual trigger for testing
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resolve any stragglers from last night
+        run: python scripts/resolve_bets.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "DK Edge Bot"
+          git config user.email "max.sheahan@icloud.com"
+          git add data.json bankroll.json
+          git commit -m "Morning resolve: $(date +%Y-%m-%d) — stragglers cleared"
+          git push

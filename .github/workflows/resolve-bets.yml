@@ -1,0 +1,39 @@
+name: Resolve Bets
+
+on:
+  schedule:
+    # 10 PM Pacific = 5 AM UTC (next day) during PDT, 6 AM UTC during PST
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Manual trigger for testing
+
+permissions:
+  contents: write
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resolve pending bets
+        run: python scripts/resolve_bets.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "DK Edge Bot"
+          git config user.email "max.sheahan@icloud.com"
+          git add data.json bankroll.json
+          git commit -m "Auto-resolve: $(date +%Y-%m-%d) bet results"
+          git push

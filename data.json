@@ -1,18 +1,19 @@
 {
   "scan_date": "2026-03-17",
-  "scan_subtitle": "Tuesday, March 17, 2026 — NBA, NHL",
+  "scan_subtitle": "Tuesday, March 17, 2026 — NBA, NHL, NCAA First Four",
   "bankroll": {
-    "current": 586.60,
+    "available": 583.92,
     "starting": 500.00,
-    "profit": 86.60,
-    "record": { "wins": 2, "losses": 0, "pushes": 0 },
-    "pending_count": 0,
-    "pending_label": "No unsettled bets"
+    "profit": 93.01,
+    "record": { "wins": 3, "losses": 1, "pushes": 0 },
+    "pending_count": 1,
+    "pending_total": 11.50,
+    "pending_label": "1 bet pending (Kings +13.5, $11.50)"
   },
-  "games_analyzed": 17,
+  "games_analyzed": 19,
   "best_bet": {
-    "title": "Wizards +18.5 (-115) — 10.5% Edge (High Tier)",
-    "desc": "Dimers model gives WAS 59.4% to cover. Massive spread already prices in 6 key absences. Best edge on the board."
+    "title": "Wizards +18 (-110) — 7.6% Edge (High Tier)",
+    "desc": "Dimers model gives WAS 60%+ to cover at +18. Line widened from +17.5 — extra half-point improves value. 18-pt NBA spreads historically brutal to lay. DET lost in Toronto Monday."
   },
   "picks": [
     {
@@ -20,48 +21,98 @@
       "sport": "NBA",
       "event": "Pistons @ Wizards",
       "market": "Spread",
-      "pick": "Wizards +18.5",
-      "odds": "-115",
-      "implied": "48.9%",
-      "model": "59.4%",
-      "edge": 10.5,
+      "pick": "Wizards +18",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "60.0%",
+      "edge": 7.6,
       "tier": "High",
-      "bet": "$29.33",
-      "notes": "Dimers model gives 59.4% cover probability. Wizards missing 6 players (Sarr, Whitmore, AD, Russell, George, Black) but 18.5 is massive — line already accounts for absences. Pistons -18.5 is historically hard to cover even against depleted rosters. 7:00 PM ET.",
-      "sources": "Dimers, ESPN, Basketball Sphere injury report"
+      "bet": "$24.00",
+      "status": "WIN",
+      "result": "DET 130, WSH 117 — Pistons by 13, +18 covers",
+      "notes": "Dimers model gave 59.4% at +17.5 — line widened to +18 on DK. DET won 130-117 but +18 covered comfortably (117+18=135 > 130).",
+      "sources": "Dimers, Action Network, ESPN"
     },
     {
       "rank": 2,
       "sport": "NBA",
       "event": "Pacers @ Knicks",
       "market": "Spread",
-      "pick": "Pacers +16.5",
-      "odds": "-112",
-      "implied": "47.2%",
-      "model": "57.6%",
-      "edge": 10.4,
+      "pick": "Pacers +15.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "56.0%",
+      "edge": 4.1,
       "tier": "High",
-      "bet": "$22.00",
-      "notes": "CONTESTED — Dimers gives 57.6% but Pacers have 11 players on injury report including Siakam. Knicks also missing Brunson. Model may not fully capture extreme roster depletion. Edge is large enough to flag but approach with caution. 7:30 PM ET.",
-      "sources": "Dimers, ESPN, Basketball Sphere injury report"
+      "bet": "$13.00",
+      "status": "LOSS",
+      "result": "NYK 136, IND 110 — Knicks by 26, didn't cover",
+      "notes": "Knicks blew out Pacers by 26. Josh Hart 33 pts on 12-of-13. Model underweighted Pacers' extreme roster depletion as noted.",
+      "sources": "Dimers, Action Network, ESPN"
     },
     {
       "rank": 3,
       "sport": "NBA",
-      "event": "Cavs @ Bucks",
+      "event": "Spurs @ Kings",
       "market": "Spread",
-      "pick": "Bucks +10.5",
+      "pick": "Kings +13.5",
       "odds": "-112",
-      "implied": "47.2%",
-      "model": "54.2%",
-      "edge": 7.0,
+      "implied": "52.8%",
+      "model": "56.3%",
+      "edge": 3.5,
       "tier": "High",
-      "bet": "$18.50",
-      "notes": "Dimers gives MIL 54.2% to cover +10.5. Bucks 28-39 but playing at home. Cavs have 5 injured players. 10.5 is wide for a home team — Bucks have covered big spreads recently in Fiserv Forum. 8:00 PM ET.",
-      "sources": "Dimers, ESPN, Basketball Sphere injury report"
+      "bet": "$11.50",
+      "status": "PENDING",
+      "result": "SAS 114, SAC 81 — Q4 in progress, Spurs up 33",
+      "notes": "Game still in progress. Spurs up 33 in Q4 — virtually a loss. Will resolve when final.",
+      "sources": "Dimers, Action Network"
     }
   ],
+  "no_edge_games": [
+    { "sport": "NBA", "event": "Cavs @ Bucks", "line": "CLE -10.5 (-108)", "reason": "Line moved from -9.5 to -10.5. Model edge fell below 3% threshold at new juice (-112)" },
+    { "sport": "NBA", "event": "Heat @ Hornets", "line": "CHA -4 (-102)", "reason": "Model aligns with market" },
+    { "sport": "NBA", "event": "Thunder @ Magic", "line": "OKC -9.5 (-115)", "reason": "Model agrees with pricing" },
+    { "sport": "NBA", "event": "Suns @ Timberwolves", "line": "MIN -4 (-115)", "reason": "No meaningful edge" },
+    { "sport": "NBA", "event": "76ers @ Nuggets", "line": "DEN -15 (-108)", "reason": "Model doesn't flag edge" },
+    { "sport": "NHL", "event": "9 games on slate", "line": "Various", "reason": "Insufficient model probability data for confident NHL edges" },
+    { "sport": "NCAAM", "event": "First Four (UMBC/Howard, NCST/Texas)", "line": "Both -1.5", "reason": "Thin model data, volatile outcomes, no confident edge" }
+  ],
   "bets": [
+    {
+      "date": "2026-03-17",
+      "sport": "NBA",
+      "event": "Pistons @ Wizards",
+      "pick": "Wizards +18",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "7.6%",
+      "wager": 24.00,
+      "outcome": "win",
+      "pnl": 21.82
+    },
+    {
+      "date": "2026-03-17",
+      "sport": "NBA",
+      "event": "Pacers @ Knicks",
+      "pick": "Pacers +15.5",
+      "odds": "-108",
+      "decimal_odds": 1.926,
+      "edge": "4.1%",
+      "wager": 13.00,
+      "outcome": "loss",
+      "pnl": -13.00
+    },
+    {
+      "date": "2026-03-17",
+      "sport": "NBA",
+      "event": "Spurs @ Kings",
+      "pick": "Kings +13.5",
+      "odds": "-112",
+      "decimal_odds": 1.893,
+      "edge": "3.5%",
+      "wager": 11.50,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-16",
       "sport": "NBA",
@@ -71,7 +122,8 @@
       "decimal_odds": 1.909,
       "edge": "7.6%",
       "wager": 18.37,
-      "outcome": "win"
+      "outcome": "win",
+      "pnl": 16.69
     },
     {
       "date": "2026-03-15",
@@ -82,7 +134,8 @@
       "decimal_odds": 3.70,
       "edge": "11.0%",
       "wager": 25.00,
-      "outcome": "win"
+      "outcome": "win",
+      "pnl": 67.50
     }
   ]
 }
