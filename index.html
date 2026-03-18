@@ -235,10 +235,11 @@ function renderAll(d) {
 
   // Stats
   const b = d.bankroll;
+  const bankrollAmt = b.available || b.current || 0;
   const profitColor = b.profit >= 0 ? 'color:var(--green)' : 'color:var(--red)';
   const profitSign = b.profit >= 0 ? '+' : '';
   document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="label">Bankroll</div><div class="value" style="color:var(--blue)">$${b.current.toFixed(2)}</div></div>
+    <div class="stat-card"><div class="label">Bankroll</div><div class="value" style="color:var(--blue)">$${bankrollAmt.toFixed(2)}</div></div>
     <div class="stat-card"><div class="label">Games Analyzed</div><div class="value" style="color:var(--accent)">${d.games_analyzed}</div></div>
     <div class="stat-card"><div class="label">Live Edges</div><div class="value" style="color:var(--green)">${d.picks.length}</div></div>
     <div class="stat-card"><div class="label">Lifetime P/L</div><div class="value" style="${profitColor}">${profitSign}$${b.profit.toFixed(2)}</div></div>
@@ -310,12 +311,12 @@ function renderAll(d) {
   const totalGames = rec.wins + rec.losses + rec.pushes;
   const winRate = totalGames > 0 ? ((rec.wins / totalGames) * 100).toFixed(0) : 0;
   const todayAction = d.picks.reduce((sum, p) => sum + parseFloat(p.bet.replace('$','')), 0);
-  const todayPct = ((todayAction / b.current) * 100).toFixed(1);
+  const todayPct = bankrollAmt > 0 ? ((todayAction / bankrollAmt) * 100).toFixed(1) : '0.0';
 
   document.getElementById('bankroll-cards').innerHTML = `
     <div class="bankroll-card">
-      <h3>Current Bankroll</h3>
-      <div class="big" style="color:var(--blue)">$${b.current.toFixed(2)}</div>
+      <h3>${b.available ? 'Available Bankroll' : 'Current Bankroll'}</h3>
+      <div class="big" style="color:var(--blue)">$${bankrollAmt.toFixed(2)}</div>
       <div style="color:var(--muted);font-size:0.85rem;margin-top:4px">Starting: $${b.starting.toFixed(2)} &bull; ${profitSign}$${b.profit.toFixed(2)}</div>
     </div>
     <div class="bankroll-card">

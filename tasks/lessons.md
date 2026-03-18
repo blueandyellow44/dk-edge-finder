@@ -16,3 +16,7 @@
 ## 2026-03-17: No player props unless confirmed available
 **Mistake:** Included player props that user couldn't find on DK.
 **Rule:** User said no player props. Stick to spreads/ML/totals unless user explicitly requests props and confirms availability.
+
+## 2026-03-17: Don't rename data.json fields without updating index.html
+**Mistake:** Renamed `bankroll.current` to `bankroll.available` in data.json without updating index.html. Netlify site broke — "Error loading data" because `b.current.toFixed(2)` threw on undefined.
+**Rule:** Any data.json schema change MUST have a corresponding index.html update in the same commit. Use fallback patterns like `b.available || b.current || 0` for backward compatibility.
