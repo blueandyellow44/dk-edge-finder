@@ -4,29 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DK Edge Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180deg,#0c0f1a 0%,#111827 100%);color:#e2e8f0;line-height:1.6;min-height:100vh}
 .container{max-width:960px;margin:0 auto;padding:16px 20px}
 
 /* Header */
 .header{padding:20px 0 16px;border-bottom:1px solid #1e293b;margin-bottom:0}
-.header h1{font-size:1.5rem;color:#fff;letter-spacing:-0.5px}
+.header h1{font-family:'Outfit',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:-0.5px;font-weight:800}
 .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .header-sub{color:#64748b;font-size:0.82rem;display:flex;align-items:center;gap:6px;margin-top:4px}
 .pulse{width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
 /* Stats strip */
-.stats{display:flex;gap:0;background:#1e293b;border-radius:12px;overflow:hidden;margin:16px 0}
+.stats{display:flex;gap:0;background:rgba(30,41,59,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;margin:16px 0}
 .stat{flex:1;padding:14px 16px;text-align:center;border-right:1px solid #334155}
 .stat:last-child{border-right:none}
-.stat-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px}
-.stat-val{font-size:1.3rem;font-weight:700;margin-top:2px}
+.stat-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;font-weight:600}
+.stat-val{font-size:1.3rem;font-weight:800;margin-top:2px;font-family:'JetBrains Mono','SF Mono',monospace}
 
 /* Tabs */
-.tabs{display:flex;gap:0;border-bottom:2px solid #1e293b;margin-bottom:20px}
-.tab{padding:10px 20px;font-size:0.85rem;font-weight:600;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;user-select:none}
+.tabs{display:flex;gap:0;border-bottom:2px solid #1e293b;margin-bottom:20px;overflow-x:auto}
+.tab{padding:10px 20px;font-size:0.85rem;font-weight:600;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;user-select:none;white-space:nowrap}
 .tab:hover{color:#94a3b8}
 .tab.active{color:#fff;border-bottom-color:#3b82f6}
 .tab-badge{background:#3b82f6;color:#fff;font-size:0.65rem;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:700}
@@ -34,25 +36,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tab-panel.active{display:block}
 
 /* Pick cards */
-.pick-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:16px;margin-bottom:10px;transition:border-color 0.15s}
-.pick-card:hover{border-color:#475569}
+.pick-card{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:10px;transition:all 0.15s;cursor:pointer}
+.pick-card:hover{border-color:#475569;background:#253449}
 .pick-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .pick-left{flex:1}
-.pick-title{font-size:1rem;font-weight:700;color:#fff}
+.pick-title{font-size:1rem;font-weight:700;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace}
 .pick-meta{color:#64748b;font-size:0.8rem;margin-top:2px}
 .pick-right{text-align:right;flex-shrink:0}
 .pick-edge{font-size:1.1rem;font-weight:800;color:#a78bfa}
-.pick-wager{font-size:1.3rem;font-weight:800;color:#4ade80;margin-top:2px}
+.pick-wager{font-size:1.3rem;font-weight:800;color:#4ade80;margin-top:2px;font-family:'JetBrains Mono','SF Mono',monospace}
 .pick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #334155}
-.pick-stat .ps-label{font-size:0.62rem;color:#64748b;text-transform:uppercase;letter-spacing:0.5px}
-.pick-stat .ps-val{font-size:0.9rem;font-weight:600;color:#e2e8f0;margin-top:1px}
+.pick-stat .ps-label{font-size:0.62rem;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.pick-stat .ps-val{font-size:0.9rem;font-weight:600;color:#e2e8f0;margin-top:1px;font-family:'JetBrains Mono','SF Mono',monospace}
 .pick-analysis{color:#94a3b8;font-size:0.82rem;margin-top:10px;padding-top:10px;border-top:1px solid #334155;line-height:1.5;display:none}
 .pick-analysis.open{display:block}
-.pick-analysis .src{color:#3b82f6;font-size:0.75rem}
-.pick-actions{display:flex;gap:8px;margin-top:12px;align-items:center}
+.pick-analysis .src{color:#3b82f6;font-size:0.75rem;font-weight:600}
+.pick-actions{display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap}
+
+/* Result scorecard */
+.scorecard{background:#1e293b;border:1px solid #334155;border-radius:12px;overflow:hidden;margin-bottom:12px;transition:all 0.15s}
+.scorecard:hover{border-color:#475569}
+.sc-header{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.1));border-bottom:1px solid #334155;padding:12px 16px}
+.sc-title{font-size:0.9rem;font-weight:600;color:#60a5fa;font-family:'JetBrains Mono','SF Mono',monospace}
+.sc-body{padding:16px}
+.sc-score{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sc-score-main{font-size:1.4rem;font-weight:800;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace;flex:1}
+.sc-score-sub{text-align:right}
+.sc-result{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:4px}
+.sc-result.win{color:#4ade80}
+.sc-result.loss{color:#f87171}
+.sc-pick{color:#94a3b8;font-size:0.85rem}
+.sc-pnl{font-size:1.3rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
+.sc-pnl.win{color:#4ade80}
+.sc-pnl.loss{color:#f87171}
+.sc-analysis{margin-top:10px;padding-top:10px;border-top:1px solid #334155;color:#64748b;font-size:0.78rem;display:none}
+.sc-analysis.open{display:block}
 
 /* Badges */
-.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;letter-spacing:0.3px}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;letter-spacing:0.3px;font-family:system-ui}
 .b-high{background:rgba(74,222,128,0.15);color:#4ade80}
 .b-med{background:rgba(250,204,21,0.15);color:#facc15}
 .b-low{background:rgba(249,115,22,0.15);color:#f97316}
@@ -66,60 +87,77 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn:active{transform:scale(0.97)}
 .btn-place{background:#3b82f6;color:#fff}
 .btn-place:hover{background:#2563eb}
-.btn-dk{background:#53d337;color:#111;font-weight:700}
-.btn-dk:hover{background:#47b82f}
+.btn-dk{background:#53d337;color:#111;font-weight:700;font-family:system-ui}
+.btn-dk:hover{background:#47b82f;box-shadow:0 2px 8px rgba(83,211,55,0.2)}
 .btn-skip{background:transparent;color:#64748b;border:1px solid #334155}
-.btn-skip:hover{border-color:#64748b}
+.btn-skip:hover{border-color:#94a3b8;color:#94a3b8}
 .btn-place-all{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;padding:10px 24px;border-radius:10px;font-size:0.9rem;font-weight:700;border:none;cursor:pointer;width:100%;margin-bottom:16px;transition:all 0.12s}
-.btn-place-all:hover{box-shadow:0 4px 20px rgba(59,130,246,0.25)}
+.btn-place-all:hover{box-shadow:0 4px 20px rgba(59,130,246,0.3)}
 .btn-place-all:disabled,.btn-place:disabled{background:#334155;color:#64748b;cursor:not-allowed;box-shadow:none}
-.btn-more{background:transparent;color:#3b82f6;border:none;font-size:0.8rem;cursor:pointer;padding:0}
-
-/* Result banners */
-.result{border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.result-w{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25)}
-.result-l{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25)}
-.result-p{background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.25)}
-.result-pick{font-weight:600;color:#fff;font-size:0.9rem}
-.result-score{color:#94a3b8;font-size:0.82rem}
-.result-pnl{font-weight:700;font-family:'SF Mono','Fira Code',monospace;font-size:0.9rem}
 
 /* No-edge list */
 .no-edge-list{background:#1e293b;border-radius:10px;padding:12px 16px}
 .ne-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #334155;font-size:0.82rem;flex-wrap:wrap;gap:4px}
 .ne-item:last-child{border-bottom:none}
-.ne-game{color:#e2e8f0;font-weight:500;min-width:180px}
-.ne-line{color:#64748b;min-width:100px}
+.ne-game{color:#e2e8f0;font-weight:500;min-width:180px;font-family:'JetBrains Mono','SF Mono',monospace}
+.ne-line{color:#64748b;min-width:100px;font-family:'JetBrains Mono','SF Mono',monospace}
 .ne-reason{color:#475569;flex:1}
 
 /* Bankroll cards */
 .br-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
-.br-card{background:#1e293b;border-radius:10px;padding:16px}
-.br-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px}
-.br-val{font-size:1.6rem;font-weight:700;margin-top:4px}
+.br-card{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;transition:all 0.15s}
+.br-card:hover{border-color:#475569}
+.br-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;font-weight:600}
+.br-val{font-size:1.6rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
 .br-sub{font-size:0.78rem;color:#64748b;margin-top:2px}
 
-/* Bet history table */
+/* Chart */
+.chart-container{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:20px;overflow:auto}
+.chart-title{font-size:0.85rem;font-weight:700;color:#e2e8f0;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px}
+
+/* History table */
 .hist-table{width:100%;border-collapse:collapse;font-size:0.82rem}
-.hist-table th{text-align:left;padding:8px 10px;color:#64748b;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #334155}
-.hist-table td{padding:8px 10px;border-bottom:1px solid rgba(51,65,85,0.4)}
+.hist-table th{text-align:left;padding:8px 10px;color:#64748b;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #334155;font-weight:600}
+.hist-table td{padding:8px 10px;border-bottom:1px solid rgba(51,65,85,0.4);font-family:'JetBrains Mono','SF Mono',monospace}
 .hist-table tbody tr:hover{background:rgba(255,255,255,0.02)}
+.hist-date-group{margin-top:16px;margin-bottom:16px}
+.hist-date-header{background:#1e293b;padding:10px 12px;border-radius:8px;border-left:3px solid #3b82f6;margin-bottom:8px}
+.hist-date-title{font-weight:700;color:#e2e8f0;font-size:0.9rem;font-family:'JetBrains Mono','SF Mono',monospace}
+.hist-date-summary{color:#64748b;font-size:0.78rem;margin-top:2px}
+.hist-item{background:#1e293b;border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.hist-item-left{flex:1}
+.hist-item-pick{font-weight:600;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace;margin-bottom:2px}
+.hist-item-meta{color:#64748b;font-size:0.75rem}
+.hist-item-right{text-align:right}
+.hist-item-result{font-weight:700;margin-bottom:2px}
+.hist-item-pnl{font-weight:700;font-size:0.9rem;font-family:'JetBrains Mono','SF Mono',monospace}
 
 /* Summary bar */
-.summary{display:flex;gap:16px;background:#1e293b;border-radius:8px;padding:10px 16px;margin-top:10px;flex-wrap:wrap;font-size:0.82rem;color:#94a3b8}
+.summary{display:flex;gap:16px;background:#1e293b;border-radius:8px;padding:10px 16px;margin-top:10px;flex-wrap:wrap;font-size:0.82rem;color:#94a3b8;border:1px solid #334155}
+.summary strong{color:#e2e8f0}
 
 /* Footer */
 .footer{text-align:center;color:#475569;font-size:0.72rem;margin-top:32px;padding:16px 0;border-top:1px solid #1e293b}
 
-/* Notice toast */
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #3b82f6;color:#e2e8f0;padding:10px 20px;border-radius:8px;font-size:0.85rem;z-index:999;max-width:90vw;text-align:center;opacity:0;transition:opacity 0.3s}
+/* Toast */
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #3b82f6;color:#e2e8f0;padding:10px 20px;border-radius:8px;font-size:0.85rem;z-index:999;max-width:90vw;text-align:center;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
 .toast.show{opacity:1}
+
+/* P/L Summary */
+.daily-pnl{background:#1e293b;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid #334155}
+.daily-pnl-title{color:#64748b;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.daily-pnl-main{font-size:1.4rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
+.daily-pnl-record{color:#94a3b8;font-size:0.85rem;margin-top:2px}
 
 @media(max-width:640px){
   .stats{flex-wrap:wrap}.stat{min-width:45%;border-right:none;border-bottom:1px solid #334155}
   .pick-grid{grid-template-columns:1fr 1fr}
   .tab{padding:8px 12px;font-size:0.8rem}
   .br-grid{grid-template-columns:1fr 1fr}
+  .pick-actions{flex-wrap:wrap}
+  .sc-score{flex-direction:column;align-items:flex-start}
+  .sc-score-main{font-size:1.2rem}
+  .sc-score-sub{align-self:flex-start;margin-top:4px}
 }
 </style>
 </head>
@@ -139,6 +177,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <div class="tabs" id="tabs">
   <div class="tab active" data-tab="picks">Today's Picks <span class="tab-badge" id="pick-count">0</span></div>
+  <div class="tab" data-tab="results">Results <span class="tab-badge" id="result-count">0</span></div>
   <div class="tab" data-tab="history">History</div>
   <div class="tab" data-tab="bankroll">Bankroll</div>
   <div class="tab" data-tab="how">How It Works</div>
@@ -157,11 +196,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
+<!-- RESULTS TAB -->
+<div class="tab-panel" id="panel-results">
+  <div id="daily-pnl"></div>
+  <div id="scorecard-container"></div>
+  <div id="no-results-msg" style="display:none;background:#1e293b;border-radius:10px;padding:24px;text-align:center;color:#64748b;font-size:0.9rem">No resolved bets yet today.</div>
+</div>
+
 <!-- HISTORY TAB -->
 <div class="tab-panel" id="panel-history">
-  <table class="hist-table"><thead><tr>
-    <th>Date</th><th>Event</th><th>Pick</th><th>Odds</th><th>Edge</th><th>Wager</th><th>Result</th><th>P/L</th>
-  </tr></thead><tbody id="hist-body"></tbody></table>
+  <div class="chart-container">
+    <div class="chart-title">Cumulative P/L</div>
+    <svg id="pnl-chart" width="100%" height="200" style="max-width:800px;margin:0 auto;display:block"></svg>
+  </div>
+  <div id="hist-groups"></div>
   <div class="summary" id="hist-summary"></div>
 </div>
 
@@ -172,8 +220,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="summary" id="perf-summary"></div>
 </div>
 
+<!-- HOW IT WORKS TAB -->
 <div class="tab-panel" id="panel-how">
-  <h2>How It Works</h2>
+  <h2 style="color:#fff;margin-bottom:16px">How It Works</h2>
   <div style="background:#1e293b;border-radius:10px;padding:20px;margin-bottom:20px;font-size:0.88rem;color:#94a3b8;line-height:1.7">
     <div style="color:#fff;font-weight:700;margin-bottom:8px">The Edge</div>
     DraftKings sets odds that imply a probability for each outcome. Our model independently estimates the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
@@ -186,7 +235,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   </div>
 </div>
 
-<div class="footer" style="margin-top:0">
+<div class="footer">
   <div id="system-status" style="margin-bottom:8px"></div>
   All models carry uncertainty. Edges are probabilistic, not guarantees. Bet responsibly.<br>
   DK Edge Finder &middot; DraftKings Oregon
@@ -229,7 +278,6 @@ function render(d){
   const pCnt=b.pending_count||0;
   const pTot=b.pending_total||0;
 
-  document.getElementById('subtitle').textContent=(d.scan_subtitle||d.scan_date)+' &middot; Last scan: '+d.scan_date;
   document.getElementById('subtitle').innerHTML=(d.scan_subtitle||d.scan_date);
 
   // Stats strip
@@ -240,29 +288,30 @@ function render(d){
     <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'#facc15':'#a78bfa'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')':((d.picks||[]).length)}</div></div>
   `;
 
-  // Tab badge
+  // Tab badges
   document.getElementById('pick-count').textContent=(d.picks||[]).length;
-
-  // Today's bets
   const todayBets=(d.bets||[]).filter(x=>x.date===d.scan_date);
   const resolved=todayBets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
+  document.getElementById('result-count').textContent=resolved.length;
+
+  // Today's bets
   const pending=todayBets.filter(x=>x.outcome==='pending');
 
-  // Result banners
+  // Result banners for unresolved picks
   let bannersHtml='';
   resolved.forEach(bet=>{
     const cls=bet.outcome==='win'?'result-w':bet.outcome==='loss'?'result-l':'result-p';
     const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
     const pnlColor=pnl>=0?'#4ade80':'#f87171';
-    bannersHtml+=`<div class="result ${cls}">
-      <div><span class="result-pick">${bet.pick}</span> <span class="result-score">${bet.final_score||''}</span></div>
-      <div class="result-pnl" style="color:${pnlColor}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+    bannersHtml+=`<div class="result" style="background:${bet.outcome==='win'?'rgba(74,222,128,0.08)':bet.outcome==='loss'?'rgba(248,113,113,0.08)':'rgba(250,204,21,0.08)'};border:1px solid ${bet.outcome==='win'?'rgba(74,222,128,0.25)':bet.outcome==='loss'?'rgba(248,113,113,0.25)':'rgba(250,204,21,0.25)'};border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><span style="font-weight:600;color:#fff;font-size:0.9rem">${bet.pick}</span> <span style="color:#94a3b8;font-size:0.82rem">${bet.final_score||''}</span></div>
+      <div style="font-weight:700;font-family:'JetBrains Mono','SF Mono',monospace;font-size:0.9rem;color:${pnlColor}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
     </div>`;
   });
   pending.forEach(bet=>{
-    bannersHtml+=`<div class="result result-p">
-      <div><span class="result-pick">${bet.pick}</span> <span class="badge b-pending">PENDING</span></div>
-      <div class="result-pnl" style="color:#facc15">$${bet.wager.toFixed(2)} at risk</div>
+    bannersHtml+=`<div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.25);border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><span style="font-weight:600;color:#fff;font-size:0.9rem">${bet.pick}</span> <span class="badge b-pending">PENDING</span></div>
+      <div style="font-weight:700;font-family:'JetBrains Mono','SF Mono',monospace;color:#60a5fa">$${bet.wager.toFixed(2)} at risk</div>
     </div>`;
   });
   document.getElementById('result-banners').innerHTML=bannersHtml;
@@ -290,7 +339,7 @@ function render(d){
     const hasUnplaced=d.picks.some(p=>!p.status||p.status==='');
     if(hasUnplaced){
       const totalW=d.picks.filter(p=>!p.status||p.status==='').reduce((s,p)=>s+parseFloat(p.bet.replace('$','')),0);
-      placeBar.innerHTML=`<button class="btn-place-all" onclick="placeAll()">Place All Bets &middot; $${totalW.toFixed(2)}</button>`;
+      placeBar.innerHTML=`<button class="btn-place-all" onclick="placeAll()">Place All Bets · $${totalW.toFixed(2)}</button>`;
     }
 
     d.picks.forEach((p,i)=>{
@@ -303,8 +352,6 @@ function render(d){
       else if(p.status==='PLACED')statusBadge='<span class="badge b-placed">PLACED</span>';
       else if(p.status==='PENDING')statusBadge='<span class="badge b-pending">PENDING</span>';
 
-      // DraftKings search URL for the game
-      const teams=p.event.replace('@','vs').replace(/\s+/g,'+');
       const dkUrl='https://sportsbook.draftkings.com/search?q='+encodeURIComponent(p.event.split('@').pop().trim());
 
       let actionsHtml='';
@@ -325,11 +372,11 @@ function render(d){
       if(p.result)resultLine=`<div style="color:#fff;font-weight:600;margin-top:4px">${p.result}</div>`;
 
       cardsEl.innerHTML+=`
-        <div class="pick-card" id="card-${i}" onclick="toggleAnalysis(${i})" style="cursor:pointer">
+        <div class="pick-card" id="card-${i}" onclick="toggleAnalysis(${i})">
           <div class="pick-top">
             <div class="pick-left">
               <div class="pick-title">${p.pick} <span style="color:#60a5fa;font-weight:500;font-size:0.9rem">${p.odds}</span></div>
-              <div class="pick-meta">${p.sport} &middot; ${p.event} &middot; ${p.market} &middot; <span class="badge ${tierCls}">${p.tier}</span></div>
+              <div class="pick-meta">${p.sport} · ${p.event} · ${p.market} · <span class="badge ${tierCls}">${p.tier}</span></div>
             </div>
             <div class="pick-right">
               <div class="pick-edge">+${p.edge}%</div>
@@ -363,73 +410,276 @@ function render(d){
     document.getElementById('ne-header').textContent='No Edge ('+d.no_edge_games.length+' games)';
     let neH='';
     d.no_edge_games.forEach(g=>{
-      neH+=`<div class="ne-item"><span class="ne-game">${g.sport} — ${g.event}</span><span class="ne-line">${g.line}</span><span class="ne-reason">${g.reason}</span></div>`;
+      neH+=`<div class="ne-item"><span class="ne-game">${g.sport} · ${g.event}</span><span class="ne-line">${g.line}</span><span class="ne-reason">${g.reason}</span></div>`;
     });
     document.getElementById('ne-body').innerHTML=neH;
   }else{neSection.style.display='none';}
 
+  // RESULTS TAB
+  renderResults(d,todayBets);
+
   // HISTORY TAB
-  const hBody=document.getElementById('hist-body');
-  const hSum=document.getElementById('hist-summary');
-  hBody.innerHTML='';
-  let tw=0,tp=0,w=0,l=0,ps=0,pn=0;
-  (d.bets||[]).forEach(bet=>{
-    const tr=document.createElement('tr');
-    let rH,pH;
-    if(bet.outcome==='win'){
-      const pr=bet.pnl||(bet.wager*(bet.decimal_odds-1));
-      rH='<span class="badge b-win">WIN</span>';pH=`<span style="color:#4ade80;font-weight:700">+$${pr.toFixed(2)}</span>`;
-      tp+=pr;w++;tw+=bet.wager;
-    }else if(bet.outcome==='loss'){
-      rH='<span class="badge b-loss">LOSS</span>';pH=`<span style="color:#f87171;font-weight:700">-$${bet.wager.toFixed(2)}</span>`;
-      tp-=bet.wager;l++;tw+=bet.wager;
-    }else if(bet.outcome==='push'){
-      rH='<span class="badge b-pending">PUSH</span>';pH='<span style="color:#64748b">$0</span>';ps++;tw+=bet.wager;
-    }else{
-      rH='<span class="badge b-pending">PENDING</span>';pH='<span style="color:#64748b">—</span>';pn++;
-    }
-    tr.innerHTML=`<td>${bet.date}</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${bet.event}</td><td style="font-weight:600">${bet.pick}</td><td style="color:#60a5fa">${bet.odds}</td><td style="color:#a78bfa">${typeof bet.edge==='number'?'+'+bet.edge+'%':bet.edge}</td><td>$${bet.wager.toFixed(2)}</td><td>${rH}</td><td>${pH}</td>`;
-    hBody.appendChild(tr);
-  });
-  const roi=tw>0?((tp/tw)*100).toFixed(1):'0.0';
-  hSum.innerHTML=`
-    <span><strong style="color:#e2e8f0">Record:</strong> ${w}W-${l}L-${ps}P${pn?' ('+pn+' pending)':''}</span>
-    <span><strong style="color:#e2e8f0">Wagered:</strong> $${tw.toFixed(2)}</span>
-    <span><strong style="color:#e2e8f0">P/L:</strong> <span style="color:${tp>=0?'#4ade80':'#f87171'}">${tp>=0?'+':''}$${tp.toFixed(2)}</span></span>
-    <span><strong style="color:#e2e8f0">ROI:</strong> <span style="color:${tp>=0?'#4ade80':'#f87171'}">${roi}%</span></span>
-  `;
+  renderHistory(d);
 
   // BANKROLL TAB
+  renderBankroll(d,b,rec,amt,profit);
+
+  // System status
+  document.getElementById('system-status').innerHTML=`
+    <span style="color:#64748b">Last scan: ${d.scan_date} · Next scan: 6 AM PT · Auto-resolve: 10 PM PT · <span style="color:#4ade80">System active</span></span>
+  `;
+}
+
+function renderResults(d,todayBets){
+  const resolved=todayBets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
+  const pending=todayBets.filter(x=>x.outcome==='pending');
+  const container=document.getElementById('scorecard-container');
+  const pnlDiv=document.getElementById('daily-pnl');
+  const noMsg=document.getElementById('no-results-msg');
+
+  container.innerHTML='';pnlDiv.innerHTML='';
+
+  if(resolved.length===0&&pending.length===0){
+    noMsg.style.display='block';
+    return;
+  }
+  noMsg.style.display='none';
+
+  // Daily P/L summary
+  let w=0,l=0,totalPnl=0;
+  resolved.forEach(bet=>{
+    if(bet.outcome==='win')w++;
+    else if(bet.outcome==='loss')l++;
+    const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
+    totalPnl+=pnl;
+  });
+  if(w>0||l>0||pending.length>0){
+    pnlDiv.innerHTML=`
+      <div class="daily-pnl">
+        <div class="daily-pnl-title">Tonight</div>
+        <div class="daily-pnl-main" style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(2)}</div>
+        <div class="daily-pnl-record">${w}W-${l}L${pending.length>0?' · '+pending.length+' pending':''}</div>
+      </div>
+    `;
+  }
+
+  // Resolved scorecards
+  resolved.forEach(bet=>{
+    const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
+    const isWin=bet.outcome==='win';
+    const score=bet.final_score||'Final score TBD';
+
+    // Parse score for display
+    let homeScore='',awayScore='',homeTeam='',awayTeam='';
+    const scoreMatch=score.match(/(\w+)\s+(\d+)[,\s]+(\w+)\s+(\d+)/);
+    if(scoreMatch){
+      homeTeam=scoreMatch[1];homeScore=scoreMatch[2];
+      awayTeam=scoreMatch[3];awayScore=scoreMatch[4];
+    }
+
+    container.innerHTML+=`
+      <div class="scorecard" id="sc-${bet.pick}">
+        <div class="sc-header">
+          <div class="sc-title">${bet.sport} · ${bet.event}</div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-score">
+            <div class="sc-score-main">${homeScore} – ${awayScore}</div>
+            <div class="sc-score-sub">
+              <div style="color:#94a3b8;font-size:0.8rem">${homeTeam} vs ${awayTeam}</div>
+            </div>
+          </div>
+          <div class="sc-result ${isWin?'win':'loss'}">${isWin?'COVERED':'DID NOT COVER'} ${bet.pick.match(/([+-]\d+\.?\d*)/)?'('+bet.pick.match(/([+-]\d+\.?\d*)/)[1]+')':''}</div>
+          <div class="sc-pick">Your pick: <strong style="color:#e2e8f0">${bet.pick}</strong> at <strong style="color:#60a5fa">${bet.odds}</strong></div>
+          <div class="sc-pnl ${isWin?'win':'loss'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+          <div class="sc-analysis" id="sca-${bet.pick}">
+            <div><strong>Wager:</strong> $${bet.wager.toFixed(2)}</div>
+            <div style="margin-top:4px"><strong>Edge:</strong> ${typeof bet.edge==='number'?'+'+bet.edge+'%':bet.edge}</div>
+            <div style="margin-top:4px"><strong>Decimal Odds:</strong> ${bet.decimal_odds||'—'}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  // Pending scorecards
+  pending.forEach(bet=>{
+    container.innerHTML+=`
+      <div class="scorecard" style="border-color:#475569">
+        <div class="sc-header" style="background:rgba(96,165,250,0.1)">
+          <div class="sc-title" style="color:#60a5fa">PENDING · ${bet.event}</div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-result" style="color:#60a5fa">IN PROGRESS</div>
+          <div class="sc-pick">Your pick: <strong style="color:#e2e8f0">${bet.pick}</strong> at <strong style="color:#60a5fa">${bet.odds}</strong></div>
+          <div class="sc-pnl" style="color:#60a5fa">$${bet.wager.toFixed(2)} at risk</div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function renderHistory(d){
+  const bets=d.bets||[];
+  const histGroups=document.getElementById('hist-groups');
+  const histSum=document.getElementById('hist-summary');
+  histGroups.innerHTML='';
+
+  // Group by date
+  const byDate={};
+  bets.forEach(bet=>{
+    if(!byDate[bet.date])byDate[bet.date]=[];
+    byDate[bet.date].push(bet);
+  });
+
+  let totalWins=0,totalLoss=0,totalPnl=0,totalWager=0,totalW=0,totalL=0,totalP=0;
+  const pnlData=[];
+
+  // Sort dates descending
+  const dates=Object.keys(byDate).sort().reverse();
+  dates.forEach(date=>{
+    const dayBets=byDate[date];
+    let dayW=0,dayL=0,dayPnl=0,dayWager=0;
+    dayBets.forEach(bet=>{
+      dayWager+=bet.wager;
+      if(bet.outcome==='win'){
+        const p=bet.pnl||(bet.wager*(bet.decimal_odds-1));
+        dayPnl+=p;dayW++;totalW++;totalWins+=p;
+      }else if(bet.outcome==='loss'){
+        dayPnl-=bet.wager;dayL++;totalL++;totalLoss+=bet.wager;
+      }else if(bet.outcome==='push'){
+        totalP++;
+      }
+      totalWager+=bet.wager;
+    });
+    totalPnl+=dayPnl;
+
+    // Track for chart
+    if(bet.outcome!=='pending'){
+      pnlData.push({date:date,pnl:totalPnl});
+    }
+
+    histGroups.innerHTML+=`
+      <div class="hist-date-group">
+        <div class="hist-date-header">
+          <div class="hist-date-title">${date}</div>
+          <div class="hist-date-summary">${dayW}W-${dayL}L · ${dayPnl>=0?'+':''}$${Math.abs(dayPnl).toFixed(2)}</div>
+        </div>
+        ${dayBets.map(bet=>{
+          const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
+          let resultBadge='';
+          if(bet.outcome==='win')resultBadge='<span class="badge b-win">WIN</span>';
+          else if(bet.outcome==='loss')resultBadge='<span class="badge b-loss">LOSS</span>';
+          else if(bet.outcome==='push')resultBadge='<span class="badge b-pending">PUSH</span>';
+          else resultBadge='<span class="badge b-pending">PENDING</span>';
+          return `
+            <div class="hist-item">
+              <div class="hist-item-left">
+                <div class="hist-item-pick">${bet.pick}</div>
+                <div class="hist-item-meta">${bet.event} · ${bet.odds} · +${typeof bet.edge==='number'?bet.edge+'%':bet.edge}</div>
+              </div>
+              <div class="hist-item-right">
+                <div class="hist-item-result">${resultBadge}</div>
+                <div class="hist-item-pnl" style="color:${pnl>=0?'#4ade80':'#f87171'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  });
+
+  // Chart
+  drawPnlChart(pnlData);
+
+  // Summary
+  const roi=totalWager>0?((totalPnl/totalWager)*100).toFixed(1):'0.0';
+  histSum.innerHTML=`
+    <span><strong>Record:</strong> ${totalW}W-${totalL}L-${totalP}P</span>
+    <span><strong>Wagered:</strong> $${totalWager.toFixed(2)}</span>
+    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${roi}%</span></span>
+  `;
+}
+
+function drawPnlChart(data){
+  const svg=document.getElementById('pnl-chart');
+  if(!svg||data.length===0)return;
+
+  const width=svg.clientWidth||800;
+  const height=200;
+  const padding=30;
+
+  const minPnl=Math.min(0,...data.map(d=>d.pnl));
+  const maxPnl=Math.max(0,...data.map(d=>d.pnl));
+  const range=maxPnl-minPnl||1;
+
+  const xScale=x=>(padding+(x/(data.length-1||1))*(width-2*padding));
+  const yScale=y=>(height-padding-(((y-minPnl)/range)*(height-2*padding)));
+
+  // Clear SVG
+  svg.innerHTML='';
+
+  // Zero line
+  const y0=yScale(0);
+  svg.innerHTML+=`<line x1="${padding}" y1="${y0}" x2="${width-padding}" y2="${y0}" stroke="#334155" stroke-width="1" stroke-dasharray="4,4"/>`;
+
+  // Chart area background
+  if(maxPnl>0){
+    const points=data.map((d,i)=>`${xScale(i)},${yScale(d.pnl)}`).join(' ');
+    const pathFill=[`M${xScale(0)},${y0}`,...data.map((d,i)=>`L${xScale(i)},${yScale(d.pnl)}`),`L${xScale(data.length-1)},${y0}`].join(' ');
+    svg.innerHTML+=`<path d="${pathFill}" fill="url(#grad)" opacity="0.3"/>`;
+  }
+
+  // Gradient
+  svg.innerHTML=`<defs><linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" style="stop-color:#4ade80;stop-opacity:0.4"/><stop offset="100%" style="stop-color:#4ade80;stop-opacity:0"/></linearGradient></defs>${svg.innerHTML}`;
+
+  // Line
+  const line=data.map((d,i)=>`${i===0?'M':'L'}${xScale(i)},${yScale(d.pnl)}`).join(' ');
+  svg.innerHTML+=`<path d="${line}" stroke="${maxPnl>0?'#4ade80':'#f87171'}" stroke-width="2" fill="none"/>`;
+
+  // Points
+  data.forEach((d,i)=>{
+    svg.innerHTML+=`<circle cx="${xScale(i)}" cy="${yScale(d.pnl)}" r="3" fill="${d.pnl>=0?'#4ade80':'#f87171'}" stroke="#0f172a" stroke-width="1"/>`;
+  });
+
+  // Axes
+  svg.innerHTML+=`<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height-padding}" stroke="#334155" stroke-width="1"/>`;
+  svg.innerHTML+=`<line x1="${padding}" y1="${height-padding}" x2="${width-padding}" y2="${height-padding}" stroke="#334155" stroke-width="1"/>`;
+
+  // Labels
+  svg.innerHTML+=`<text x="${padding-5}" y="${height-padding+3}" text-anchor="end" font-size="11" fill="#64748b">$0</text>`;
+  if(maxPnl>0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(maxPnl)+3}" text-anchor="end" font-size="11" fill="#4ade80">$${maxPnl.toFixed(0)}</text>`;
+  if(minPnl<0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(minPnl)+3}" text-anchor="end" font-size="11" fill="#f87171">$${minPnl.toFixed(0)}</text>`;
+}
+
+function renderBankroll(d,b,rec,amt,profit){
   const totalGames=rec.wins+rec.losses+rec.pushes;
   const winRate=totalGames>0?((rec.wins/totalGames)*100).toFixed(0):'0';
+  const bets=d.bets||[];
+  const resolved=bets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
+  let totalWager=0,bestWin=0,bestWinPick='—';
+  resolved.forEach(bet=>{
+    totalWager+=bet.wager;
+    if(bet.outcome==='win'){
+      const p=bet.pnl||(bet.wager*(bet.decimal_odds-1));
+      if(p>bestWin){bestWin=p;bestWinPick=bet.pick;}
+    }
+  });
+
   document.getElementById('br-cards').innerHTML=`
-    <div class="br-card"><div class="br-label">Available</div><div class="br-val" style="color:#4ade80">$${amt.toFixed(2)}</div><div class="br-sub">After pending deductions</div></div>
+    <div class="br-card"><div class="br-label">Available</div><div class="br-val" style="color:#4ade80">$${amt.toFixed(2)}</div><div class="br-sub">After pending</div></div>
     <div class="br-card"><div class="br-label">Starting</div><div class="br-val" style="color:#fff">$${(b.starting||500).toFixed(2)}</div></div>
     <div class="br-card"><div class="br-label">Lifetime P/L</div><div class="br-val" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
     <div class="br-card"><div class="br-label">Record</div><div class="br-val" style="color:${rec.wins>rec.losses?'#4ade80':'#fff'}">${rec.wins}W-${rec.losses}L-${rec.pushes}P</div><div class="br-sub">${winRate}% win rate</div></div>
   `;
   document.getElementById('perf-summary').innerHTML=`
-    <span><strong style="color:#e2e8f0">Total Bets:</strong> ${totalGames}${pn?' (+'+pn+' pending)':''}</span>
-    <span><strong style="color:#e2e8f0">Avg Wager:</strong> $${totalGames>0?(tw/totalGames).toFixed(2):'0.00'}</span>
-    <span><strong style="color:#e2e8f0">ROI:</strong> <span style="color:${tp>=0?'#4ade80':'#f87171'}">${roi}%</span></span>
-    <span><strong style="color:#e2e8f0">Best Win:</strong> <span style="color:#4ade80">${getBestWin(d.bets||[])}</span></span>
+    <span><strong>Total Bets:</strong> ${totalGames}</span>
+    <span><strong>Avg Wager:</strong> $${totalGames>0?(totalWager/totalGames).toFixed(2):'0.00'}</span>
+    <span><strong>ROI:</strong> <span style="color:${profit>=0?'#4ade80':'#f87171'}">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
+    <span><strong>Best Win:</strong> <span style="color:#4ade80">${bestWin>0?bestWinPick+' +$'+bestWin.toFixed(2):'—'}</span></span>
   `;
-
-  // System status
-  document.getElementById('system-status').innerHTML=`
-    <span style="color:#64748b">Last scan: ${d.scan_date} &middot; Next scan: 6 AM PT &middot; Auto-resolve: 10 PM PT &middot; <span style="color:#4ade80">System active</span></span>
-  `;
-}
-
-function getBestWin(bets){
-  let best=0;let pick='—';
-  bets.forEach(b=>{
-    if(b.outcome==='win'){
-      const p=b.pnl||(b.wager*(b.decimal_odds-1));
-      if(p>best){best=p;pick=b.pick;}
-    }
-  });
-  return best>0?pick+' +$'+best.toFixed(2):'—';
 }
 
 function toggleAnalysis(i){
@@ -440,14 +690,8 @@ function kellyExplainer(p,bankroll){
   const edge=p.edge;
   const wager=parseFloat(p.bet.replace('$',''));
   const pct=bankroll>0?((wager/bankroll)*100).toFixed(1):'?';
-  const isTank=p.notes&&p.notes.includes('TANK RISK');
-  const isB2B=p.notes&&p.notes.includes('B2B');
-  let adjustments=[];
-  if(isTank)adjustments.push('tank penalty reduced edge');
-  if(isB2B)adjustments.push('B2B schedule factored in');
-  const adjStr=adjustments.length>0?' '+adjustments.join(', ')+'.':'';
   return `<div style="margin-top:8px;padding-top:8px;border-top:1px solid #334155;color:#64748b;font-size:0.78rem">
-    <strong style="color:#94a3b8">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.${adjStr}
+    <strong style="color:#94a3b8">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.
   </div>`;
 }
 
