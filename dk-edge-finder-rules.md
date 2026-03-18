@@ -184,6 +184,16 @@ When the user confirms bets are placed, **immediately deduct total wager amount 
 - End every scan with: "All models carry uncertainty. Edge estimates are probabilistic, not guarantees. Bet responsibly."
 - Save bankroll state before suggesting a session switch
 
+### Never assume
+- Don't assume the user hasn't pushed. If they say they pushed, they pushed.
+- Don't assume data.json on disk matches what's live on Netlify. Check if asked.
+- Don't assume the user wants to be asked before every action. Read the room.
+- Don't assume your model is correct. If an edge looks too good (>10%), the model is probably wrong — investigate, don't cap.
+- Don't assume a standard deviation or probability parameter — RESEARCH IT. If you can't find a measured value from academic literature, historical data, or verified sources, label it "UNVALIDATED" and note the uncertainty.
+- Don't invent combined SD values by guessing model error. Measure it or skip the sport.
+- Don't cap edges to hide a broken model. If the math produces a 27% edge, the model inputs are wrong — fix the inputs.
+- When the user says "research this" — actually read papers, fetch data, find measured values. Don't summarize search result titles.
+
 ### When in doubt
 - Shorter is better than longer
 - Fewer searches is better than more

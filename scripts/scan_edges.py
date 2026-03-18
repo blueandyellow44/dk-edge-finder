@@ -27,25 +27,69 @@ BANKROLL_JSON = REPO_ROOT / "bankroll.json"
 # ── Config ──────────────────────────────────────────
 MIN_EDGE_HIGH = 0.03      # 3% for spreads/ML/totals
 MIN_EDGE_MEDIUM = 0.05    # 5% for props
-MAX_EDGE_CAP = 0.12       # 12% cap — above this, model is probably wrong, not the book
+SUSPICIOUS_EDGE = 0.10    # 10% — flag for investigation, don't cap
 KELLY_FRACTION_HIGH = 0.5
 MAX_SINGLE_BET_PCT = 0.05 # 5% max single bet
 MAX_DAILY_EXPOSURE = 0.15 # 15% max daily
 
-# Combined standard deviations (game variance + model error) by sport
-# Used for proper normal distribution probability conversion
-COMBINED_SD = {
-    "nba_spread": 15.5,    # NBA spread SD ~12, model error ~10 → combined ~15.5
-    "nba_total": 21.0,     # NBA total SD ~16, model error ~13 → combined ~21
-    "nhl_spread": 1.8,     # NHL puck line is tight (±1.5), variance ~1.5, model ~1.0
-    "nhl_total": 2.5,      # NHL totals SD ~2, model error ~1.5
-    "nfl_spread": 14.0,    # NFL spread SD ~13, model ~6 → combined ~14
-    "nfl_total": 18.0,     # NFL total SD ~14, model ~11
-    "mlb_spread": 3.5,     # MLB run line SD ~3, model ~2
-    "mlb_total": 3.0,      # MLB total SD ~2.5, model ~1.8
-    "default_spread": 12.0,
-    "default_total": 15.0,
+# ── GAME OUTCOME STANDARD DEVIATIONS ───────────────
+# These are the SDs of (actual outcome - closing line).
+# They tell us how much real game results deviate from market predictions.
+#
+# IMPORTANT: We use GAME SD only, not "combined SD" with model error.
+# Reason: the normal CDF conversion already accounts for model uncertainty
+# implicitly — if DRatings disagrees with the market by X points, the
+# probability calculation using game SD tells us how likely that disagreement
+# is to materialize as a real outcome. Adding model error SD on top
+# double-counts uncertainty and inflates edges.
+#
+# ┌─────────────┬──────────┬──────────┬──────────────────────────────────────┐
+# │ Sport       │ Spread   │ Totals   │ Source                               │
+# ├─────────────┼──────────┼──────────┼──────────────────────────────────────┤
+# │ NBA         │ 11.26    │ 17.19    │ Boyd's Bets (measured, multi-season) │
+# │ NFL         │ 13.28    │ 13.28    │ Boyd's Bets + Stern 1991 (13.86)    │
+# │ NHL         │ —        │ —        │ NO MEASURED DATA                     │
+# │ MLB         │ —        │ —        │ NO MEASURED DATA                     │
+# │ Soccer      │ —        │ 1.5-1.7  │ Dixon-Coles (1997), Poisson-derived  │
+# │ MMA         │ —        │ —        │ No spread/total market               │
+# └─────────────┴──────────┴──────────┴──────────────────────────────────────┘
+#
+# Sources:
+# - Boyd's Bets: https://www.boydsbets.com/ats-margin-standard-deviations-by-point-spread/
+# - Boyd's Bets: https://www.boydsbets.com/standard-deviations-of-overunder-margins-by-total/
+# - Stern (1991): "On the Probability of Winning a Football Game", American Statistician 45(3):179-183
+# - Dixon & Coles (1997): "Modelling Association Football Scores", JRSS-C 46(2):265-280
+# - Boyd's Bets NFL avg: 13.28, Stern 1991: 13.86, modern replication: 13.7
+
+GAME_SD = {
+    # NBA — MEASURED (Boyd's Bets, multi-season)
+    # Spread: avg 11.26, range 9.20-12.03, correlation 0.60 (larger spreads slightly more predictable)
+    # Totals: avg 17.19, range 15.08-21.25, correlation 0.33 (higher totals slightly less predictable)
+    "nba_spread": 11.26,
+    "nba_total": 17.19,
+
+    # NFL — MEASURED (Boyd's Bets + Stern 1991)
+    # Spread: avg 13.28, Stern measured 13.86 (1981-84), modern ~13.7, correlation -0.06 (no relationship)
+    # Totals: avg 13.28, correlation -0.02 (no relationship)
+    "nfl_spread": 13.28,
+    "nfl_total": 13.28,
+
+    # Soccer — DERIVED from Dixon-Coles Poisson model
+    # EPL: λ_home=1.5, λ_away=1.42, total SD ≈ sqrt(λ_h + λ_a) ≈ 1.71
+    # Goal margin SD from Skellam distribution ≈ sqrt(λ_h + λ_a) ≈ 1.71
+    # ρ (correlation) = -0.13, γ (home advantage) = 0.27 log scale
+    # Over 2.5 goals ≈ 53-54% historically
+    "epl_spread": 1.71,   # DERIVED — Skellam distribution, NOT measured ATS data
+    "epl_total": 1.71,    # DERIVED — sum of Poisson SDs
+    "mls_spread": 1.71,   # Using same as EPL — similar scoring rates
+    "mls_total": 1.71,
 }
+
+# Sports with NO measured SD — we will NOT calculate edges for these
+# until we have validated data. The scanner will show "insufficient model data"
+UNVALIDATED_SPORTS = {"nhl", "mlb", "mma"}
+# Note: NHL and MLB games are still fetched for display purposes,
+# but no edges will be calculated without measured SDs.
 
 # Teams confirmed tanking (update periodically)
 # Record threshold: bottom-8 teams (win% < .300 after All-Star break)
@@ -357,24 +401,24 @@ def normal_cdf(x: float) -> float:
     return 1.0 - d * math.exp(-0.5 * x * x) * poly
 
 
-def cushion_to_probability(cushion: float, sport: str, market: str) -> float:
+def cushion_to_probability(cushion: float, sport: str, market: str) -> float | None:
     """Convert points of cushion to cover probability using normal distribution.
 
     Uses sport-specific combined SD (game variance + model error).
-    More principled than linear heuristic — accounts for the fact that
-    larger cushions have diminishing marginal value.
+    Returns None if the sport doesn't have researched SD values.
     """
     key = f"{sport.lower()}_{market.lower()}"
-    sd = COMBINED_SD.get(key, COMBINED_SD.get(f"default_{market.lower()}", 15.0))
+    sd = GAME_SD.get(key)
+
+    if sd is None:
+        # No researched SD for this sport/market — can't calculate probability
+        return None
 
     if sd <= 0 or cushion <= 0:
         return 0.50
 
     z = cushion / sd
-    prob = normal_cdf(z)
-
-    # Cap at 75% — beyond this we're extrapolating into unreliable territory
-    return min(0.75, prob)
+    return normal_cdf(z)
 
 
 def american_to_decimal(odds: int) -> float:
@@ -468,8 +512,9 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         return None  # No underdog spread to bet
 
     # Convert cushion to cover probability using normal distribution
-    # Uses sport-specific combined SD (game variance + model error)
     model_prob = cushion_to_probability(spread_cushion, sport, "spread")
+    if model_prob is None:
+        return None  # No researched SD for this sport — skip
 
     # Standard DK juice for big spreads: -110 to -115
     # Use -110 as default if we don't have exact juice
@@ -516,11 +561,8 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if edge < MIN_EDGE_HIGH:
         return None  # Below threshold
 
-    # Cap edge — above 12%, model is probably wrong, not the book
-    capped = False
-    if edge > MAX_EDGE_CAP:
-        edge = MAX_EDGE_CAP
-        capped = True
+    # Flag suspicious edges — don't cap, but warn
+    suspicious = edge > SUSPICIOUS_EDGE
 
     # Kelly sizing
     decimal_odds = american_to_decimal(dk_odds)
@@ -531,6 +573,8 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         f"DRatings: {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (projected margin: {abs(model_home_margin):.1f}).",
         f"Spread cushion: {spread_cushion:.1f} pts.",
     ]
+    if suspicious:
+        notes_parts.append(f"⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model disagrees with market by {spread_cushion:.1f} pts. Investigate before betting — DRatings may be missing injury/lineup info.")
     if tank_note:
         notes_parts.append(tank_note)
     if b2b_note:
@@ -621,6 +665,8 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
     # Convert cushion to cover probability using normal distribution
     model_prob = cushion_to_probability(abs(cushion), sport, "total")
+    if model_prob is None:
+        return None  # No researched SD for this sport — skip
 
     # Standard DK juice for totals: -110
     dk_odds = -110
@@ -632,11 +678,8 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     if edge < MIN_EDGE_HIGH:
         return None  # Below 3% threshold
 
-    # Cap edge — above 12%, model is probably wrong
-    capped = False
-    if edge > MAX_EDGE_CAP:
-        edge = MAX_EDGE_CAP
-        capped = True
+    # Flag suspicious edges — don't cap, but warn
+    suspicious = edge > SUSPICIOUS_EDGE
 
     # Kelly sizing
     decimal_odds = american_to_decimal(dk_odds)
@@ -644,6 +687,8 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
     # Build notes
     notes = f"DRatings: {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (total: {model_total:.1f}). Line: {espn_total}. Cushion: {cushion:.1f} pts."
+    if suspicious:
+        notes += f" ⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model predicts {model_total:.1f} vs market {espn_total} — {cushion:.1f} pt gap. Investigate before betting."
 
     return {
         "sport": sport.upper(),
