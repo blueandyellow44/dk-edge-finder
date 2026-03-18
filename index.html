@@ -141,6 +141,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="tab active" data-tab="picks">Today's Picks <span class="tab-badge" id="pick-count">0</span></div>
   <div class="tab" data-tab="history">History</div>
   <div class="tab" data-tab="bankroll">Bankroll</div>
+  <div class="tab" data-tab="how">How It Works</div>
 </div>
 
 <!-- PICKS TAB -->
@@ -171,7 +172,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <div class="summary" id="perf-summary"></div>
 </div>
 
-<div class="footer">
+<div class="tab-panel" id="panel-how">
+  <h2>How It Works</h2>
+  <div style="background:#1e293b;border-radius:10px;padding:20px;margin-bottom:20px;font-size:0.88rem;color:#94a3b8;line-height:1.7">
+    <div style="color:#fff;font-weight:700;margin-bottom:8px">The Edge</div>
+    DraftKings sets odds that imply a probability for each outcome. Our model independently estimates the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
+    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Kelly Criterion Sizing</div>
+    Instead of betting the same amount on every pick, Kelly sizes each bet proportional to your edge. Bigger edge = bigger bet. A 9% edge gets roughly 3x the wager of a 3% edge. We use half-Kelly (conservative) to reduce volatility — you'll grow slower but survive losing streaks.
+    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Safety Rails</div>
+    Max 5% of bankroll on any single bet. Max 15% total daily exposure. Confirmed tanking teams get a 3% penalty. Back-to-back games get a 1.5-2.5% penalty. If a pick conflicts with sharp money movement, Kelly fraction drops 25%.
+    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Bankroll Tracking</div>
+    When you place bets, the wagered amount is immediately deducted from your available bankroll. Wins add back the wager + profit. Losses stay deducted. This means the number you see is always your real available cash.
+  </div>
+</div>
+
+<div class="footer" style="margin-top:0">
+  <div id="system-status" style="margin-bottom:8px"></div>
   All models carry uncertainty. Edges are probabilistic, not guarantees. Bet responsibly.<br>
   DK Edge Finder &middot; DraftKings Oregon
 </div>
@@ -330,6 +346,7 @@ function render(d){
             ${p.notes||''}
             ${p.sources?'<br><span class="src">Sources: '+p.sources+'</span>':''}
             ${resultLine}
+            ${!isPlaced?kellyExplainer(p,amt):''}
           </div>
           <div class="pick-actions" id="actions-${i}" onclick="event.stopPropagation()">
             ${actionsHtml}
@@ -397,6 +414,11 @@ function render(d){
     <span><strong style="color:#e2e8f0">ROI:</strong> <span style="color:${tp>=0?'#4ade80':'#f87171'}">${roi}%</span></span>
     <span><strong style="color:#e2e8f0">Best Win:</strong> <span style="color:#4ade80">${getBestWin(d.bets||[])}</span></span>
   `;
+
+  // System status
+  document.getElementById('system-status').innerHTML=`
+    <span style="color:#64748b">Last scan: ${d.scan_date} &middot; Next scan: 6 AM PT &middot; Auto-resolve: 10 PM PT &middot; <span style="color:#4ade80">System active</span></span>
+  `;
 }
 
 function getBestWin(bets){
@@ -412,6 +434,21 @@ function getBestWin(bets){
 
 function toggleAnalysis(i){
   document.getElementById('analysis-'+i).classList.toggle('open');
+}
+
+function kellyExplainer(p,bankroll){
+  const edge=p.edge;
+  const wager=parseFloat(p.bet.replace('$',''));
+  const pct=bankroll>0?((wager/bankroll)*100).toFixed(1):'?';
+  const isTank=p.notes&&p.notes.includes('TANK RISK');
+  const isB2B=p.notes&&p.notes.includes('B2B');
+  let adjustments=[];
+  if(isTank)adjustments.push('tank penalty reduced edge');
+  if(isB2B)adjustments.push('B2B schedule factored in');
+  const adjStr=adjustments.length>0?' '+adjustments.join(', ')+'.':'';
+  return `<div style="margin-top:8px;padding-top:8px;border-top:1px solid #334155;color:#64748b;font-size:0.78rem">
+    <strong style="color:#94a3b8">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.${adjStr}
+  </div>`;
 }
 
 // Bet placement
