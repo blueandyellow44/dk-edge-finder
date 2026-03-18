@@ -2,7 +2,7 @@
   "scan_date": "2026-03-18",
   "scan_subtitle": "Wednesday, March 18, 2026 \u2014 MLB (13), NBA (9), NHL (6)",
   "bankroll": {
-    "available": 499.51,
+    "available": 581.51,
     "starting": 500.0,
     "profit": 81.51,
     "record": {
@@ -16,7 +16,7 @@
   },
   "games_analyzed": 28,
   "best_bet": {
-    "title": "UNDER 237.5 (-110) \u2014 27.6% Edge (High Tier)",
+    "title": "UNDER 237.5 (-110) \u2014 13.7% Edge (High Tier)",
     "desc": "DRatings: TOR 115.2, CHI 108.6 (total: 223.8). Line: 237.5. Cushion: 13.7 pts."
   },
   "picks": [
@@ -28,10 +28,10 @@
       "pick": "UNDER 237.5",
       "odds": "-110",
       "implied": "52.4%",
-      "model": "80.0%",
-      "edge": 27.6,
+      "model": "66.1%",
+      "edge": 13.7,
       "tier": "High",
-      "bet": "$24.98",
+      "bet": "$29.08",
       "status": "",
       "result": "",
       "notes": "DRatings: TOR 115.2, CHI 108.6 (total: 223.8). Line: 237.5. Cushion: 13.7 pts.",
@@ -45,10 +45,10 @@
       "pick": "UNDER 237.5",
       "odds": "-110",
       "implied": "52.4%",
-      "model": "64.0%",
-      "edge": 11.6,
+      "model": "60.6%",
+      "edge": 8.2,
       "tier": "High",
-      "bet": "$24.98",
+      "bet": "$26.29",
       "status": "",
       "result": "",
       "notes": "DRatings: LAC 116.0, NO 115.9 (total: 231.9). Line: 237.5. Cushion: 5.6 pts.",
@@ -57,15 +57,32 @@
     {
       "rank": 3,
       "sport": "NBA",
+      "event": "Oklahoma City Thunder @ Brooklyn Nets",
+      "market": "Spread",
+      "pick": "Brooklyn Nets +19.5",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "60.8%",
+      "edge": 7.3,
+      "tier": "High",
+      "bet": "$24.27",
+      "status": "",
+      "result": "",
+      "notes": "DRatings: OKC 115.6, BKN 101.0 (projected margin: 14.6). Spread cushion: 4.9 pts. TANK RISK: 17-51, eliminated, traded stars (-3% adj) | OKC on B2B (+1.5% boost)",
+      "sources": "DRatings, ESPN"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
       "event": "Denver Nuggets @ Memphis Grizzlies",
       "market": "Over/Under",
       "pick": "UNDER 246.5",
       "odds": "-110",
       "implied": "52.4%",
-      "model": "61.5%",
-      "edge": 9.1,
+      "model": "59.2%",
+      "edge": 6.8,
       "tier": "High",
-      "bet": "$24.97",
+      "bet": "$7.59",
       "status": "",
       "result": "",
       "notes": "DRatings: DEN 126.2, MEM 115.7 (total: 241.9). Line: 246.5. Cushion: 4.6 pts.",
@@ -73,12 +90,6 @@
     }
   ],
   "no_edge_games": [
-    {
-      "sport": "NBA",
-      "event": "GS @ BOS",
-      "line": "BOS -12.5",
-      "reason": "Edge below 3% threshold"
-    },
     {
       "sport": "NBA",
       "event": "POR @ IND",
@@ -135,15 +146,15 @@
     },
     {
       "sport": "NBA",
-      "event": "OKC @ BKN",
-      "line": "Brooklyn Nets +19.5 (-115)",
-      "reason": "Edge exists (7.3%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
       "event": "DEN @ MEM",
       "line": "Memphis Grizzlies +12.5 (-110)",
       "reason": "Edge exists (4.1%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "LAC @ NO",
+      "line": "New Orleans Pelicans +2.5 (-110)",
+      "reason": "Edge exists (3.6%) but daily exposure limit reached"
     }
   ],
   "bets": [

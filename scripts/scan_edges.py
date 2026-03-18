@@ -423,7 +423,15 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     # Rough heuristic: each point of cushion ≈ 2-3% cover probability
     # Base: if model exactly matches spread, ~50% cover
     base_cover_prob = 0.50
-    cushion_boost = spread_cushion * 0.025  # 2.5% per point of cushion
+    # Diminishing returns: first points of cushion matter most
+    # 0-5 pts: 2.5% per point | 5-10 pts: 1.5% per point | 10+ pts: 0.5% per point
+    sc = spread_cushion
+    if sc <= 5:
+        cushion_boost = sc * 0.025
+    elif sc <= 10:
+        cushion_boost = (5 * 0.025) + ((sc - 5) * 0.015)
+    else:
+        cushion_boost = (5 * 0.025) + (5 * 0.015) + ((sc - 10) * 0.005)
     model_prob = min(0.80, max(0.30, base_cover_prob + cushion_boost))
 
     # Standard DK juice for big spreads: -110 to -115
@@ -569,10 +577,16 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         return None  # Less than 0.5 pts of edge, too thin
 
     # Estimate cover probability from model total vs line
-    # Each point of cushion ≈ 1.5% cover probability, base 50%
-    # (More conservative than spreads — totals are noisier)
+    # Diminishing returns: first points matter most, later points are noise
+    # 0-5 pts: 2% per point | 5-10 pts: 1% per point | 10+ pts: 0.3% per point
     base_cover_prob = 0.50
-    cushion_boost = abs(cushion) * 0.015
+    c = abs(cushion)
+    if c <= 5:
+        cushion_boost = c * 0.02
+    elif c <= 10:
+        cushion_boost = (5 * 0.02) + ((c - 5) * 0.01)
+    else:
+        cushion_boost = (5 * 0.02) + (5 * 0.01) + ((c - 10) * 0.003)
     model_prob = min(0.80, max(0.30, base_cover_prob + cushion_boost))
 
     # Standard DK juice for totals: -110
