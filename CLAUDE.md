@@ -15,17 +15,17 @@ CLAUDE MD
 * Write rules for yourself that prevent the same mistake
 * Ruthlessly iterate on these lessons until mistake rate drops
 * Review lessons at session start for relevant project
-1. Verification Before Done
+4. Verification Before Done
 * Never mark a task complete without proving it works
 * Diff behavior between main and your changes when relevant
 * Ask yourself: “Would a staff engineer approve this?”
 * Run tests, check logs, demonstrate correctness
-4. Demand Elegance (Balanced)
+5. Demand Elegance (Balanced)
 * For non-trivial changes: pause and ask “Is there a more elegant way?”
 * If a fix feels hacky: “Knowing everything I know now, implement the elegant solution”
 * Skip this for simple, obvious fixes — don’t over-engineer
 * Challenge your own work before presenting it
-2. Autonomous Bug Fixing
+6. Autonomous Bug Fixing
 * When given a bug report: just fix it. Don’t ask for hand-holding
 * Point at logs, errors, failing tests — then resolve them
 * Zero context switching required from the user
@@ -48,6 +48,13 @@ Task Management
 * The user gives the goal. Claude should propose the full system — not build half and wait for the user to notice what’s missing.
 * When something has a dependency (needs Mac, needs token, needs API key), surface ALL dependencies upfront in one list
 * "Here’s what I built, here’s what still needs your Mac, here’s what I recommend to fix that" — every time
+
+7. Mom Test Mindset
+* Don’t ask leading questions ("want me to build X?"). Instead observe how Max actually uses the system and fix friction before he hits it.
+* Watch for: what does he have to do manually that should be automatic? What breaks when he’s not at his computer? What will his friends struggle with when he shares this?
+* When you build something, mentally walk through Max opening it on his phone at a bar with friends. Does it make sense? Can he show it off? Does it work without explanation?
+* Complaints > compliments. When Max says "this is clunky" or "hmm" or sends a screenshot of something broken — that’s the real feedback. Don’t defend, fix.
+* The goal isn’t to build what’s technically impressive. It’s to build what Max actually reaches for every morning.
 
 Core Principles
 * Simplicity First: Make every change as simple as possible. Impact minimal code.

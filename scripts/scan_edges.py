@@ -149,10 +149,13 @@ def fetch_nba_schedule_and_odds(date_str: str) -> list[dict]:
 def fetch_dratings_predictions(date_str: str) -> dict:
     """
     Fetch model predictions from DRatings.
-    Returns dict keyed by "AWAY@HOME" abbreviation with predicted scores.
+    Returns dict keyed by "AWAY_NAME@HOME_NAME" with predicted scores and win probs.
+
+    DRatings HTML row format (pipe-separated after stripping tags):
+    date | time | away_team | (away_record) | home_team | (home_record) |
+    away_prob% | home_prob% | ...odds... | away_score | home_score | total | ...
     """
-    # DRatings URL format
-    url = f"https://www.dratings.com/predictor/nba-basketball-predictions/"
+    url = "https://www.dratings.com/predictor/nba-basketball-predictions/"
     predictions = {}
 
     try:
@@ -162,35 +165,87 @@ def fetch_dratings_predictions(date_str: str) -> dict:
         with urllib.request.urlopen(req, timeout=20) as resp:
             html = resp.read().decode("utf-8", errors="ignore")
 
-        # Parse predicted scores from DRatings HTML
-        # Look for patterns like team names and predicted scores
-        # DRatings format varies but typically has predicted scores in table rows
-        # This is a simplified parser — may need adjustment if DRatings changes format
+        # Extract table rows
+        trs = re.findall(r'<tr[^>]*>(.*?)</tr>', html, re.DOTALL)
 
-        # Look for game rows with predicted scores
-        # Pattern: team abbreviation followed by predicted score
-        rows = re.findall(
-            r'(?i)(\w{2,3})\s+(\d{2,3}(?:\.\d)?)\s*[,-]\s*(\w{2,3})\s+(\d{2,3}(?:\.\d)?)',
-            html
-        )
+        for tr in trs:
+            # Strip HTML tags, split by cell boundaries
+            text = re.sub(r'<[^>]+>', '|', tr)
+            cells = [x.strip() for x in text.split('|') if x.strip()]
 
-        for match in rows:
-            team1, score1, team2, score2 = match
-            try:
-                s1, s2 = float(score1), float(score2)
-                key = f"{team1.upper()}@{team2.upper()}"
-                predictions[key] = {"away_score": s1, "home_score": s2}
-                # Also store reverse key
-                predictions[f"{team2.upper()}@{team1.upper()}"] = {"away_score": s2, "home_score": s1}
-            except ValueError:
+            if len(cells) < 10:
                 continue
 
-        print(f"  DRatings: found {len(predictions)//2} game predictions")
+            # Look for rows with predicted scores (format: XXX.X)
+            # Find score pairs — two consecutive floats in 80-150 range
+            scores = []
+            team_names = []
+            records = []
+
+            for cell in cells:
+                # Match predicted score
+                m = re.match(r'^(\d{2,3}\.\d)$', cell)
+                if m:
+                    val = float(m.group(1))
+                    if 70 <= val <= 160:
+                        scores.append(val)
+
+                # Match team name (multi-word, capitalized)
+                if re.match(r'^[A-Z][a-z]+(?: [A-Z][a-z]+)+$', cell):
+                    # Filter out non-team strings
+                    if cell not in ("Eastern Conference", "Western Conference", "Atlantic Division"):
+                        team_names.append(cell)
+
+                # Match record like (33-35)
+                rm = re.match(r'^\((\d+-\d+)\)$', cell)
+                if rm:
+                    records.append(rm.group(1))
+
+            # We need exactly 2 team names and 2+ scores (away_score, home_score, total)
+            if len(team_names) >= 2 and len(scores) >= 2:
+                away_name = team_names[0]
+                home_name = team_names[1]
+                away_score = scores[0]
+                home_score = scores[1]
+
+                # Map full names to abbreviations
+                away_abbr = TEAM_NAME_TO_ABBR.get(away_name, away_name[:3].upper())
+                home_abbr = TEAM_NAME_TO_ABBR.get(home_name, home_name[:3].upper())
+
+                key = f"{away_abbr}@{home_abbr}"
+                predictions[key] = {
+                    "away_name": away_name,
+                    "home_name": home_name,
+                    "away_abbr": away_abbr,
+                    "home_abbr": home_abbr,
+                    "away_score": away_score,
+                    "home_score": home_score,
+                    "margin": round(home_score - away_score, 1),
+                }
+
+                print(f"    {away_abbr} {away_score} @ {home_abbr} {home_score} (margin: {home_score - away_score:+.1f})")
+
+        print(f"  DRatings: found {len(predictions)} game predictions")
 
     except Exception as e:
         print(f"  DRatings fetch error: {e}", file=sys.stderr)
 
     return predictions
+
+
+# NBA team name to abbreviation mapping
+TEAM_NAME_TO_ABBR = {
+    "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
+    "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE",
+    "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET",
+    "Golden State Warriors": "GS", "Houston Rockets": "HOU", "Indiana Pacers": "IND",
+    "Los Angeles Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM",
+    "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN",
+    "New Orleans Pelicans": "NO", "New York Knicks": "NY", "Oklahoma City Thunder": "OKC",
+    "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
+    "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SA",
+    "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WSH",
+}
 
 
 # ── Schedule / B2B detection ────────────────────────
@@ -249,14 +304,25 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set) -> dict | None
     if game["home_spread"] is None or game["away_spread"] is None:
         return None
 
-    # Try to find DRatings prediction
+    # Try to find DRatings prediction — try multiple key formats
     key = f"{away_abbr}@{home_abbr}"
     pred = predictions.get(key)
 
     if not pred:
-        # Try alternate key formats
-        key2 = f"{away_abbr.upper()}@{home_abbr.upper()}"
-        pred = predictions.get(key2)
+        # ESPN uses slightly different abbreviations than DRatings sometimes
+        # Try common alternates
+        alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+                   "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+                   "WAS": "WSH", "WSH": "WAS"}
+        alt_away = alt_map.get(away_abbr, away_abbr)
+        alt_home = alt_map.get(home_abbr, home_abbr)
+        for a in [away_abbr, alt_away]:
+            for h in [home_abbr, alt_home]:
+                pred = predictions.get(f"{a}@{h}")
+                if pred:
+                    break
+            if pred:
+                break
 
     if not pred:
         return None
@@ -406,7 +472,13 @@ def main():
         "current_bankroll": 500.0, "starting_bankroll": 500.0
     }
 
-    available = bankroll.get("current_bankroll", 500.0)
+    # Calculate bankroll from bet history (source of truth), not just bankroll.json
+    starting = bankroll.get("starting_bankroll", 500.0)
+    existing_bets = data.get("bets", [])
+    resolved_pnl = sum(b.get("pnl", 0) for b in existing_bets if b.get("outcome") in ("win", "loss", "push"))
+    pending_locked = sum(b.get("wager", 0) for b in existing_bets if b.get("outcome") == "pending")
+    available = round(starting + resolved_pnl - pending_locked, 2)
+    print(f"  Bankroll: ${starting:.2f} start + ${resolved_pnl:.2f} P/L - ${pending_locked:.2f} pending = ${available:.2f} available")
 
     # Step 2: Fetch today's games
     print(f"\n[2] Fetching NBA schedule for {today}...")
@@ -444,13 +516,23 @@ def main():
             picks.append(result)
             print(f"  EDGE: {result['pick']} ({result['odds']}) — {result['edge']}% edge")
         else:
-            home_spread = game.get("home_spread")
-            away_spread = game.get("away_spread")
             spread_str = game.get("odds_details", "N/A")
-            reason = "No model data" if not predictions.get(f"{game['away']['abbr']}@{game['home']['abbr']}") else "Edge below 3% threshold"
+
+            # Check if we had model data (try all abbreviation variants)
+            aa, ha = game["away"]["abbr"], game["home"]["abbr"]
+            alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+                       "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+                       "WAS": "WSH", "WSH": "WAS"}
+            had_model = any(
+                predictions.get(f"{a}@{h}")
+                for a in [aa, alt_map.get(aa, aa)]
+                for h in [ha, alt_map.get(ha, ha)]
+            )
+            reason = "Edge below 3% threshold" if had_model else "No model data"
 
             # Check if it was filtered by tanking
-            pick_abbr = game["home"]["abbr"] if (home_spread or 0) > 0 else game["away"]["abbr"]
+            home_spread = game.get("home_spread", 0) or 0
+            pick_abbr = game["home"]["abbr"] if home_spread > 0 else game["away"]["abbr"]
             tank_info = TANK_TEAMS_2026.get(pick_abbr)
             if tank_info and tank_info["confirmed"]:
                 reason = f"Tank penalty applied — {tank_info['reason']}"
@@ -523,28 +605,35 @@ def main():
             "desc": bp["notes"][:200],
         }
 
-    # Preserve existing bet history
+    # Preserve existing bet history — NEVER delete historical bets
+    # Only remove today's unplaced picks (status empty) if re-scanning
     existing_bets = data.get("bets", [])
-    # Remove any existing bets for today (will be replaced by new picks if placed)
-    existing_bets = [b for b in existing_bets if b.get("date") != today_iso]
+    # Keep all bets that are placed/resolved or from other dates
+    existing_bets = [b for b in existing_bets if b.get("date") != today_iso or b.get("outcome") != "pending"]
 
     # Build subtitle
     subtitle = f"{datetime.strptime(today, '%Y%m%d').strftime('%A, %B %d, %Y')} — NBA ({len(games)} games)"
 
-    # Get current record from bankroll
-    rec = data.get("bankroll", {}).get("record", {"wins": 0, "losses": 0, "pushes": 0})
+    # Calculate record from ALL bet history
+    all_bets = existing_bets  # today's pending removed, will be re-added if placed
+    win_count = sum(1 for b in all_bets if b.get("outcome") == "win")
+    loss_count = sum(1 for b in all_bets if b.get("outcome") == "loss")
+    push_count = sum(1 for b in all_bets if b.get("outcome") == "push")
+    pend_count = sum(1 for b in all_bets if b.get("outcome") == "pending")
+    pend_total = sum(b.get("wager", 0) for b in all_bets if b.get("outcome") == "pending")
+    profit = round(resolved_pnl, 2)
 
     new_data = {
         "scan_date": today_iso,
         "scan_subtitle": subtitle,
         "bankroll": {
             "available": available,
-            "starting": bankroll.get("starting_bankroll", 500.0),
-            "profit": round(available - bankroll.get("starting_bankroll", 500.0), 2),
-            "record": rec,
-            "pending_count": 0,
-            "pending_total": 0,
-            "pending_label": "No unsettled bets",
+            "starting": starting,
+            "profit": profit,
+            "record": {"wins": win_count, "losses": loss_count, "pushes": push_count},
+            "pending_count": pend_count,
+            "pending_total": round(pend_total, 2),
+            "pending_label": f"{pend_count} bet(s) pending (${pend_total:.2f})" if pend_count > 0 else "No unsettled bets",
         },
         "games_analyzed": len(games),
         "best_bet": best_bet,
