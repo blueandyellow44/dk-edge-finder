@@ -37,6 +37,18 @@ Task Management
 4. Explain Changes: High-level summary at each step
 5. Document Results: Add review section to tasks/todo.md
 6. Capture Lessons: Update tasks/lessons.md after corrections
+5. Anticipate the Next Problem
+* After building anything, ask: "What breaks if the user’s Mac is off? What breaks if they share this? What’s the obvious next question?"
+* Propose the fix in the same message — don’t wait for the user to connect the dots
+* If you build automation that only works halfway (e.g., resolve but not scan), flag the gap immediately and offer to close it
+* Think two steps ahead: if you change a data format, what else reads that data? Update everything in one commit.
+* Never ship broken code and move on — if a scraper returns 0 results, fix it before calling the task done
+
+6. Don’t Make the User Be the Architect
+* The user gives the goal. Claude should propose the full system — not build half and wait for the user to notice what’s missing.
+* When something has a dependency (needs Mac, needs token, needs API key), surface ALL dependencies upfront in one list
+* "Here’s what I built, here’s what still needs your Mac, here’s what I recommend to fix that" — every time
+
 Core Principles
 * Simplicity First: Make every change as simple as possible. Impact minimal code.
 * No Laziness: Find root causes. No temporary fixes. Senior developer standards.
