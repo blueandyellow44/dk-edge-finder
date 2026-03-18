@@ -9,13 +9,22 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;padding:20px;max-width:1200px;margin:0 auto}
 h1{font-size:1.8rem;color:#fff;margin-bottom:4px}
 .sub{color:#94a3b8;font-size:0.95rem;margin-bottom:20px}
+.tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid #334155}
+.tab{padding:10px 24px;cursor:pointer;color:#94a3b8;font-size:0.9rem;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+.tab:hover{color:#e2e8f0}
+.tab.active{color:#60a5fa;border-bottom-color:#60a5fa}
+.tab-content{display:none}
+.tab-content.active{display:block}
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
-.sc{background:#1e293b;border-radius:12px;padding:16px 20px;flex:1;min-width:140px;border:1px solid #334155}
+.sc{background:#1e293b;border-radius:12px;padding:16px 20px;flex:1;min-width:130px;border:1px solid #334155}
 .sc .l{font-size:0.72rem;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px}
 .sc .v{font-size:1.5rem;font-weight:700;color:#fff;margin-top:2px}
 .alert{background:linear-gradient(135deg,#1e293b,#172554);border:1px solid #3b82f6;border-radius:12px;padding:16px 20px;margin-bottom:24px}
 .alert .t{font-weight:700;color:#60a5fa;font-size:1rem;margin-bottom:4px}
 .alert .d{color:#94a3b8;font-size:0.9rem}
+.pending-banner{background:linear-gradient(135deg,#1e293b,#422006);border:1px solid #f59e0b;border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.pending-banner .t{font-weight:700;color:#facc15;font-size:1rem;margin-bottom:4px}
+.pending-banner .d{color:#94a3b8;font-size:0.9rem}
 h2{font-size:1.2rem;color:#fff;margin:28px 0 12px}
 table{width:100%;border-collapse:collapse;margin-bottom:8px}
 th{background:#1e293b;color:#94a3b8;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;padding:10px 12px;text-align:left;border-bottom:1px solid #334155}
@@ -28,42 +37,53 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
 .bh{background:rgba(74,222,128,0.12);color:#4ade80}
 .bw{background:rgba(74,222,128,0.12);color:#4ade80}
 .bl{background:rgba(248,113,113,0.12);color:#f87171}
+.bp{background:rgba(250,204,21,0.12);color:#facc15}
 .ne{background:#1e293b;border-radius:12px;padding:16px;margin-bottom:24px}
 .ni{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #334155;font-size:0.9rem;flex-wrap:wrap;gap:4px}
 .ni:last-child{border-bottom:none}
 .ni .g{color:#fff;min-width:200px}.ni .ln{color:#94a3b8;min-width:120px}.ni .r{color:#64748b;font-size:0.85rem;flex:1}
 .pw{color:#4ade80;font-weight:700;font-family:'SF Mono','Fira Code',monospace}
 .pl{color:#f87171;font-weight:700;font-family:'SF Mono','Fira Code',monospace}
+.pz{color:#94a3b8;font-family:'SF Mono','Fira Code',monospace}
 .sb{display:flex;gap:16px;background:#1e293b;border-radius:10px;padding:14px 20px;margin-top:12px;flex-wrap:wrap;font-size:0.9rem;color:#94a3b8}
 .sb span strong{color:#e2e8f0}
 .ft{text-align:center;color:#64748b;font-size:0.8rem;margin-top:40px;padding-top:20px;border-top:1px solid #1e293b}
-@media(max-width:600px){.stats{flex-direction:column}.sc{min-width:100%}td,th{padding:8px 6px}table{font-size:0.82rem}}
+@media(max-width:600px){.stats{flex-direction:column}.sc{min-width:100%}td,th{padding:8px 6px}table{font-size:0.82rem}.tabs{overflow-x:auto}.tab{padding:10px 16px;white-space:nowrap}}
 </style>
 </head>
 <body>
 <h1>DK Edge Finder</h1>
 <p class="sub">Wednesday, March 18, 2026 — NBA (9 games), NHL (6 games), NCAA First Four</p>
 
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('today')">Today (3/18)</div>
+  <div class="tab" onclick="switchTab('total')">All-Time</div>
+</div>
+
+<!-- TODAY TAB -->
+<div id="tab-today" class="tab-content active">
+
 <div class="stats">
-  <div class="sc"><div class="l">Available</div><div class="v" style="color:#4ade80">$583.92</div></div>
-  <div class="sc"><div class="l">Record</div><div class="v" style="color:#4ade80">3-2-0</div></div>
-  <div class="sc"><div class="l">Profit</div><div class="v" style="color:#4ade80">+$83.92</div></div>
-  <div class="sc"><div class="l">Edges</div><div class="v" style="color:#a78bfa">4</div></div>
+  <div class="sc"><div class="l">Available</div><div class="v" style="color:#4ade80">$501.92</div></div>
+  <div class="sc"><div class="l">At Risk</div><div class="v" style="color:#facc15">$82.00</div></div>
+  <div class="sc"><div class="l">Today's Bets</div><div class="v" style="color:#a78bfa">4</div></div>
+  <div class="sc"><div class="l">Today's Record</div><div class="v" style="color:#94a3b8">0-0-0</div></div>
 </div>
 
-<div class="alert">
-  <div class="t">Best Bet: Nets +19.5 (-112) — 9.2% Edge (High Tier)</div>
-  <div class="d">DRatings projects OKC by 15.4 — 4.1 points of value on a 19.5-pt spread. 54-15 Thunder should cruise but 19.5 is a lot of points vs any NBA team. Nets at home.</div>
+<div class="pending-banner">
+  <div class="t">4 Bets Placed — $82.00 at risk</div>
+  <div class="d">Nets +19.5 ($29) &bull; Jazz +13.5 ($25) &bull; Grizzlies +13.5 ($16) &bull; Mavericks +8.5 ($12)</div>
 </div>
 
-<h2>Flagged Edges (4)</h2>
+<h2>Today's Picks (4 PLACED)</h2>
 <table><thead><tr>
-  <th>#</th><th>Event</th><th>Pick</th><th>DK Odds</th><th>Implied</th><th>Model</th><th>Edge</th><th>Tier</th><th>Wager</th>
+  <th>#</th><th>Event</th><th>Pick</th><th>DK Odds</th><th>Implied</th><th>Model</th><th>Edge</th><th>Tier</th><th>Wager</th><th>Status</th>
 </tr></thead><tbody>
-  <tr><td>1</td><td>Thunder @ Nets</td><td class="pn">Nets +19.5</td><td class="od">-112</td><td>52.8%</td><td>62.0%</td><td class="ed">+9.2%</td><td><span class="b bh">High</span></td><td class="od">$29.00</td></tr>
-  <tr><td>2</td><td>Jazz @ Timberwolves</td><td class="pn">Jazz +13.5</td><td class="od">-108</td><td>51.9%</td><td>60.0%</td><td class="ed">+7.9%</td><td><span class="b bh">High</span></td><td class="od">$25.00</td></tr>
-  <tr><td>3</td><td>Nuggets @ Grizzlies</td><td class="pn">Grizzlies +13.5</td><td class="od">-118</td><td>54.1%</td><td>59.0%</td><td class="ed">+4.6%</td><td><span class="b bh">High</span></td><td class="od">$16.00</td></tr>
-  <tr><td>4</td><td>Hawks @ Mavericks</td><td class="pn">Mavericks +8.5</td><td class="od">-115</td><td>53.5%</td><td>57.0%</td><td class="ed">+3.7%</td><td><span class="b bh">High</span></td><td class="od">$12.00</td></tr>
+  <tr><td>1</td><td>Thunder @ Nets</td><td class="pn">Nets +19.5</td><td class="od">-112</td><td>52.8%</td><td>62.0%</td><td class="ed">+9.2%</td><td><span class="b bh">High</span></td><td class="od">$29.00</td><td><span class="b bp">PLACED</span></td></tr>
+  <tr><td>2</td><td>Jazz @ Timberwolves</td><td class="pn">Jazz +13.5</td><td class="od">-108</td><td>51.9%</td><td>60.0%</td><td class="ed">+7.9%</td><td><span class="b bh">High</span></td><td class="od">$25.00</td><td><span class="b bp">PLACED</span></td></tr>
+  <tr><td>3</td><td>Nuggets @ Grizzlies</td><td class="pn">Grizzlies +13.5</td><td class="od">-118</td><td>54.1%</td><td>59.0%</td><td class="ed">+4.6%</td><td><span class="b bh">High</span></td><td class="od">$16.00</td><td><span class="b bp">PLACED</span></td></tr>
+  <tr><td>4</td><td>Hawks @ Mavericks</td><td class="pn">Mavericks +8.5</td><td class="od">-115</td><td>53.5%</td><td>57.0%</td><td class="ed">+3.7%</td><td><span class="b bh">High</span></td><td class="od">$12.00</td><td><span class="b bp">PLACED</span></td></tr>
 </tbody></table>
 
 <h2>No Edge Found (7)</h2>
@@ -77,10 +97,27 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <div class="ni"><span class="g">NCAAM — First Four</span><span class="ln">TBD</span><span class="r">Thin data on First Four matchups</span></div>
 </div>
 
-<h2>Bet History</h2>
+</div><!-- end today tab -->
+
+<!-- ALL-TIME TAB -->
+<div id="tab-total" class="tab-content">
+
+<div class="stats">
+  <div class="sc"><div class="l">Bankroll</div><div class="v" style="color:#4ade80">$501.92</div></div>
+  <div class="sc"><div class="l">Starting</div><div class="v" style="color:#fff">$500.00</div></div>
+  <div class="sc"><div class="l">Lifetime Profit</div><div class="v" style="color:#4ade80">+$83.92</div></div>
+  <div class="sc"><div class="l">Record</div><div class="v" style="color:#4ade80">3W-2L-0P</div></div>
+  <div class="sc"><div class="l">ROI</div><div class="v" style="color:#4ade80">88.7%</div></div>
+</div>
+
+<h2>Full Bet History</h2>
 <table><thead><tr>
   <th>Date</th><th>Event</th><th>Pick</th><th>Odds</th><th>Edge</th><th>Wager</th><th>Result</th><th>P/L</th>
 </tr></thead><tbody>
+  <tr style="background:rgba(250,204,21,0.04)"><td>3/18</td><td>Thunder @ Nets</td><td class="pn">Nets +19.5</td><td class="od">-112</td><td class="ed">9.2%</td><td class="od">$29.00</td><td><span class="b bp">PENDING</span></td><td class="pz">—</td></tr>
+  <tr style="background:rgba(250,204,21,0.04)"><td>3/18</td><td>Jazz @ Timberwolves</td><td class="pn">Jazz +13.5</td><td class="od">-108</td><td class="ed">7.9%</td><td class="od">$25.00</td><td><span class="b bp">PENDING</span></td><td class="pz">—</td></tr>
+  <tr style="background:rgba(250,204,21,0.04)"><td>3/18</td><td>Nuggets @ Grizzlies</td><td class="pn">Grizzlies +13.5</td><td class="od">-118</td><td class="ed">4.6%</td><td class="od">$16.00</td><td><span class="b bp">PENDING</span></td><td class="pz">—</td></tr>
+  <tr style="background:rgba(250,204,21,0.04)"><td>3/18</td><td>Hawks @ Mavericks</td><td class="pn">Mavericks +8.5</td><td class="od">-115</td><td class="ed">3.7%</td><td class="od">$12.00</td><td><span class="b bp">PENDING</span></td><td class="pz">—</td></tr>
   <tr><td>3/17</td><td>Pistons @ Wizards</td><td class="pn">Wizards +18</td><td class="od">-110</td><td class="ed">7.6%</td><td class="od">$24.00</td><td><span class="b bw">WIN</span></td><td class="pw">+$21.82</td></tr>
   <tr><td>3/17</td><td>Pacers @ Knicks</td><td class="pn">Pacers +15.5</td><td class="od">-108</td><td class="ed">4.1%</td><td class="od">$13.00</td><td><span class="b bl">LOSS</span></td><td class="pl">-$13.00</td></tr>
   <tr><td>3/17</td><td>Spurs @ Kings</td><td class="pn">Kings +13.5</td><td class="od">-112</td><td class="ed">3.5%</td><td class="od">$11.50</td><td><span class="b bl">LOSS</span></td><td class="pl">-$11.50</td></tr>
@@ -88,15 +125,29 @@ tbody tr:hover{background:rgba(255,255,255,0.03)}
   <tr><td>3/15</td><td>Blazers @ 76ers</td><td class="pn">76ers ML</td><td class="od">+270</td><td class="ed">11.0%</td><td class="od">$25.00</td><td><span class="b bw">WIN</span></td><td class="pw">+$67.50</td></tr>
 </tbody></table>
 <div class="sb">
-  <span><strong>Record:</strong> 3W-2L-0P</span>
-  <span><strong>Wagered:</strong> $91.87</span>
+  <span><strong>Resolved:</strong> 3W-2L-0P</span>
+  <span><strong>Pending:</strong> 4 ($82.00)</span>
+  <span><strong>Wagered:</strong> $91.87 resolved</span>
   <span><strong>Net P/L:</strong> <span class="pw">+$81.51</span></span>
   <span><strong>ROI:</strong> <span class="pw">88.7%</span></span>
 </div>
+
+</div><!-- end total tab -->
 
 <div class="ft">
   All models carry uncertainty. Edge estimates are probabilistic, not guarantees. Bet responsibly.<br>
   DK Edge Finder &bull; DraftKings Oregon &bull; March 18, 2026
 </div>
+
+<script>
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>{
+    if((tab==='today'&&t.textContent.includes('Today'))||(tab==='total'&&t.textContent.includes('All-Time')))t.classList.add('active');
+  });
+}
+</script>
 </body>
 </html>

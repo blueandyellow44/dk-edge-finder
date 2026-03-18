@@ -2,13 +2,13 @@
   "scan_date": "2026-03-18",
   "scan_subtitle": "Wednesday, March 18, 2026 — NBA (9 games), NHL (6 games), NCAA First Four",
   "bankroll": {
-    "available": 583.92,
+    "available": 501.92,
     "starting": 500.00,
     "profit": 83.92,
     "record": { "wins": 3, "losses": 2, "pushes": 0 },
-    "pending_count": 0,
-    "pending_total": 0,
-    "pending_label": ""
+    "pending_count": 4,
+    "pending_total": 82.00,
+    "pending_label": "4 bets pending ($82.00)"
   },
   "games_analyzed": 15,
   "best_bet": {
@@ -28,7 +28,7 @@
       "edge": 9.2,
       "tier": "High",
       "bet": "$29.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "DRatings: OKC 115.8, BKN 100.4 (Thunder by 15.4). One outlier model had Thunder by only 6 (dismissed — inconsistent with 54-15 vs 17-51 records). Nets at home, 19.5 pts is massive cushion.",
       "sources": "DRatings, ESPN, Docsports"
@@ -45,7 +45,7 @@
       "edge": 7.9,
       "tier": "High",
       "bet": "$25.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "DRatings: MIN 122.4, UTA 111.6 (TWolves by 10.8). 2.7 points of spread cushion. One contradictory source (Jazz 55% win prob) dismissed as unrealistic for this matchup.",
       "sources": "DRatings"
@@ -62,7 +62,7 @@
       "edge": 4.6,
       "tier": "High",
       "bet": "$16.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "DRatings: DEN 126.6, MEM 115.5 (Nuggets by 11.1). Secondary model had Nuggets by only 4. Both agree Grizzlies cover +13.5. Medium confidence — direction consistent across sources.",
       "sources": "DRatings, sprediction"
@@ -79,7 +79,7 @@
       "edge": 3.7,
       "tier": "High",
       "bet": "$12.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "DRatings: ATL 122.7, DAL 116.2 (Hawks by 6.5). 2 points of spread cushion. Low confidence — single source only. Marginal edge.",
       "sources": "DRatings"
@@ -95,6 +95,50 @@
     { "sport": "NCAAM", "event": "First Four (2 games)", "line": "TBD", "reason": "Thin model data on First Four matchups — not enough for confident edge" }
   ],
   "bets": [
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Thunder @ Nets",
+      "pick": "Nets +19.5",
+      "odds": "-112",
+      "decimal_odds": 1.893,
+      "edge": "9.2%",
+      "wager": 29.00,
+      "outcome": "pending"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Jazz @ Timberwolves",
+      "pick": "Jazz +13.5",
+      "odds": "-108",
+      "decimal_odds": 1.926,
+      "edge": "7.9%",
+      "wager": 25.00,
+      "outcome": "pending"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Nuggets @ Grizzlies",
+      "pick": "Grizzlies +13.5",
+      "odds": "-118",
+      "decimal_odds": 1.847,
+      "edge": "4.6%",
+      "wager": 16.00,
+      "outcome": "pending"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Hawks @ Mavericks",
+      "pick": "Mavericks +8.5",
+      "odds": "-115",
+      "decimal_odds": 1.870,
+      "edge": "3.7%",
+      "wager": 12.00,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-17",
       "sport": "NBA",

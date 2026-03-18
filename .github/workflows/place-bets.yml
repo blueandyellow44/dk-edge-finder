@@ -1,0 +1,41 @@
+name: Place Bets
+
+on:
+  workflow_dispatch:
+    inputs:
+      picks:
+        description: 'Comma-separated pick indices to mark as placed (e.g. "0,1,2" or "all")'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  place:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Mark bets as placed
+        run: python scripts/place_bets.py "${{ github.event.inputs.picks }}"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "DK Edge Bot"
+          git config user.email "max.sheahan@icloud.com"
+          git add data.json bankroll.json
+          git commit -m "Bets placed: $(date +%Y-%m-%d)"
+          git push
