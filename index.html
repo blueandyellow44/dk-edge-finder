@@ -554,8 +554,9 @@ function renderHistory(d){
     });
     totalPnl+=dayPnl;
 
-    // Track for chart
-    if(bet.outcome!=='pending'){
+    // Track for chart — only if this day has resolved bets
+    const hasResolved=dayBets.some(b=>b.outcome==='win'||b.outcome==='loss'||b.outcome==='push');
+    if(hasResolved){
       pnlData.push({date:date,pnl:totalPnl});
     }
 
