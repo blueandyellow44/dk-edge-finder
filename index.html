@@ -3,178 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DK Edge Finder</title>
+<title>Betting Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180deg,#0c0f1a 0%,#111827 100%);color:#e2e8f0;line-height:1.6;min-height:100vh}
-.container{max-width:960px;margin:0 auto;padding:16px 20px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#222;line-height:1.6;min-height:100vh}
+.container{max-width:1000px;margin:0 auto;padding:16px 20px}
 
 /* Header */
-.header{padding:20px 0 16px;border-bottom:1px solid #1e293b;margin-bottom:0}
-.header h1{font-family:'Outfit',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:-0.5px;font-weight:800}
-.header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.header-sub{color:#64748b;font-size:0.82rem;display:flex;align-items:center;gap:6px;margin-top:4px}
-.pulse{width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 2s ease-in-out infinite}
+.header{background:#d00;color:#fff;padding:16px 0;margin-bottom:24px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.header-sub{color:rgba(255,255,255,0.9);font-size:0.85rem;display:flex;align-items:center;gap:6px}
+.pulse{width:7px;height:7px;border-radius:50%;background:#4c0;display:inline-block;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
 /* Stats strip */
-.stats{display:flex;gap:0;background:rgba(30,41,59,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;margin:16px 0}
-.stat{flex:1;padding:14px 16px;text-align:center;border-right:1px solid #334155}
+.stats{display:flex;gap:0;background:#fff;border:1px solid #ddd;margin:0 0 20px 0;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+.stat{flex:1;padding:14px 16px;text-align:center;border-right:1px solid #ddd}
 .stat:last-child{border-right:none}
-.stat-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;font-weight:600}
-.stat-val{font-size:1.3rem;font-weight:800;margin-top:2px;font-family:'JetBrains Mono','SF Mono',monospace}
+.stat-label{font-size:0.7rem;color:#666;text-transform:uppercase;letter-spacing:0.8px;font-weight:700}
+.stat-val{font-size:1.3rem;font-weight:800;margin-top:4px;font-family:'Courier New',monospace;color:#222}
 
 /* Tabs */
-.tabs{display:flex;gap:0;border-bottom:2px solid #1e293b;margin-bottom:20px;overflow-x:auto}
-.tab{padding:10px 20px;font-size:0.85rem;font-weight:600;color:#64748b;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;user-select:none;white-space:nowrap}
-.tab:hover{color:#94a3b8}
-.tab.active{color:#fff;border-bottom-color:#3b82f6}
-.tab-badge{background:#3b82f6;color:#fff;font-size:0.65rem;padding:1px 6px;border-radius:8px;margin-left:6px;font-weight:700}
+.tabs{display:flex;gap:0;border-bottom:2px solid #ddd;margin-bottom:20px;overflow-x:auto}
+.tab{padding:12px 20px;font-size:0.9rem;font-weight:700;color:#666;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.15s;user-select:none;white-space:nowrap;text-transform:uppercase;letter-spacing:0.3px}
+.tab:hover{color:#222}
+.tab.active{color:#d00;border-bottom-color:#d00}
+.tab-badge{background:#d00;color:#fff;font-size:0.65rem;padding:2px 6px;border-radius:3px;margin-left:6px;font-weight:700}
 .tab-panel{display:none}
 .tab-panel.active{display:block}
 
-/* Pick cards */
-.pick-card{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:10px;transition:all 0.15s;cursor:pointer}
-.pick-card:hover{border-color:#475569;background:#253449}
-.pick-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+/* Place All Button */
+.btn-place-all-wrapper{margin-bottom:16px}
+.btn-place-all{background:#d00;color:#fff;padding:12px 20px;border:none;border-radius:3px;font-size:0.95rem;font-weight:700;cursor:pointer;width:100%;transition:all 0.12s;letter-spacing:0.3px}
+.btn-place-all:hover{background:#c00;box-shadow:0 2px 6px rgba(220,0,0,0.3)}
+.btn-place-all:disabled{background:#ccc;color:#999;cursor:not-allowed;box-shadow:none}
+
+/* Pick cards (scoreboard style) */
+.pick-card{background:#fff;border:1px solid #ddd;border-left:4px solid #ccc;border-radius:4px;padding:16px;margin-bottom:12px;transition:all 0.15s;cursor:pointer}
+.pick-card:hover{border-color:#bbb;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.pick-card.unplaced{border-left-color:#999}
+.pick-card.placed{border-left-color:#080}
+.pick-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
 .pick-left{flex:1}
-.pick-title{font-size:1rem;font-weight:700;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace}
-.pick-meta{color:#64748b;font-size:0.8rem;margin-top:2px}
+.pick-title{font-size:1.1rem;font-weight:800;color:#222;font-family:'Courier New',monospace;margin-bottom:4px}
+.pick-title .odds{color:#0066cc;font-weight:600;margin-left:8px}
+.pick-meta{color:#666;font-size:0.8rem;margin-bottom:8px}
 .pick-right{text-align:right;flex-shrink:0}
-.pick-edge{font-size:1.1rem;font-weight:800;color:#a78bfa}
-.pick-wager{font-size:1.3rem;font-weight:800;color:#4ade80;margin-top:2px;font-family:'JetBrains Mono','SF Mono',monospace}
-.pick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #334155}
-.pick-stat .ps-label{font-size:0.62rem;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
-.pick-stat .ps-val{font-size:0.9rem;font-weight:600;color:#e2e8f0;margin-top:1px;font-family:'JetBrains Mono','SF Mono',monospace}
-.pick-analysis{color:#94a3b8;font-size:0.82rem;margin-top:10px;padding-top:10px;border-top:1px solid #334155;line-height:1.5;display:none}
+.pick-edge{font-size:1.2rem;font-weight:800;color:#080;margin-bottom:2px}
+.pick-wager{font-size:1.4rem;font-weight:800;color:#222;font-family:'Courier New',monospace}
+
+.pick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #eee}
+.pick-stat .ps-label{font-size:0.65rem;color:#999;text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
+.pick-stat .ps-val{font-size:0.9rem;font-weight:600;color:#222;margin-top:2px;font-family:'Courier New',monospace}
+
+.pick-analysis{color:#666;font-size:0.85rem;margin-top:10px;padding-top:10px;border-top:1px solid #eee;line-height:1.5;display:none}
 .pick-analysis.open{display:block}
-.pick-analysis .src{color:#3b82f6;font-size:0.75rem;font-weight:600}
-.pick-actions{display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.pick-analysis .src{color:#0066cc;font-size:0.75rem;font-weight:600}
 
-/* Result scorecard */
-.scorecard{background:#1e293b;border:1px solid #334155;border-radius:12px;overflow:hidden;margin-bottom:12px;transition:all 0.15s}
-.scorecard:hover{border-color:#475569}
-.sc-header{background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.1));border-bottom:1px solid #334155;padding:12px 16px}
-.sc-title{font-size:0.9rem;font-weight:600;color:#60a5fa;font-family:'JetBrains Mono','SF Mono',monospace}
-.sc-body{padding:16px}
-.sc-score{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.sc-score-main{font-size:1.4rem;font-weight:800;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace;flex:1}
-.sc-score-sub{text-align:right}
-.sc-result{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:4px}
-.sc-result.win{color:#4ade80}
-.sc-result.loss{color:#f87171}
-.sc-pick{color:#94a3b8;font-size:0.85rem}
-.sc-pnl{font-size:1.3rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
-.sc-pnl.win{color:#4ade80}
-.sc-pnl.loss{color:#f87171}
-.sc-analysis{margin-top:10px;padding-top:10px;border-top:1px solid #334155;color:#64748b;font-size:0.78rem;display:none}
-.sc-analysis.open{display:block}
-
-/* Badges */
-.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;letter-spacing:0.3px;font-family:system-ui}
-.b-high{background:rgba(74,222,128,0.15);color:#4ade80}
-.b-med{background:rgba(250,204,21,0.15);color:#facc15}
-.b-low{background:rgba(249,115,22,0.15);color:#f97316}
-.b-win{background:rgba(74,222,128,0.15);color:#4ade80}
-.b-loss{background:rgba(248,113,113,0.15);color:#f87171}
-.b-pending{background:rgba(96,165,250,0.15);color:#60a5fa}
-.b-placed{background:rgba(250,204,21,0.15);color:#facc15}
+.pick-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 
 /* Buttons */
-.btn{border:none;padding:8px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px}
+.btn{border:none;padding:8px 14px;border-radius:3px;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.2px}
 .btn:active{transform:scale(0.97)}
-.btn-place{background:#3b82f6;color:#fff}
-.btn-place:hover{background:#2563eb}
-.btn-dk{background:#53d337;color:#111;font-weight:700;font-family:system-ui}
-.btn-dk:hover{background:#47b82f;box-shadow:0 2px 8px rgba(83,211,55,0.2)}
-.btn-skip{background:transparent;color:#64748b;border:1px solid #334155}
-.btn-skip:hover{border-color:#94a3b8;color:#94a3b8}
-.btn-place-all{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;padding:10px 24px;border-radius:10px;font-size:0.9rem;font-weight:700;border:none;cursor:pointer;width:100%;margin-bottom:16px;transition:all 0.12s}
-.btn-place-all:hover{box-shadow:0 4px 20px rgba(59,130,246,0.3)}
-.btn-place-all:disabled,.btn-place:disabled{background:#334155;color:#64748b;cursor:not-allowed;box-shadow:none}
 
-/* No-edge list */
-.no-edge-list{background:#1e293b;border-radius:10px;padding:12px 16px}
-.ne-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #334155;font-size:0.82rem;flex-wrap:wrap;gap:4px}
-.ne-item:last-child{border-bottom:none}
-.ne-game{color:#e2e8f0;font-weight:500;min-width:180px;font-family:'JetBrains Mono','SF Mono',monospace}
-.ne-line{color:#64748b;min-width:100px;font-family:'JetBrains Mono','SF Mono',monospace}
-.ne-reason{color:#475569;flex:1}
+.btn-place{background:#d00;color:#fff}
+.btn-place:hover{background:#c00}
+
+.btn-dk{background:#080;color:#fff;font-weight:700}
+.btn-dk:hover{background:#060}
+
+.btn-skip{background:#fff;color:#999;border:1px solid #ddd}
+.btn-skip:hover{border-color:#999;color:#666}
+
+.btn-place:disabled,.btn-dk:disabled{background:#ccc;color:#999;cursor:not-allowed}
+
+/* Badge */
+.badge{display:inline-block;padding:3px 8px;border-radius:3px;font-size:0.7rem;font-weight:700;letter-spacing:0.2px}
+.b-high{background:#efe;color:#080}
+.b-med{background:#fff8dc;color:#d90}
+.b-low{background:#ffe6e6;color:#c00}
+.b-win{background:#efe;color:#080;font-weight:700}
+.b-loss{background:#ffe6e6;color:#c00;font-weight:700}
+.b-pending{background:#e6f2ff;color:#0066cc;font-weight:700}
+.b-placed{background:#fff8dc;color:#d90;font-weight:700}
+
+/* Scorecard (Results tab) */
+.scorecard{background:#fff;border:1px solid #ddd;border-left:4px solid #ccc;border-radius:4px;padding:16px;margin-bottom:12px;transition:all 0.15s}
+.scorecard:hover{border-color:#bbb;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+
+.scorecard.win{border-left-color:#080}
+.scorecard.loss{border-left-color:#c00}
+.scorecard.pending{border-left-color:#0066cc}
+
+.sc-header{background:#f9f9f9;padding:12px 0;margin-bottom:14px;border-bottom:1px solid #eee}
+.sc-title{font-size:0.85rem;color:#666;text-transform:uppercase;letter-spacing:0.3px;font-weight:600}
+
+.sc-score{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.sc-score-main{font-size:2rem;font-weight:800;color:#222;font-family:'Courier New',monospace}
+.sc-score-sub{font-size:0.9rem;color:#666}
+
+.sc-result{font-size:1.1rem;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.2px}
+.sc-result.win{color:#080}
+.sc-result.loss{color:#c00}
+.sc-result.pending{color:#0066cc}
+
+.sc-pick{color:#666;font-size:0.85rem;margin-bottom:8px}
+.sc-pick strong{color:#222}
+
+.sc-pnl{font-size:1.4rem;font-weight:800;margin-top:8px;font-family:'Courier New',monospace}
+.sc-pnl.win{color:#080}
+.sc-pnl.loss{color:#c00}
+.sc-pnl.pending{color:#0066cc}
+
+.sc-analysis{margin-top:10px;padding-top:10px;border-top:1px solid #eee;color:#666;font-size:0.8rem;display:none}
+.sc-analysis.open{display:block}
+
+/* Daily P/L banner */
+.daily-pnl{background:#fff;border:1px solid #ddd;border-left:4px solid #080;border-radius:4px;padding:16px;margin-bottom:16px}
+.daily-pnl-title{color:#999;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:4px}
+.daily-pnl-main{font-size:1.8rem;font-weight:800;font-family:'Courier New',monospace}
+.daily-pnl-record{color:#666;font-size:0.85rem;margin-top:4px}
 
 /* Bankroll cards */
-.br-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
-.br-card{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;transition:all 0.15s}
-.br-card:hover{border-color:#475569}
-.br-label{font-size:0.65rem;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;font-weight:600}
-.br-val{font-size:1.6rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
-.br-sub{font-size:0.78rem;color:#64748b;margin-top:2px}
+.br-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.br-card{background:#fff;border:1px solid #ddd;border-radius:4px;padding:16px;transition:all 0.15s}
+.br-card:hover{border-color:#bbb;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.br-label{font-size:0.7rem;color:#999;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:4px}
+.br-val{font-size:1.5rem;font-weight:800;font-family:'Courier New',monospace;color:#222}
+.br-sub{font-size:0.8rem;color:#999;margin-top:4px}
 
 /* Chart */
-.chart-container{background:rgba(30,41,59,0.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:20px;overflow:auto}
-.chart-title{font-size:0.85rem;font-weight:700;color:#e2e8f0;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px}
+.chart-container{background:#fff;border:1px solid #ddd;border-radius:4px;padding:20px;margin-bottom:20px;overflow:auto}
+.chart-title{font-size:0.9rem;font-weight:800;color:#222;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.3px}
 
-/* History table */
-.hist-table{width:100%;border-collapse:collapse;font-size:0.82rem}
-.hist-table th{text-align:left;padding:8px 10px;color:#64748b;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #334155;font-weight:600}
-.hist-table td{padding:8px 10px;border-bottom:1px solid rgba(51,65,85,0.4);font-family:'JetBrains Mono','SF Mono',monospace}
-.hist-table tbody tr:hover{background:rgba(255,255,255,0.02)}
-.hist-date-group{margin-top:16px;margin-bottom:16px}
-.hist-date-header{background:#1e293b;padding:10px 12px;border-radius:8px;border-left:3px solid #3b82f6;margin-bottom:8px}
-.hist-date-title{font-weight:700;color:#e2e8f0;font-size:0.9rem;font-family:'JetBrains Mono','SF Mono',monospace}
-.hist-date-summary{color:#64748b;font-size:0.78rem;margin-top:2px}
-.hist-item{background:#1e293b;border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+/* History */
+.hist-date-group{margin-bottom:20px}
+.hist-date-header{background:#f9f9f9;padding:12px 14px;border-left:4px solid #0066cc;margin-bottom:10px;border-radius:3px}
+.hist-date-title{font-weight:800;color:#222;font-size:0.95rem;font-family:'Courier New',monospace;margin-bottom:2px}
+.hist-date-summary{color:#666;font-size:0.8rem}
+
+.hist-item{background:#fff;border:1px solid #ddd;border-radius:3px;padding:12px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
 .hist-item-left{flex:1}
-.hist-item-pick{font-weight:600;color:#fff;font-family:'JetBrains Mono','SF Mono',monospace;margin-bottom:2px}
-.hist-item-meta{color:#64748b;font-size:0.75rem}
+.hist-item-pick{font-weight:700;color:#222;font-size:0.9rem;font-family:'Courier New',monospace;margin-bottom:2px}
+.hist-item-meta{color:#999;font-size:0.75rem}
 .hist-item-right{text-align:right}
-.hist-item-result{font-weight:700;margin-bottom:2px}
-.hist-item-pnl{font-weight:700;font-size:0.9rem;font-family:'JetBrains Mono','SF Mono',monospace}
+.hist-item-result{margin-bottom:4px;font-weight:700}
+.hist-item-pnl{font-weight:800;font-size:0.9rem;font-family:'Courier New',monospace}
 
 /* Summary bar */
-.summary{display:flex;gap:16px;background:#1e293b;border-radius:8px;padding:10px 16px;margin-top:10px;flex-wrap:wrap;font-size:0.82rem;color:#94a3b8;border:1px solid #334155}
-.summary strong{color:#e2e8f0}
+.summary{display:flex;gap:16px;background:#fff;border:1px solid #ddd;border-radius:4px;padding:12px 16px;flex-wrap:wrap;font-size:0.85rem;color:#666}
+.summary strong{color:#222}
+
+/* No-edge list */
+.no-edge-list{background:#fff;border:1px solid #ddd;border-radius:4px;padding:12px 16px}
+.ne-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:0.85rem;flex-wrap:wrap;gap:8px}
+.ne-item:last-child{border-bottom:none}
+.ne-game{color:#222;font-weight:600;min-width:200px;font-family:'Courier New',monospace}
+.ne-line{color:#999;min-width:100px;font-family:'Courier New',monospace}
+.ne-reason{color:#666;flex:1}
+
+/* Result banner */
+.result{background:#fff;border:1px solid #ddd;border-left:4px solid #080;border-radius:4px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.result-win .result{border-left-color:#080}
+.result-loss .result{border-left-color:#c00}
+
+/* No message */
+.no-msg{background:#fff;border:1px solid #ddd;border-radius:4px;padding:24px;text-align:center;color:#999;font-size:0.9rem}
 
 /* Footer */
-.footer{text-align:center;color:#475569;font-size:0.72rem;margin-top:32px;padding:16px 0;border-top:1px solid #1e293b}
+.footer{text-align:center;color:#999;font-size:0.75rem;margin-top:32px;padding:16px 0;border-top:1px solid #ddd}
 
 /* Toast */
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #3b82f6;color:#e2e8f0;padding:10px 20px;border-radius:8px;font-size:0.85rem;z-index:999;max-width:90vw;text-align:center;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:12px 20px;border-radius:4px;font-size:0.85rem;z-index:999;max-width:90vw;text-align:center;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
 .toast.show{opacity:1}
 
-/* P/L Summary */
-.daily-pnl{background:#1e293b;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid #334155}
-.daily-pnl-title{color:#64748b;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
-.daily-pnl-main{font-size:1.4rem;font-weight:800;margin-top:4px;font-family:'JetBrains Mono','SF Mono',monospace}
-.daily-pnl-record{color:#94a3b8;font-size:0.85rem;margin-top:2px}
+/* Alert box */
+.alert-box{background:#fff;border:1px solid #0066cc;border-left:4px solid #0066cc;border-radius:4px;padding:12px 16px;margin-bottom:16px}
+.alert-box-title{font-weight:700;color:#0066cc;font-size:0.9rem;margin-bottom:4px}
+.alert-box-desc{color:#666;font-size:0.85rem}
 
-@media(max-width:640px){
-  .stats{flex-wrap:wrap}.stat{min-width:45%;border-right:none;border-bottom:1px solid #334155}
+@media(max-width:768px){
+  .header h1{font-size:1.4rem}
+  .stats{flex-wrap:wrap}.stat{min-width:45%;border-right:none;border-bottom:1px solid #ddd}
   .pick-grid{grid-template-columns:1fr 1fr}
-  .tab{padding:8px 12px;font-size:0.8rem}
+  .tab{padding:10px 14px;font-size:0.8rem}
   .br-grid{grid-template-columns:1fr 1fr}
   .pick-actions{flex-wrap:wrap}
   .sc-score{flex-direction:column;align-items:flex-start}
-  .sc-score-main{font-size:1.2rem}
-  .sc-score-sub{align-self:flex-start;margin-top:4px}
+  .sc-score-main{font-size:1.6rem}
 }
 </style>
 </head>
 <body>
+
 <div class="container">
 
+<!-- HEADER -->
 <div class="header">
-  <div class="header-row">
-    <div>
-      <h1>DK Edge Finder</h1>
-      <div class="header-sub"><span class="pulse"></span> <span id="subtitle">Loading...</span></div>
-    </div>
-  </div>
+  <h1>Betting Dashboard</h1>
+  <div class="header-sub"><span class="pulse"></span> <span id="subtitle">Loading...</span></div>
 </div>
 
+<!-- STATS -->
 <div class="stats" id="stats"></div>
 
+<!-- TABS -->
 <div class="tabs" id="tabs">
   <div class="tab active" data-tab="picks">Today's Picks <span class="tab-badge" id="pick-count">0</span></div>
   <div class="tab" data-tab="results">Results <span class="tab-badge" id="result-count">0</span></div>
@@ -189,9 +224,9 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180de
   <div id="result-banners"></div>
   <div id="alert-box"></div>
   <div id="pick-cards"></div>
-  <div id="no-picks-msg" style="display:none;background:#1e293b;border-radius:10px;padding:24px;text-align:center;color:#64748b;font-size:0.9rem">No edges today. All lines fairly priced. Patience is edge.</div>
+  <div id="no-picks-msg" style="display:none" class="no-msg">No edges today. All lines fairly priced. Patience is edge.</div>
   <div id="no-edge-section" style="display:none;margin-top:20px">
-    <div style="color:#64748b;font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px" id="ne-header">No Edge Found</div>
+    <div style="color:#999;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:8px" id="ne-header">No Edge Found</div>
     <div class="no-edge-list" id="ne-body"></div>
   </div>
 </div>
@@ -200,7 +235,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180de
 <div class="tab-panel" id="panel-results">
   <div id="daily-pnl"></div>
   <div id="scorecard-container"></div>
-  <div id="no-results-msg" style="display:none;background:#1e293b;border-radius:10px;padding:24px;text-align:center;color:#64748b;font-size:0.9rem">No resolved bets yet today.</div>
+  <div id="no-results-msg" style="display:none" class="no-msg">No resolved bets yet today.</div>
 </div>
 
 <!-- HISTORY TAB -->
@@ -216,29 +251,33 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:linear-gradient(180de
 <!-- BANKROLL TAB -->
 <div class="tab-panel" id="panel-bankroll">
   <div class="br-grid" id="br-cards"></div>
-  <div style="color:#64748b;font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Performance</div>
+  <div style="color:#999;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:12px">Performance</div>
   <div class="summary" id="perf-summary"></div>
 </div>
 
 <!-- HOW IT WORKS TAB -->
 <div class="tab-panel" id="panel-how">
-  <h2 style="color:#fff;margin-bottom:16px">How It Works</h2>
-  <div style="background:#1e293b;border-radius:10px;padding:20px;margin-bottom:20px;font-size:0.88rem;color:#94a3b8;line-height:1.7">
-    <div style="color:#fff;font-weight:700;margin-bottom:8px">The Edge</div>
+  <h2 style="color:#222;margin-bottom:20px;font-size:1.3rem">How It Works</h2>
+  <div style="background:#fff;border:1px solid #ddd;border-radius:4px;padding:20px;margin-bottom:20px;font-size:0.9rem;color:#666;line-height:1.7">
+    <div style="color:#222;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.2px">The Edge</div>
     DraftKings sets odds that imply a probability for each outcome. Our model independently estimates the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
-    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Kelly Criterion Sizing</div>
+
+    <div style="color:#222;font-weight:800;margin:16px 0 8px;text-transform:uppercase;letter-spacing:0.2px">Kelly Criterion Sizing</div>
     Instead of betting the same amount on every pick, Kelly sizes each bet proportional to your edge. Bigger edge = bigger bet. A 9% edge gets roughly 3x the wager of a 3% edge. We use half-Kelly (conservative) to reduce volatility — you'll grow slower but survive losing streaks.
-    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Safety Rails</div>
+
+    <div style="color:#222;font-weight:800;margin:16px 0 8px;text-transform:uppercase;letter-spacing:0.2px">Safety Rails</div>
     Max 5% of bankroll on any single bet. Max 15% total daily exposure. Confirmed tanking teams get a 3% penalty. Back-to-back games get a 1.5-2.5% penalty. If a pick conflicts with sharp money movement, Kelly fraction drops 25%.
-    <div style="color:#fff;font-weight:700;margin:16px 0 8px">Bankroll Tracking</div>
+
+    <div style="color:#222;font-weight:800;margin:16px 0 8px;text-transform:uppercase;letter-spacing:0.2px">Bankroll Tracking</div>
     When you place bets, the wagered amount is immediately deducted from your available bankroll. Wins add back the wager + profit. Losses stay deducted. This means the number you see is always your real available cash.
   </div>
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
   <div id="system-status" style="margin-bottom:8px"></div>
   All models carry uncertainty. Edges are probabilistic, not guarantees. Bet responsibly.<br>
-  DK Edge Finder &middot; DraftKings Oregon
+  Betting Dashboard &middot; DraftKings Oregon
 </div>
 
 </div>
@@ -282,10 +321,10 @@ function render(d){
 
   // Stats strip
   document.getElementById('stats').innerHTML=`
-    <div class="stat"><div class="stat-label">Available</div><div class="stat-val" style="color:#4ade80">$${amt.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Record</div><div class="stat-val" style="color:${rec.wins>rec.losses?'#4ade80':rec.losses>rec.wins?'#f87171':'#fff'}">${rec.wins}-${rec.losses}-${rec.pushes}</div></div>
-    <div class="stat"><div class="stat-label">P/L</div><div class="stat-val" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'#facc15':'#a78bfa'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')':((d.picks||[]).length)}</div></div>
+    <div class="stat"><div class="stat-label">Available</div><div class="stat-val" style="color:#080">$${amt.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">Record</div><div class="stat-val" style="color:${rec.wins>rec.losses?'#080':rec.losses>rec.wins?'#c00':'#222'}">${rec.wins}-${rec.losses}-${rec.pushes}</div></div>
+    <div class="stat"><div class="stat-label">P/L</div><div class="stat-val" style="color:${profit>=0?'#080':'#c00'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
+    <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'#d90':'#0066cc'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')':((d.picks||[]).length)}</div></div>
   `;
 
   // Tab badges
@@ -297,21 +336,22 @@ function render(d){
   // Today's bets
   const pending=todayBets.filter(x=>x.outcome==='pending');
 
-  // Result banners for unresolved picks
+  // Result banners for bets
   let bannersHtml='';
   resolved.forEach(bet=>{
-    const cls=bet.outcome==='win'?'result-w':bet.outcome==='loss'?'result-l':'result-p';
     const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-    const pnlColor=pnl>=0?'#4ade80':'#f87171';
-    bannersHtml+=`<div class="result" style="background:${bet.outcome==='win'?'rgba(74,222,128,0.08)':bet.outcome==='loss'?'rgba(248,113,113,0.08)':'rgba(250,204,21,0.08)'};border:1px solid ${bet.outcome==='win'?'rgba(74,222,128,0.25)':bet.outcome==='loss'?'rgba(248,113,113,0.25)':'rgba(250,204,21,0.25)'};border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-      <div><span style="font-weight:600;color:#fff;font-size:0.9rem">${bet.pick}</span> <span style="color:#94a3b8;font-size:0.82rem">${bet.final_score||''}</span></div>
-      <div style="font-weight:700;font-family:'JetBrains Mono','SF Mono',monospace;font-size:0.9rem;color:${pnlColor}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+    const pnlColor=pnl>=0?'#080':'#c00';
+    const bgColor=bet.outcome==='win'?'#f0fff0':bet.outcome==='loss'?'#fff0f0':'#f0f8ff';
+    const borderColor=bet.outcome==='win'?'#080':bet.outcome==='loss'?'#c00':'#0066cc';
+    bannersHtml+=`<div style="background:${bgColor};border:1px solid ${borderColor};border-left:4px solid ${borderColor};border-radius:4px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><span style="font-weight:700;color:#222;font-size:0.9rem">${bet.pick}</span> <span style="color:#999;font-size:0.8rem">${bet.final_score||''}</span></div>
+      <div style="font-weight:800;font-family:'Courier New',monospace;font-size:0.9rem;color:${pnlColor}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
     </div>`;
   });
   pending.forEach(bet=>{
-    bannersHtml+=`<div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.25);border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-      <div><span style="font-weight:600;color:#fff;font-size:0.9rem">${bet.pick}</span> <span class="badge b-pending">PENDING</span></div>
-      <div style="font-weight:700;font-family:'JetBrains Mono','SF Mono',monospace;color:#60a5fa">$${bet.wager.toFixed(2)} at risk</div>
+    bannersHtml+=`<div style="background:#f0f8ff;border:1px solid #0066cc;border-left:4px solid #0066cc;border-radius:4px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><span style="font-weight:700;color:#222;font-size:0.9rem">${bet.pick}</span> <span class="badge b-pending">PENDING</span></div>
+      <div style="font-weight:700;font-family:'Courier New',monospace;color:#0066cc">$${bet.wager.toFixed(2)} at risk</div>
     </div>`;
   });
   document.getElementById('result-banners').innerHTML=bannersHtml;
@@ -320,9 +360,9 @@ function render(d){
   const alertEl=document.getElementById('alert-box');
   const unplaced=(d.picks||[]).filter(p=>!p.status||p.status==='');
   if(d.best_bet&&unplaced.length>0){
-    alertEl.innerHTML=`<div style="background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(139,92,246,0.1));border:1px solid rgba(59,130,246,0.3);border-radius:10px;padding:14px 16px;margin-bottom:16px">
-      <div style="font-weight:700;color:#60a5fa;font-size:0.9rem">${d.best_bet.title}</div>
-      <div style="color:#94a3b8;font-size:0.82rem;margin-top:2px">${d.best_bet.desc}</div>
+    alertEl.innerHTML=`<div class="alert-box">
+      <div class="alert-box-title">${d.best_bet.title}</div>
+      <div class="alert-box-desc">${d.best_bet.desc}</div>
     </div>`;
   }else{alertEl.innerHTML='';}
 
@@ -339,7 +379,7 @@ function render(d){
     const hasUnplaced=d.picks.some(p=>!p.status||p.status==='');
     if(hasUnplaced){
       const totalW=d.picks.filter(p=>!p.status||p.status==='').reduce((s,p)=>s+parseFloat(p.bet.replace('$','')),0);
-      placeBar.innerHTML=`<button class="btn-place-all" onclick="placeAll()">Place All Bets · $${totalW.toFixed(2)}</button>`;
+      placeBar.innerHTML=`<div class="btn-place-all-wrapper"><button class="btn-place-all" onclick="placeAll()">Place All Bets • $${totalW.toFixed(2)}</button></div>`;
     }
 
     d.picks.forEach((p,i)=>{
@@ -369,13 +409,15 @@ function render(d){
       }
 
       let resultLine='';
-      if(p.result)resultLine=`<div style="color:#fff;font-weight:600;margin-top:4px">${p.result}</div>`;
+      if(p.result)resultLine=`<div style="color:#222;font-weight:700;margin-top:4px">${p.result}</div>`;
+
+      const cardCls=isPlaced?'pick-card placed':'pick-card unplaced';
 
       cardsEl.innerHTML+=`
-        <div class="pick-card" id="card-${i}" onclick="toggleAnalysis(${i})">
+        <div class="${cardCls}" id="card-${i}" onclick="toggleAnalysis(${i})">
           <div class="pick-top">
             <div class="pick-left">
-              <div class="pick-title">${p.pick} <span style="color:#60a5fa;font-weight:500;font-size:0.9rem">${p.odds}</span></div>
+              <div class="pick-title">${p.pick} <span class="odds">${p.odds}</span></div>
               <div class="pick-meta">${p.sport} · ${p.event} · ${p.market} · <span class="badge ${tierCls}">${p.tier}</span></div>
             </div>
             <div class="pick-right">
@@ -384,10 +426,10 @@ function render(d){
             </div>
           </div>
           <div class="pick-grid">
-            <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:#60a5fa">${p.odds}</div></div>
+            <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:#0066cc">${p.odds}</div></div>
             <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:#4ade80">${p.model||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:#a78bfa">+${p.edge}%</div></div>
+            <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:#080">${p.model||'—'}</div></div>
+            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:#0066cc">+${p.edge}%</div></div>
           </div>
           <div class="pick-analysis" id="analysis-${i}">
             ${p.notes||''}
@@ -426,7 +468,7 @@ function render(d){
 
   // System status
   document.getElementById('system-status').innerHTML=`
-    <span style="color:#64748b">Last scan: ${d.scan_date} · Next scan: 6 AM PT · Auto-resolve: 10 PM PT · <span style="color:#4ade80">System active</span></span>
+    <span style="color:#999">Last scan: ${d.scan_date} · Next scan: 6 AM PT · Auto-resolve: 10 PM PT · <span style="color:#080">System active</span></span>
   `;
 }
 
@@ -454,10 +496,11 @@ function renderResults(d,todayBets){
     totalPnl+=pnl;
   });
   if(w>0||l>0||pending.length>0){
+    const borderColor=totalPnl>=0?'#080':'#c00';
     pnlDiv.innerHTML=`
-      <div class="daily-pnl">
+      <div class="daily-pnl" style="border-left-color:${borderColor}">
         <div class="daily-pnl-title">Tonight</div>
-        <div class="daily-pnl-main" style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(2)}</div>
+        <div class="daily-pnl-main" style="color:${totalPnl>=0?'#080':'#c00'}">${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(2)}</div>
         <div class="daily-pnl-record">${w}W-${l}L${pending.length>0?' · '+pending.length+' pending':''}</div>
       </div>
     `;
@@ -477,20 +520,20 @@ function renderResults(d,todayBets){
       awayTeam=scoreMatch[3];awayScore=scoreMatch[4];
     }
 
+    const cardCls=isWin?'scorecard win':bet.outcome==='loss'?'scorecard loss':'scorecard pending';
+
     container.innerHTML+=`
-      <div class="scorecard" id="sc-${bet.pick}">
+      <div class="${cardCls}" id="sc-${bet.pick}">
         <div class="sc-header">
           <div class="sc-title">${bet.sport} · ${bet.event}</div>
         </div>
-        <div class="sc-body">
+        <div>
           <div class="sc-score">
             <div class="sc-score-main">${homeScore} – ${awayScore}</div>
-            <div class="sc-score-sub">
-              <div style="color:#94a3b8;font-size:0.8rem">${homeTeam} vs ${awayTeam}</div>
-            </div>
+            <div class="sc-score-sub">${homeTeam} vs ${awayTeam}</div>
           </div>
           <div class="sc-result ${isWin?'win':'loss'}">${isWin?'COVERED':'DID NOT COVER'} ${bet.pick.match(/([+-]\d+\.?\d*)/)?'('+bet.pick.match(/([+-]\d+\.?\d*)/)[1]+')':''}</div>
-          <div class="sc-pick">Your pick: <strong style="color:#e2e8f0">${bet.pick}</strong> at <strong style="color:#60a5fa">${bet.odds}</strong></div>
+          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:#0066cc">${bet.odds}</strong></div>
           <div class="sc-pnl ${isWin?'win':'loss'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
           <div class="sc-analysis" id="sca-${bet.pick}">
             <div><strong>Wager:</strong> $${bet.wager.toFixed(2)}</div>
@@ -505,14 +548,14 @@ function renderResults(d,todayBets){
   // Pending scorecards
   pending.forEach(bet=>{
     container.innerHTML+=`
-      <div class="scorecard" style="border-color:#475569">
-        <div class="sc-header" style="background:rgba(96,165,250,0.1)">
-          <div class="sc-title" style="color:#60a5fa">PENDING · ${bet.event}</div>
+      <div class="scorecard pending">
+        <div class="sc-header" style="background:#f0f8ff">
+          <div class="sc-title" style="color:#0066cc">PENDING · ${bet.event}</div>
         </div>
-        <div class="sc-body">
-          <div class="sc-result" style="color:#60a5fa">IN PROGRESS</div>
-          <div class="sc-pick">Your pick: <strong style="color:#e2e8f0">${bet.pick}</strong> at <strong style="color:#60a5fa">${bet.odds}</strong></div>
-          <div class="sc-pnl" style="color:#60a5fa">$${bet.wager.toFixed(2)} at risk</div>
+        <div>
+          <div class="sc-result pending">IN PROGRESS</div>
+          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:#0066cc">${bet.odds}</strong></div>
+          <div class="sc-pnl pending">$${bet.wager.toFixed(2)} at risk</div>
         </div>
       </div>
     `;
@@ -554,7 +597,7 @@ function renderHistory(d){
     });
     totalPnl+=dayPnl;
 
-    // Track for chart — only if this day has resolved bets
+    // Track for chart
     const hasResolved=dayBets.some(b=>b.outcome==='win'||b.outcome==='loss'||b.outcome==='push');
     if(hasResolved){
       pnlData.push({date:date,pnl:totalPnl});
@@ -581,7 +624,7 @@ function renderHistory(d){
               </div>
               <div class="hist-item-right">
                 <div class="hist-item-result">${resultBadge}</div>
-                <div class="hist-item-pnl" style="color:${pnl>=0?'#4ade80':'#f87171'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+                <div class="hist-item-pnl" style="color:${pnl>=0?'#080':'#c00'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
               </div>
             </div>
           `;
@@ -598,8 +641,8 @@ function renderHistory(d){
   histSum.innerHTML=`
     <span><strong>Record:</strong> ${totalW}W-${totalL}L-${totalP}P</span>
     <span><strong>Wagered:</strong> $${totalWager.toFixed(2)}</span>
-    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
-    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'#4ade80':'#f87171'}">${roi}%</span></span>
+    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'#080':'#c00'}">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'#080':'#c00'}">${roi}%</span></span>
   `;
 }
 
@@ -623,36 +666,35 @@ function drawPnlChart(data){
 
   // Zero line
   const y0=yScale(0);
-  svg.innerHTML+=`<line x1="${padding}" y1="${y0}" x2="${width-padding}" y2="${y0}" stroke="#334155" stroke-width="1" stroke-dasharray="4,4"/>`;
+  svg.innerHTML+=`<line x1="${padding}" y1="${y0}" x2="${width-padding}" y2="${y0}" stroke="#ddd" stroke-width="1" stroke-dasharray="4,4"/>`;
 
   // Chart area background
   if(maxPnl>0){
-    const points=data.map((d,i)=>`${xScale(i)},${yScale(d.pnl)}`).join(' ');
     const pathFill=[`M${xScale(0)},${y0}`,...data.map((d,i)=>`L${xScale(i)},${yScale(d.pnl)}`),`L${xScale(data.length-1)},${y0}`].join(' ');
-    svg.innerHTML+=`<path d="${pathFill}" fill="url(#grad)" opacity="0.3"/>`;
+    svg.innerHTML+=`<path d="${pathFill}" fill="url(#grad)" opacity="0.2"/>`;
   }
 
   // Gradient
   svg.innerHTML=`<defs><linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" style="stop-color:#4ade80;stop-opacity:0.4"/><stop offset="100%" style="stop-color:#4ade80;stop-opacity:0"/></linearGradient></defs>${svg.innerHTML}`;
+    <stop offset="0%" style="stop-color:#080;stop-opacity:0.4"/><stop offset="100%" style="stop-color:#080;stop-opacity:0"/></linearGradient></defs>${svg.innerHTML}`;
 
   // Line
   const line=data.map((d,i)=>`${i===0?'M':'L'}${xScale(i)},${yScale(d.pnl)}`).join(' ');
-  svg.innerHTML+=`<path d="${line}" stroke="${maxPnl>0?'#4ade80':'#f87171'}" stroke-width="2" fill="none"/>`;
+  svg.innerHTML+=`<path d="${line}" stroke="${maxPnl>0?'#080':'#c00'}" stroke-width="2" fill="none"/>`;
 
   // Points
   data.forEach((d,i)=>{
-    svg.innerHTML+=`<circle cx="${xScale(i)}" cy="${yScale(d.pnl)}" r="3" fill="${d.pnl>=0?'#4ade80':'#f87171'}" stroke="#0f172a" stroke-width="1"/>`;
+    svg.innerHTML+=`<circle cx="${xScale(i)}" cy="${yScale(d.pnl)}" r="3" fill="${d.pnl>=0?'#080':'#c00'}" stroke="#fff" stroke-width="1"/>`;
   });
 
   // Axes
-  svg.innerHTML+=`<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height-padding}" stroke="#334155" stroke-width="1"/>`;
-  svg.innerHTML+=`<line x1="${padding}" y1="${height-padding}" x2="${width-padding}" y2="${height-padding}" stroke="#334155" stroke-width="1"/>`;
+  svg.innerHTML+=`<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height-padding}" stroke="#ddd" stroke-width="1"/>`;
+  svg.innerHTML+=`<line x1="${padding}" y1="${height-padding}" x2="${width-padding}" y2="${height-padding}" stroke="#ddd" stroke-width="1"/>`;
 
   // Labels
-  svg.innerHTML+=`<text x="${padding-5}" y="${height-padding+3}" text-anchor="end" font-size="11" fill="#64748b">$0</text>`;
-  if(maxPnl>0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(maxPnl)+3}" text-anchor="end" font-size="11" fill="#4ade80">$${maxPnl.toFixed(0)}</text>`;
-  if(minPnl<0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(minPnl)+3}" text-anchor="end" font-size="11" fill="#f87171">$${minPnl.toFixed(0)}</text>`;
+  svg.innerHTML+=`<text x="${padding-5}" y="${height-padding+3}" text-anchor="end" font-size="11" fill="#999">$0</text>`;
+  if(maxPnl>0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(maxPnl)+3}" text-anchor="end" font-size="11" fill="#080">$${maxPnl.toFixed(0)}</text>`;
+  if(minPnl<0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(minPnl)+3}" text-anchor="end" font-size="11" fill="#c00">$${minPnl.toFixed(0)}</text>`;
 }
 
 function renderBankroll(d,b,rec,amt,profit){
@@ -670,16 +712,16 @@ function renderBankroll(d,b,rec,amt,profit){
   });
 
   document.getElementById('br-cards').innerHTML=`
-    <div class="br-card"><div class="br-label">Available</div><div class="br-val" style="color:#4ade80">$${amt.toFixed(2)}</div><div class="br-sub">After pending</div></div>
-    <div class="br-card"><div class="br-label">Starting</div><div class="br-val" style="color:#fff">$${(b.starting||500).toFixed(2)}</div></div>
-    <div class="br-card"><div class="br-label">Lifetime P/L</div><div class="br-val" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
-    <div class="br-card"><div class="br-label">Record</div><div class="br-val" style="color:${rec.wins>rec.losses?'#4ade80':'#fff'}">${rec.wins}W-${rec.losses}L-${rec.pushes}P</div><div class="br-sub">${winRate}% win rate</div></div>
+    <div class="br-card"><div class="br-label">Available</div><div class="br-val" style="color:#080">$${amt.toFixed(2)}</div><div class="br-sub">After pending</div></div>
+    <div class="br-card"><div class="br-label">Starting</div><div class="br-val">$${(b.starting||500).toFixed(2)}</div></div>
+    <div class="br-card"><div class="br-label">Lifetime P/L</div><div class="br-val" style="color:${profit>=0?'#080':'#c00'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
+    <div class="br-card"><div class="br-label">Record</div><div class="br-val" style="color:${rec.wins>rec.losses?'#080':'#222'}">${rec.wins}W-${rec.losses}L-${rec.pushes}P</div><div class="br-sub">${winRate}% win rate</div></div>
   `;
   document.getElementById('perf-summary').innerHTML=`
     <span><strong>Total Bets:</strong> ${totalGames}</span>
     <span><strong>Avg Wager:</strong> $${totalGames>0?(totalWager/totalGames).toFixed(2):'0.00'}</span>
-    <span><strong>ROI:</strong> <span style="color:${profit>=0?'#4ade80':'#f87171'}">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
-    <span><strong>Best Win:</strong> <span style="color:#4ade80">${bestWin>0?bestWinPick+' +$'+bestWin.toFixed(2):'—'}</span></span>
+    <span><strong>ROI:</strong> <span style="color:${profit>=0?'#080':'#c00'}">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
+    <span><strong>Best Win:</strong> <span style="color:#080">${bestWin>0?bestWinPick+' +$'+bestWin.toFixed(2):'—'}</span></span>
   `;
 }
 
@@ -691,8 +733,8 @@ function kellyExplainer(p,bankroll){
   const edge=p.edge;
   const wager=parseFloat(p.bet.replace('$',''));
   const pct=bankroll>0?((wager/bankroll)*100).toFixed(1):'?';
-  return `<div style="margin-top:8px;padding-top:8px;border-top:1px solid #334155;color:#64748b;font-size:0.78rem">
-    <strong style="color:#94a3b8">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.
+  return `<div style="margin-top:8px;padding-top:8px;border-top:1px solid #eee;color:#999;font-size:0.8rem">
+    <strong style="color:#666">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.
   </div>`;
 }
 
@@ -728,8 +770,8 @@ function placeAll(){
 }
 function skipBet(i){
   const c=document.getElementById('card-'+i);
-  if(c){c.style.opacity='0.35';c.style.pointerEvents='none';}
-  document.getElementById('actions-'+i).innerHTML='<span style="color:#475569;font-size:0.8rem">Skipped</span>';
+  if(c){c.style.opacity='0.5';c.style.pointerEvents='none';}
+  document.getElementById('actions-'+i).innerHTML='<span style="color:#999;font-size:0.8rem">Skipped</span>';
 }
 function promptToken(pending){
   const t=prompt('Enter GitHub personal access token (repo + workflow scope).\nStored in your browser only.');
@@ -743,5 +785,6 @@ function toast(msg){
 
 loadData();
 </script>
+
 </body>
 </html>

@@ -76,9 +76,18 @@ def get_today_iso() -> str:
     return datetime.now(pt).strftime("%Y-%m-%d")
 
 
-def fetch_nba_schedule_and_odds(date_str: str) -> list[dict]:
-    """Fetch NBA games with odds from ESPN for a given date."""
-    url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date_str}"
+def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
+    """Fetch games with odds from ESPN for a given date and sport."""
+    sport_endpoints = {
+        "nba": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date_str}",
+        "nhl": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates={date_str}",
+        "mlb": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates={date_str}",
+        "nfl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates={date_str}",
+        "mls": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates={date_str}",
+        "epl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates={date_str}",
+        "mma": "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard?dates={date_str}",
+    }
+    url = sport_endpoints.get(sport.lower(), sport_endpoints["nba"]).format(date_str=date_str)
     data = espn_fetch(url)
     games = []
 
@@ -146,7 +155,12 @@ def fetch_nba_schedule_and_odds(date_str: str) -> list[dict]:
     return games
 
 
-def fetch_dratings_predictions(date_str: str) -> dict:
+def fetch_nba_schedule_and_odds(date_str: str) -> list[dict]:
+    """Backward-compatible wrapper for NBA schedule fetching."""
+    return fetch_schedule_and_odds(date_str, "nba")
+
+
+def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
     """
     Fetch model predictions from DRatings.
     Returns dict keyed by "AWAY_NAME@HOME_NAME" with predicted scores and win probs.
@@ -154,8 +168,19 @@ def fetch_dratings_predictions(date_str: str) -> dict:
     DRatings HTML row format (pipe-separated after stripping tags):
     date | time | away_team | (away_record) | home_team | (home_record) |
     away_prob% | home_prob% | ...odds... | away_score | home_score | total | ...
+
+    sport: "nba", "nhl", or "ncaam"
     """
-    url = "https://www.dratings.com/predictor/nba-basketball-predictions/"
+    sport_urls = {
+        "nba": "https://www.dratings.com/predictor/nba-basketball-predictions/",
+        "nhl": "https://www.dratings.com/predictor/nhl-hockey-predictions/",
+        "mlb": "https://www.dratings.com/predictor/mlb-baseball-predictions/",
+        "nfl": "https://www.dratings.com/predictor/nfl-football-predictions/",
+        "mls": "https://www.dratings.com/predictor/mls-soccer-predictions/",
+        "epl": "https://www.dratings.com/predictor/epl-soccer-predictions/",
+        # MMA: DRatings doesn't have UFC predictions — will return empty, that's fine
+    }
+    url = sport_urls.get(sport.lower(), sport_urls["nba"])
     predictions = {}
 
     try:
@@ -208,9 +233,16 @@ def fetch_dratings_predictions(date_str: str) -> dict:
                 away_score = scores[0]
                 home_score = scores[1]
 
-                # Map full names to abbreviations
-                away_abbr = TEAM_NAME_TO_ABBR.get(away_name, away_name[:3].upper())
-                home_abbr = TEAM_NAME_TO_ABBR.get(home_name, home_name[:3].upper())
+                # Map full names to abbreviations based on sport
+                if sport.lower() == "nhl":
+                    team_map = NHL_TEAM_NAME_TO_ABBR
+                elif sport.lower() == "ncaam":
+                    team_map = NCAAM_TEAM_NAME_TO_ABBR
+                else:
+                    team_map = TEAM_NAME_TO_ABBR
+
+                away_abbr = team_map.get(away_name, away_name[:3].upper())
+                home_abbr = team_map.get(home_name, home_name[:3].upper())
 
                 key = f"{away_abbr}@{home_abbr}"
                 predictions[key] = {
@@ -245,6 +277,35 @@ TEAM_NAME_TO_ABBR = {
     "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX",
     "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SA",
     "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WSH",
+}
+
+# NHL team name to abbreviation mapping
+NHL_TEAM_NAME_TO_ABBR = {
+    "Anaheim Ducks": "ANA", "Arizona Coyotes": "ARI", "Boston Bruins": "BOS",
+    "Buffalo Sabres": "BUF", "Calgary Flames": "CGY", "Carolina Hurricanes": "CAR",
+    "Chicago Blackhawks": "CHI", "Colorado Avalanche": "COL", "Columbus Blue Jackets": "CBJ",
+    "Dallas Stars": "DAL", "Detroit Red Wings": "DET", "Edmonton Oilers": "EDM",
+    "Florida Panthers": "FLA", "Los Angeles Kings": "LAK", "Minnesota Wild": "MIN",
+    "Montreal Canadiens": "MTL", "Nashville Predators": "NSH", "New Jersey Devils": "NJ",
+    "New York Islanders": "NYI", "New York Rangers": "NYR", "Ottawa Senators": "OTT",
+    "Philadelphia Flyers": "PHI", "Pittsburgh Penguins": "PIT", "San Jose Sharks": "SJ",
+    "Seattle Kraken": "SEA", "St. Louis Blues": "STL", "Tampa Bay Lightning": "TB",
+    "Toronto Maple Leafs": "TOR", "Vancouver Canucks": "VAN", "Vegas Golden Knights": "VGK",
+    "Washington Capitals": "WSH", "Winnipeg Jets": "WPG",
+}
+
+# NCAAM team name to abbreviation mapping (major schools)
+NCAAM_TEAM_NAME_TO_ABBR = {
+    "Duke Blue Devils": "DUKE", "North Carolina Tar Heels": "UNC", "Kansas Jayhawks": "KU",
+    "Kentucky Wildcats": "UK", "UCLA Bruins": "UCLA", "Michigan Wolverines": "MICH",
+    "Indiana Hoosiers": "IU", "Ohio State Buckeyes": "OSU", "Gonzaga Bulldogs": "GONZ",
+    "Auburn Tigers": "AU", "Tennessee Volunteers": "TENN", "Purdue Boilermakers": "PURDUE",
+    "Alabama Crimson Tide": "BAMA", "Arizona Wildcats": "ARI", "Baylor Bears": "BAYLOR",
+    "Houston Cougars": "HOU", "Iowa Hawkeyes": "IOWA", "Marquette Golden Eagles": "MARQ",
+    "Providence Friars": "PROV", "Connecticut Huskies": "CONN", "Creighton Bluejays": "CREIGHTON",
+    "DePaul Blue Demons": "DEPAUL", "Georgetown Hoyas": "GTOWN", "Villanova Wildcats": "NOVA",
+    "Saint John's Red Storm": "SJU", "Butler Bulldogs": "BUTLER", "Dayton Flyers": "DAYTON",
+    "VCU Rams": "VCU", "San Diego State Aztecs": "SDSU", "TCU Horned Frogs": "TCU",
 }
 
 
@@ -290,7 +351,7 @@ def calc_kelly(edge: float, decimal_odds: float, fraction: float) -> float:
     return kelly * fraction
 
 
-def calculate_edge(game: dict, predictions: dict, b2b_teams: set) -> dict | None:
+def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "nba") -> dict | None:
     """
     Calculate edge for a single game's spread.
     Returns pick dict or None if no edge.
@@ -447,6 +508,113 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set) -> dict | None
     }
 
 
+def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> dict | None:
+    """
+    Calculate edge for a game's over/under (totals) market.
+    Returns pick dict or None if no edge.
+
+    For totals: model predicts away_score + home_score.
+    Compare vs ESPN over/under line.
+    Standard juice: -110.
+    """
+    home = game["home"]
+    away = game["away"]
+    home_abbr = home.get("abbr", "")
+    away_abbr = away.get("abbr", "")
+
+    # Need an over/under line
+    if game.get("over_under") is None or game["over_under"] == 0:
+        return None
+
+    # Try to find DRatings prediction
+    key = f"{away_abbr}@{home_abbr}"
+    pred = predictions.get(key)
+
+    if not pred:
+        # Try abbreviation variants for NBA
+        if sport.lower() == "nba":
+            alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+                       "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+                       "WAS": "WSH", "WSH": "WAS"}
+            alt_away = alt_map.get(away_abbr, away_abbr)
+            alt_home = alt_map.get(home_abbr, home_abbr)
+            for a in [away_abbr, alt_away]:
+                for h in [home_abbr, alt_home]:
+                    pred = predictions.get(f"{a}@{h}")
+                    if pred:
+                        break
+                if pred:
+                    break
+
+    if not pred:
+        return None
+
+    # Model predicted total
+    model_total = pred["away_score"] + pred["home_score"]
+
+    # ESPN over/under line
+    espn_total = game["over_under"]
+
+    # Determine which side to bet (under if model < line, over if model > line)
+    if model_total > espn_total:
+        pick_side = "over"
+        cushion = model_total - espn_total
+    elif model_total < espn_total:
+        pick_side = "under"
+        cushion = espn_total - model_total
+    else:
+        return None  # Exactly at line, no edge
+
+    if abs(cushion) < 0.5:
+        return None  # Less than 0.5 pts of edge, too thin
+
+    # Estimate cover probability from model total vs line
+    # Each point of cushion ≈ 1.5% cover probability, base 50%
+    # (More conservative than spreads — totals are noisier)
+    base_cover_prob = 0.50
+    cushion_boost = abs(cushion) * 0.015
+    model_prob = min(0.80, max(0.30, base_cover_prob + cushion_boost))
+
+    # Standard DK juice for totals: -110
+    dk_odds = -110
+    implied_prob = american_to_implied(dk_odds)
+
+    # Calculate edge
+    edge = model_prob - implied_prob
+
+    if edge < MIN_EDGE_HIGH:
+        return None  # Below 3% threshold
+
+    # Kelly sizing
+    decimal_odds = american_to_decimal(dk_odds)
+    kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
+
+    # Build notes
+    notes = f"DRatings: {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (total: {model_total:.1f}). Line: {espn_total}. Cushion: {cushion:.1f} pts."
+
+    return {
+        "sport": sport.upper(),
+        "event": game["event_str"],
+        "event_short": game["event_short"],
+        "market": "Over/Under",
+        "pick": f"{pick_side.upper()} {espn_total}",
+        "pick_abbr": "",
+        "odds": str(dk_odds),
+        "dk_odds_int": dk_odds,
+        "decimal_odds": decimal_odds,
+        "implied_prob": implied_prob,
+        "model_prob": model_prob,
+        "edge": round(edge * 100, 1),
+        "edge_raw": edge,
+        "tier": "High",
+        "kelly_pct": kelly_pct,
+        "notes": notes,
+        "sources": "DRatings, ESPN",
+        "tank_risk": False,
+        "spread_cushion": cushion,
+    }
+
+
 # ── Main ────────────────────────────────────────────
 def main():
     today = get_today_str()
@@ -480,27 +648,50 @@ def main():
     available = round(starting + resolved_pnl - pending_locked, 2)
     print(f"  Bankroll: ${starting:.2f} start + ${resolved_pnl:.2f} P/L - ${pending_locked:.2f} pending = ${available:.2f} available")
 
-    # Step 2: Fetch today's games
-    print(f"\n[2] Fetching NBA schedule for {today}...")
-    games = fetch_nba_schedule_and_odds(today)
+    # Step 2: Fetch games for all sports
+    print(f"\n[2] Fetching schedule for {today}...")
+    # All DraftKings Oregon sports — off-season sports return 0 games, no cost
+    all_sports = ["nba", "nhl", "mlb", "nfl", "mls", "epl", "mma"]
+    all_games = []
+    all_predictions = {}
+    game_count = 0
+
+    for sport in all_sports:
+        try:
+            games_for_sport = fetch_schedule_and_odds(today, sport)
+            print(f"  {sport.upper()}: {len(games_for_sport)} games found")
+            game_count += len(games_for_sport)
+            # Tag each game with sport
+            for g in games_for_sport:
+                g["sport"] = sport
+            all_games.extend(games_for_sport)
+        except Exception as e:
+            print(f"  {sport.upper()} fetch error: {e}", file=sys.stderr)
+
     # Filter to only games that haven't started
-    upcoming = [g for g in games if g["status"] in ("STATUS_SCHEDULED", "STATUS_PREGAME")]
-    print(f"  Found {len(games)} total games, {len(upcoming)} upcoming")
+    upcoming = [g for g in all_games if g["status"] in ("STATUS_SCHEDULED", "STATUS_PREGAME")]
+    print(f"  Found {game_count} total games, {len(upcoming)} upcoming")
 
     if not upcoming:
         print("No upcoming games. Saving empty scan.")
         data["scan_date"] = today_iso
-        data["scan_subtitle"] = f"{today_iso} — No NBA games scheduled"
+        data["scan_subtitle"] = f"{today_iso} — No games scheduled"
         data["picks"] = []
         data["no_edge_games"] = []
         DATA_JSON.write_text(json.dumps(data, indent=2) + "\n")
         return
 
-    # Step 3: Fetch model predictions
+    # Step 3: Fetch model predictions for each sport
     print("\n[3] Fetching DRatings predictions...")
-    predictions = fetch_dratings_predictions(today)
+    for sport in all_sports:
+        try:
+            preds = fetch_dratings_predictions(today, sport)
+            all_predictions[sport] = preds
+        except Exception as e:
+            print(f"  {sport.upper()} predictions error: {e}", file=sys.stderr)
+            all_predictions[sport] = {}
 
-    # Step 4: Check B2B teams
+    # Step 4: Check B2B teams (NBA only for now; NHL could use same logic)
     print("\n[4] Checking back-to-back schedule...")
     b2b_teams = fetch_yesterday_games(today)
     print(f"  Teams on B2B: {', '.join(sorted(b2b_teams)) if b2b_teams else 'none'}")
@@ -511,34 +702,43 @@ def main():
     no_edge = []
 
     for game in upcoming:
-        result = calculate_edge(game, predictions, b2b_teams)
-        if result:
-            picks.append(result)
-            print(f"  EDGE: {result['pick']} ({result['odds']}) — {result['edge']}% edge")
-        else:
-            spread_str = game.get("odds_details", "N/A")
+        sport = game.get("sport", "nba")
+        sport_preds = all_predictions.get(sport, {})
 
-            # Check if we had model data (try all abbreviation variants)
+        # Calculate spread edge for all sports that have spreads
+        result = None
+        if sport.lower() in ("nba", "nfl", "mlb", "nhl"):
+            result = calculate_edge(game, sport_preds, b2b_teams, sport)
+            if result:
+                picks.append(result)
+                print(f"  EDGE: {result['pick']} ({result['odds']}) — {result['edge']}% edge")
+
+        # Calculate totals edge for all sports
+        total_result = calculate_total_edge(game, sport_preds, sport)
+        if total_result:
+            picks.append(total_result)
+            print(f"  EDGE: {total_result['pick']} ({total_result['odds']}) — {total_result['edge']}% edge")
+
+        # Track no-edge games
+        if not (result if sport.lower() == "nba" else None) and not total_result:
+            spread_str = game.get("odds_details", "N/A")
+            ou_str = f" O/U {game.get('over_under', 'N/A')}" if game.get("over_under") else ""
+
+            # Check if we had model data
             aa, ha = game["away"]["abbr"], game["home"]["abbr"]
-            alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
-                       "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
-                       "WAS": "WSH", "WSH": "WAS"}
-            had_model = any(
-                predictions.get(f"{a}@{h}")
-                for a in [aa, alt_map.get(aa, aa)]
-                for h in [ha, alt_map.get(ha, ha)]
-            )
+            had_model = sport_preds.get(f"{aa}@{ha}") is not None
             reason = "Edge below 3% threshold" if had_model else "No model data"
 
-            # Check if it was filtered by tanking
-            home_spread = game.get("home_spread", 0) or 0
-            pick_abbr = game["home"]["abbr"] if home_spread > 0 else game["away"]["abbr"]
-            tank_info = TANK_TEAMS_2026.get(pick_abbr)
-            if tank_info and tank_info["confirmed"]:
-                reason = f"Tank penalty applied — {tank_info['reason']}"
+            # Check if it was filtered by tanking (NBA only)
+            if sport.lower() == "nba":
+                home_spread = game.get("home_spread", 0) or 0
+                pick_abbr = game["home"]["abbr"] if home_spread > 0 else game["away"]["abbr"]
+                tank_info = TANK_TEAMS_2026.get(pick_abbr)
+                if tank_info and tank_info["confirmed"]:
+                    reason = f"Tank penalty applied — {tank_info['reason']}"
 
             no_edge.append({
-                "sport": "NBA",
+                "sport": sport.upper(),
                 "event": game["event_short"],
                 "line": spread_str if spread_str else "N/A",
                 "reason": reason,
@@ -611,8 +811,14 @@ def main():
     # Keep all bets that are placed/resolved or from other dates
     existing_bets = [b for b in existing_bets if b.get("date") != today_iso or b.get("outcome") != "pending"]
 
-    # Build subtitle
-    subtitle = f"{datetime.strptime(today, '%Y%m%d').strftime('%A, %B %d, %Y')} — NBA ({len(games)} games)"
+    # Build subtitle with sport breakdown
+    date_str = datetime.strptime(today, '%Y%m%d').strftime('%A, %B %d, %Y')
+    sport_counts = {}
+    for g in all_games:
+        s = g.get("sport", "nba").upper()
+        sport_counts[s] = sport_counts.get(s, 0) + 1
+    sports_str = ", ".join([f"{s} ({count})" for s, count in sorted(sport_counts.items())])
+    subtitle = f"{date_str} — {sports_str}"
 
     # Calculate record from ALL bet history
     all_bets = existing_bets  # today's pending removed, will be re-added if placed
@@ -635,7 +841,7 @@ def main():
             "pending_total": round(pend_total, 2),
             "pending_label": f"{pend_count} bet(s) pending (${pend_total:.2f})" if pend_count > 0 else "No unsettled bets",
         },
-        "games_analyzed": len(games),
+        "games_analyzed": len(all_games),
         "best_bet": best_bet,
         "picks": formatted_picks,
         "no_edge_games": no_edge,
