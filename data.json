@@ -4,11 +4,11 @@
   "bankroll": {
     "available": 583.92,
     "starting": 500.00,
-    "profit": 93.01,
-    "record": { "wins": 3, "losses": 1, "pushes": 0 },
-    "pending_count": 1,
-    "pending_total": 11.50,
-    "pending_label": "1 bet pending (Kings +13.5, $11.50)"
+    "profit": 81.51,
+    "record": { "wins": 3, "losses": 2, "pushes": 0 },
+    "pending_count": 0,
+    "pending_total": 0,
+    "pending_label": ""
   },
   "games_analyzed": 19,
   "best_bet": {
@@ -62,9 +62,9 @@
       "edge": 3.5,
       "tier": "High",
       "bet": "$11.50",
-      "status": "PENDING",
-      "result": "SAS 114, SAC 81 — Q4 in progress, Spurs up 33",
-      "notes": "Game still in progress. Spurs up 33 in Q4 — virtually a loss. Will resolve when final.",
+      "status": "LOSS",
+      "result": "SAS 132, SAC 104 — Spurs by 28, +13.5 doesn't cover",
+      "notes": "Spurs dominated wire-to-wire, winning by 28. Kings +13.5 needed to lose by 13 or fewer. Wembanyama 18pts, Fox 15pts for SAS.",
       "sources": "Dimers, Action Network"
     }
   ],
@@ -111,7 +111,8 @@
       "decimal_odds": 1.893,
       "edge": "3.5%",
       "wager": 11.50,
-      "outcome": "pending"
+      "outcome": "loss",
+      "pnl": -11.50
     },
     {
       "date": "2026-03-16",
