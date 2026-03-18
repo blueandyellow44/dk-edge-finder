@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK Edge Finder</title>
+<style>
+  :root {
+    --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a;
+    --text: #e4e4e7; --muted: #9ca3af;
+    --green: #22c55e; --green-bg: rgba(34,197,94,0.12);
+    --yellow: #eab308; --yellow-bg: rgba(234,179,8,0.12);
+    --orange: #f97316; --orange-bg: rgba(249,115,22,0.12);
+    --red: #ef4444; --red-bg: rgba(239,68,68,0.12);
+    --blue: #3b82f6; --blue-bg: rgba(59,130,246,0.12);
+    --accent: #8b5cf6; --accent-bg: rgba(139,92,246,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    padding: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1 { font-size: 1.5rem; font-weight: 700; }
+  h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 12px; }
+
+  /* Header */
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left h1 { margin-bottom: 4px; }
+  .header-left .subtitle { color: var(--muted); font-size: 0.9rem; }
+  .stats-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 20px; min-width: 130px; text-align: center;
+  }
+  .stat-card .label {
+    font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .stat-card .value { font-size: 1.4rem; font-weight: 700; margin-top: 2px; }
+
+  /* Alert */
+  .alert-banner {
+    background: linear-gradient(135deg, var(--accent-bg), var(--blue-bg));
+    border: 1px solid var(--accent); border-radius: 10px; padding: 16px 20px;
+    margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+  }
+  .alert-banner.no-edge {
+    background: linear-gradient(135deg, var(--yellow-bg), var(--orange-bg));
+    border-color: var(--yellow);
+  }
+  .alert-banner .icon { font-size: 1.5rem; }
+  .alert-banner .content { flex: 1; }
+  .alert-banner .title { font-weight: 600; font-size: 0.95rem; }
+  .alert-banner .desc { color: var(--muted); font-size: 0.85rem; }
+
+  /* Stale warning */
+  .stale-warning {
+    background: var(--orange-bg); border: 1px solid var(--orange); border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 16px; color: var(--orange); font-size: 0.85rem;
+  }
+
+  /* Drawdown warning */
+  .drawdown-warning {
+    background: var(--red-bg); border: 1px solid var(--red); border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 12px; color: var(--red); font-size: 0.85rem; font-weight: 600;
+  }
+
+  /* No-picks message */
+  .no-picks {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 32px; text-align: center; color: var(--muted); font-size: 0.95rem;
+  }
+
+  /* Sections */
+  .section { margin-bottom: 28px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead th {
+    text-align: left; padding: 10px 12px; font-size: 0.75rem;
+    text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td { padding: 12px; vertical-align: top; }
+
+  /* Overflow */
+  .table-wrap { overflow-x: auto; }
+
+  /* Badges */
+  .tier-badge {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .tier-high { background: var(--green-bg); color: var(--green); }
+  .tier-medium { background: var(--yellow-bg); color: var(--yellow); }
+  .tier-low { background: var(--orange-bg); color: var(--orange); }
+
+  .outcome-badge {
+    display: inline-block; padding: 3px 12px; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  }
+  .outcome-win { background: var(--green-bg); color: var(--green); }
+  .outcome-loss { background: var(--red-bg); color: var(--red); }
+  .outcome-push { background: var(--yellow-bg); color: var(--yellow); }
+  .outcome-pending { background: var(--blue-bg); color: var(--blue); }
+
+  .status-placed {
+    display: inline-block; padding: 2px 8px; border-radius: 8px;
+    font-size: 0.7rem; font-weight: 600; background: var(--accent-bg); color: var(--accent);
+    margin-left: 6px;
+  }
+
+  /* Values */
+  .edge-val { font-weight: 700; }
+  .edge-positive { color: var(--green); }
+  .pick-cell { font-weight: 600; }
+  .odds-cell { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; }
+  .pnl-positive { color: var(--green); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .pnl-negative { color: var(--red); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .pnl-zero { color: var(--muted); font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+
+  /* Expandable rows */
+  .expandable { cursor: pointer; }
+  .expand-icon {
+    display: inline-block; transition: transform 0.2s; margin-right: 6px; font-size: 0.75rem;
+  }
+  .expand-icon.open { transform: rotate(90deg); }
+  .detail-row { display: none; }
+  .detail-row.open { display: table-row; }
+  .detail-row td {
+    padding: 8px 12px 16px 36px; color: var(--muted); font-size: 0.82rem;
+    line-height: 1.6; background: rgba(255,255,255,0.02);
+  }
+
+  /* Bankroll cards */
+  .bankroll-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;
+  }
+  .bankroll-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px;
+  }
+  .bankroll-card h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .bankroll-card .big { font-size: 2rem; font-weight: 700; }
+  .bankroll-card .sub { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+  /* Summary bar */
+  .summary-bar {
+    margin-top: 12px; padding: 12px 16px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 0.85rem; color: var(--muted);
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+
+  /* Resolve dropdown */
+  .resolve-select {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 4px 8px; font-size: 0.75rem; color: var(--text);
+    cursor: pointer; outline: none;
+  }
+  .resolve-select:focus { border-color: var(--accent); }
+
+  /* No-edge games */
+  .no-edge-table { margin-top: 8px; }
+  .no-edge-table td { color: var(--muted); font-size: 0.82rem; padding: 8px 12px; }
+  .no-edge-table .reason { font-style: italic; }
+  .no-edge-toggle {
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 14px; color: var(--muted); font-size: 0.8rem; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .no-edge-toggle:hover { border-color: var(--accent); color: var(--text); }
+
+  /* Footer */
+  .footer {
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 0.8rem; text-align: center; line-height: 1.8;
+  }
+
+  /* Last updated pulse */
+  .last-updated {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; color: var(--muted); margin-top: 4px;
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6); display: flex; align-items: center;
+    justify-content: center; z-index: 50; padding: 16px;
+  }
+  .modal {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; width: 100%; max-width: 420px;
+  }
+  .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+  .modal .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 4px; }
+  .modal .kelly-suggest { color: var(--green); font-weight: 600; }
+  .modal-input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px; color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.95rem;
+    margin: 12px 0 16px; outline: none;
+  }
+  .modal-input:focus { border-color: var(--accent); }
+  .modal-buttons { display: flex; gap: 12px; }
+  .btn-confirm {
+    flex: 1; background: var(--accent); color: white; border: none;
+    border-radius: 8px; padding: 10px; font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-confirm:hover { opacity: 0.85; }
+  .btn-cancel {
+    padding: 10px 16px; background: none; border: 1px solid var(--border);
+    border-radius: 8px; color: var(--muted); cursor: pointer;
+    font-size: 0.9rem; transition: color 0.15s;
+  }
+  .btn-cancel:hover { color: var(--text); }
+  .cap-warning { color: var(--yellow); font-size: 0.8rem; margin-bottom: 8px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .stats-row { flex-direction: column; }
+    .bankroll-grid { grid-template-columns: 1fr; }
+    table { font-size: 0.8rem; }
+    td, th { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>DK Edge Finder</h1>
+    <div class="subtitle" id="subtitle">Loading...</div>
+    <div class="last-updated"><span class="pulse"></span> <span id="updated-time">...</span></div>
+  </div>
+  <div class="stats-row" id="stats-row"></div>
+</div>
+
+<div id="stale-container"></div>
+<div id="alert-container"></div>
+
+<div class="section">
+  <h2>Flagged Edges</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Sport</th><th>Event</th><th>Market</th><th>Pick</th>
+          <th>DK Odds</th><th>Implied %</th><th>Model %</th><th>Edge %</th>
+          <th>Tier</th><th>Bet Size</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="picks-body"></tbody>
+    </table>
+  </div>
+  <div id="no-picks" class="no-picks" style="display:none">No edges flagged for today. Check back tomorrow at 6 AM.</div>
+</div>
+
+<div class="section" id="no-edge-section" style="display:none">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+    <h2 style="margin-bottom:0">Games Without Edges</h2>
+    <button class="no-edge-toggle" id="no-edge-toggle">Show</button>
+  </div>
+  <div id="no-edge-wrap" style="display:none">
+    <div class="table-wrap">
+      <table class="no-edge-table">
+        <thead>
+          <tr><th>Sport</th><th>Event</th><th>Line</th><th>Why No Edge</th></tr>
+        </thead>
+        <tbody id="no-edge-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Bankroll &amp; Tracking</h2>
+  <div id="drawdown-warning"></div>
+  <div class="bankroll-grid" id="bankroll-cards"></div>
+</div>
+
+<div class="section">
+  <h2>Placed Bets &mdash; All Time</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th><th>Sport</th><th>Event</th><th>Pick</th><th>Odds</th>
+          <th>Edge</th><th>Wager</th><th>Result</th><th>P/L</th>
+        </tr>
+      </thead>
+      <tbody id="bets-body"></tbody>
+    </table>
+  </div>
+  <div class="summary-bar" id="bets-summary"></div>
+</div>
+
+<div class="footer">
+  All models carry uncertainty. Edge estimates are probabilistic, not guarantees. Bet responsibly.<br>
+  DK Edge Finder &bull; DraftKings Oregon &bull; Auto-updates daily at 6 AM PT
+</div>
+
+<!-- Modal for logging bets -->
+<div id="modal-overlay" class="modal-overlay" style="display:none"></div>
+
+<script>
+// ── State ──
+let DATA = null;
+let localOverrides = {};  // bet outcome overrides saved in localStorage
+
+const STORAGE_KEY = 'dk-edge-overrides';
+const BANKROLL_KEY = 'dk-edge-bankroll';
+
+function loadOverrides() {
+  try { localOverrides = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { localOverrides = {}; }
+}
+function saveOverrides() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(localOverrides));
+}
+
+// Bankroll override (manual sync)
+function loadBankrollOverride() {
+  try { return JSON.parse(localStorage.getItem(BANKROLL_KEY)); } catch { return null; }
+}
+function saveBankrollOverride(val) {
+  localStorage.setItem(BANKROLL_KEY, JSON.stringify(val));
+}
+
+// ── Kelly ──
+function toDecimalOdds(oddsStr) {
+  const odds = parseInt(oddsStr, 10);
+  if (isNaN(odds)) return 1;
+  return odds < 0 ? 1 + 100 / Math.abs(odds) : 1 + odds / 100;
+}
+
+function kellyBetSize(edgePct, oddsStr, tier, bankroll) {
+  const TIER_FRACTION = { High: 0.5, Medium: 0.25, Low: 0.125 };
+  const TIER_MIN_EDGE = { High: 0.03, Medium: 0.05, Low: 0.08 };
+  const MAX_BET_PCT = 0.05;
+
+  const edge = edgePct / 100;
+  const minEdge = TIER_MIN_EDGE[tier] || 0.03;
+  if (edge < minEdge) return { betSize: 0, capped: false };
+
+  const decOdds = toDecimalOdds(oddsStr);
+  const kf = (edge * decOdds - (1 - edge)) / (decOdds - 1);
+  if (kf <= 0) return { betSize: 0, capped: false };
+
+  const frac = kf * (TIER_FRACTION[tier] || 0.25);
+  const maxBet = bankroll * MAX_BET_PCT;
+  const raw = frac * bankroll;
+  return { betSize: Math.round(Math.min(raw, maxBet) * 100) / 100, capped: raw > maxBet };
+}
+
+// ── Compute live bankroll from base + resolved overrides ──
+function computeBankroll(d) {
+  const override = loadBankrollOverride();
+  // Start with the pre-bet bankroll from data.json (before today's bets)
+  let current = d.bankroll.pre_bet || d.bankroll.available || d.bankroll.current || 500;
+  const starting = override?.starting ?? d.bankroll.starting ?? 500;
+
+  // Apply all bet resolutions from localStorage overrides
+  d.bets.forEach(bet => {
+    const key = betKey(bet);
+    const ov = localOverrides[key];
+    if (ov && ov !== 'pending') {
+      const decOdds = bet.decimal_odds || toDecimalOdds(bet.odds);
+      if (ov === 'win') current += bet.wager * (decOdds - 1);
+      else if (ov === 'loss') current -= bet.wager;
+      // push = no change
+    }
+  });
+
+  // Subtract pending wagers (money at risk)
+  let pendingTotal = 0;
+  d.bets.forEach(bet => {
+    const outcome = getOutcome(bet);
+    if (outcome === 'pending') pendingTotal += bet.wager;
+  });
+
+  return {
+    current: Math.round(current * 100) / 100,
+    available: Math.round((current - pendingTotal) * 100) / 100,
+    starting,
+    profit: Math.round((current - starting) * 100) / 100,
+    pendingTotal,
+  };
+}
+
+// ── Helpers ──
+function betKey(bet) {
+  return `${bet.date}|${bet.pick}|${bet.wager}`;
+}
+
+function getOutcome(bet) {
+  const key = betKey(bet);
+  if (localOverrides[key]) return localOverrides[key];
+  return bet.outcome || 'pending';
+}
+
+// ── Load & Render ──
+async function loadData() {
+  loadOverrides();
+  try {
+    const resp = await fetch('../data.json?' + Date.now());
+    DATA = await resp.json();
+    renderAll(DATA);
+  } catch (e) {
+    document.getElementById('subtitle').textContent = 'Error loading data';
+    console.error(e);
+  }
+}
+
+function renderAll(d) {
+  const br = computeBankroll(d);
+
+  // Subtitle & updated time
+  document.getElementById('subtitle').textContent = d.scan_subtitle;
+  document.getElementById('updated-time').textContent = 'Last scan: ' + d.scan_date;
+
+  // Stats row
+  const profitColor = br.profit >= 0 ? 'color:var(--green)' : 'color:var(--red)';
+  const profitSign = br.profit >= 0 ? '+' : '';
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><div class="label">Bankroll</div><div class="value" style="color:var(--blue)">$${br.current.toFixed(2)}</div></div>
+    <div class="stat-card"><div class="label">Games Analyzed</div><div class="value" style="color:var(--accent)">${d.games_analyzed}</div></div>
+    <div class="stat-card"><div class="label">Live Edges</div><div class="value" style="color:var(--green)">${d.picks.length}</div></div>
+    <div class="stat-card"><div class="label">Lifetime P/L</div><div class="value" style="${profitColor}">${profitSign}$${Math.abs(br.profit).toFixed(2)}</div></div>
+  `;
+
+  // Alert
+  const alertContainer = document.getElementById('alert-container');
+  if (d.best_bet && d.picks.length > 0) {
+    alertContainer.innerHTML = `
+      <div class="alert-banner">
+        <div class="icon">&#9889;</div>
+        <div class="content">
+          <div class="title">Best Bet: ${d.best_bet.title}</div>
+          <div class="desc">${d.best_bet.desc}</div>
+        </div>
+      </div>`;
+  } else {
+    alertContainer.innerHTML = `
+      <div class="alert-banner no-edge">
+        <div class="icon">&#128522;</div>
+        <div class="content">
+          <div class="title">No edges today</div>
+          <div class="desc">All lines look fairly priced. Patience is edge.</div>
+        </div>
+      </div>`;
+  }
+
+  // Picks table
+  const picksBody = document.getElementById('picks-body');
+  const noPicks = document.getElementById('no-picks');
+  picksBody.innerHTML = '';
+
+  if (d.picks.length === 0) {
+    noPicks.style.display = 'block';
+  } else {
+    noPicks.style.display = 'none';
+    d.picks.forEach((p, i) => {
+      const tierClass = p.tier === 'High' ? 'tier-high' : p.tier === 'Medium' ? 'tier-medium' : 'tier-low';
+      const kelly = kellyBetSize(p.edge, p.odds, p.tier, br.current);
+      const betDisplay = kelly.betSize > 0 ? `$${kelly.betSize.toFixed(2)}` : p.bet;
+      const capLabel = kelly.capped ? '<span style="color:var(--yellow);font-size:0.7rem;margin-left:4px" title="Capped at 5%">cap</span>' : '';
+      const statusLabel = p.status === 'PLACED' ? '<span class="status-placed">PLACED</span>' : '';
+
+      const tr = document.createElement('tr');
+      tr.className = 'expandable';
+      tr.innerHTML = `
+        <td><span class="expand-icon" id="icon-${i}">&#9654;</span>${p.rank}</td>
+        <td>${p.sport}</td><td>${p.event}</td><td>${p.market}</td>
+        <td class="pick-cell">${p.pick}${statusLabel}</td><td class="odds-cell">${p.odds}</td>
+        <td>${p.implied}</td><td>${p.model}</td>
+        <td class="edge-val edge-positive">+${p.edge}%</td>
+        <td><span class="tier-badge ${tierClass}">${p.tier}</span></td>
+        <td class="odds-cell">${betDisplay}${capLabel}</td>
+        <td></td>
+      `;
+      tr.onclick = (e) => {
+        if (e.target.closest('button')) return;
+        const det = document.getElementById('detail-'+i);
+        const ic = document.getElementById('icon-'+i);
+        det.classList.toggle('open'); ic.classList.toggle('open');
+      };
+      picksBody.appendChild(tr);
+
+      const detailTr = document.createElement('tr');
+      detailTr.className = 'detail-row'; detailTr.id = 'detail-'+i;
+      detailTr.innerHTML = `<td colspan="12"><strong>Analysis:</strong> ${p.notes}<br><strong>Sources:</strong> ${p.sources}</td>`;
+      picksBody.appendChild(detailTr);
+    });
+  }
+
+  // No-edge games
+  if (d.no_edge_games && d.no_edge_games.length > 0) {
+    document.getElementById('no-edge-section').style.display = 'block';
+    const body = document.getElementById('no-edge-body');
+    body.innerHTML = '';
+    d.no_edge_games.forEach(g => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${g.sport}</td><td>${g.event}</td><td class="odds-cell">${g.line}</td><td class="reason">${g.reason}</td>`;
+      body.appendChild(tr);
+    });
+
+    const toggle = document.getElementById('no-edge-toggle');
+    const wrap = document.getElementById('no-edge-wrap');
+    toggle.onclick = () => {
+      const open = wrap.style.display !== 'none';
+      wrap.style.display = open ? 'none' : 'block';
+      toggle.textContent = open ? 'Show' : 'Hide';
+    };
+  }
+
+  // Bankroll cards
+  const rec = computeRecord(d);
+  const recStr = `${rec.wins}-${rec.losses}-${rec.pushes}`;
+  const totalGames = rec.wins + rec.losses + rec.pushes;
+  const winRate = totalGames > 0 ? ((rec.wins / totalGames) * 100).toFixed(0) : 0;
+
+  const pendingBets = d.bets.filter(b => getOutcome(b) === 'pending');
+  const todayBets = d.bets.filter(b => b.date === d.scan_date && getOutcome(b) === 'pending');
+  const todayAction = todayBets.reduce((s, b) => s + b.wager, 0);
+  const todayPct = br.current > 0 ? ((todayAction / br.current) * 100).toFixed(1) : '0.0';
+  const overLimit = parseFloat(todayPct) > 15;
+
+  // Drawdown warning
+  const drawdownPct = br.starting > 0 ? ((br.starting - br.current) / br.starting) * 100 : 0;
+  const dwWarn = document.getElementById('drawdown-warning');
+  if (drawdownPct >= 20) {
+    dwWarn.innerHTML = `<div class="drawdown-warning">Warning: Bankroll is down ${drawdownPct.toFixed(0)}% from starting balance.</div>`;
+  } else {
+    dwWarn.innerHTML = '';
+  }
+
+  const pendingLabel = pendingBets.length > 0
+    ? pendingBets.map(b => b.pick).join(', ')
+    : 'No unsettled bets';
+
+  document.getElementById('bankroll-cards').innerHTML = `
+    <div class="bankroll-card">
+      <h3>Current Bankroll</h3>
+      <div class="big" style="color:var(--blue)">$${br.current.toFixed(2)}</div>
+      <div class="sub">Starting: $${br.starting.toFixed(2)} &bull; ${profitSign}$${Math.abs(br.profit).toFixed(2)}</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Record</h3>
+      <div class="big" style="color:${rec.wins > rec.losses ? 'var(--green)' : rec.losses > rec.wins ? 'var(--red)' : 'var(--text)'}">${recStr}</div>
+      <div class="sub">W-L-P &bull; ${winRate}% win rate</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Today's Action</h3>
+      <div class="big" style="color:var(--green)">$${todayAction.toFixed(2)}</div>
+      <div class="sub">${todayPct}% of bankroll &bull; ${overLimit ? 'EXCEEDS' : 'Within'} 15% limit ${overLimit ? '&#9888;' : '&#10003;'}</div>
+    </div>
+    <div class="bankroll-card">
+      <h3>Pending Bets</h3>
+      <div class="big" style="color:var(--yellow)">${pendingBets.length}</div>
+      <div class="sub" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${pendingLabel}</div>
+    </div>
+  `;
+
+  // Bet history
+  renderBets(d, br);
+}
+
+function computeRecord(d) {
+  let wins = 0, losses = 0, pushes = 0;
+  d.bets.forEach(b => {
+    const o = getOutcome(b);
+    if (o === 'win') wins++;
+    else if (o === 'loss') losses++;
+    else if (o === 'push') pushes++;
+  });
+  return { wins, losses, pushes };
+}
+
+function renderBets(d, br) {
+  const betsBody = document.getElementById('bets-body');
+  const betsSummary = document.getElementById('bets-summary');
+  betsBody.innerHTML = '';
+
+  let totalWagered = 0, totalPnl = 0, wins = 0, losses = 0, pushes = 0, pending = 0;
+
+  d.bets.forEach((bet, idx) => {
+    const outcome = getOutcome(bet);
+    totalWagered += bet.wager;
+    const decOdds = bet.decimal_odds || toDecimalOdds(bet.odds);
+    const tr = document.createElement('tr');
+    let outcomeHtml, pnlHtml;
+
+    if (outcome === 'win') {
+      const profit = bet.wager * (decOdds - 1);
+      outcomeHtml = '<span class="outcome-badge outcome-win">WIN</span>';
+      pnlHtml = `<span class="pnl-positive">+$${profit.toFixed(2)}</span>`;
+      totalPnl += profit; wins++;
+    } else if (outcome === 'loss') {
+      outcomeHtml = '<span class="outcome-badge outcome-loss">LOSS</span>';
+      pnlHtml = `<span class="pnl-negative">-$${bet.wager.toFixed(2)}</span>`;
+      totalPnl -= bet.wager; losses++;
+    } else if (outcome === 'push') {
+      outcomeHtml = '<span class="outcome-badge outcome-push">PUSH</span>';
+      pnlHtml = '<span class="pnl-zero">$0.00</span>'; pushes++;
+    } else {
+      // Pending — show resolve dropdown
+      outcomeHtml = `<select class="resolve-select" data-idx="${idx}" onchange="resolveBet(this)">
+        <option value="" disabled selected>Resolve...</option>
+        <option value="win">Win</option>
+        <option value="loss">Loss</option>
+        <option value="push">Push</option>
+      </select>`;
+      pnlHtml = '<span class="pnl-zero">---</span>'; pending++;
+    }
+
+    tr.innerHTML = `
+      <td>${bet.date}</td><td>${bet.sport}</td><td>${bet.event}</td>
+      <td class="pick-cell">${bet.pick}</td><td class="odds-cell">${bet.odds}</td>
+      <td class="edge-val edge-positive">${bet.edge}</td>
+      <td class="odds-cell">$${bet.wager.toFixed(2)}</td>
+      <td>${outcomeHtml}</td><td>${pnlHtml}</td>
+    `;
+    betsBody.appendChild(tr);
+  });
+
+  const roi = totalWagered > 0 ? ((totalPnl / totalWagered) * 100).toFixed(1) : '0.0';
+  const pnlClass = totalPnl > 0 ? 'pnl-positive' : totalPnl < 0 ? 'pnl-negative' : 'pnl-zero';
+  const pnlSign2 = totalPnl >= 0 ? '+' : '';
+  betsSummary.innerHTML = `
+    <span><strong>Record:</strong> ${wins}W-${losses}L-${pushes}P${pending ? ` (${pending} pending)` : ''}</span>
+    <span><strong>Total Wagered:</strong> $${totalWagered.toFixed(2)}</span>
+    <span><strong>Net P/L:</strong> <span class="${pnlClass}">${pnlSign2}$${Math.abs(totalPnl).toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span class="${pnlClass}">${roi}%</span></span>
+  `;
+}
+
+// ── Resolve a bet ──
+function resolveBet(select) {
+  const idx = parseInt(select.dataset.idx);
+  const bet = DATA.bets[idx];
+  const outcome = select.value;
+  if (!outcome) return;
+
+  localOverrides[betKey(bet)] = outcome;
+  saveOverrides();
+  renderAll(DATA);
+}
+
+// ── Init ──
+loadData();
+</script>
+</body>
+</html>
