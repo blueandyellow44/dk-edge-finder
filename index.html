@@ -641,7 +641,23 @@ function renderHistory(d){
   let totalWins=0,totalLoss=0,totalPnl=0,totalWager=0,totalW=0,totalL=0,totalP=0;
   const pnlData=[];
 
-  // Sort dates descending
+  // Build chart data in chronological order (ascending) first
+  const datesAsc=Object.keys(byDate).sort();
+  let chartPnl=0;
+  datesAsc.forEach(date=>{
+    const dayBets=byDate[date];
+    let dayPnl=0;
+    dayBets.forEach(bet=>{
+      if(bet.outcome==='win'){dayPnl+=bet.pnl||(bet.wager*(bet.decimal_odds-1));}
+      else if(bet.outcome==='loss'){dayPnl-=bet.wager;}
+    });
+    chartPnl+=dayPnl;
+    if(dayBets.some(b=>b.outcome==='win'||b.outcome==='loss'||b.outcome==='push')){
+      pnlData.push({date:date,pnl:chartPnl});
+    }
+  });
+
+  // Now render history cards in descending order (newest first)
   const dates=Object.keys(byDate).sort().reverse();
   dates.forEach(date=>{
     const dayBets=byDate[date];
@@ -659,12 +675,6 @@ function renderHistory(d){
       totalWager+=bet.wager;
     });
     totalPnl+=dayPnl;
-
-    // Track for chart
-    const hasResolved=dayBets.some(b=>b.outcome==='win'||b.outcome==='loss'||b.outcome==='push');
-    if(hasResolved){
-      pnlData.push({date:date,pnl:totalPnl});
-    }
 
     histGroups.innerHTML+=`
       <div class="hist-date-group">
