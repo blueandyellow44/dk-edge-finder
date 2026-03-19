@@ -41,6 +41,15 @@
 **Mistake:** Added "(H/A reversed)" label to user-facing source notes on picks. Users don't care about data source disagreements — they just want the pick and confidence level.
 **Rule:** Keep internal data quality notes (H/A reversed, single source, parser issues) out of user-facing labels. Use confidence levels (HIGH/MEDIUM/LOW) and contested flags instead.
 
+## 2026-03-18: Verify before push — NEVER ship broken code
+**Mistake:** Pushed index.html with broken JS template literals (missing `}` in ternary expressions inside style strings). Site showed "Loading..." forever because render() crashed. User had to push twice.
+**Rule:** Before ANY commit that touches index.html:
+1. Run `node -c index.html` or extract the JS and run `node --check` on it to catch syntax errors
+2. If the file has template literals with ternaries inside style attributes, manually verify every `${condition?'a':'b'}` has its closing brace BEFORE the semicolon
+3. Open the file locally in a browser and confirm it renders with data.json before telling user to push
+4. Never let a subagent write JS without verifying the output compiles
+**General rule from user:** "Have high confidence in everything before a push." No more ship-and-pray. Verify locally first.
+
 ## 2026-03-17: Don't rename data.json fields without updating index.html
 **Mistake:** Renamed `bankroll.current` to `bankroll.available` in data.json without updating index.html. Netlify site broke — "Error loading data" because `b.current.toFixed(2)` threw on undefined.
 **Rule:** Any data.json schema change MUST have a corresponding index.html update in the same commit. Use fallback patterns like `b.available || b.current || 0` for backward compatibility.
