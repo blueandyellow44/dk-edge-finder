@@ -704,8 +704,8 @@ function renderHistory(d){
   histSum.innerHTML=`
     <span><strong>Record:</strong> ${totalW}W-${totalL}L-${totalP}P</span>
     <span><strong>Wagered:</strong> $${totalWager.toFixed(2)}</span>
-    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)';font-weight:900">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
-    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)';font-weight:900">${roi}%</span></span>
+    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
+    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${roi}%</span></span>
   `;
 }
 
@@ -783,7 +783,7 @@ function renderBankroll(d,b,rec,amt,profit){
   document.getElementById('perf-summary').innerHTML=`
     <span><strong>Total Bets:</strong> ${totalGames}</span>
     <span><strong>Avg Wager:</strong> $${totalGames>0?(totalWager/totalGames).toFixed(2):'0.00'}</span>
-    <span><strong>ROI:</strong> <span style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)';font-weight:900">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
+    <span><strong>ROI:</strong> <span style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
     <span><strong>Best Win:</strong> <span style="color:var(--dk-green)">${bestWin>0?bestWinPick+' +$'+bestWin.toFixed(2):'—'}</span></span>
   `;
 }
