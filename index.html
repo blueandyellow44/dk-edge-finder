@@ -302,6 +302,7 @@ async function loadData(){
   try{
     const r=await fetch('data.json?'+Date.now());
     DATA=await r.json();
+    applyLocalPlacements(DATA);
     render(DATA);
   }catch(e){
     document.getElementById('subtitle').textContent='Error loading data';
@@ -611,20 +612,20 @@ function renderHistory(d){
         </div>
         ${dayBets.map(bet=>{
           const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-          let resultBadge='';
-          if(bet.outcome==='win')resultBadge='<span class="badge b-win">WIN</span>';
-          else if(bet.outcome==='loss')resultBadge='<span class="badge b-loss">LOSS</span>';
-          else if(bet.outcome==='push')resultBadge='<span class="badge b-pending">PUSH</span>';
-          else resultBadge='<span class="badge b-pending">PENDING</span>';
+          let resultBadge='',pnlDisplay='';
+          if(bet.outcome==='win'){resultBadge='<span class="badge b-win">WIN</span>';pnlDisplay=`<span style="color:#080">+$${Math.abs(pnl).toFixed(2)}</span>`;}
+          else if(bet.outcome==='loss'){resultBadge='<span class="badge b-loss">LOSS</span>';pnlDisplay=`<span style="color:#c00">-$${Math.abs(pnl).toFixed(2)}</span>`;}
+          else if(bet.outcome==='push'){resultBadge='<span class="badge b-pending">PUSH</span>';pnlDisplay='<span style="color:#999">$0</span>';}
+          else{resultBadge='<span class="badge b-pending">PENDING</span>';pnlDisplay=`<span style="color:#0066cc">$${bet.wager.toFixed(2)} at risk</span>`;}
           return `
             <div class="hist-item">
               <div class="hist-item-left">
                 <div class="hist-item-pick">${bet.pick}</div>
-                <div class="hist-item-meta">${bet.event} · ${bet.odds} · +${typeof bet.edge==='number'?bet.edge+'%':bet.edge}</div>
+                <div class="hist-item-meta">${bet.event} · ${bet.odds} · ${typeof bet.edge==='number'?'+'+bet.edge+'%':bet.edge}</div>
               </div>
               <div class="hist-item-right">
                 <div class="hist-item-result">${resultBadge}</div>
-                <div class="hist-item-pnl" style="color:${pnl>=0?'#080':'#c00'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
+                <div class="hist-item-pnl">${pnlDisplay}</div>
               </div>
             </div>
           `;
@@ -738,6 +739,42 @@ function kellyExplainer(p,bankroll){
   </div>`;
 }
 
+// Local placement cache — survives refresh until GitHub Action commits
+function getLocalPlacements(){
+  try{return JSON.parse(localStorage.getItem('dk_placed')||'{}');}catch(e){return {};}
+}
+function saveLocalPlacement(pickIndices){
+  const cache=getLocalPlacements();
+  const date=DATA.scan_date;
+  if(!cache[date])cache[date]=[];
+  if(pickIndices==='all'){
+    DATA.picks.forEach((p,i)=>{if(!p.status||p.status==='')cache[date].push(i);});
+  }else{
+    pickIndices.forEach(i=>cache[date].push(i));
+  }
+  localStorage.setItem('dk_placed',JSON.stringify(cache));
+}
+function applyLocalPlacements(d){
+  const cache=getLocalPlacements();
+  const placed=cache[d.scan_date]||[];
+  placed.forEach(i=>{
+    if(d.picks[i]&&(!d.picks[i].status||d.picks[i].status===''))d.picks[i].status='PLACED';
+  });
+  // Recalculate bankroll if we have local placements not yet in bets[]
+  const localWager=placed.reduce((s,i)=>{
+    const p=d.picks[i];
+    if(p&&!d.bets.some(b=>b.pick===p.pick&&b.date===d.scan_date)){
+      return s+parseFloat(p.bet.replace('$',''));
+    }
+    return s;
+  },0);
+  if(localWager>0){
+    d.bankroll.available=(d.bankroll.available||d.bankroll.current||500)-localWager;
+    d.bankroll.pending_count=(d.bankroll.pending_count||0)+placed.length;
+    d.bankroll.pending_total=(d.bankroll.pending_total||0)+localWager;
+  }
+}
+
 // Bet placement
 async function triggerPlacement(indices){
   const str=indices==='all'?'all':indices.join(',');
@@ -750,10 +787,11 @@ async function triggerPlacement(indices){
       body:JSON.stringify({ref:'main',inputs:{picks:str}})
     });
     if(resp.status===204){
+      saveLocalPlacement(indices);
       if(indices==='all'){DATA.picks.forEach(p=>{if(!p.status||p.status==='')p.status='PLACED'});}
       else{indices.forEach(i=>{if(DATA.picks[i])DATA.picks[i].status='PLACED'});}
       render(DATA);
-      toast('Bets marked as placed. Dashboard updates in ~60s.');
+      toast('Bets placed. Bankroll updated. GitHub syncs in ~60s.');
     }else if(resp.status===401||resp.status===403){
       localStorage.removeItem('gh_token');promptToken(indices);
     }else{toast('Error ('+resp.status+'). Try again.');}
