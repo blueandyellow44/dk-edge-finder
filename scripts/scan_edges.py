@@ -83,11 +83,25 @@ GAME_SD = {
     "epl_total": 1.71,    # DERIVED — sum of Poisson SDs
     "mls_spread": 1.71,   # Using same as EPL — similar scoring rates
     "mls_total": 1.71,
+
+    # NHL — MEASURED (Mysterious Lights blog, 2012-13 season, 1230 games)
+    # Margin of victory SD: 1.274 goals (single season — MEDIUM confidence)
+    # Totals SD: NOT measured — no published O/U margin SD for NHL
+    # Using margin SD only; totals edges will be skipped until we find measured data
+    "nhl_spread": 1.274,
+    # "nhl_total": None,  # BLOCKED — no measured value
+
+    # MLB — MEASURED (Mysterious Lights blog, 2013 season, ~2430 games)
+    # Run margin SD: 2.538 runs (single season — MEDIUM confidence)
+    # Totals SD: NOT measured — no published O/U margin SD for MLB
+    "mlb_spread": 2.538,
+    # "mlb_total": None,  # BLOCKED — no measured value
 }
 
-# Sports with NO measured SD — we will NOT calculate edges for these
-# until we have validated data. The scanner will show "insufficient model data"
-UNVALIDATED_SPORTS = {"nhl", "mlb", "mma"}
+# Sports with partially validated SD — edges will be labeled MEDIUM confidence
+PARTIALLY_VALIDATED_SPORTS = {"nhl", "mlb"}
+# MMA has no spread/total market at all — moneyline only
+UNVALIDATED_SPORTS = {"mma"}
 # Note: NHL and MLB games are still fetched for display purposes,
 # but no edges will be calculated without measured SDs.
 
@@ -177,26 +191,32 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
         home = teams.get("home", {})
         away = teams.get("away", {})
 
-        # Determine which team is favored
+        # Determine which team is favored and assign spread
         home_spread = None
         away_spread = None
         if spread and spread != 0:
-            # ESPN spread is from perspective of the favorite
-            # details string tells us who: "OKC -19.5"
+            # ESPN returns 'spread' as the absolute value of the point spread
+            # 'details' tells us who is favored: "OKC -19.5" or "COL -142"
+            # CRITICAL: For NHL/MLB, details contains MONEYLINE (e.g. "COL -142"),
+            # not the actual spread. Use the 'spread' API field for the value,
+            # and 'details' only to determine favorite direction.
+            spread_val = abs(float(spread))
             if details:
                 parts = details.split(" ")
-                if len(parts) >= 2:
-                    fav_abbr = parts[0]
-                    try:
-                        spread_val = float(parts[1])
-                    except ValueError:
-                        spread_val = 0
-                    if fav_abbr == home.get("abbr"):
-                        home_spread = spread_val
-                        away_spread = -spread_val
-                    else:
-                        away_spread = spread_val
-                        home_spread = -spread_val
+                fav_abbr = parts[0] if parts else ""
+                # For NBA/NFL, details value matches the spread. For NHL/MLB it's moneyline.
+                # Always trust the 'spread' API field for the actual spread value.
+                if fav_abbr == home.get("abbr"):
+                    home_spread = -spread_val  # Home is favored (negative spread)
+                    away_spread = spread_val
+                else:
+                    away_spread = -spread_val
+                    home_spread = spread_val
+            else:
+                # No details — use spread sign directly
+                # ESPN spread field: negative means home favored
+                home_spread = float(spread)
+                away_spread = -float(spread)
 
         game = {
             "home": home,
@@ -250,6 +270,33 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
         with urllib.request.urlopen(req, timeout=20) as resp:
             html = resp.read().decode("utf-8", errors="ignore")
 
+        # Sport-specific score detection config
+        # NBA/NFL: 2-3 digits before decimal, 1 after, range 70-160
+        # NHL: 1-2 digits before decimal, 1-2 after, range 0.5-8
+        # MLB: 1-2 digits before decimal, 1-2 after, range 0.5-15
+        # Soccer: 1 digit before decimal, 1-2 after, range 0.3-5
+        score_config = {
+            "nba":  {"regex": r'^(\d{2,3}\.\d{1,2})$', "min": 70, "max": 160},
+            "nfl":  {"regex": r'^(\d{2,3}\.\d{1,2})$', "min": 10, "max": 60},
+            "nhl":  {"regex": r'^(\d{1,2}\.\d{1,2})$', "min": 0.5, "max": 8},
+            "mlb":  {"regex": r'^(\d{1,2}\.\d{1,2})$', "min": 0.5, "max": 15},
+            "mls":  {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "epl":  {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+        }
+        cfg = score_config.get(sport.lower(), score_config["nba"])
+        score_re = re.compile(cfg["regex"])
+        score_min, score_max = cfg["min"], cfg["max"]
+
+        # Minimum cells: NHL/MLB tables may have fewer columns than NBA
+        min_cells = 6 if sport.lower() in ("nhl", "mlb", "mls", "epl") else 10
+
+        # Non-team strings to filter out (varies by sport)
+        non_team_strings = {
+            "Eastern Conference", "Western Conference", "Atlantic Division",
+            "Pacific Division", "Central Division", "Metropolitan Division",
+            "American League", "National League", "Upcoming Games",
+        }
+
         # Extract table rows
         trs = re.findall(r'<tr[^>]*>(.*?)</tr>', html, re.DOTALL)
 
@@ -258,35 +305,33 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
             text = re.sub(r'<[^>]+>', '|', tr)
             cells = [x.strip() for x in text.split('|') if x.strip()]
 
-            if len(cells) < 10:
+            if len(cells) < min_cells:
                 continue
 
-            # Look for rows with predicted scores (format: XXX.X)
-            # Find score pairs — two consecutive floats in 80-150 range
             scores = []
             team_names = []
             records = []
 
             for cell in cells:
-                # Match predicted score
-                m = re.match(r'^(\d{2,3}\.\d)$', cell)
+                # Match predicted score (sport-specific format and range)
+                m = score_re.match(cell)
                 if m:
                     val = float(m.group(1))
-                    if 70 <= val <= 160:
+                    if score_min <= val <= score_max:
                         scores.append(val)
 
                 # Match team name (multi-word, capitalized)
-                if re.match(r'^[A-Z][a-z]+(?: [A-Z][a-z]+)+$', cell):
-                    # Filter out non-team strings
-                    if cell not in ("Eastern Conference", "Western Conference", "Atlantic Division"):
+                # Also handle names with periods like "St. Louis Blues"
+                if re.match(r'^[A-Z][a-z]+\.?(?: [A-Z][a-z]+)+$', cell):
+                    if cell not in non_team_strings:
                         team_names.append(cell)
 
-                # Match record like (33-35)
-                rm = re.match(r'^\((\d+-\d+)\)$', cell)
+                # Match record: (W-L), (W-L-OTL), or (W-L-T)
+                rm = re.match(r'^\((\d+-\d+(?:-\d+)?)\)$', cell)
                 if rm:
                     records.append(rm.group(1))
 
-            # We need exactly 2 team names and 2+ scores (away_score, home_score, total)
+            # We need exactly 2 team names and 2+ scores (away_score, home_score, [total])
             if len(team_names) >= 2 and len(scores) >= 2:
                 away_name = team_names[0]
                 home_name = team_names[1]
@@ -296,6 +341,8 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
                 # Map full names to abbreviations based on sport
                 if sport.lower() == "nhl":
                     team_map = NHL_TEAM_NAME_TO_ABBR
+                elif sport.lower() == "mlb":
+                    team_map = MLB_TEAM_NAME_TO_ABBR
                 elif sport.lower() == "ncaam":
                     team_map = NCAAM_TEAM_NAME_TO_ABBR
                 else:
@@ -352,6 +399,20 @@ NHL_TEAM_NAME_TO_ABBR = {
     "Seattle Kraken": "SEA", "St. Louis Blues": "STL", "Tampa Bay Lightning": "TB",
     "Toronto Maple Leafs": "TOR", "Vancouver Canucks": "VAN", "Vegas Golden Knights": "VGK",
     "Washington Capitals": "WSH", "Winnipeg Jets": "WPG",
+}
+
+# MLB team name to abbreviation mapping
+MLB_TEAM_NAME_TO_ABBR = {
+    "Arizona Diamondbacks": "ARI", "Atlanta Braves": "ATL", "Baltimore Orioles": "BAL",
+    "Boston Red Sox": "BOS", "Chicago Cubs": "CHC", "Chicago White Sox": "CWS",
+    "Cincinnati Reds": "CIN", "Cleveland Guardians": "CLE", "Colorado Rockies": "COL",
+    "Detroit Tigers": "DET", "Houston Astros": "HOU", "Kansas City Royals": "KC",
+    "Los Angeles Angels": "LAA", "Los Angeles Dodgers": "LAD", "Miami Marlins": "MIA",
+    "Milwaukee Brewers": "MIL", "Minnesota Twins": "MIN", "New York Mets": "NYM",
+    "New York Yankees": "NYY", "Oakland Athletics": "OAK", "Philadelphia Phillies": "PHI",
+    "Pittsburgh Pirates": "PIT", "San Diego Padres": "SD", "San Francisco Giants": "SF",
+    "Seattle Mariners": "SEA", "St. Louis Cardinals": "STL", "Tampa Bay Rays": "TB",
+    "Texas Rangers": "TEX", "Toronto Blue Jays": "TOR", "Washington Nationals": "WSH",
 }
 
 # NCAAM team name to abbreviation mapping (major schools)
@@ -463,10 +524,20 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
     if not pred:
         # ESPN uses slightly different abbreviations than DRatings sometimes
-        # Try common alternates
-        alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
-                   "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
-                   "WAS": "WSH", "WSH": "WAS"}
+        # Sport-specific alternate mappings
+        alt_maps = {
+            "nba": {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+                    "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+                    "WAS": "WSH", "WSH": "WAS"},
+            "nhl": {"VGK": "VEG", "VEG": "VGK", "NJD": "NJ", "NJ": "NJD",
+                    "SJS": "SJ", "SJ": "SJS", "TBL": "TB", "TB": "TBL",
+                    "LAK": "LA", "LA": "LAK", "WSH": "WAS", "WAS": "WSH"},
+            "mlb": {"AZ": "ARI", "ARI": "AZ", "CHW": "CWS", "CWS": "CHW",
+                    "SDP": "SD", "SD": "SDP", "SFG": "SF", "SF": "SFG",
+                    "TBR": "TB", "TB": "TBR", "WSN": "WSH", "WSH": "WSN",
+                    "KCR": "KC", "KC": "KCR"},
+        }
+        alt_map = alt_maps.get(sport.lower(), alt_maps.get("nba", {}))
         alt_away = alt_map.get(away_abbr, away_abbr)
         alt_home = alt_map.get(home_abbr, home_abbr)
         for a in [away_abbr, alt_away]:
@@ -516,13 +587,20 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if model_prob is None:
         return None  # No researched SD for this sport — skip
 
-    # Standard DK juice for big spreads: -110 to -115
-    # Use -110 as default if we don't have exact juice
-    dk_odds = -110
-    if pick_spread >= 15:
-        dk_odds = -112  # Larger spreads often have slightly more juice
-    if pick_spread >= 18:
-        dk_odds = -115
+    # Sport-specific default odds (when ESPN doesn't provide juice)
+    # NBA/NFL: standard -110 juice on spreads, scaling with size
+    # NHL puck line (+1.5): underdog side is heavily juiced ~-180 to -200
+    # MLB run line (+1.5): underdog side is juiced ~-160 to -180
+    if sport.lower() == "nhl":
+        dk_odds = -190  # Typical puck line underdog juice
+    elif sport.lower() == "mlb":
+        dk_odds = -170  # Typical run line underdog juice
+    else:
+        dk_odds = -110
+        if pick_spread >= 15:
+            dk_odds = -112
+        if pick_spread >= 18:
+            dk_odds = -115
 
     implied_prob = american_to_implied(dk_odds)
 
@@ -580,8 +658,13 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if b2b_note:
         notes_parts.append(b2b_note.strip())
 
+    # Label partially validated sports
+    confidence = "MEDIUM" if sport.lower() in PARTIALLY_VALIDATED_SPORTS else "HIGH"
+    if confidence == "MEDIUM":
+        notes_parts.append(f"⚠ SD confidence: {confidence} (single-season data)")
+
     return {
-        "sport": "NBA",
+        "sport": sport.upper(),
         "event": game["event_str"],
         "event_short": game["event_short"],
         "market": "Spread",
@@ -600,6 +683,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "sources": "DRatings, ESPN",
         "tank_risk": bool(tank_info and tank_info["confirmed"]),
         "spread_cushion": spread_cushion,
+        "confidence": confidence,
     }
 
 
@@ -626,20 +710,29 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     pred = predictions.get(key)
 
     if not pred:
-        # Try abbreviation variants for NBA
-        if sport.lower() == "nba":
-            alt_map = {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
-                       "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
-                       "WAS": "WSH", "WSH": "WAS"}
-            alt_away = alt_map.get(away_abbr, away_abbr)
-            alt_home = alt_map.get(home_abbr, home_abbr)
-            for a in [away_abbr, alt_away]:
-                for h in [home_abbr, alt_home]:
-                    pred = predictions.get(f"{a}@{h}")
-                    if pred:
-                        break
+        # Sport-specific alternate abbreviation mappings
+        alt_maps = {
+            "nba": {"GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+                    "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+                    "WAS": "WSH", "WSH": "WAS"},
+            "nhl": {"VGK": "VEG", "VEG": "VGK", "NJD": "NJ", "NJ": "NJD",
+                    "SJS": "SJ", "SJ": "SJS", "TBL": "TB", "TB": "TBL",
+                    "LAK": "LA", "LA": "LAK", "WSH": "WAS", "WAS": "WSH"},
+            "mlb": {"AZ": "ARI", "ARI": "AZ", "CHW": "CWS", "CWS": "CHW",
+                    "SDP": "SD", "SD": "SDP", "SFG": "SF", "SF": "SFG",
+                    "TBR": "TB", "TB": "TBR", "WSN": "WSH", "WSH": "WSN",
+                    "KCR": "KC", "KC": "KCR"},
+        }
+        alt_map = alt_maps.get(sport.lower(), {})
+        alt_away = alt_map.get(away_abbr, away_abbr)
+        alt_home = alt_map.get(home_abbr, home_abbr)
+        for a in [away_abbr, alt_away]:
+            for h in [home_abbr, alt_home]:
+                pred = predictions.get(f"{a}@{h}")
                 if pred:
                     break
+            if pred:
+                break
 
     if not pred:
         return None
@@ -817,8 +910,8 @@ def main():
             picks.append(total_result)
             print(f"  EDGE: {total_result['pick']} ({total_result['odds']}) — {total_result['edge']}% edge")
 
-        # Track no-edge games
-        if not (result if sport.lower() == "nba" else None) and not total_result:
+        # Track no-edge games — only add if NEITHER spread nor totals edge found
+        if not result and not total_result:
             spread_str = game.get("odds_details", "N/A")
             ou_str = f" O/U {game.get('over_under', 'N/A')}" if game.get("over_under") else ""
 
@@ -887,6 +980,7 @@ def main():
             "result": "",
             "notes": pick["notes"],
             "sources": pick["sources"],
+            "confidence": pick.get("confidence", "HIGH"),
         })
 
         print(f"  #{i+1}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
