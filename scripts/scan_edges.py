@@ -611,10 +611,6 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
                 margin_diff = abs(dr["margin"] - dm_margin)
             contested = margin_diff > thresh
 
-            source_note = "DRatings + Dimers"
-            if dm_reversed:
-                source_note += " (H/A reversed)"
-
             ensemble[dr_key] = {
                 "away_abbr": dr.get("away_abbr", ""),
                 "home_abbr": dr.get("home_abbr", ""),
@@ -624,7 +620,7 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
                 "home_score": avg_home,
                 "margin": round(avg_home - avg_away, 1),
                 "sources": 2,
-                "source_label": source_note,
+                "source_label": "DRatings + Dimers",
                 "contested": contested,
                 "disagreement": round(margin_diff, 1),
                 "dr_margin": dr["margin"],
