@@ -218,6 +218,35 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
                 home_spread = float(spread)
                 away_spread = -float(spread)
 
+        # Extract ACTUAL DK spread/total/ML odds from ESPN's detailed odds object
+        # ESPN provides: pointSpread.home/away.close.odds, total.over/under.close.odds, moneyline
+        home_spread_odds = None  # Actual DK juice on the spread (e.g., -285)
+        away_spread_odds = None
+        over_odds = None
+        under_odds = None
+        ps_data = odds_data.get("pointSpread", {})
+        if ps_data:
+            try:
+                home_ps = ps_data.get("home", {}).get("close", {})
+                away_ps = ps_data.get("away", {}).get("close", {})
+                if home_ps.get("odds"):
+                    home_spread_odds = int(home_ps["odds"])
+                if away_ps.get("odds"):
+                    away_spread_odds = int(away_ps["odds"])
+            except (ValueError, TypeError):
+                pass
+        total_data = odds_data.get("total", {})
+        if total_data:
+            try:
+                over_close = total_data.get("over", {}).get("close", {})
+                under_close = total_data.get("under", {}).get("close", {})
+                if over_close.get("odds"):
+                    over_odds = int(over_close["odds"])
+                if under_close.get("odds"):
+                    under_odds = int(under_close["odds"])
+            except (ValueError, TypeError):
+                pass
+
         game = {
             "home": home,
             "away": away,
@@ -225,7 +254,11 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             "is_final": status == "STATUS_FINAL",
             "home_spread": home_spread,
             "away_spread": away_spread,
+            "home_spread_odds": home_spread_odds,  # Actual DK juice
+            "away_spread_odds": away_spread_odds,
             "over_under": over_under,
+            "over_odds": over_odds,
+            "under_odds": under_odds,
             "event_str": f"{away.get('name', '?')} @ {home.get('name', '?')}",
             "event_short": f"{away.get('abbr', '?')} @ {home.get('abbr', '?')}",
             "odds_details": details,
@@ -862,20 +895,24 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if model_prob is None:
         return None  # No researched SD for this sport — skip
 
-    # Sport-specific default odds (when ESPN doesn't provide juice)
-    # NBA/NFL: standard -110 juice on spreads, scaling with size
-    # NHL puck line (+1.5): underdog side is heavily juiced ~-180 to -200
-    # MLB run line (+1.5): underdog side is juiced ~-160 to -180
-    if sport.lower() == "nhl":
-        dk_odds = -190  # Typical puck line underdog juice
-    elif sport.lower() == "mlb":
-        dk_odds = -170  # Typical run line underdog juice
+    # Use ACTUAL DK odds from ESPN when available, fall back to defaults
+    # ESPN provides pointSpread.home/away.close.odds with real DK juice
+    if pick_side == "home" and game.get("home_spread_odds"):
+        dk_odds = game["home_spread_odds"]
+    elif pick_side == "away" and game.get("away_spread_odds"):
+        dk_odds = game["away_spread_odds"]
     else:
-        dk_odds = -110
-        if pick_spread >= 15:
-            dk_odds = -112
-        if pick_spread >= 18:
-            dk_odds = -115
+        # Fallback defaults when ESPN doesn't have odds
+        if sport.lower() == "nhl":
+            dk_odds = -190
+        elif sport.lower() == "mlb":
+            dk_odds = -170
+        else:
+            dk_odds = -110
+            if pick_spread >= 15:
+                dk_odds = -112
+            if pick_spread >= 18:
+                dk_odds = -115
 
     implied_prob = american_to_implied(dk_odds)
 
@@ -1046,8 +1083,13 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     if model_prob is None:
         return None  # No researched SD for this sport — skip
 
-    # Standard DK juice for totals: -110
-    dk_odds = -110
+    # Use ACTUAL DK total odds from ESPN when available
+    if pick_side == "over" and game.get("over_odds"):
+        dk_odds = game["over_odds"]
+    elif pick_side == "under" and game.get("under_odds"):
+        dk_odds = game["under_odds"]
+    else:
+        dk_odds = -110  # Standard fallback
     implied_prob = american_to_implied(dk_odds)
 
     # Calculate edge
