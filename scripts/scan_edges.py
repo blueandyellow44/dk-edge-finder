@@ -372,6 +372,256 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
     return predictions
 
 
+def fetch_dimers_predictions(date_str: str, sport: str = "nba") -> dict:
+    """
+    Fetch predictions from Levy Edge (Dimers backend) API.
+    Returns dict keyed by "AWAY_ABBR@HOME_ABBR" with predicted scores.
+
+    The API uses Season/Round numbers. We search for the round matching today's date.
+    """
+    sport_map = {"nba": "NBA", "nhl": "NHL", "mlb": "MLB", "nfl": "NFL"}
+    api_sport = sport_map.get(sport.lower())
+    if not api_sport:
+        return {}
+
+    predictions = {}
+    today_iso = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}"
+
+    try:
+        # Determine season year: NBA/NHL 2025-26 uses Season=2025
+        year = int(date_str[:4])
+        month = int(date_str[4:6])
+        season = year - 1 if month < 7 else year  # Before July = previous year's season
+
+        # Search for today's round by scanning recent rounds
+        # Strategy: find round where the SIMatchID date-stamp matches today
+        # SIMatchID format: SPORT_SEASON_ROUND_AWAY_HOME
+        # We also check MatchData.Date, but it's in UTC (evening games show next day).
+        # Use DateStamp (Unix epoch) or check if majority of games match the target date.
+        base_round = {"NBA": 150, "NHL": 163, "MLB": 160, "NFL": 15}.get(api_sport, 100)
+
+        # Find the round matching today's date.
+        # Challenge: Levy Edge uses UTC dates, so March 18 evening ET = March 19 UTC.
+        # Strategy: find ALL rounds within ±24h, then pick the one closest to
+        # target_date at 7PM ET (midnight UTC = typical game time).
+        found_round = None
+        target_dt = datetime.strptime(date_str, "%Y%m%d")
+        # Target: 7 PM ET = midnight UTC of the next day
+        target_ts = (target_dt.replace(tzinfo=timezone.utc) + timedelta(hours=24)).timestamp()
+        best_round = None
+        best_diff = float("inf")
+
+        for offset in range(-10, 15):
+            r = base_round + offset
+            if r < 1:
+                continue
+            url = f"https://levy-edge.statsinsider.com.au/round/matches?Sport={api_sport}&Round={r}&Season={season}&strip=true"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            try:
+                with urllib.request.urlopen(req, timeout=8) as resp:
+                    rdata = json.loads(resp.read())
+                if not isinstance(rdata, list) or not rdata:
+                    continue
+
+                ds = rdata[0].get("MatchData", {}).get("DateStamp", 0)
+                if ds:
+                    diff = abs(ds - target_ts)
+                    if diff < 24 * 3600 and diff < best_diff:
+                        best_diff = diff
+                        best_round = r
+                else:
+                    match_date = str(rdata[0].get("MatchData", {}).get("Date", ""))
+                    if today_iso in match_date:
+                        best_round = r
+                        break
+            except:
+                continue
+
+        found_round = best_round
+
+        if found_round is None:
+            print(f"  Dimers: could not find round for {today_iso}")
+            return {}
+
+        # Fetch the found round
+        url = f"https://levy-edge.statsinsider.com.au/round/matches?Sport={api_sport}&Round={found_round}&Season={season}&strip=true"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read())
+
+        for game in data:
+            pre = game.get("PreData", {})
+            match_data = game.get("MatchData", {})
+            sid = match_data.get("SIMatchID", "") or game.get("LiveData", {}).get("SIMatchID", "")
+
+            pred_away = pre.get("PredAwayScore")
+            pred_home = pre.get("PredHomeScore")
+
+            if pred_away is None or pred_home is None:
+                continue
+
+            # Extract team abbreviations from SIMatchID (format: SPORT_SEASON_ROUND_AWAY_HOME)
+            parts = sid.split("_")
+            if len(parts) >= 5:
+                away_abbr = parts[3]
+                home_abbr = parts[4]
+            else:
+                continue
+
+            key = f"{away_abbr}@{home_abbr}"
+            predictions[key] = {
+                "away_abbr": away_abbr,
+                "home_abbr": home_abbr,
+                "away_score": round(pred_away, 1),
+                "home_score": round(pred_home, 1),
+                "margin": round(pred_home - pred_away, 1),
+                "pythag_away": pre.get("PythagAway", 0),
+                "pythag_home": pre.get("PythagHome", 0),
+            }
+
+            print(f"    {away_abbr} {pred_away:.1f} @ {home_abbr} {pred_home:.1f} (margin: {pred_home - pred_away:+.1f})")
+
+        print(f"  Dimers: found {len(predictions)} game predictions (round {found_round})")
+
+    except Exception as e:
+        print(f"  Dimers fetch error: {e}", file=sys.stderr)
+
+    return predictions
+
+
+def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
+    """
+    Average predictions from DRatings and Dimers into an ensemble.
+
+    Key matching: DRatings and Dimers may use different home/away ordering
+    for the same game (e.g., "MTL@DET" vs "DET@MTL"). We match by canonical
+    key (sorted team pair) and normalize to DRatings' perspective if available.
+
+    Returns dict keyed by "AWAY@HOME" (DRatings perspective) with ensemble predictions.
+    """
+    # Disagreement thresholds by sport
+    disagree_thresh = {"nba": 3.0, "nfl": 3.0, "nhl": 0.5, "mlb": 0.5,
+                       "epl": 0.3, "mls": 0.3}
+    thresh = disagree_thresh.get(sport.lower(), 3.0)
+
+    # Common abbreviation aliases between ESPN/DRatings and Dimers
+    abbr_aliases = {
+        "GSW": "GS", "GS": "GSW", "NOP": "NO", "NO": "NOP",
+        "NYK": "NY", "NY": "NYK", "SAS": "SA", "SA": "SAS",
+        "WAS": "WSH", "WSH": "WAS", "VGK": "VEG", "VEG": "VGK",
+        "NJD": "NJ", "NJ": "NJD", "SJS": "SJ", "SJ": "SJS",
+        "TBL": "TB", "TB": "TBL", "LAK": "LA", "LA": "LAK",
+        "CHW": "CWS", "CWS": "CHW", "SDP": "SD", "SD": "SDP",
+        "SFG": "SF", "SF": "SFG", "TBR": "TB", "WSN": "WSH",
+        "KCR": "KC", "KC": "KCR", "AZ": "ARI", "ARI": "AZ",
+        "VOL": "UTA", "UTA": "VOL",  # Utah Jazz / Hockey rebrands
+    }
+
+    def canonical_key(key):
+        """Create a sorted team-pair key for matching, with alias resolution."""
+        parts = key.split("@")
+        if len(parts) != 2:
+            return key
+        t1, t2 = parts[0].upper(), parts[1].upper()
+        # Normalize both through aliases
+        t1n = abbr_aliases.get(t1, t1)
+        t2n = abbr_aliases.get(t2, t2)
+        return tuple(sorted([t1, t1n, t2, t2n]))  # Broad match set
+
+    def teams_match(key1, key2):
+        """Check if two AWAY@HOME keys represent the same game (in any order)."""
+        p1 = key1.split("@")
+        p2 = key2.split("@")
+        if len(p1) != 2 or len(p2) != 2:
+            return False
+        t1a, t1h = p1[0].upper(), p1[1].upper()
+        t2a, t2h = p2[0].upper(), p2[1].upper()
+        # Also check aliases
+        aliases_1a = {t1a, abbr_aliases.get(t1a, t1a)}
+        aliases_1h = {t1h, abbr_aliases.get(t1h, t1h)}
+        aliases_2a = {t2a, abbr_aliases.get(t2a, t2a)}
+        aliases_2h = {t2h, abbr_aliases.get(t2h, t2h)}
+        # Match if teams are the same pair (in any home/away order)
+        fwd = bool(aliases_1a & aliases_2a) and bool(aliases_1h & aliases_2h)
+        rev = bool(aliases_1a & aliases_2h) and bool(aliases_1h & aliases_2a)
+        return fwd or rev
+
+    ensemble = {}
+    dimers_matched = set()
+
+    # Process DRatings predictions first (they have full team names)
+    for dr_key, dr in dratings.items():
+        # Try to find matching Dimers prediction
+        dm = None
+        dm_key = None
+        dm_reversed = False
+        for dk, dv in dimers.items():
+            if dk in dimers_matched:
+                continue
+            if teams_match(dr_key, dk):
+                dm = dv
+                dm_key = dk
+                # Check if home/away are reversed
+                dr_parts = dr_key.split("@")
+                dm_parts = dk.split("@")
+                aliases_dr_away = {dr_parts[0].upper(), abbr_aliases.get(dr_parts[0].upper(), dr_parts[0].upper())}
+                aliases_dm_away = {dm_parts[0].upper(), abbr_aliases.get(dm_parts[0].upper(), dm_parts[0].upper())}
+                dm_reversed = not bool(aliases_dr_away & aliases_dm_away)
+                break
+
+        if dm:
+            dimers_matched.add(dm_key)
+            # Normalize Dimers scores to DRatings' home/away perspective.
+            # When reversed, Dimers' away team = DRatings' home team (and vice versa).
+            # We match by TEAM IDENTITY: DRatings' away team's score maps to
+            # whichever Dimers position has that same team.
+            if dm_reversed:
+                # DRatings: away=TeamA, home=TeamB
+                # Dimers: away=TeamB, home=TeamA
+                # dm["away_score"] is TeamB's score, dm["home_score"] is TeamA's score
+                # For DRatings perspective: away(TeamA) = dm's home, home(TeamB) = dm's away
+                dm_away_score = dm["home_score"]  # TeamA's score from Dimers
+                dm_home_score = dm["away_score"]   # TeamB's score from Dimers
+            else:
+                dm_away_score = dm["away_score"]
+                dm_home_score = dm["home_score"]
+
+            # Margin from DRatings perspective (home - away) using Dimers' scores
+            dm_margin = dm_home_score - dm_away_score
+
+            avg_away = round((dr["away_score"] + dm_away_score) / 2, 1)
+            avg_home = round((dr["home_score"] + dm_home_score) / 2, 1)
+            margin_diff = abs(dr["margin"] - dm_margin)
+            contested = margin_diff > thresh
+
+            ensemble[dr_key] = {
+                "away_abbr": dr.get("away_abbr", ""),
+                "home_abbr": dr.get("home_abbr", ""),
+                "away_name": dr.get("away_name", ""),
+                "home_name": dr.get("home_name", ""),
+                "away_score": avg_away,
+                "home_score": avg_home,
+                "margin": round(avg_home - avg_away, 1),
+                "sources": 2,
+                "source_label": "DRatings + Dimers",
+                "contested": contested,
+                "disagreement": round(margin_diff, 1),
+                "dr_margin": dr["margin"],
+                "dm_margin": dm_margin,
+            }
+        else:
+            ensemble[dr_key] = {**dr, "sources": 1, "source_label": "DRatings only",
+                                "contested": False, "disagreement": 0}
+
+    # Add unmatched Dimers predictions
+    for dm_key, dm in dimers.items():
+        if dm_key not in dimers_matched:
+            ensemble[dm_key] = {**dm, "sources": 1, "source_label": "Dimers only",
+                                "contested": False, "disagreement": 0}
+
+    return ensemble
+
+
 # NBA team name to abbreviation mapping
 TEAM_NAME_TO_ABBR = {
     "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
@@ -646,13 +896,19 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     decimal_odds = american_to_decimal(dk_odds)
     kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
 
-    # Build notes
+    # Build notes with ensemble info
+    source_label = pred.get("source_label", "DRatings")
     notes_parts = [
-        f"DRatings: {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (projected margin: {abs(model_home_margin):.1f}).",
+        f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (margin: {abs(model_home_margin):.1f}).",
         f"Spread cushion: {spread_cushion:.1f} pts.",
     ]
+    # Ensemble disagreement warning
+    if pred.get("contested"):
+        notes_parts.append(f"⚠ CONTESTED: Sources disagree by {pred['disagreement']:.1f} pts (DRatings: {pred.get('dr_margin', '?'):+.1f}, Dimers: {pred.get('dm_margin', '?'):+.1f}). Lower confidence.")
+    elif pred.get("sources", 1) == 1:
+        notes_parts.append(f"Single source — {source_label}. Lower confidence without cross-validation.")
     if suspicious:
-        notes_parts.append(f"⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model disagrees with market by {spread_cushion:.1f} pts. Investigate before betting — DRatings may be missing injury/lineup info.")
+        notes_parts.append(f"⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model disagrees with market by {spread_cushion:.1f} pts. Investigate before betting.")
     if tank_note:
         notes_parts.append(tank_note)
     if b2b_note:
@@ -660,8 +916,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
     # Label partially validated sports
     confidence = "MEDIUM" if sport.lower() in PARTIALLY_VALIDATED_SPORTS else "HIGH"
-    if confidence == "MEDIUM":
-        notes_parts.append(f"⚠ SD confidence: {confidence} (single-season data)")
+    if pred.get("contested"):
+        confidence = "LOW"
+    elif pred.get("sources", 1) == 1:
+        confidence = "MEDIUM" if confidence == "HIGH" else confidence
+    if confidence != "HIGH":
+        notes_parts.append(f"⚠ Confidence: {confidence}")
 
     return {
         "sport": sport.upper(),
@@ -680,7 +940,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "tier": "High",
         "kelly_pct": kelly_pct,
         "notes": " ".join(notes_parts),
-        "sources": "DRatings, ESPN",
+        "sources": f"{source_label}, ESPN",
         "tank_risk": bool(tank_info and tank_info["confirmed"]),
         "spread_cushion": spread_cushion,
         "confidence": confidence,
@@ -778,10 +1038,15 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     decimal_odds = american_to_decimal(dk_odds)
     kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
 
-    # Build notes
-    notes = f"DRatings: {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (total: {model_total:.1f}). Line: {espn_total}. Cushion: {cushion:.1f} pts."
+    # Build notes with ensemble info
+    source_label = pred.get("source_label", "DRatings")
+    notes = f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (total: {model_total:.1f}). Line: {espn_total}. Cushion: {cushion:.1f} pts."
+    if pred.get("contested"):
+        notes += f" ⚠ CONTESTED: Sources disagree by {pred['disagreement']:.1f} pts."
+    elif pred.get("sources", 1) == 1:
+        notes += f" Single source — {source_label}."
     if suspicious:
-        notes += f" ⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model predicts {model_total:.1f} vs market {espn_total} — {cushion:.1f} pt gap. Investigate before betting."
+        notes += f" ⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model predicts {model_total:.1f} vs market {espn_total} — {cushion:.1f} pt gap."
 
     return {
         "sport": sport.upper(),
@@ -800,7 +1065,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         "tier": "High",
         "kelly_pct": kelly_pct,
         "notes": notes,
-        "sources": "DRatings, ESPN",
+        "sources": f"{source_label}, ESPN",
         "tank_risk": False,
         "spread_cushion": cushion,
     }
@@ -872,15 +1137,39 @@ def main():
         DATA_JSON.write_text(json.dumps(data, indent=2) + "\n")
         return
 
-    # Step 3: Fetch model predictions for each sport
-    print("\n[3] Fetching DRatings predictions...")
+    # Step 3: Fetch model predictions from multiple sources and build ensemble
+    print("\n[3] Fetching predictions (DRatings + Dimers ensemble)...")
+    all_dratings = {}
+    all_dimers = {}
     for sport in all_sports:
+        # Fetch DRatings
         try:
-            preds = fetch_dratings_predictions(today, sport)
-            all_predictions[sport] = preds
+            dr_preds = fetch_dratings_predictions(today, sport)
+            all_dratings[sport] = dr_preds
         except Exception as e:
-            print(f"  {sport.upper()} predictions error: {e}", file=sys.stderr)
-            all_predictions[sport] = {}
+            print(f"  {sport.upper()} DRatings error: {e}", file=sys.stderr)
+            all_dratings[sport] = {}
+
+        # Fetch Dimers/Levy Edge (only for sports with API support)
+        if sport.lower() in ("nba", "nhl", "mlb", "nfl"):
+            try:
+                dm_preds = fetch_dimers_predictions(today, sport)
+                all_dimers[sport] = dm_preds
+            except Exception as e:
+                print(f"  {sport.upper()} Dimers error: {e}", file=sys.stderr)
+                all_dimers[sport] = {}
+        else:
+            all_dimers[sport] = {}
+
+        # Build ensemble for this sport
+        ensemble = build_ensemble(all_dratings.get(sport, {}), all_dimers.get(sport, {}), sport)
+        all_predictions[sport] = ensemble
+
+        # Log ensemble stats
+        n_both = sum(1 for v in ensemble.values() if v.get("sources", 0) == 2)
+        n_contested = sum(1 for v in ensemble.values() if v.get("contested", False))
+        if ensemble:
+            print(f"  {sport.upper()} ensemble: {len(ensemble)} games ({n_both} dual-source, {n_contested} contested)")
 
     # Step 4: Check B2B teams (NBA only for now; NHL could use same logic)
     print("\n[4] Checking back-to-back schedule...")
