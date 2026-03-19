@@ -529,22 +529,21 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
         return tuple(sorted([t1, t1n, t2, t2n]))  # Broad match set
 
     def teams_match(key1, key2):
-        """Check if two AWAY@HOME keys represent the same game (in any order)."""
+        """Check if two AWAY@HOME keys represent the same game.
+        Requires both away and home teams to match (same direction).
+        Reversed matches (DET@WSH vs WSH@DET) are rejected — these are
+        likely different games on back-to-back nights."""
         p1 = key1.split("@")
         p2 = key2.split("@")
         if len(p1) != 2 or len(p2) != 2:
             return False
         t1a, t1h = p1[0].upper(), p1[1].upper()
         t2a, t2h = p2[0].upper(), p2[1].upper()
-        # Also check aliases
         aliases_1a = {t1a, abbr_aliases.get(t1a, t1a)}
         aliases_1h = {t1h, abbr_aliases.get(t1h, t1h)}
         aliases_2a = {t2a, abbr_aliases.get(t2a, t2a)}
         aliases_2h = {t2h, abbr_aliases.get(t2h, t2h)}
-        # Match if teams are the same pair (in any home/away order)
-        fwd = bool(aliases_1a & aliases_2a) and bool(aliases_1h & aliases_2h)
-        rev = bool(aliases_1a & aliases_2h) and bool(aliases_1h & aliases_2a)
-        return fwd or rev
+        return bool(aliases_1a & aliases_2a) and bool(aliases_1h & aliases_2h)
 
     ensemble = {}
     dimers_matched = set()
@@ -554,40 +553,19 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
         # Try to find matching Dimers prediction
         dm = None
         dm_key = None
-        dm_reversed = False
         for dk, dv in dimers.items():
             if dk in dimers_matched:
                 continue
             if teams_match(dr_key, dk):
                 dm = dv
                 dm_key = dk
-                # Check if home/away are reversed
-                dr_parts = dr_key.split("@")
-                dm_parts = dk.split("@")
-                aliases_dr_away = {dr_parts[0].upper(), abbr_aliases.get(dr_parts[0].upper(), dr_parts[0].upper())}
-                aliases_dm_away = {dm_parts[0].upper(), abbr_aliases.get(dm_parts[0].upper(), dm_parts[0].upper())}
-                dm_reversed = not bool(aliases_dr_away & aliases_dm_away)
                 break
 
         if dm:
             dimers_matched.add(dm_key)
-            # Normalize Dimers scores to DRatings' home/away perspective.
-            # When reversed, Dimers' away team = DRatings' home team (and vice versa).
-            # We match by TEAM IDENTITY: DRatings' away team's score maps to
-            # whichever Dimers position has that same team.
-            if dm_reversed:
-                # DRatings: away=TeamA, home=TeamB
-                # Dimers: away=TeamB, home=TeamA
-                # dm["away_score"] is TeamB's score, dm["home_score"] is TeamA's score
-                # For DRatings perspective: away(TeamA) = dm's home, home(TeamB) = dm's away
-                dm_away_score = dm["home_score"]  # TeamA's score from Dimers
-                dm_home_score = dm["away_score"]   # TeamB's score from Dimers
-            else:
-                dm_away_score = dm["away_score"]
-                dm_home_score = dm["home_score"]
-
-            # Margin from DRatings perspective (home - away) using Dimers' scores
-            dm_margin = dm_home_score - dm_away_score
+            dm_away_score = dm["away_score"]
+            dm_home_score = dm["home_score"]
+            dm_margin = dm["margin"]
 
             avg_away = round((dr["away_score"] + dm_away_score) / 2, 1)
             avg_home = round((dr["home_score"] + dm_home_score) / 2, 1)
