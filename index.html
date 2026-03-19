@@ -393,7 +393,9 @@ function render(d){
       else if(p.status==='PLACED')statusBadge='<span class="badge b-placed">PLACED</span>';
       else if(p.status==='PENDING')statusBadge='<span class="badge b-pending">PENDING</span>';
 
-      const dkUrl='https://sportsbook.draftkings.com/search?q='+encodeURIComponent(p.event.split('@').pop().trim());
+      const dkSportMap={NBA:'basketball/nba',NHL:'hockey/nhl',MLB:'baseball/mlb',NFL:'football/nfl',MLS:'soccer/mls',EPL:'soccer/england---premier-league'};
+      const dkLeague=dkSportMap[(p.sport||'NBA').toUpperCase()]||'';
+      const dkUrl=dkLeague?'https://sportsbook.draftkings.com/leagues/'+dkLeague:'https://sportsbook.draftkings.com';
 
       let actionsHtml='';
       if(!isPlaced){
