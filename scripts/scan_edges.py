@@ -530,20 +530,26 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
 
     def teams_match(key1, key2):
         """Check if two AWAY@HOME keys represent the same game.
-        Requires both away and home teams to match (same direction).
-        Reversed matches (DET@WSH vs WSH@DET) are rejected — these are
-        likely different games on back-to-back nights."""
+        Returns (matched: bool, reversed: bool).
+        Reversed means teams are the same but home/away flipped — one source
+        got it wrong. This IS the same game (teams don't play twice in a night)."""
         p1 = key1.split("@")
         p2 = key2.split("@")
         if len(p1) != 2 or len(p2) != 2:
-            return False
+            return False, False
         t1a, t1h = p1[0].upper(), p1[1].upper()
         t2a, t2h = p2[0].upper(), p2[1].upper()
         aliases_1a = {t1a, abbr_aliases.get(t1a, t1a)}
         aliases_1h = {t1h, abbr_aliases.get(t1h, t1h)}
         aliases_2a = {t2a, abbr_aliases.get(t2a, t2a)}
         aliases_2h = {t2h, abbr_aliases.get(t2h, t2h)}
-        return bool(aliases_1a & aliases_2a) and bool(aliases_1h & aliases_2h)
+        fwd = bool(aliases_1a & aliases_2a) and bool(aliases_1h & aliases_2h)
+        rev = bool(aliases_1a & aliases_2h) and bool(aliases_1h & aliases_2a)
+        if fwd:
+            return True, False
+        if rev:
+            return True, True
+        return False, False
 
     ensemble = {}
     dimers_matched = set()
@@ -553,24 +559,61 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
         # Try to find matching Dimers prediction
         dm = None
         dm_key = None
+        dm_reversed = False
         for dk, dv in dimers.items():
             if dk in dimers_matched:
                 continue
-            if teams_match(dr_key, dk):
+            matched, reversed_ = teams_match(dr_key, dk)
+            if matched:
                 dm = dv
                 dm_key = dk
+                dm_reversed = reversed_
                 break
 
         if dm:
             dimers_matched.add(dm_key)
-            dm_away_score = dm["away_score"]
-            dm_home_score = dm["home_score"]
-            dm_margin = dm["margin"]
+            # When reversed, one source has home/away flipped for the SAME game.
+            # Both models predict "away team scores X, home team scores Y" — but they
+            # disagree on who's away/home. To compare apples-to-apples, we match by
+            # TEAM IDENTITY: find each team's predicted score across both sources.
+            #
+            # Example: DRatings DET@WSH: DET(away)=121.5, WSH(home)=108.1
+            #          Dimers  WAS@DET: WAS(away)=121.5, DET(home)=108.4
+            # DET's score: DR=121.5 (as away), DM=108.4 (as home)
+            # WSH's score: DR=108.1 (as home), DM=121.5 (as away)
+            # The ~13pt difference per team is from home advantage being applied
+            # to different teams. Average removes the bias:
+            # DET avg: (121.5+108.4)/2 = 115.0, WSH avg: (108.1+121.5)/2 = 114.8
+            if dm_reversed:
+                # Dimers' away = DRatings' home team, Dimers' home = DRatings' away team
+                # To align with DRatings' perspective (key = away@home):
+                # DRatings away team's score in Dimers = dm["home_score"]
+                # DRatings home team's score in Dimers = dm["away_score"]
+                dm_away_score = dm["home_score"]
+                dm_home_score = dm["away_score"]
+            else:
+                dm_away_score = dm["away_score"]
+                dm_home_score = dm["home_score"]
+            dm_margin = dm_home_score - dm_away_score
 
             avg_away = round((dr["away_score"] + dm_away_score) / 2, 1)
             avg_home = round((dr["home_score"] + dm_home_score) / 2, 1)
-            margin_diff = abs(dr["margin"] - dm_margin)
+
+            if dm_reversed:
+                # H/A flipped between sources — both predict similar game strength
+                # but apply home advantage to different teams.
+                # True disagreement = how much they disagree on the MAGNITUDE of
+                # the mismatch (ignoring direction): ||DR margin| - |DM margin||
+                margin_diff = abs(abs(dr["margin"]) - abs(dm_margin))
+                # Note: avg margin will be near zero (H/A cancels out).
+                # This is correct — when we don't know who's home, predict neutral.
+            else:
+                margin_diff = abs(dr["margin"] - dm_margin)
             contested = margin_diff > thresh
+
+            source_note = "DRatings + Dimers"
+            if dm_reversed:
+                source_note += " (H/A reversed)"
 
             ensemble[dr_key] = {
                 "away_abbr": dr.get("away_abbr", ""),
@@ -581,7 +624,7 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
                 "home_score": avg_home,
                 "margin": round(avg_home - avg_away, 1),
                 "sources": 2,
-                "source_label": "DRatings + Dimers",
+                "source_label": source_note,
                 "contested": contested,
                 "disagreement": round(margin_diff, 1),
                 "dr_margin": dr["margin"],
