@@ -25,6 +25,22 @@
 **Mistake:** scan_edges.py overwrote data.json and wiped the user's 4 placed bets THREE TIMES in one session. Bets were in picks[] (status "PLACED") but not in bets[]. Scan replaces picks[] every run.
 **Rule:** The bets[] array is SACRED. The scan must NEVER remove entries from it. Bets only enter bets[] when the user places them (via Place button or manual confirmation). The scan writes picks[] (today's suggestions) but preserves bets[] untouched. This is the #1 data integrity rule.
 
+## 2026-03-18: Don't change git remote URL from this VM
+**Mistake:** Changed remote from SSH (`git@github.com:...`) to HTTPS (`https://github.com/...`) when trying to push from the Cowork VM. This broke Max's push from his Mac — it asked for a password instead of using his SSH key.
+**Rule:** Never run `git remote set-url` in this VM. The SSH remote is configured on Max's Mac with his SSH key. If we can't push from the VM, just tell Max to push from his Mac. Don't try to "fix" the remote.
+
+## 2026-03-18: Ensemble — reversed home/away is the same game, not different games
+**Mistake:** Initially rejected reversed matches (DET@WSH vs WSH@DET) thinking they were different games on back-to-back nights. They're the same game — one source just has home/away flipped. Also initially computed disagreement as `|DR_margin - DM_margin|` which showed 26.5pts when the real team-strength disagreement was only 0.3pts.
+**Rule:** Teams don't play each other twice in one night. If the same two teams appear in both sources with reversed H/A, it's the same game. Match by team identity, swap scores to align perspectives, compute true disagreement as `||DR_margin| - |DM_margin||` (magnitude difference, ignoring sign).
+
+## 2026-03-18: ESPN 'details' field contains moneyline for NHL/MLB, not spread
+**Mistake:** Parser treated ESPN's `details` field (e.g., "COL -142") as the point spread for all sports. For NBA it IS the spread ("OKC -19.5"), but for NHL/MLB it's the moneyline. Created 142-point fake spreads and 45% fake edges.
+**Rule:** Use ESPN's `spread` API field for the actual spread value. Only use `details` to determine which team is favored (the team abbreviation). Never parse the number from `details` for NHL/MLB.
+
+## 2026-03-18: Don't show internal implementation details to users
+**Mistake:** Added "(H/A reversed)" label to user-facing source notes on picks. Users don't care about data source disagreements — they just want the pick and confidence level.
+**Rule:** Keep internal data quality notes (H/A reversed, single source, parser issues) out of user-facing labels. Use confidence levels (HIGH/MEDIUM/LOW) and contested flags instead.
+
 ## 2026-03-17: Don't rename data.json fields without updating index.html
 **Mistake:** Renamed `bankroll.current` to `bankroll.available` in data.json without updating index.html. Netlify site broke — "Error loading data" because `b.current.toFixed(2)` threw on undefined.
 **Rule:** Any data.json schema change MUST have a corresponding index.html update in the same commit. Use fallback patterns like `b.available || b.current || 0` for backward compatibility.
