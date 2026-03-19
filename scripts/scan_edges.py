@@ -585,47 +585,55 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
             # to different teams. Average removes the bias:
             # DET avg: (121.5+108.4)/2 = 115.0, WSH avg: (108.1+121.5)/2 = 114.8
             if dm_reversed:
-                # Dimers' away = DRatings' home team, Dimers' home = DRatings' away team
-                # To align with DRatings' perspective (key = away@home):
-                # DRatings away team's score in Dimers = dm["home_score"]
-                # DRatings home team's score in Dimers = dm["away_score"]
-                dm_away_score = dm["home_score"]
-                dm_home_score = dm["away_score"]
+                # H/A flipped — same game, one source has home/away wrong.
+                # DRatings matches ESPN schedule, so USE DRATINGS SCORES as primary.
+                # Dimers confirms team strength agreement (low magnitude diff = high confidence).
+                dm_margin_magnitude = abs(dm["margin"])
+                dr_margin_magnitude = abs(dr["margin"])
+                margin_diff = abs(dr_margin_magnitude - dm_margin_magnitude)
+                contested = margin_diff > thresh
+
+                ensemble[dr_key] = {
+                    "away_abbr": dr.get("away_abbr", ""),
+                    "home_abbr": dr.get("home_abbr", ""),
+                    "away_name": dr.get("away_name", ""),
+                    "home_name": dr.get("home_name", ""),
+                    "away_score": dr["away_score"],  # Use DRatings (correct H/A)
+                    "home_score": dr["home_score"],
+                    "margin": dr["margin"],           # Use DRatings margin
+                    "sources": 2,
+                    "source_label": "DRatings + Dimers",
+                    "contested": contested,
+                    "disagreement": round(margin_diff, 1),
+                    "dr_margin": dr["margin"],
+                    "dm_margin": dm["margin"],
+                }
             else:
+                # Same H/A direction — safe to average
                 dm_away_score = dm["away_score"]
                 dm_home_score = dm["home_score"]
-            dm_margin = dm_home_score - dm_away_score
+                dm_margin = dm["margin"]
 
-            avg_away = round((dr["away_score"] + dm_away_score) / 2, 1)
-            avg_home = round((dr["home_score"] + dm_home_score) / 2, 1)
-
-            if dm_reversed:
-                # H/A flipped between sources — both predict similar game strength
-                # but apply home advantage to different teams.
-                # True disagreement = how much they disagree on the MAGNITUDE of
-                # the mismatch (ignoring direction): ||DR margin| - |DM margin||
-                margin_diff = abs(abs(dr["margin"]) - abs(dm_margin))
-                # Note: avg margin will be near zero (H/A cancels out).
-                # This is correct — when we don't know who's home, predict neutral.
-            else:
+                avg_away = round((dr["away_score"] + dm_away_score) / 2, 1)
+                avg_home = round((dr["home_score"] + dm_home_score) / 2, 1)
                 margin_diff = abs(dr["margin"] - dm_margin)
-            contested = margin_diff > thresh
+                contested = margin_diff > thresh
 
-            ensemble[dr_key] = {
-                "away_abbr": dr.get("away_abbr", ""),
-                "home_abbr": dr.get("home_abbr", ""),
-                "away_name": dr.get("away_name", ""),
-                "home_name": dr.get("home_name", ""),
-                "away_score": avg_away,
-                "home_score": avg_home,
-                "margin": round(avg_home - avg_away, 1),
-                "sources": 2,
-                "source_label": "DRatings + Dimers",
-                "contested": contested,
-                "disagreement": round(margin_diff, 1),
-                "dr_margin": dr["margin"],
-                "dm_margin": dm_margin,
-            }
+                ensemble[dr_key] = {
+                    "away_abbr": dr.get("away_abbr", ""),
+                    "home_abbr": dr.get("home_abbr", ""),
+                    "away_name": dr.get("away_name", ""),
+                    "home_name": dr.get("home_name", ""),
+                    "away_score": avg_away,
+                    "home_score": avg_home,
+                    "margin": round(avg_home - avg_away, 1),
+                    "sources": 2,
+                    "source_label": "DRatings + Dimers",
+                    "contested": contested,
+                    "disagreement": round(margin_diff, 1),
+                    "dr_margin": dr["margin"],
+                    "dm_margin": dm_margin,
+                }
         else:
             ensemble[dr_key] = {**dr, "sources": 1, "source_label": "DRatings only",
                                 "contested": False, "disagreement": 0}
@@ -1146,11 +1154,20 @@ def main():
     print(f"  Found {game_count} total games, {len(upcoming)} upcoming")
 
     if not upcoming:
-        print("No upcoming games. Saving empty scan.")
+        started = sum(1 for g in all_games if g["status"] not in ("STATUS_SCHEDULED", "STATUS_PREGAME"))
+        if started > 0:
+            msg = f"{today_iso} — All {started} games in progress or final · Next scan 6 AM PT"
+        else:
+            msg = f"{today_iso} — No games scheduled"
+        print(f"No upcoming games ({started} started/final). Preserving existing picks.")
         data["scan_date"] = today_iso
-        data["scan_subtitle"] = f"{today_iso} — No games scheduled"
-        data["picks"] = []
-        data["no_edge_games"] = []
+        data["scan_subtitle"] = msg
+        # PRESERVE existing picks and no_edge_games — don't wipe them
+        # Only clear if there were never any picks for today
+        if "picks" not in data:
+            data["picks"] = []
+        if "no_edge_games" not in data:
+            data["no_edge_games"] = []
         DATA_JSON.write_text(json.dumps(data, indent=2) + "\n")
         return
 
