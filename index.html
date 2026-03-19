@@ -444,7 +444,8 @@ function render(d){
     }
 
     d.picks.forEach((p,i)=>{
-      const tierCls=p.tier==='High'?'b-high':p.tier==='Medium'?'b-med':'b-low';
+      const conf=p.confidence||p.tier||'HIGH';
+      const tierCls=conf==='HIGH'?'b-high':conf==='MEDIUM'?'b-med':'b-low';
       const isPlaced=p.status==='PLACED'||p.status==='WIN'||p.status==='LOSS'||p.status==='PUSH'||p.status==='PENDING';
 
       let statusBadge='';
@@ -483,7 +484,7 @@ function render(d){
           <div class="pick-top">
             <div class="pick-left">
               <div class="pick-title">${p.pick} <span class="odds">${p.odds}</span></div>
-              <div class="pick-meta">${p.sport} · ${p.event} · ${p.market} · <span class="badge ${tierCls}">${p.tier}</span></div>
+              <div class="pick-meta">${p.sport} · ${p.event} · ${p.market} · <span class="badge ${tierCls}">${conf}</span></div>
             </div>
             <div class="pick-right">
               <div class="pick-edge">+${p.edge}%</div>
