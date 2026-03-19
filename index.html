@@ -332,6 +332,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <script>
 let DATA=null;
 const REPO='blueandyellow44/dk-edge-finder';
+function americanToDecimal(odds){return odds<0?1+100/Math.abs(odds):1+odds/100;}
 
 // Tab switching
 document.querySelectorAll('.tab').forEach(t=>{
@@ -452,9 +453,11 @@ function render(d){
       else if(p.status==='PLACED')statusBadge='<span class="badge b-placed">PLACED</span>';
       else if(p.status==='PENDING')statusBadge='<span class="badge b-pending">PENDING</span>';
 
+      // Use direct DK bet slip link when available, fall back to league page
       const dkSportMap={NBA:'basketball/nba',NHL:'hockey/nhl',MLB:'baseball/mlb',NFL:'football/nfl',MLS:'soccer/mls',EPL:'soccer/england---premier-league'};
       const dkLeague=dkSportMap[(p.sport||'NBA').toUpperCase()]||'';
-      const dkUrl=dkLeague?'https://sportsbook.draftkings.com/leagues/'+dkLeague:'https://sportsbook.draftkings.com';
+      const dkFallback=dkLeague?'https://sportsbook.draftkings.com/leagues/'+dkLeague:'https://sportsbook.draftkings.com';
+      const dkUrl=p.dk_link||dkFallback;
 
       let actionsHtml='';
       if(!isPlaced){
@@ -487,11 +490,15 @@ function render(d){
               <div class="pick-wager">${p.bet}</div>
             </div>
           </div>
+          <div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-bottom:12px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">
+            ${p.notes||'No model data available.'}
+            ${p.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+p.sources+'</span>':''}
+          </div>
           <div class="pick-grid">
             <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${p.odds}</div></div>
             <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
             <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-blue)">+${p.edge}%</div></div>
+            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${p.edge}%</div></div>
           </div>
           <div class="pick-analysis" id="analysis-${i}">
             ${p.notes||''}
@@ -860,10 +867,30 @@ async function triggerPlacement(indices){
     });
     if(resp.status===204){
       saveLocalPlacement(indices);
-      if(indices==='all'){DATA.picks.forEach(p=>{if(!p.status||p.status==='')p.status='PLACED'});}
-      else{indices.forEach(i=>{if(DATA.picks[i])DATA.picks[i].status='PLACED'});}
+      // Mark picks as placed AND add to bets[] AND deduct bankroll
+      const placedPicks=indices==='all'?DATA.picks.filter(p=>!p.status||p.status===''):indices.map(i=>DATA.picks[i]).filter(Boolean);
+      let totalDeducted=0;
+      placedPicks.forEach(p=>{
+        p.status='PLACED';
+        const wager=parseFloat(p.bet.replace('$',''));
+        totalDeducted+=wager;
+        // Add to bets[] so it shows in Results/History immediately
+        if(!DATA.bets.some(b=>b.pick===p.pick&&b.date===DATA.scan_date)){
+          DATA.bets.push({
+            date:DATA.scan_date,sport:p.sport,event:p.event,
+            pick:p.pick,odds:p.odds,
+            decimal_odds:p.odds?americanToDecimal(parseInt(p.odds)):1.909,
+            edge:p.edge+'%',wager:wager,outcome:'pending'
+          });
+        }
+      });
+      // Deduct from bankroll
+      DATA.bankroll.available=Math.round((DATA.bankroll.available-totalDeducted)*100)/100;
+      DATA.bankroll.pending_count=(DATA.bankroll.pending_count||0)+placedPicks.length;
+      DATA.bankroll.pending_total=Math.round(((DATA.bankroll.pending_total||0)+totalDeducted)*100)/100;
+      DATA.bankroll.pending_label=DATA.bankroll.pending_count+' bet(s) pending ($'+DATA.bankroll.pending_total.toFixed(2)+')';
       render(DATA);
-      toast('Bets placed. Bankroll updated. GitHub syncs in ~60s.');
+      toast('Placed '+placedPicks.length+' bet(s) for $'+totalDeducted.toFixed(2)+'. Bankroll: $'+DATA.bankroll.available.toFixed(2));
     }else if(resp.status===401||resp.status===403){
       localStorage.removeItem('gh_token');promptToken(indices);
     }else{toast('Error ('+resp.status+'). Try again.');}

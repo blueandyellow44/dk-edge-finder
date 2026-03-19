@@ -17,6 +17,7 @@ import sys
 import re
 import urllib.request
 import urllib.error
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -247,6 +248,30 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             except (ValueError, TypeError):
                 pass
 
+        # Extract DK deep links for bet slip (from ESPN's link.href with preurl param)
+        dk_spread_links = {"home": "", "away": ""}
+        dk_total_links = {"over": "", "under": ""}
+        dk_game_link = ""
+        if ps_data:
+            for side in ("home", "away"):
+                raw = ps_data.get(side, {}).get("close", {}).get("link", {}).get("href", "")
+                if "preurl=" in raw:
+                    dk_spread_links[side] = urllib.parse.unquote(raw.split("preurl=")[-1])
+                elif raw:
+                    dk_spread_links[side] = raw
+        if total_data:
+            for side in ("over", "under"):
+                raw = total_data.get(side, {}).get("close", {}).get("link", {}).get("href", "")
+                if "preurl=" in raw:
+                    dk_total_links[side] = urllib.parse.unquote(raw.split("preurl=")[-1])
+                elif raw:
+                    dk_total_links[side] = raw
+        game_link_raw = odds_data.get("link", {}).get("href", "")
+        if "preurl=" in game_link_raw:
+            dk_game_link = urllib.parse.unquote(game_link_raw.split("preurl=")[-1])
+        elif game_link_raw:
+            dk_game_link = game_link_raw
+
         game = {
             "home": home,
             "away": away,
@@ -262,6 +287,9 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             "event_str": f"{away.get('name', '?')} @ {home.get('name', '?')}",
             "event_short": f"{away.get('abbr', '?')} @ {home.get('abbr', '?')}",
             "odds_details": details,
+            "dk_spread_links": dk_spread_links,
+            "dk_total_links": dk_total_links,
+            "dk_game_link": dk_game_link,
         }
         games.append(game)
 
@@ -1006,6 +1034,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "tank_risk": bool(tank_info and tank_info["confirmed"]),
         "spread_cushion": spread_cushion,
         "confidence": confidence,
+        "dk_link": game.get("dk_spread_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
     }
 
 
@@ -1135,6 +1164,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         "sources": f"{source_label}, ESPN",
         "tank_risk": False,
         "spread_cushion": cushion,
+        "dk_link": game.get("dk_total_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
     }
 
 
@@ -1346,6 +1376,7 @@ def main():
             "notes": pick["notes"],
             "sources": pick["sources"],
             "confidence": pick.get("confidence", "HIGH"),
+            "dk_link": pick.get("dk_link", ""),
         })
 
         print(f"  #{i+1}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
