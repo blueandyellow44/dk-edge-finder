@@ -2,12 +2,12 @@
   "scan_date": "2026-03-18",
   "scan_subtitle": "2026-03-18 \u2014 No games scheduled",
   "bankroll": {
-    "available": 529.06,
+    "available": 548.64,
     "starting": 500.0,
-    "profit": 29.06,
+    "profit": 48.64,
     "record": {
-      "wins": 4,
-      "losses": 5,
+      "wins": 6,
+      "losses": 6,
       "pushes": 0
     },
     "pending_count": 0,
@@ -138,6 +138,45 @@
       "outcome": "win",
       "pnl": 67.5,
       "final_score": ""
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Nuggets @ Grizzlies",
+      "pick": "UNDER 246.5",
+      "odds": "-108",
+      "decimal_odds": 1.926,
+      "edge": "5.7%",
+      "wager": 22.44,
+      "outcome": "win",
+      "pnl": 20.77,
+      "final_score": "DEN 118, MEM 125 (243)"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Clippers @ Pelicans",
+      "pick": "UNDER 237.5",
+      "odds": "-105",
+      "decimal_odds": 1.952,
+      "edge": "5.7%",
+      "wager": 24.98,
+      "outcome": "win",
+      "pnl": 23.79,
+      "final_score": "LAC 109, NO 124 (233)"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Raptors @ Bulls",
+      "pick": "UNDER 237.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "26.3%",
+      "wager": 24.98,
+      "outcome": "loss",
+      "pnl": -24.98,
+      "final_score": "TOR 139, CHI 109 (248)"
     }
   ]
 }
