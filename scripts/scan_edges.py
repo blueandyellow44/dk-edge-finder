@@ -203,7 +203,8 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             }
 
         # Extract odds if available
-        odds_data = comp.get("odds", [{}])[0] if comp.get("odds") else {}
+        odds_list = comp.get("odds") or [{}]
+        odds_data = odds_list[0] if odds_list and odds_list[0] else {}
         spread = odds_data.get("spread", 0)
         over_under = odds_data.get("overUnder", 0)
         spread_odds = odds_data.get("spreadOdds", {})
@@ -339,12 +340,12 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
         "mlb": "https://www.dratings.com/predictor/mlb-baseball-predictions/",
         "nfl": "https://www.dratings.com/predictor/nfl-football-predictions/",
         "mls": "https://www.dratings.com/predictor/mls-soccer-predictions/",
-        "epl": "https://www.dratings.com/predictor/epl-soccer-predictions/",
-        "la_liga": "https://www.dratings.com/predictor/la-liga-soccer-predictions/",
-        "bundesliga": "https://www.dratings.com/predictor/bundesliga-soccer-predictions/",
-        "serie_a": "https://www.dratings.com/predictor/serie-a-soccer-predictions/",
-        "ligue_1": "https://www.dratings.com/predictor/ligue-1-soccer-predictions/",
-        "ucl": "https://www.dratings.com/predictor/ucl-soccer-predictions/",
+        "epl": "https://www.dratings.com/predictor/english-premier-league-predictions/",
+        "la_liga": "https://www.dratings.com/predictor/spain-la-liga-predictions/",
+        "bundesliga": "https://www.dratings.com/predictor/german-bundesliga-predictions/",
+        "serie_a": "https://www.dratings.com/predictor/italy-serie-a-predictions/",
+        "ligue_1": "https://www.dratings.com/predictor/france-ligue-1-predictions/",
+        "ucl": "https://www.dratings.com/predictor/champions-league-predictions/",
         # MMA: DRatings doesn't have UFC predictions — will return empty, that's fine
     }
     url = sport_urls.get(sport.lower(), sport_urls["nba"])
@@ -369,13 +370,18 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
             "mlb":  {"regex": r'^(\d{1,2}\.\d{1,2})$', "min": 0.5, "max": 15},
             "mls":  {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
             "epl":  {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "la_liga":    {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "bundesliga": {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "serie_a":    {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "ligue_1":    {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
+            "ucl":        {"regex": r'^(\d{1}\.\d{1,2})$',   "min": 0.3, "max": 5},
         }
         cfg = score_config.get(sport.lower(), score_config["nba"])
         score_re = re.compile(cfg["regex"])
         score_min, score_max = cfg["min"], cfg["max"]
 
-        # Minimum cells: NHL/MLB tables may have fewer columns than NBA
-        min_cells = 6 if sport.lower() in ("nhl", "mlb", "mls", "epl") else 10
+        # Minimum cells: NHL/MLB/soccer tables may have fewer columns than NBA
+        min_cells = 6 if sport.lower() in ("nhl", "mlb", "mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl") else 10
 
         # Non-team strings to filter out (varies by sport)
         non_team_strings = {
@@ -407,11 +413,19 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
                     if score_min <= val <= score_max:
                         scores.append(val)
 
-                # Match team name (multi-word, capitalized)
-                # Also handle names with periods like "St. Louis Blues"
-                if re.match(r'^[A-Z][a-z]+\.?(?: [A-Z][a-z]+)+$', cell):
-                    if cell not in non_team_strings:
-                        team_names.append(cell)
+                # Match team name — capitalized word(s)
+                # Multi-word: "Manchester United", "St. Louis Blues"
+                # Single-word (soccer): "Bournemouth", "Liverpool", "Wolverhampton"
+                is_soccer = sport.lower() in ("mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl")
+                if is_soccer:
+                    # Allow single-word names (min 4 chars to avoid matching "Win", "Draw", etc.)
+                    if re.match(r'^[A-Z][a-z]{3,}(?: [A-Z][a-z]+)*$', cell):
+                        if cell not in non_team_strings and cell not in ("Time", "Teams", "Draw", "Best", "Goals", "Total", "Value", "Loss", "Final", "More", "Details", "Sportsbook", "DRatings"):
+                            team_names.append(cell)
+                else:
+                    if re.match(r'^[A-Z][a-z]+\.?(?: [A-Z][a-z]+)+$', cell):
+                        if cell not in non_team_strings:
+                            team_names.append(cell)
 
                 # Match record: (W-L), (W-L-OTL), or (W-L-T)
                 rm = re.match(r'^\((\d+-\d+(?:-\d+)?)\)$', cell)
