@@ -154,8 +154,10 @@ def skellam_cdf(k_threshold, mu1, mu2):
     std = math.sqrt(mu1 + mu2)
 
     # Bounds: ±6σ from mean covers 99.73% of normal distribution
-    k_min = int(mean - 6 * std) - 1
-    k_max = int(k_threshold) + 1
+    k_min = math.floor(mean - 6 * std) - 1
+    # CRITICAL: use floor, not int. int(-1.5) = -1 (truncates toward zero)
+    # but floor(-1.5) = -2. For P(D ≤ -1.5) we need to sum up to k=-2 only.
+    k_max = math.floor(k_threshold) + 1
 
     result = 0.0
     for k in range(k_min, k_max):
