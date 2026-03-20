@@ -10,6 +10,7 @@ import sys
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Optional
 import urllib.request
 import urllib.error
 
@@ -49,7 +50,7 @@ def fetch_nba_scores(date_str: str) -> list[dict]:
         return []
 
 
-def find_game_score(games: list[dict], event_str: str) -> dict | None:
+def find_game_score(games: list[dict], event_str: str) -> Optional[dict]:
     """Match a bet's event string (e.g. 'Pistons @ Wizards') to an ESPN game."""
     # Parse "Away @ Home" format
     parts = event_str.split(" @ ")
