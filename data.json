@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-03-19",
-  "scan_subtitle": "Thursday, March 19, 2026 \u2014 MLB (14), NBA (8), NHL (11)",
+  "scan_date": "2026-03-20",
+  "scan_subtitle": "Friday, March 20, 2026 \u2014 BUNDESLIGA (1), EPL (1), LA_LIGA (1), LIGUE_1 (1), MLB (17), NBA (6), NHL (5), SERIE_A (2)",
   "bankroll": {
     "available": 585.67,
     "starting": 500.0,
@@ -14,138 +14,141 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 33,
+  "games_analyzed": 34,
   "best_bet": {
-    "title": "Florida Panthers +1.5 (-185) \u2014 18.2% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers): FLA 3.4, EDM 3.7 (margin: 0.3). Spread cushion: 1.2 pts. \u26a0 SUSPICIOUS EDGE (17.6%): Model disagrees with market by 1.2 pts. Investigate before betting. \u26a0 Confidence: MEDIUM"
+    "title": "Chicago Blackhawks +1.5 (102) \u2014 38.3% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): COL 4.0, CHI 2.4 (margin: 1.6). Spread cushion: -0.1 pts. \u26a0 CONTESTED: Sources disagree by 0.6 pts (DRatings: -1.6, Dimers: -1.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (38.3%"
   },
   "picks": [
     {
       "rank": 1,
       "sport": "NHL",
-      "event": "Montreal Canadiens @ Detroit Red Wings",
+      "event": "Colorado Avalanche @ Chicago Blackhawks",
       "market": "Spread",
-      "pick": "Detroit Red Wings +1.5",
-      "odds": "-285",
-      "implied": "74.0%",
-      "model": "87.6%",
-      "edge": 13.6,
+      "pick": "Chicago Blackhawks +1.5",
+      "odds": "102",
+      "implied": "49.5%",
+      "model": "87.8%",
+      "edge": 38.3,
       "tier": "High",
-      "bet": "$27.43",
+      "bet": "$29.28",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): MTL 3.1, DET 3.1 (margin: 0.0). Spread cushion: 1.5 pts. \u26a0 SUSPICIOUS EDGE (22.1%): Model disagrees with market by 1.5 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers): COL 4.0, CHI 2.4 (margin: 1.6). Spread cushion: -0.1 pts. \u26a0 CONTESTED: Sources disagree by 0.6 pts (DRatings: -1.6, Dimers: -1.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (38.3%): Model disagrees with market by -0.1 pts. Investigate before betting. CHI on B2B (-1.5% adj) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers, ESPN",
-      "confidence": "MEDIUM"
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841220?outcomes=0HC83940621P150_1"
     },
     {
       "rank": 2,
       "sport": "NHL",
-      "event": "New York Islanders @ Ottawa Senators",
+      "event": "Anaheim Ducks @ Utah Mammoth",
       "market": "Spread",
-      "pick": "New York Islanders +1.5",
-      "odds": "-218",
-      "implied": "68.6%",
-      "model": "86.1%",
-      "edge": 17.5,
+      "pick": "Utah Mammoth +1.5",
+      "odds": "195",
+      "implied": "33.9%",
+      "model": "60.6%",
+      "edge": 26.7,
       "tier": "High",
-      "bet": "$27.43",
+      "bet": "$29.28",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): NYI 2.9, OTT 3.0 (margin: 0.1). Spread cushion: 1.4 pts. \u26a0 SUSPICIOUS EDGE (20.5%): Model disagrees with market by 1.4 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers): ANA 2.9, UTA 3.5 (margin: 0.7). Spread cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (26.7%): Model disagrees with market by 0.8 pts. Investigate before betting. TANK RISK: 20-48, eliminated, development mode (-3% adj) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers, ESPN",
-      "confidence": "MEDIUM"
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841224?outcomes=0HC83940627N150_1"
     },
     {
       "rank": 3,
       "sport": "NHL",
-      "event": "Florida Panthers @ Edmonton Oilers",
+      "event": "Carolina Hurricanes @ Toronto Maple Leafs",
       "market": "Spread",
-      "pick": "Florida Panthers +1.5",
-      "odds": "-185",
-      "implied": "64.9%",
-      "model": "83.1%",
-      "edge": 18.2,
+      "pick": "Toronto Maple Leafs +1.5",
+      "odds": "-142",
+      "implied": "58.7%",
+      "model": "84.2%",
+      "edge": 25.6,
       "tier": "High",
-      "bet": "$27.43",
+      "bet": "$29.28",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): FLA 3.4, EDM 3.7 (margin: 0.3). Spread cushion: 1.2 pts. \u26a0 SUSPICIOUS EDGE (17.6%): Model disagrees with market by 1.2 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers): CAR 3.7, TOR 2.6 (margin: 1.1). Spread cushion: 0.4 pts. \u26a0 CONTESTED: Sources disagree by 0.7 pts (DRatings: -1.1, Dimers: -0.4). Lower confidence. \u26a0 SUSPICIOUS EDGE (25.6%): Model disagrees with market by 0.4 pts. Investigate before betting. TANK WATCH: 36-32, playoff push (-1.5% adj) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers, ESPN",
-      "confidence": "MEDIUM"
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841207?outcomes=0HC83940625P150_1"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "ORL @ CHA",
-      "line": "CHA -5.5",
+      "event": "GS @ DET",
+      "line": "DET -5.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
-      "event": "DET @ WSH",
-      "line": "DET -14.5",
+      "event": "ATL @ HOU",
+      "line": "HOU -3.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
-      "event": "LAL @ MIA",
-      "line": "MIA -3.5",
+      "event": "POR @ MIN",
+      "line": "MIN -2.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
-      "event": "LAC @ NO",
-      "line": "NO -1.5",
+      "event": "TOR @ DEN",
+      "line": "DEN -6.5",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "NBA",
-      "event": "PHX @ SA",
-      "line": "SA -9.5",
+      "sport": "NHL",
+      "event": "FLA @ CGY",
+      "line": "FLA -108",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "NBA",
-      "event": "MIL @ UTAH",
-      "line": "MIL -5.5",
+      "sport": "MLB",
+      "event": "TOR @ MIN",
+      "line": "N/A",
       "reason": "No model data"
     },
     {
-      "sport": "NBA",
-      "event": "PHI @ SAC",
-      "line": "PHI -2.5",
-      "reason": "Tank penalty applied \u2014 18-51, eliminated, Fox shut down"
+      "sport": "MLB",
+      "event": "DET @ PHI",
+      "line": "N/A",
+      "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "NYR @ CBJ",
-      "line": "CBJ -218",
-      "reason": "Edge below 3% threshold"
+      "sport": "MLB",
+      "event": "BOS @ TB",
+      "line": "N/A",
+      "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "CHI @ MIN",
-      "line": "MIN -238",
-      "reason": "Edge below 3% threshold"
+      "sport": "MLB",
+      "event": "STL @ NYM",
+      "line": "N/A",
+      "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "TB @ VAN",
-      "line": "TB -290",
-      "reason": "Edge below 3% threshold"
+      "sport": "MLB",
+      "event": "CHW @ LAA",
+      "line": "N/A",
+      "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "BUF @ SJ",
-      "line": "BUF -142",
-      "reason": "Edge below 3% threshold"
+      "sport": "MLB",
+      "event": "PIT @ ATL",
+      "line": "N/A",
+      "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "PHI @ LA",
-      "line": "LA -170",
+      "sport": "MLB",
+      "event": "MIA @ HOU",
+      "line": "N/A",
       "reason": "No model data"
     },
     {
@@ -156,105 +159,123 @@
     },
     {
       "sport": "MLB",
-      "event": "TB @ PHI",
+      "event": "WSH @ MIA",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "WSH @ STL",
+      "event": "KC @ SF",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "NYY @ TOR",
+      "event": "CIN @ CHC",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "PIT @ BAL",
+      "event": "SEA @ CLE",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "MIN @ BOS",
+      "event": "SD @ LAD",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "NYM @ HOU",
+      "event": "SF @ TEX",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "ARI @ CHW",
+      "event": "MIL @ ARI",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "KC @ CLE",
+      "event": "CHC @ ATH",
       "line": "N/A",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
-      "event": "LAA @ KC",
+      "event": "COL @ SD",
       "line": "N/A",
       "reason": "No model data"
     },
     {
-      "sport": "MLB",
-      "event": "SEA @ ATH",
-      "line": "N/A",
+      "sport": "LA_LIGA",
+      "event": "RSO @ VIL",
+      "line": "VIL -105",
       "reason": "No model data"
     },
     {
-      "sport": "MLB",
-      "event": "SF @ COL",
-      "line": "N/A",
+      "sport": "BUNDESLIGA",
+      "event": "TSG @ RBL",
+      "line": "RBL -110",
       "reason": "No model data"
     },
     {
-      "sport": "MLB",
-      "event": "TEX @ MIL",
-      "line": "N/A",
-      "reason": "No model data"
+      "sport": "SERIE_A",
+      "event": "NAP @ CAG",
+      "line": "NAP -145",
+      "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLB",
-      "event": "CHW @ SD",
-      "line": "N/A",
+      "sport": "SERIE_A",
+      "event": "UDI @ GEN",
+      "line": "GEN +110",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "ANG @ RCL",
+      "line": "RCL -450",
       "reason": "No model data"
     },
     {
       "sport": "NHL",
-      "event": "WPG @ BOS",
-      "line": "Winnipeg Jets +1.5 (-190)",
-      "reason": "Edge exists (14.6%) but daily exposure limit reached"
+      "event": "NJ @ WSH",
+      "line": "New Jersey Devils +1.5 (-238)",
+      "reason": "Edge exists (16.0%) but daily exposure limit reached"
     },
     {
-      "sport": "NHL",
-      "event": "UTA @ VGK",
-      "line": "Utah Mammoth +1.5 (-190)",
-      "reason": "Edge exists (14.2%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "SEA @ NSH",
-      "line": "Seattle Kraken +1.5 (-190)",
-      "reason": "Edge exists (8.5%) but daily exposure limit reached"
+      "sport": "EPL",
+      "event": "MAN @ BOU",
+      "line": "UNDER 3.5 (-170)",
+      "reason": "Edge exists (12.2%) but daily exposure limit reached"
     },
     {
       "sport": "NBA",
-      "event": "CLE @ CHI",
-      "line": "Chicago Bulls +13.5 (-110)",
-      "reason": "Edge exists (7.6%) but daily exposure limit reached"
+      "event": "BOS @ MEM",
+      "line": "Memphis Grizzlies +15.5 (-112)",
+      "reason": "Edge exists (11.0%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "NY @ BKN",
+      "line": "Brooklyn Nets +16.5 (-105)",
+      "reason": "Edge exists (6.6%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "NY @ BKN",
+      "line": "OVER 214.5 (-110)",
+      "reason": "Edge exists (5.7%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "BOS @ MEM",
+      "line": "UNDER 229.5 (-110)",
+      "reason": "Edge exists (4.5%) but daily exposure limit reached"
     }
   ],
   "bets": [
