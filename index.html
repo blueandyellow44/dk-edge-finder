@@ -495,23 +495,23 @@ function render(d){
             ${p.notes||'No model data available.'}
             ${p.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+p.sources+'</span>':''}
           </div>
-          <div class="pick-grid">
-            <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${p.odds}</div></div>
-            <div class="pick-stat"><div class="ps-label">Breakeven</div><div class="ps-val">${p.implied||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${p.edge}%</div></div>
-          </div>
           ${(() => {
-            if (!p.implied || !p.model) return '';
-            const breakeven = parseFloat(p.implied);
-            const model = parseFloat(p.model);
-            const odds = parseInt(p.odds);
-            if (model < breakeven * 1.5) {
-              return `<div style="color:var(--dk-red);font-size:0.82rem;margin-top:8px;padding:8px 12px;background:rgba(229,56,59,0.1);border-radius:6px;border-left:2px solid var(--dk-red)">⚠ Thin edge — need ${breakeven}% to break even, model says ${model}%</div>`;
-            } else if (odds < -200) {
-              return `<div style="color:var(--dk-orange);font-size:0.82rem;margin-top:8px;padding:8px 12px;background:rgba(255,165,0,0.1);border-radius:6px;border-left:2px solid #ffa500">Heavy juice — must win ${breakeven}% to profit at ${odds}</div>`;
-            }
-            return '';
+            const wager=parseFloat(p.bet.replace('$',''));
+            const odds=parseInt(p.odds);
+            const toWin=odds<0?Math.round(wager*100/Math.abs(odds)*100)/100:Math.round(wager*odds/100*100)/100;
+            const payout=Math.round((wager+toWin)*100)/100;
+            return `<div class="pick-grid">
+            <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${p.odds}</div></div>
+            <div class="pick-stat"><div class="ps-label">Risk</div><div class="ps-val" style="color:var(--dk-red)">$${wager.toFixed(2)}</div></div>
+            <div class="pick-stat"><div class="ps-label">To Win</div><div class="ps-val" style="color:var(--dk-green)">$${toWin.toFixed(2)}</div></div>
+            <div class="pick-stat"><div class="ps-label">Payout</div><div class="ps-val" style="color:var(--dk-green)">$${payout.toFixed(2)}</div></div>
+          </div>
+          <div class="pick-grid" style="margin-top:6px">
+            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${p.edge}%</div></div>
+            <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
+            <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
+            <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${conf}</div></div>
+          </div>`;
           })()}
           <div class="pick-analysis" id="analysis-${i}">
             ${p.notes||''}
@@ -616,13 +616,8 @@ function renderResults(d,todayBets){
             <div class="sc-score-sub">${homeTeam} vs ${awayTeam}</div>
           </div>
           <div class="sc-result ${isWin?'win':'loss'}">${isWin?'COVERED':'DID NOT COVER'} ${bet.pick.match(/([+-]\d+\.?\d*)/)?'('+bet.pick.match(/([+-]\d+\.?\d*)/)[1]+')':''}</div>
-          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:var(--dk-blue)">${bet.odds}</strong></div>
-          <div class="sc-pnl ${isWin?'win':'loss'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
-          <div class="sc-analysis" id="sca-${bet.pick}">
-            <div><strong>Wager:</strong> $${bet.wager.toFixed(2)}</div>
-            <div style="margin-top:4px"><strong>Edge:</strong> ${typeof bet.edge==='number'?'+'+bet.edge+'%':bet.edge}</div>
-            <div style="margin-top:4px"><strong>Decimal Odds:</strong> ${bet.decimal_odds||'—'}</div>
-          </div>
+          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:var(--dk-blue)">${bet.odds}</strong> · Wagered <strong>$${bet.wager.toFixed(2)}</strong></div>
+          <div class="sc-pnl ${isWin?'win':'loss'}">${isWin?'Won':'Lost'} ${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
         </div>
       </div>
     `;
@@ -713,7 +708,7 @@ function renderHistory(d){
             <div class="hist-item">
               <div class="hist-item-left">
                 <div class="hist-item-pick">${bet.pick}</div>
-                <div class="hist-item-meta">${bet.event} · ${bet.odds} · ${typeof bet.edge==='number'?'+'+bet.edge+'%':bet.edge}</div>
+                <div class="hist-item-meta">${bet.event} · ${bet.odds} · $${bet.wager.toFixed(2)} risked${bet.outcome==='win'?' → won $'+Math.abs(bet.pnl||(bet.wager*(bet.decimal_odds-1))).toFixed(2):bet.outcome==='loss'?' → lost $'+bet.wager.toFixed(2):''}</div>
               </div>
               <div class="hist-item-right">
                 <div class="hist-item-result">${resultBadge}</div>
