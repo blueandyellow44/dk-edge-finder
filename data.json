@@ -64,27 +64,6 @@
     },
     {
       "rank": 3,
-      "sport": "EPL",
-      "event": "Manchester United @ AFC Bournemouth",
-      "event_short": "MAN @ BOU",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-170",
-      "implied": "63.0%",
-      "model": "75.1%",
-      "edge": 12.2,
-      "tier": "High",
-      "bet": "$29.28",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): MAN 1.3, BOU 1.0 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. \u26a0 SUSPICIOUS EDGE (12.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33759074?outcomes=0OU83726970U350_3",
-      "type": "game"
-    },
-    {
-      "rank": 4,
       "sport": "NBA",
       "event": "Boston Celtics @ Memphis Grizzlies",
       "event_short": "BOS @ MEM",
@@ -95,13 +74,34 @@
       "model": "64.2%",
       "edge": 11.4,
       "tier": "High",
-      "bet": "$23.43",
+      "bet": "$29.28",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers): BOS 119.0, MEM 107.6 (margin: 11.4). Spread cushion: 4.1 pts. \u26a0 SUSPICIOUS EDGE (11.4%): Model disagrees with market by 4.1 pts. Investigate before betting.",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/33836802?outcomes=0HC83920868P1550_1",
+      "type": "game"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
+      "event": "New York Knicks @ Brooklyn Nets",
+      "event_short": "NY @ BKN",
+      "market": "Over/Under",
+      "pick": "OVER 213.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "62.1%",
+      "edge": 10.2,
+      "tier": "High",
+      "bet": "$23.43",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): NY 115.9, BKN 102.9 (total: 218.8). Line: 213.5. Cushion: 5.3 pts. \u26a0 SUSPICIOUS EDGE (10.2%): Model predicts 218.8 vs market 213.5 \u2014 5.3 pt gap.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33836799?outcomes=0OU83920865O21350_1",
       "type": "game"
     }
   ],
@@ -145,7 +145,7 @@
     {
       "sport": "NHL",
       "event": "ANA @ UTA",
-      "line": "UTAH -130",
+      "line": "UTAH -135",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -221,30 +221,6 @@
       "reason": "No model data"
     },
     {
-      "sport": "LA_LIGA",
-      "event": "RSO @ VIL",
-      "line": "VIL -105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "UDI @ GEN",
-      "line": "GEN +115",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "ANG @ RCL",
-      "line": "RCL -450",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "NY @ BKN",
-      "line": "OVER 213.5 (-108)",
-      "reason": "Edge exists (10.2%) but daily exposure limit reached"
-    },
-    {
       "sport": "NBA",
       "event": "BOS @ MEM",
       "line": "UNDER 231.5 (-108)",
@@ -259,8 +235,8 @@
     {
       "sport": "NBA",
       "event": "TOR @ DEN",
-      "line": "UNDER 238.5 (-105)",
-      "reason": "Edge exists (5.7%) but daily exposure limit reached"
+      "line": "UNDER 239.5 (-110)",
+      "reason": "Edge exists (6.8%) but daily exposure limit reached"
     },
     {
       "sport": "NHL",
