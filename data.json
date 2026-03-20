@@ -2,11 +2,11 @@
   "scan_date": "2026-03-19",
   "scan_subtitle": "Thursday, March 19, 2026 \u2014 MLB (14), NBA (8), NHL (11)",
   "bankroll": {
-    "available": 548.64,
+    "available": 585.67,
     "starting": 500.0,
-    "profit": 48.64,
+    "profit": 85.67,
     "record": {
-      "wins": 6,
+      "wins": 9,
       "losses": 6,
       "pushes": 0
     },
@@ -258,6 +258,45 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-19",
+      "sport": "NHL",
+      "event": "Montreal Canadiens @ Detroit Red Wings",
+      "pick": "Detroit Red Wings +1.5",
+      "odds": "-285",
+      "decimal_odds": 1.351,
+      "edge": "13.6%",
+      "wager": 27.43,
+      "outcome": "win",
+      "final_score": "MTL 1, DET 3",
+      "pnl": 9.62
+    },
+    {
+      "date": "2026-03-19",
+      "sport": "NHL",
+      "event": "New York Islanders @ Ottawa Senators",
+      "pick": "New York Islanders +1.5",
+      "odds": "-218",
+      "decimal_odds": 1.459,
+      "edge": "17.5%",
+      "wager": 27.43,
+      "outcome": "win",
+      "final_score": "NYI 2, OTT 3",
+      "pnl": 12.58
+    },
+    {
+      "date": "2026-03-19",
+      "sport": "NHL",
+      "event": "Florida Panthers @ Edmonton Oilers",
+      "pick": "Florida Panthers +1.5",
+      "odds": "-185",
+      "decimal_odds": 1.541,
+      "edge": "18.2%",
+      "wager": 27.43,
+      "outcome": "win",
+      "final_score": "FLA 6, EDM 0",
+      "pnl": 14.83
+    },
     {
       "date": "2026-03-18",
       "sport": "NBA",
