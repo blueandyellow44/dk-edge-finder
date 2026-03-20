@@ -497,10 +497,22 @@ function render(d){
           </div>
           <div class="pick-grid">
             <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${p.odds}</div></div>
-            <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
+            <div class="pick-stat"><div class="ps-label">Breakeven</div><div class="ps-val">${p.implied||'—'}</div></div>
             <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
             <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${p.edge}%</div></div>
           </div>
+          ${(() => {
+            if (!p.implied || !p.model) return '';
+            const breakeven = parseFloat(p.implied);
+            const model = parseFloat(p.model);
+            const odds = parseInt(p.odds);
+            if (model < breakeven * 1.5) {
+              return `<div style="color:var(--dk-red);font-size:0.82rem;margin-top:8px;padding:8px 12px;background:rgba(229,56,59,0.1);border-radius:6px;border-left:2px solid var(--dk-red)">⚠ Thin edge — need ${breakeven}% to break even, model says ${model}%</div>`;
+            } else if (odds < -200) {
+              return `<div style="color:var(--dk-orange);font-size:0.82rem;margin-top:8px;padding:8px 12px;background:rgba(255,165,0,0.1);border-radius:6px;border-left:2px solid #ffa500">Heavy juice — must win ${breakeven}% to profit at ${odds}</div>`;
+            }
+            return '';
+          })()}
           <div class="pick-analysis" id="analysis-${i}">
             ${p.notes||''}
             ${p.sources?'<br><span class="src">Sources: '+p.sources+'</span>':''}

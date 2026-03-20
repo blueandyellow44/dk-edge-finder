@@ -34,33 +34,36 @@ MAX_SINGLE_BET_PCT = 0.05 # 5% max single bet
 MAX_DAILY_EXPOSURE = 0.15 # 15% max daily
 
 # ── GAME OUTCOME STANDARD DEVIATIONS ───────────────
-# These are the SDs of (actual outcome - closing line).
-# They tell us how much real game results deviate from market predictions.
+# These are the SDs of (actual outcome - market prediction).
+# For NBA/NFL: measured from closing line ATS data (Boyd's Bets).
+# For NHL/MLB: measured margins, then adjusted for model-vs-market gap.
+# For Soccer: derived from Poisson scoring model (Dixon-Coles).
 #
-# IMPORTANT: We use GAME SD only, not "combined SD" with model error.
-# Reason: the normal CDF conversion already accounts for model uncertainty
-# implicitly — if DRatings disagrees with the market by X points, the
-# probability calculation using game SD tells us how likely that disagreement
-# is to materialize as a real outcome. Adding model error SD on top
-# double-counts uncertainty and inflates edges.
+# MODEL ERROR BUFFER:
+# NHL and MLB measured SDs come from comparing actual outcomes to closing lines.
+# But we use DRatings/Dimers predictions (which can deviate from markets).
+# Puck line underdogs historically cover 70-75%, not 87.6% (as 1.274 would imply).
+# Solution: apply model error buffer to widen SD and account for our model's
+# additional uncertainty vs. the market's prediction.
+# - NHL: 1.274 * 1.4 = 1.78 (40% wider, more realistic to historical data)
+# - MLB: 2.538 * 1.3 = 3.30 (30% wider)
 #
-# ┌─────────────┬──────────┬──────────┬──────────────────────────────────────┐
-# │ Sport       │ Spread   │ Totals   │ Source                               │
-# ├─────────────┼──────────┼──────────┼──────────────────────────────────────┤
-# │ NBA         │ 11.26    │ 17.19    │ Boyd's Bets (measured, multi-season) │
-# │ NFL         │ 13.28    │ 13.28    │ Boyd's Bets + Stern 1991 (13.86)    │
-# │ NHL         │ —        │ —        │ NO MEASURED DATA                     │
-# │ MLB         │ —        │ —        │ NO MEASURED DATA                     │
-# │ Soccer      │ —        │ 1.5-1.7  │ Dixon-Coles (1997), Poisson-derived  │
-# │ MMA         │ —        │ —        │ No spread/total market               │
-# └─────────────┴──────────┴──────────┴──────────────────────────────────────┘
+# ┌─────────────┬──────────┬──────────┬──────────────────────────────────────────────────┐
+# │ Sport       │ Spread   │ Totals   │ Source & Notes                                   │
+# ├─────────────┼──────────┼──────────┼──────────────────────────────────────────────────┤
+# │ NBA         │ 11.26    │ 17.19    │ Boyd's Bets (measured, multi-season, validated)  │
+# │ NFL         │ 13.28    │ 13.28    │ Boyd's Bets + Stern 1991 (validated multi-year)  │
+# │ NHL         │ 1.78     │ —        │ Measured 1.274 * 1.4 (model error buffer)        │
+# │ MLB         │ 3.30     │ —        │ Measured 2.538 * 1.3 (model error buffer)        │
+# │ Soccer      │ 1.71     │ 1.71     │ Dixon-Coles (1997), Poisson-derived              │
+# │ MMA         │ —        │ —        │ No spread/total market                           │
+# └─────────────┴──────────┴──────────┴──────────────────────────────────────────────────┘
 #
 # Sources:
 # - Boyd's Bets: https://www.boydsbets.com/ats-margin-standard-deviations-by-point-spread/
 # - Boyd's Bets: https://www.boydsbets.com/standard-deviations-of-overunder-margins-by-total/
 # - Stern (1991): "On the Probability of Winning a Football Game", American Statistician 45(3):179-183
 # - Dixon & Coles (1997): "Modelling Association Football Scores", JRSS-C 46(2):265-280
-# - Boyd's Bets NFL avg: 13.28, Stern 1991: 13.86, modern replication: 13.7
 
 GAME_SD = {
     # NBA — MEASURED (Boyd's Bets, multi-season)
@@ -76,26 +79,38 @@ GAME_SD = {
     "nfl_total": 13.28,
 
     # Soccer — DERIVED from Dixon-Coles Poisson model
-    # EPL: λ_home=1.5, λ_away=1.42, total SD ≈ sqrt(λ_h + λ_a) ≈ 1.71
+    # All major leagues: λ_home ≈ 1.5, λ_away ≈ 1.42, total SD ≈ sqrt(λ_h + λ_a) ≈ 1.71
     # Goal margin SD from Skellam distribution ≈ sqrt(λ_h + λ_a) ≈ 1.71
     # ρ (correlation) = -0.13, γ (home advantage) = 0.27 log scale
     # Over 2.5 goals ≈ 53-54% historically
     "epl_spread": 1.71,   # DERIVED — Skellam distribution, NOT measured ATS data
     "epl_total": 1.71,    # DERIVED — sum of Poisson SDs
-    "mls_spread": 1.71,   # Using same as EPL — similar scoring rates
+    "mls_spread": 1.71,   # DERIVED — similar scoring rates to EPL
     "mls_total": 1.71,
+    "la_liga_spread": 1.71,   # DERIVED — Spain, similar to EPL
+    "la_liga_total": 1.71,
+    "bundesliga_spread": 1.71,   # DERIVED — Germany, similar to EPL
+    "bundesliga_total": 1.71,
+    "serie_a_spread": 1.71,   # DERIVED — Italy, similar to EPL
+    "serie_a_total": 1.71,
+    "ligue_1_spread": 1.71,   # DERIVED — France, similar to EPL
+    "ligue_1_total": 1.71,
+    "ucl_spread": 1.71,   # DERIVED — Champions League, similar to EPL
+    "ucl_total": 1.71,
 
-    # NHL — MEASURED (Mysterious Lights blog, 2012-13 season, 1230 games)
-    # Margin of victory SD: 1.274 goals (single season — MEDIUM confidence)
+    # NHL — MEASURED then ADJUSTED (Mysterious Lights: 1.274 * 1.4 model error buffer)
+    # Raw margin of victory SD: 1.274 goals (single season, 1230 games — MEDIUM confidence)
+    # Puck line underdogs historically cover 70-75%, not 87.6% (as raw 1.274 would imply)
+    # Applying 40% model error buffer: 1.274 * 1.4 = 1.78 (accounts for DRatings vs market gap)
     # Totals SD: NOT measured — no published O/U margin SD for NHL
-    # Using margin SD only; totals edges will be skipped until we find measured data
-    "nhl_spread": 1.274,
+    "nhl_spread": 1.78,
     # "nhl_total": None,  # BLOCKED — no measured value
 
-    # MLB — MEASURED (Mysterious Lights blog, 2013 season, ~2430 games)
-    # Run margin SD: 2.538 runs (single season — MEDIUM confidence)
+    # MLB — MEASURED then ADJUSTED (Mysterious Lights: 2.538 * 1.3 model error buffer)
+    # Raw run margin SD: 2.538 runs (single season, ~2430 games — MEDIUM confidence)
+    # Applying 30% model error buffer: 2.538 * 1.3 = 3.30 (accounts for DRatings vs market gap)
     # Totals SD: NOT measured — no published O/U margin SD for MLB
-    "mlb_spread": 2.538,
+    "mlb_spread": 3.30,
     # "mlb_total": None,  # BLOCKED — no measured value
 }
 
@@ -160,6 +175,11 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
         "nfl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates={date_str}",
         "mls": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates={date_str}",
         "epl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates={date_str}",
+        "la_liga": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates={date_str}",
+        "bundesliga": "https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?dates={date_str}",
+        "serie_a": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates={date_str}",
+        "ligue_1": "https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/scoreboard?dates={date_str}",
+        "ucl": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates={date_str}",
         "mma": "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard?dates={date_str}",
     }
     url = sport_endpoints.get(sport.lower(), sport_endpoints["nba"]).format(date_str=date_str)
@@ -319,6 +339,11 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
         "nfl": "https://www.dratings.com/predictor/nfl-football-predictions/",
         "mls": "https://www.dratings.com/predictor/mls-soccer-predictions/",
         "epl": "https://www.dratings.com/predictor/epl-soccer-predictions/",
+        "la_liga": "https://www.dratings.com/predictor/la-liga-soccer-predictions/",
+        "bundesliga": "https://www.dratings.com/predictor/bundesliga-soccer-predictions/",
+        "serie_a": "https://www.dratings.com/predictor/serie-a-soccer-predictions/",
+        "ligue_1": "https://www.dratings.com/predictor/ligue-1-soccer-predictions/",
+        "ucl": "https://www.dratings.com/predictor/ucl-soccer-predictions/",
         # MMA: DRatings doesn't have UFC predictions — will return empty, that's fine
     }
     url = sport_urls.get(sport.lower(), sport_urls["nba"])
@@ -1204,7 +1229,7 @@ def main():
     # Step 2: Fetch games for all sports
     print(f"\n[2] Fetching schedule for {today}...")
     # All DraftKings Oregon sports — off-season sports return 0 games, no cost
-    all_sports = ["nba", "nhl", "mlb", "nfl", "mls", "epl", "mma"]
+    all_sports = ["nba", "nhl", "mlb", "nfl", "mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl", "mma"]
     all_games = []
     all_predictions = {}
     game_count = 0
