@@ -961,12 +961,17 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     # Convert to cover probability — use Skellam for discrete scoring, normal for high-scoring
     DISCRETE_SPORTS = {"nhl", "mlb", "mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl"}
     if sport.lower() in DISCRETE_SPORTS:
-        # Skellam distribution: proper for Poisson goal/run scoring
-        # poisson_spread_probability(fav_rate, underdog_rate, underdog_spread)
+        # Skellam: P(underdog covers +spread) = P(fav_score - dog_score ≤ floor(spread))
+        # This is the CDF of the Skellam distribution at floor(spread).
+        import math as _math
+        from skellam import skellam_cdf
+        k = _math.floor(pick_spread)  # +1.5 → 1, +0.5 → 0
         if pick_side == "home":
-            model_prob = poisson_spread_probability(pred["away_score"], pred["home_score"], pick_spread)
+            # Home underdog: favorite is away. D = away - home.
+            model_prob = skellam_cdf(k, pred["away_score"], pred["home_score"])
         else:
-            model_prob = poisson_spread_probability(pred["home_score"], pred["away_score"], pick_spread)
+            # Away underdog: favorite is home. D = home - away.
+            model_prob = skellam_cdf(k, pred["home_score"], pred["away_score"])
         if model_prob is None or model_prob <= 0:
             return None
     else:
@@ -998,16 +1003,14 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
     # ── Apply situational adjustments ──
 
-    # Tanking penalty
+    # Tanking check — confirmed tankers are SKIPPED entirely, not penalized
     tank_info = TANK_TEAMS_2026.get(pick_team.get("abbr", ""), None)
     tank_note = ""
-    if tank_info:
-        if tank_info["confirmed"]:
-            model_prob -= TANK_PENALTY_CONFIRMED
-            tank_note = f"TANK RISK: {tank_info['reason']} (-3% adj)"
-        else:
-            model_prob -= TANK_PENALTY_SUSPECTED
-            tank_note = f"TANK WATCH: {tank_info['reason']} (-1.5% adj)"
+    if tank_info and tank_info["confirmed"]:
+        return None  # Model predictions are unreliable for tanking teams
+    if tank_info and not tank_info["confirmed"]:
+        model_prob -= TANK_PENALTY_SUSPECTED
+        tank_note = f"TANK WATCH: {tank_info['reason']} (-1.5% adj)"
 
     # B2B penalty
     b2b_note = ""
