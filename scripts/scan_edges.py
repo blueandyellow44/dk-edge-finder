@@ -20,6 +20,7 @@ import urllib.error
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from skellam import poisson_spread_probability
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -943,10 +944,22 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if pick_spread <= 0:
         return None  # No underdog spread to bet
 
-    # Convert cushion to cover probability using normal distribution
-    model_prob = cushion_to_probability(spread_cushion, sport, "spread")
-    if model_prob is None:
-        return None  # No researched SD for this sport — skip
+    # Convert to cover probability — use Skellam for discrete scoring, normal for high-scoring
+    DISCRETE_SPORTS = {"nhl", "mlb", "mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl"}
+    if sport.lower() in DISCRETE_SPORTS:
+        # Skellam distribution: proper for Poisson goal/run scoring
+        # poisson_spread_probability(fav_rate, underdog_rate, underdog_spread)
+        if pick_side == "home":
+            model_prob = poisson_spread_probability(pred["away_score"], pred["home_score"], pick_spread)
+        else:
+            model_prob = poisson_spread_probability(pred["home_score"], pred["away_score"], pick_spread)
+        if model_prob is None or model_prob <= 0:
+            return None
+    else:
+        # Normal CDF: fine for NBA/NFL (high-scoring, CLT applies)
+        model_prob = cushion_to_probability(spread_cushion, sport, "spread")
+        if model_prob is None:
+            return None
 
     # Use ACTUAL DK odds from ESPN when available, fall back to defaults
     # ESPN provides pointSpread.home/away.close.odds with real DK juice
