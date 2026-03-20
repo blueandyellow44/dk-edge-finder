@@ -53,3 +53,11 @@
 ## 2026-03-17: Don't rename data.json fields without updating index.html
 **Mistake:** Renamed `bankroll.current` to `bankroll.available` in data.json without updating index.html. Netlify site broke — "Error loading data" because `b.current.toFixed(2)` threw on undefined.
 **Rule:** Any data.json schema change MUST have a corresponding index.html update in the same commit. Use fallback patterns like `b.available || b.current || 0` for backward compatibility.
+
+## 2026-03-20: PrizePicks returns non-NBA players for sport=nba
+**Mistake:** First prop scan found 0 edges because PrizePicks includes college/G-League players whose ESPN game logs don't exist. All 10 ESPN lookups were wasted on minor players.
+**Rule:** Always filter PrizePicks props to known NBA team abbreviations before looking up stats. Also sort by highest line (stars) so limited lookups focus on the players most likely to have edges.
+
+## 2026-03-20: PrizePicks rate limits aggressively
+**Mistake:** Multiple rapid calls to PrizePicks API triggered 429 (Too Many Requests) that persists for ~30 seconds.
+**Rule:** Never call PrizePicks more than once per scan session. Add retry-after-10s for 429 errors. Cache the result for the full scan.

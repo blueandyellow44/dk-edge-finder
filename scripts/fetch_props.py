@@ -18,19 +18,43 @@ from datetime import datetime, timezone
 
 # ── PrizePicks API ────────────────────────────────────────
 
+NBA_TEAMS = {
+    "ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN", "DET", "GS",
+    "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NO", "NY",
+    "NYK", "OKC", "ORL", "PHI", "PHX", "POR", "SAC", "SA", "TOR", "UTAH", "WSH",
+}
+
+
 def fetch_prizepicks_projections(sport: str = "nba") -> list[dict]:
-    """Fetch today's player prop projections from PrizePicks."""
+    """Fetch today's player prop projections from PrizePicks.
+
+    Retries once after 10s on rate limit (429).
+    Filters to NBA teams only to exclude college/G-League.
+    """
     url = f"https://api.prizepicks.com/projections?sport={sport}"
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0",
         "Accept": "application/json",
     })
 
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            data = json.loads(resp.read())
-    except Exception as e:
-        print(f"  PrizePicks fetch error: {e}")
+    data = None
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read())
+            break
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt == 0:
+                print(f"  PrizePicks rate limited, retrying in 10s...")
+                time.sleep(10)
+                continue
+            print(f"  PrizePicks fetch error: {e}")
+            return []
+        except Exception as e:
+            print(f"  PrizePicks fetch error: {e}")
+            return []
+
+    if not data:
         return []
 
     projections = data.get("data", [])
@@ -57,6 +81,10 @@ def fetch_prizepicks_projections(sport: str = "nba") -> list[dict]:
         player_name = player_info.get("display_name") or player_info.get("name", "Unknown")
         team = player_info.get("team", "")
         position = player_info.get("position", "")
+
+        # Filter to NBA teams only (skip college, G-League, etc.)
+        if sport == "nba" and team and team.upper() not in NBA_TEAMS:
+            continue
 
         odds_type = attrs.get("odds_type", "standard")
         if odds_type == "demon":
@@ -375,11 +403,16 @@ def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 3
             by_player[name].append(p)
 
     # Fetch stats for top players (limit lookups)
+    # Sort by highest points line — stars first, better chance of finding edges
+    def player_max_line(item):
+        _, props_list = item
+        return max((p["line"] for p in props_list if p["stat_type"] == "Points"), default=0)
+
     edges = []
     lookups = 0
     player_stats_cache = {}
 
-    for player_name, player_props in sorted(by_player.items()):
+    for player_name, player_props in sorted(by_player.items(), key=player_max_line, reverse=True):
         if lookups >= max_lookups:
             break
 

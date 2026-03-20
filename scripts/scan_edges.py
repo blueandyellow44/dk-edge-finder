@@ -21,6 +21,7 @@ import urllib.parse
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from skellam import poisson_spread_probability
+from fetch_props import scan_props as scan_player_props
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -1385,6 +1386,31 @@ def main():
                 "reason": reason,
             })
 
+    # Step 5b: Scan player props (NBA only for now)
+    print("\n[5b] Scanning player props...")
+    try:
+        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=10)
+        if prop_edges:
+            # Normalize prop edge format to match game edge format
+            for pe in prop_edges:
+                # Parse formatted strings back to floats
+                impl_str = pe.get("implied", "0%").replace("%", "")
+                model_str = pe.get("model", "0%").replace("%", "")
+                pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
+                pe["model_prob"] = float(model_str) / 100 if model_str else 0
+                # Build event from team + opponent (description has opponent abbr)
+                team = pe.get("team", "")
+                opp = pe.get("event", "")  # PrizePicks puts opponent abbr in description
+                pe["event"] = f"{team} vs {opp}" if team and opp else team or opp or ""
+                pe["event_short"] = pe["event"]
+                pe["tier"] = pe.get("tier", "Medium")
+            picks.extend(prop_edges)
+            print(f"  Found {len(prop_edges)} prop edges")
+        else:
+            print("  No prop edges found")
+    except Exception as e:
+        print(f"  Prop scanning error: {e}", file=sys.stderr)
+
     # Sort picks by edge descending
     picks.sort(key=lambda x: x["edge"], reverse=True)
 
@@ -1416,22 +1442,24 @@ def main():
 
         formatted_picks.append({
             "rank": i + 1,
-            "sport": pick["sport"],
-            "event": pick["event"],
-            "market": pick["market"],
+            "sport": pick.get("sport", "NBA"),
+            "event": pick.get("event", pick.get("event_short", "")),
+            "event_short": pick.get("event_short", ""),
+            "market": pick.get("market", "Spread"),
             "pick": pick["pick"],
             "odds": pick["odds"],
             "implied": f"{pick['implied_prob']*100:.1f}%",
             "model": f"{pick['model_prob']*100:.1f}%",
             "edge": pick["edge"],
-            "tier": pick["tier"],
+            "tier": pick.get("tier", "High"),
             "bet": f"${bet_amount:.2f}",
             "status": "",
             "result": "",
-            "notes": pick["notes"],
-            "sources": pick["sources"],
+            "notes": pick.get("notes", ""),
+            "sources": pick.get("sources", ""),
             "confidence": pick.get("confidence", "HIGH"),
             "dk_link": pick.get("dk_link", ""),
+            "type": "prop" if pick.get("market") == "Player Prop" else "game",
         })
 
         print(f"  #{i+1}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")

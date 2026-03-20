@@ -16,33 +16,78 @@
   },
   "games_analyzed": 34,
   "best_bet": {
-    "title": "UNDER 3.5 (-175) \u2014 11.5% Edge (High Tier)",
-    "desc": "Model (DRatings only): MAN 1.3, BOU 1.0 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. \u26a0 SUSPICIOUS EDGE (11.5%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap."
+    "title": "Jamal Murray UNDER 3.5 3-PT Made (-115) \u2014 21.3% Edge (Medium Tier)",
+    "desc": "Last 10g avg: 2.5 3-PT Made. Line: 3.5. Diff: -1.0. Model says under at 74.8%."
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "EPL",
-      "event": "Manchester United @ AFC Bournemouth",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-175",
-      "implied": "63.6%",
-      "model": "75.1%",
-      "edge": 11.5,
-      "tier": "High",
-      "bet": "$29.28",
+      "sport": "NBA",
+      "event": "DEN vs TOR",
+      "event_short": "DEN vs TOR",
+      "market": "Player Prop",
+      "pick": "Jamal Murray UNDER 3.5 3-PT Made",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "74.8%",
+      "edge": 21.3,
+      "tier": "Medium",
+      "bet": "$17.57",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): MAN 1.3, BOU 1.0 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. \u26a0 SUSPICIOUS EDGE (11.5%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33759074?outcomes=0OU83726970U350_3"
+      "notes": "Last 10g avg: 2.5 3-PT Made. Line: 3.5. Diff: -1.0. Model says under at 74.8%.",
+      "sources": "PrizePicks, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "",
+      "type": "prop"
     },
     {
       "rank": 2,
       "sport": "NBA",
+      "event": "NYK vs BKN",
+      "event_short": "NYK vs BKN",
+      "market": "Player Prop",
+      "pick": "Jalen Brunson OVER 1.5 3-PT Made",
+      "odds": "-120",
+      "implied": "54.5%",
+      "model": "72.6%",
+      "edge": 18.0,
+      "tier": "Medium",
+      "bet": "$17.57",
+      "status": "",
+      "result": "",
+      "notes": "Last 10g avg: 2.4 3-PT Made. Line: 1.5. Diff: +0.9. Model says over at 72.6%.",
+      "sources": "PrizePicks, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "",
+      "type": "prop"
+    },
+    {
+      "rank": 3,
+      "sport": "EPL",
+      "event": "Manchester United @ AFC Bournemouth",
+      "event_short": "MAN @ BOU",
+      "market": "Over/Under",
+      "pick": "UNDER 3.5",
+      "odds": "-170",
+      "implied": "63.0%",
+      "model": "75.1%",
+      "edge": 12.2,
+      "tier": "High",
+      "bet": "$29.28",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): MAN 1.3, BOU 1.0 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. \u26a0 SUSPICIOUS EDGE (12.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33759074?outcomes=0OU83726970U350_3",
+      "type": "game"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
       "event": "Boston Celtics @ Memphis Grizzlies",
+      "event_short": "BOS @ MEM",
       "market": "Spread",
       "pick": "Memphis Grizzlies +15.5",
       "odds": "-112",
@@ -50,51 +95,14 @@
       "model": "64.2%",
       "edge": 11.4,
       "tier": "High",
-      "bet": "$29.28",
+      "bet": "$23.43",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers): BOS 119.0, MEM 107.6 (margin: 11.4). Spread cushion: 4.1 pts. \u26a0 SUSPICIOUS EDGE (11.4%): Model disagrees with market by 4.1 pts. Investigate before betting.",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33836802?outcomes=0HC83920868P1550_1"
-    },
-    {
-      "rank": 3,
-      "sport": "NBA",
-      "event": "New York Knicks @ Brooklyn Nets",
-      "market": "Over/Under",
-      "pick": "OVER 214.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "59.0%",
-      "edge": 6.6,
-      "tier": "High",
-      "bet": "$21.24",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers): NY 115.6, BKN 102.8 (total: 218.4). Line: 214.5. Cushion: 3.9 pts.",
-      "sources": "DRatings + Dimers, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33836799?outcomes=0OU83920865O21450_1"
-    },
-    {
-      "rank": 4,
-      "sport": "NBA",
-      "event": "Boston Celtics @ Memphis Grizzlies",
-      "market": "Over/Under",
-      "pick": "UNDER 229.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "56.7%",
-      "edge": 4.3,
-      "tier": "High",
-      "bet": "$8.05",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers): BOS 119.0, MEM 107.6 (total: 226.6). Line: 229.5. Cushion: 2.9 pts.",
-      "sources": "DRatings + Dimers, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33836802?outcomes=0OU83920868U22950_3"
+      "dk_link": "https://sportsbook.draftkings.com/event/33836802?outcomes=0HC83920868P1550_1",
+      "type": "game"
     }
   ],
   "no_edge_games": [
@@ -113,7 +121,7 @@
     {
       "sport": "NBA",
       "event": "POR @ MIN",
-      "line": "MIN -2.5",
+      "line": "MIN -1.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -131,7 +139,7 @@
     {
       "sport": "NHL",
       "event": "COL @ CHI",
-      "line": "COL -305",
+      "line": "COL -340",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -139,36 +147,6 @@
       "event": "ANA @ UTA",
       "line": "UTAH -130",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TOR @ MIN",
-      "line": "N/A",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "DET @ PHI",
-      "line": "N/A",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "BOS @ TB",
-      "line": "N/A",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ NYM",
-      "line": "N/A",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "CHW @ LAA",
-      "line": "N/A",
-      "reason": "No model data"
     },
     {
       "sport": "MLB",
@@ -249,21 +227,9 @@
       "reason": "No model data"
     },
     {
-      "sport": "BUNDESLIGA",
-      "event": "TSG @ RBL",
-      "line": "RBL -110",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "NAP @ CAG",
-      "line": "NAP -145",
-      "reason": "Edge below 3% threshold"
-    },
-    {
       "sport": "SERIE_A",
       "event": "UDI @ GEN",
-      "line": "GEN +110",
+      "line": "GEN +115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -274,15 +240,33 @@
     },
     {
       "sport": "NBA",
+      "event": "NY @ BKN",
+      "line": "OVER 213.5 (-108)",
+      "reason": "Edge exists (10.2%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "BOS @ MEM",
+      "line": "UNDER 231.5 (-108)",
+      "reason": "Edge exists (9.3%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "DEN vs TOR",
+      "line": "Nikola Joki\u0107 OVER 10.0 Assists (-110)",
+      "reason": "Edge exists (8.6%) but daily exposure limit reached"
+    },
+    {
+      "sport": "NBA",
       "event": "TOR @ DEN",
-      "line": "UNDER 237.5 (-105)",
-      "reason": "Edge exists (3.4%) but daily exposure limit reached"
+      "line": "UNDER 238.5 (-105)",
+      "reason": "Edge exists (5.7%) but daily exposure limit reached"
     },
     {
       "sport": "NHL",
       "event": "FLA @ CGY",
       "line": "Calgary Flames +1.5 (-285)",
-      "reason": "Edge exists (3.0%) but daily exposure limit reached"
+      "reason": "Edge exists (3.2%) but daily exposure limit reached"
     }
   ],
   "bets": [
