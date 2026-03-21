@@ -16,12 +16,159 @@
   },
   "games_analyzed": 67,
   "best_bet": {
-    "title": "Luka Doncic OVER 3.5 3-PT Made (-148) \u2014 31.2% Edge (Medium Tier)",
-    "desc": "Last 10g avg: 5.5 3-PT Made. Line: 3.5. Diff: +2.0. DK odds: -148. Model says over at 90.9%."
+    "title": "Memphis Grizzlies +17.5 (-115) \u2014 11.2% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): MEM 110.0, CHA 122.5 (margin: 12.5). Spread cushion: 5.0 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 5.0 pts. Investigate before betting. MEM on road B2B "
   },
   "picks": [
     {
       "rank": 1,
+      "sport": "NBA",
+      "event": "Memphis Grizzlies @ Charlotte Hornets",
+      "event_short": "MEM @ CHA",
+      "market": "Spread",
+      "pick": "Memphis Grizzlies +17.5",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "64.6%",
+      "edge": 11.2,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): MEM 110.0, CHA 122.5 (margin: 12.5). Spread cushion: 5.0 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 5.0 pts. Investigate before betting. MEM on road B2B (-2.5% adj)",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841192?outcomes=0HC83933082P1750_3",
+      "type": "game"
+    },
+    {
+      "rank": 2,
+      "sport": "SERIE_A",
+      "event": "Torino @ AC Milan",
+      "event_short": "TOR @ MIL",
+      "market": "Over/Under",
+      "pick": "OVER 2.5",
+      "odds": "-125",
+      "implied": "55.6%",
+      "model": "64.4%",
+      "edge": 8.8,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): TOR 0.8, MIL 2.4 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33782556?outcomes=0OU83784739O250_1",
+      "type": "game"
+    },
+    {
+      "rank": 3,
+      "sport": "LA_LIGA",
+      "event": "Getafe @ Espanyol",
+      "event_short": "GET @ ESP",
+      "market": "Over/Under",
+      "pick": "OVER 1.5",
+      "odds": "-150",
+      "implied": "60.0%",
+      "model": "68.4%",
+      "edge": 8.4,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): GET 1.0, ESP 1.3 (total: 2.3). Line: 1.5. Cushion: 0.8 pts. Single source \u2014 DRatings only.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33783754?outcomes=0OU83787638O150_1",
+      "type": "game"
+    },
+    {
+      "rank": 4,
+      "sport": "NHL",
+      "event": "Philadelphia Flyers @ San Jose Sharks",
+      "event_short": "PHI @ SJ",
+      "market": "Spread",
+      "pick": "Philadelphia Flyers +1.5",
+      "odds": "-265",
+      "implied": "72.6%",
+      "model": "79.4%",
+      "edge": 6.8,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): PHI 3.3, SJ 2.8 (margin: 0.5). Spread cushion: 1.0 pts. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33847672?outcomes=0HC83955142P150_3",
+      "type": "game"
+    },
+    {
+      "rank": 5,
+      "sport": "NBA",
+      "event": "Milwaukee Bucks @ Phoenix Suns",
+      "event_short": "MIL @ PHX",
+      "market": "Spread",
+      "pick": "Milwaukee Bucks +11.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "58.4%",
+      "edge": 6.1,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): MIL 105.3, PHX 114.4 (margin: 9.1). Spread cushion: 2.4 pts.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841205?outcomes=0HC83933145P1150_3",
+      "type": "game"
+    },
+    {
+      "rank": 6,
+      "sport": "NBA",
+      "event": "Golden State Warriors @ Atlanta Hawks",
+      "event_short": "GS @ ATL",
+      "market": "Spread",
+      "pick": "Golden State Warriors +10.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "57.4%",
+      "edge": 4.6,
+      "tier": "High",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): GS 110.8, ATL 118.9 (margin: 8.1). Spread cushion: 2.4 pts. GS on road B2B (-2.5% adj) | ATL on B2B (+1.5% boost)",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841195?outcomes=0HC83933098P1050_3",
+      "type": "game"
+    },
+    {
+      "rank": 7,
+      "sport": "NBA",
+      "event": "Memphis Grizzlies @ Charlotte Hornets",
+      "event_short": "MEM @ CHA",
+      "market": "Over/Under",
+      "pick": "UNDER 234.5",
+      "odds": "-105",
+      "implied": "51.2%",
+      "model": "54.6%",
+      "edge": 3.4,
+      "tier": "High",
+      "bet": "$10.22",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): MEM 110.0, CHA 122.5 (total: 232.5). Line: 234.5. Cushion: 2.0 pts.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841192?outcomes=0OU83933082U23450_3",
+      "type": "game"
+    },
+    {
+      "rank": 8,
       "sport": "NBA",
       "event": "Los Angeles Lakers @ Orlando Magic",
       "event_short": "Los Angeles Lakers @ Orlando Magic",
@@ -32,7 +179,7 @@
       "model": "90.9%",
       "edge": 31.2,
       "tier": "Medium",
-      "bet": "$19.97",
+      "bet": "$11.41",
       "status": "",
       "result": "",
       "notes": "Last 10g avg: 5.5 3-PT Made. Line: 3.5. Diff: +2.0. DK odds: -148. Model says over at 90.9%.",
@@ -42,7 +189,7 @@
       "type": "prop"
     },
     {
-      "rank": 2,
+      "rank": 9,
       "sport": "NBA",
       "event": "Indiana Pacers @ San Antonio Spurs",
       "event_short": "Indiana Pacers @ San Antonio Spurs",
@@ -53,7 +200,7 @@
       "model": "65.5%",
       "edge": 23.5,
       "tier": "Medium",
-      "bet": "$19.97",
+      "bet": "$11.41",
       "status": "",
       "result": "",
       "notes": "Last 10g avg: 3.1 3-PT Made. Line: 2.5. Diff: +0.6. DK odds: 138. Model says over at 65.5%.",
@@ -63,28 +210,28 @@
       "type": "prop"
     },
     {
-      "rank": 3,
+      "rank": 10,
       "sport": "NBA",
       "event": "Los Angeles Lakers @ Orlando Magic",
       "event_short": "Los Angeles Lakers @ Orlando Magic",
       "market": "Player Prop",
-      "pick": "Luka Doncic OVER 33.5 Points",
-      "odds": "-108",
-      "implied": "51.9%",
-      "model": "71.7%",
-      "edge": 19.8,
+      "pick": "Luka Doncic OVER 32.5 Points",
+      "odds": "-122",
+      "implied": "55.0%",
+      "model": "75.8%",
+      "edge": 20.8,
       "tier": "Medium",
-      "bet": "$19.97",
+      "bet": "$11.41",
       "status": "",
       "result": "",
-      "notes": "Last 10g avg: 38.1 Points. Line: 33.5. Diff: +4.6. DK odds: -108. Model says over at 71.7%.",
+      "notes": "Last 10g avg: 38.1 Points. Line: 32.5. Diff: +5.6. DK odds: -122. Model says over at 75.8%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "",
       "type": "prop"
     },
     {
-      "rank": 4,
+      "rank": 11,
       "sport": "NBA",
       "event": "Oklahoma City Thunder @ Washington Wizards",
       "event_short": "Oklahoma City Thunder @ Washington Wizards",
@@ -95,7 +242,7 @@
       "model": "69.8%",
       "edge": 18.6,
       "tier": "Medium",
-      "bet": "$19.97",
+      "bet": "$11.41",
       "status": "",
       "result": "",
       "notes": "Last 10g avg: 7.8 Assists. Line: 6.5. Diff: +1.3. DK odds: -105. Model says over at 69.8%.",
@@ -105,7 +252,28 @@
       "type": "prop"
     },
     {
-      "rank": 5,
+      "rank": 12,
+      "sport": "NBA",
+      "event": "Cleveland Cavaliers @ New Orleans Pelicans",
+      "event_short": "Cleveland Cavaliers @ New Orleans Pelicans",
+      "market": "Player Prop",
+      "pick": "Donovan Mitchell UNDER 2.5 3-PT Made",
+      "odds": "+106",
+      "implied": "48.5%",
+      "model": "65.5%",
+      "edge": 17.0,
+      "tier": "Medium",
+      "bet": "$11.41",
+      "status": "",
+      "result": "",
+      "notes": "Last 10g avg: 1.9 3-PT Made. Line: 2.5. Diff: -0.6. DK odds: 106. Model says under at 65.5%.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "",
+      "type": "prop"
+    },
+    {
+      "rank": 13,
       "sport": "NBA",
       "event": "Cleveland Cavaliers @ New Orleans Pelicans",
       "event_short": "Cleveland Cavaliers @ New Orleans Pelicans",
@@ -116,7 +284,7 @@
       "model": "72.6%",
       "edge": 17.0,
       "tier": "Medium",
-      "bet": "$19.97",
+      "bet": "$11.41",
       "status": "",
       "result": "",
       "notes": "Last 10g avg: 3.4 3-PT Made. Line: 2.5. Diff: +0.9. DK odds: -125. Model says over at 72.6%.",
@@ -126,7 +294,7 @@
       "type": "prop"
     },
     {
-      "rank": 6,
+      "rank": 14,
       "sport": "NBA",
       "event": "Golden State Warriors @ Atlanta Hawks",
       "event_short": "Golden State Warriors @ Atlanta Hawks",
@@ -137,10 +305,31 @@
       "model": "73.5%",
       "edge": 16.8,
       "tier": "Medium",
-      "bet": "$14.26",
+      "bet": "$11.41",
       "status": "",
       "result": "",
       "notes": "Last 10g avg: 8.3 Rebounds. Line: 10.5. Diff: -2.2. DK odds: -131. Model says under at 73.5%.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "",
+      "type": "prop"
+    },
+    {
+      "rank": 15,
+      "sport": "NBA",
+      "event": "Los Angeles Lakers @ Orlando Magic",
+      "event_short": "Los Angeles Lakers @ Orlando Magic",
+      "market": "Player Prop",
+      "pick": "Luka Doncic UNDER 8.5 Assists",
+      "odds": "-119",
+      "implied": "54.3%",
+      "model": "68.4%",
+      "edge": 14.1,
+      "tier": "Medium",
+      "bet": "$5.72",
+      "status": "",
+      "result": "",
+      "notes": "Last 10g avg: 7.3 Assists. Line: 8.5. Diff: -1.2. DK odds: -119. Model says under at 68.4%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "",
@@ -157,7 +346,7 @@
     {
       "sport": "NBA",
       "event": "LAL @ ORL",
-      "line": "LAL -3.5",
+      "line": "LAL -2.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -439,7 +628,7 @@
     {
       "sport": "BUNDESLIGA",
       "event": "HSV @ DOR",
-      "line": "DOR -260",
+      "line": "DOR -270",
       "reason": "No model data"
     },
     {
@@ -468,111 +657,57 @@
     },
     {
       "sport": "NBA",
-      "event": "Los Angeles Lakers @ Orlando Magic",
-      "line": "Luka Doncic UNDER 8.5 Assists (-112)",
-      "reason": "Edge exists (15.6%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
       "event": "Cleveland Cavaliers @ New Orleans Pelicans",
-      "line": "Donovan Mitchell UNDER 2.5 3-PT Made (-106)",
-      "reason": "Edge exists (14.1%) but daily exposure limit reached"
+      "line": "Donovan Mitchell UNDER 26.5 Points (-108)",
+      "reason": "Edge exists (13.6%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Memphis Grizzlies @ Charlotte Hornets",
       "line": "Brandon Miller OVER 5.5 Rebounds (+111)",
-      "reason": "Edge exists (12.8%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New Orleans Pelicans",
-      "line": "Donovan Mitchell UNDER 26.5 Points (-114)",
-      "reason": "Edge exists (12.3%) but daily exposure limit reached"
+      "reason": "Edge exists (12.8%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Cleveland Cavaliers @ New Orleans Pelicans",
       "line": "James Harden UNDER 8.5 Assists (-144)",
-      "reason": "Edge exists (12.2%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "MEM @ CHA",
-      "line": "Memphis Grizzlies +17.5 (-115)",
-      "reason": "Edge exists (11.2%) but daily exposure limit reached"
+      "reason": "Edge exists (12.2%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Golden State Warriors @ Atlanta Hawks",
       "line": "Jalen Johnson UNDER 22.5 Points (-117)",
-      "reason": "Edge exists (11.2%) but daily exposure limit reached"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "TOR @ MIL",
-      "line": "OVER 2.5 (-125)",
-      "reason": "Edge exists (8.8%) but daily exposure limit reached"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "GET @ ESP",
-      "line": "OVER 1.5 (-150)",
-      "reason": "Edge exists (8.4%) but daily exposure limit reached"
+      "reason": "Edge exists (11.2%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Memphis Grizzlies @ Charlotte Hornets",
       "line": "Brandon Miller UNDER 20.5 Points (-108)",
-      "reason": "Edge exists (8.4%) but daily exposure limit reached"
+      "reason": "Edge exists (8.4%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Los Angeles Lakers @ Orlando Magic",
       "line": "Luka Doncic OVER 8.5 Rebounds (-103)",
-      "reason": "Edge exists (7.2%) but daily exposure limit reached"
+      "reason": "Edge exists (7.2%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Memphis Grizzlies @ Charlotte Hornets",
       "line": "Brandon Miller OVER 2.5 Assists (-170)",
-      "reason": "Edge exists (6.9%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "PHI @ SJ",
-      "line": "Philadelphia Flyers +1.5 (-265)",
-      "reason": "Edge exists (6.8%) but daily exposure limit reached"
+      "reason": "Edge exists (6.9%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Memphis Grizzlies @ Charlotte Hornets",
       "line": "Brandon Miller OVER 2.5 3-PT Made (-143)",
-      "reason": "Edge exists (6.7%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "MIL @ PHX",
-      "line": "Milwaukee Bucks +11.5 (-110)",
-      "reason": "Edge exists (6.1%) but daily exposure limit reached"
+      "reason": "Edge exists (6.7%) but category exposure limit reached"
     },
     {
       "sport": "NBA",
       "event": "Cleveland Cavaliers @ New Orleans Pelicans",
       "line": "Trey Murphy III OVER 3.5 Assists (-130)",
-      "reason": "Edge exists (6.0%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "GS @ ATL",
-      "line": "Golden State Warriors +10.5 (-112)",
-      "reason": "Edge exists (4.6%) but daily exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "MEM @ CHA",
-      "line": "UNDER 234.5 (-105)",
-      "reason": "Edge exists (3.4%) but daily exposure limit reached"
+      "reason": "Edge exists (6.0%) but category exposure limit reached"
     }
   ],
   "bets": [

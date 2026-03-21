@@ -32,8 +32,10 @@ MIN_EDGE_HIGH = 0.03      # 3% for spreads/ML/totals
 MIN_EDGE_MEDIUM = 0.05    # 5% for props
 SUSPICIOUS_EDGE = 0.10    # 10% — flag for investigation, don't cap
 KELLY_FRACTION_HIGH = 0.5
-MAX_SINGLE_BET_PCT = 0.035 # 3.5% max single bet (was 5%)
-MAX_DAILY_EXPOSURE = 0.20  # 20% max daily (was 15%)
+MAX_SINGLE_BET_PCT = 0.02  # 2% max single bet — smaller bets = more diversification
+MAX_DAILY_EXPOSURE = 0.35  # 35% total daily cap
+MAX_GAME_EXPOSURE = 0.20   # 20% budget for game edges (spreads/ML/totals)
+MAX_PROP_EXPOSURE = 0.15   # 15% budget for prop edges
 
 # ── GAME OUTCOME STANDARD DEVIATIONS ───────────────
 # These are the SDs of (actual outcome - market prediction).
@@ -1425,37 +1427,59 @@ def main():
     except Exception as e:
         print(f"  Prop scanning error: {e}", file=sys.stderr)
 
-    # Sort picks by edge descending
-    picks.sort(key=lambda x: x["edge"], reverse=True)
+    # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
+    # Split picks into game edges and prop edges, sort each by edge descending
+    game_picks = sorted([p for p in picks if p.get("market") != "Player Prop"], key=lambda x: x["edge"], reverse=True)
+    prop_picks = sorted([p for p in picks if p.get("market") == "Player Prop"], key=lambda x: x["edge"], reverse=True)
 
-    # Step 6: Size bets with Kelly
-    print(f"\n[6] Sizing {len(picks)} picks (bankroll: ${available:.2f})...")
-    total_exposure = 0
+    game_budget = available * MAX_GAME_EXPOSURE
+    prop_budget = available * MAX_PROP_EXPOSURE
+    print(f"\n[6] Sizing picks (bankroll: ${available:.2f})")
+    print(f"    Game budget: ${game_budget:.2f} ({len(game_picks)} edges), Prop budget: ${prop_budget:.2f} ({len(prop_picks)} edges)")
+
+    def fill_category(category_picks, budget, category_name):
+        """Fill a category up to its budget, return (sized_picks, skipped_picks, total_spent)."""
+        sized = []
+        skipped = []
+        spent = 0
+        for pick in category_picks:
+            bet_pct = min(pick["kelly_pct"], MAX_SINGLE_BET_PCT)
+            bet_amount = round(available * bet_pct, 2)
+
+            if spent + bet_amount > budget:
+                remaining = budget - spent
+                if remaining > 5:  # Min bet $5
+                    bet_amount = round(remaining, 2)
+                else:
+                    skipped.append(pick)
+                    continue
+
+            spent += bet_amount
+            sized.append((pick, bet_amount))
+        return sized, skipped, spent
+
+    game_sized, game_skipped, game_spent = fill_category(game_picks, game_budget, "game")
+    prop_sized, prop_skipped, prop_spent = fill_category(prop_picks, prop_budget, "prop")
+
+    # Add skipped picks to no_edge with reason
+    for pick in game_skipped + prop_skipped:
+        no_edge.append({
+            "sport": pick["sport"],
+            "event": pick["event_short"],
+            "line": f"{pick['pick']} ({pick['odds']})",
+            "reason": f"Edge exists ({pick['edge']}%) but category exposure limit reached",
+        })
+        print(f"  Skipping {pick['pick']} — category limit reached")
+
+    # Combine and assign ranks (games first, then props — sorted by edge within each)
+    total_exposure = game_spent + prop_spent
     formatted_picks = []
+    rank = 0
 
-    for i, pick in enumerate(picks):
-        bet_pct = min(pick["kelly_pct"], MAX_SINGLE_BET_PCT)
-        bet_amount = round(available * bet_pct, 2)
-
-        # Check daily exposure limit
-        if total_exposure + bet_amount > available * MAX_DAILY_EXPOSURE:
-            remaining = (available * MAX_DAILY_EXPOSURE) - total_exposure
-            if remaining > 5:  # Min bet $5
-                bet_amount = round(remaining, 2)
-            else:
-                print(f"  Skipping {pick['pick']} — daily exposure limit reached")
-                no_edge.append({
-                    "sport": pick["sport"],
-                    "event": pick["event_short"],
-                    "line": f"{pick['pick']} ({pick['odds']})",
-                    "reason": f"Edge exists ({pick['edge']}%) but daily exposure limit reached",
-                })
-                continue
-
-        total_exposure += bet_amount
-
+    for pick, bet_amount in game_sized + prop_sized:
+        rank += 1
         formatted_picks.append({
-            "rank": i + 1,
+            "rank": rank,
             "sport": pick.get("sport", "NBA"),
             "event": pick.get("event", pick.get("event_short", "")),
             "event_short": pick.get("event_short", ""),
@@ -1475,8 +1499,9 @@ def main():
             "dk_link": pick.get("dk_link", ""),
             "type": "prop" if pick.get("market") == "Player Prop" else "game",
         })
+        print(f"  #{rank}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
 
-        print(f"  #{i+1}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
+    print(f"  Games: {len(game_sized)} picks (${game_spent:.2f}), Props: {len(prop_sized)} picks (${prop_spent:.2f})")
 
     # Step 7: Build data.json
     print(f"\n[7] Updating data.json...")
