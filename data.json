@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 446.25,
+    "available": 434.84,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 11,
-    "pending_total": 124.32,
-    "pending_label": "11 bet(s) pending ($124.32)"
+    "pending_count": 12,
+    "pending_total": 135.73,
+    "pending_label": "12 bet(s) pending ($135.73)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -264,7 +264,7 @@
       "edge": 17.0,
       "tier": "Medium",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 1.9 3-PT Made. Line: 2.5. Diff: -0.6. DK odds: 106. Model says under at 65.5%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Cleveland Cavaliers @ New Orleans Pelicans",
+      "pick": "Donovan Mitchell UNDER 2.5 3-PT Made",
+      "odds": "+106",
+      "decimal_odds": 2.06,
+      "edge": 17.0,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",

@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 446.25,
+  "current_bankroll": 434.84,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -158,7 +158,21 @@
       "edge_pct": 18.6,
       "tier": "Medium",
       "bet_size": 11.41
+    },
+    {
+      "id": "don-player-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Cleveland Cavaliers @ New Orleans Pelicans",
+      "market": "player prop",
+      "pick": "Donovan Mitchell UNDER 2.5 3-PT Made",
+      "odds": "+106",
+      "decimal_odds": 2.06,
+      "model_prob": 0.655,
+      "edge_pct": 17.0,
+      "tier": "Medium",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 11
+  "lifetime_bets": 12
 }
