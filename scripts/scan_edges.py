@@ -33,9 +33,9 @@ MIN_EDGE_MEDIUM = 0.05    # 5% for props
 SUSPICIOUS_EDGE = 0.10    # 10% — flag for investigation, don't cap
 KELLY_FRACTION_HIGH = 0.5
 MAX_SINGLE_BET_PCT = 0.02  # 2% max single bet — smaller bets = more diversification
-MAX_DAILY_EXPOSURE = 0.35  # 35% total daily cap
-MAX_GAME_EXPOSURE = 0.20   # 20% budget for game edges (spreads/ML/totals)
-MAX_PROP_EXPOSURE = 0.15   # 15% budget for prop edges
+MAX_DAILY_EXPOSURE = 0.25  # 25% total daily cap
+MAX_GAME_EXPOSURE = 0.15   # 15% budget for game edges (spreads/ML/totals)
+MAX_PROP_EXPOSURE = 0.10   # 10% budget for prop edges
 
 # ── GAME OUTCOME STANDARD DEVIATIONS ───────────────
 # These are the SDs of (actual outcome - market prediction).
