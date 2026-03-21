@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# Claude agent worktrees
+.claude/worktrees/
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
