@@ -385,6 +385,9 @@ function render(d){
   const rec=b.record||{wins:0,losses:0,pushes:0};
   const pCnt=b.pending_count||0;
   const pTot=b.pending_total||0;
+  // Calculate total potential winnings from pending bets
+  const pendingBets=(d.bets||[]).filter(x=>x.outcome==='pending');
+  const pWin=pendingBets.reduce((sum,bet)=>{const o=parseInt(bet.odds);const tw=o<0?bet.wager*100/Math.abs(o):bet.wager*o/100;return sum+tw;},0);
 
   document.getElementById('subtitle').innerHTML=(d.scan_subtitle||d.scan_date);
   document.getElementById('header-balance').textContent='$'+amt.toFixed(2);
@@ -394,7 +397,7 @@ function render(d){
     <div class="stat"><div class="stat-label">Available</div><div class="stat-val" style="color:var(--dk-green)">$${amt.toFixed(2)}</div></div>
     <div class="stat"><div class="stat-label">Record</div><div class="stat-val" style="color:${rec.wins>rec.losses?'var(--dk-green)':rec.losses>rec.wins?'var(--dk-red)':'var(--dk-text)'}">${rec.wins}-${rec.losses}-${rec.pushes}</div></div>
     <div class="stat"><div class="stat-label">P/L</div><div class="stat-val" style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'var(--dk-gold)':'var(--dk-blue)'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')':((d.picks||[]).length)}</div></div>
+    <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'var(--dk-gold)':'var(--dk-blue)'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')<br><span style="color:var(--dk-green);font-size:0.85rem">to win $'+pWin.toFixed(2)+'</span>':((d.picks||[]).length)}</div></div>
   `;
 
   // Tab badges
