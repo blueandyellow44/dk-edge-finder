@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 434.84,
+    "available": 429.12,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 12,
-    "pending_total": 135.73,
-    "pending_label": "12 bet(s) pending ($135.73)"
+    "pending_count": 13,
+    "pending_total": 141.45,
+    "pending_label": "13 bet(s) pending ($141.45)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -327,7 +327,7 @@
       "edge": 14.1,
       "tier": "Medium",
       "bet": "$5.72",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 7.3 Assists. Line: 8.5. Diff: -1.2. DK odds: -119. Model says under at 68.4%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Los Angeles Lakers @ Orlando Magic",
+      "pick": "Luka Doncic UNDER 8.5 Assists",
+      "odds": "-119",
+      "decimal_odds": 1.84,
+      "edge": 14.1,
+      "wager": 5.72,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",
