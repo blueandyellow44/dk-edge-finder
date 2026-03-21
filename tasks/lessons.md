@@ -65,3 +65,27 @@
 ## 2026-03-20: Embedded git repos break Netlify deploys
 **Mistake:** Running `git add -A` committed `.claude/worktrees/` directories which contain embedded git repos. Netlify treats these as submodules and fails when there's no `.gitmodules` entry.
 **Rule:** ALWAYS have a .gitignore with `.claude/worktrees/` and `__pycache__/` BEFORE the first `git add`. Never use `git add -A` without verifying .gitignore covers agent artifacts. Prefer `git add <specific files>` over `git add -A`.
+
+## 2026-03-21: Git index.lock keeps blocking pushes
+**Mistake:** Stale `.git/index.lock` files left by crashed git processes (from Cowork VM or interrupted terminal commands) block all subsequent git operations. This has happened 3+ times.
+**Rule:** scan_edges.py now auto-removes stale index.lock on startup. For manual fix: `rm -f .git/index.lock`. Root cause: two environments (Cowork VM + Mac terminal) share the same .git directory. Long-term: only one environment should write to git at a time.
+**Code fix:** Added Step 0 to scan_edges.py that unlinks stale index.lock before any git operations.
+
+## 2026-03-21: Bankroll must come from DK app, not calculated PnL
+**Mistake:** Scan calculated bankroll from bet history PnL ($568.61) but actual DK balance was $570.57. The $2 gap comes from rounding on odds/payouts in manually entered historical bets. Every scan overwrote the real balance with the wrong number.
+**Rule:** DK app balance is always the source of truth. Set `balance_override` in bankroll.json to the real number. The scan uses it when present, falls back to calculated PnL when not set. After every session where bets are placed or resolved, update bankroll.json with the actual DK balance.
+**Code fix:** Added `balance_override` field to bankroll.json and corresponding logic in scan_edges.py.
+
+## 2026-03-21: Max doesn't place every suggested bet — don't assume he does
+**Mistake:** Scan suggested 7 bets for March 20. Data showed all 7 in bet history as if placed. Max only placed 4. Record showed 12W-10L instead of correct 11W-8L.
+**Rule:** NEVER auto-add picks to the bets[] array. Bets only enter history when Max explicitly confirms placement via the site's "Mark Placed" button or tells us directly. If Max says "bankroll should be X", that's the number — don't argue with calculated PnL.
+
+## 2026-03-21: META — Lessons must become code, not just docs
+**Pattern:** We keep writing rules in lessons.md but the same bugs recur because the rules require manual compliance. A lesson that says "always do X" will eventually be forgotten. A guard clause that enforces X cannot be.
+**Rule:** Every lesson that CAN be automated MUST be automated:
+- "Never overwrite bets[]" → code preserves bets[] (done)
+- "Use DK balance not calculated" → balance_override in bankroll.json (done)
+- "Clean stale git locks" → Step 0 in scan_edges.py (done)
+- "Verify JS syntax before push" → TODO: add pre-commit hook
+- "Don't change git remote" → TODO: add check that warns if remote URL changes
+If a lesson can only be a doc (like "verify odds on DK"), tag it `[MANUAL]`. If it should be code, tag it `[AUTOMATE]` until the code exists.

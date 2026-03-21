@@ -1230,6 +1230,15 @@ def main():
     today_iso = get_today_iso()
     print(f"DK Edge Finder — Scanning for {today_iso}")
 
+    # Step 0: Clean stale git lock if present (prevents "Another git process" errors)
+    git_lock = REPO_ROOT / ".git" / "index.lock"
+    if git_lock.exists():
+        try:
+            git_lock.unlink()
+            print("  Removed stale .git/index.lock")
+        except OSError:
+            pass  # Permission denied in some envs — user can remove manually
+
     # Step 1: Resolve pending bets first
     print("\n[1] Resolving pending bets...")
     import importlib.util
@@ -1249,13 +1258,19 @@ def main():
         "current_bankroll": 500.0, "starting_bankroll": 500.0
     }
 
-    # Calculate bankroll from bet history (source of truth), not just bankroll.json
+    # Calculate bankroll — use manual override if set (from DK app balance), else from bet history
     starting = bankroll.get("starting_bankroll", 500.0)
     existing_bets = data.get("bets", [])
     resolved_pnl = sum(b.get("pnl", 0) for b in existing_bets if b.get("outcome") in ("win", "loss", "push"))
     pending_locked = sum(b.get("wager", 0) for b in existing_bets if b.get("outcome") == "pending")
-    available = round(starting + resolved_pnl - pending_locked, 2)
-    print(f"  Bankroll: ${starting:.2f} start + ${resolved_pnl:.2f} P/L - ${pending_locked:.2f} pending = ${available:.2f} available")
+    calculated = round(starting + resolved_pnl - pending_locked, 2)
+    override = bankroll.get("balance_override")
+    if override and isinstance(override, (int, float)) and override > 0:
+        available = round(float(override), 2)
+        print(f"  Bankroll: ${available:.2f} (manual override from DK balance, calculated was ${calculated:.2f})")
+    else:
+        available = calculated
+        print(f"  Bankroll: ${starting:.2f} start + ${resolved_pnl:.2f} P/L - ${pending_locked:.2f} pending = ${available:.2f} available")
 
     # Step 2: Fetch games for all sports
     print(f"\n[2] Fetching schedule for {today}...")
@@ -1498,7 +1513,7 @@ def main():
     push_count = sum(1 for b in all_bets if b.get("outcome") == "push")
     pend_count = sum(1 for b in all_bets if b.get("outcome") == "pending")
     pend_total = sum(b.get("wager", 0) for b in all_bets if b.get("outcome") == "pending")
-    profit = round(resolved_pnl, 2)
+    profit = round(available - starting, 2) if override else round(resolved_pnl, 2)
 
     new_data = {
         "scan_date": today_iso,

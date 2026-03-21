@@ -22,7 +22,8 @@ jobs:
           python-version: '3.12'
 
       - name: Resolve pending bets
-        run: python scripts/resolve_bets.py
+        working-directory: scripts
+        run: python resolve_bets.py
 
       - name: Check for changes
         id: changes

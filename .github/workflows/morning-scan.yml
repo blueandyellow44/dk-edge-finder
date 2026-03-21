@@ -22,7 +22,8 @@ jobs:
           python-version: '3.12'
 
       - name: Run full edge scan
-        run: python scripts/scan_edges.py
+        working-directory: scripts
+        run: python scan_edges.py
 
       - name: Check for changes
         id: changes
