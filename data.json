@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 480.48,
+    "available": 469.07,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 8,
-    "pending_total": 90.09,
-    "pending_label": "8 bet(s) pending ($90.09)"
+    "pending_count": 9,
+    "pending_total": 101.5,
+    "pending_label": "9 bet(s) pending ($101.50)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -201,7 +201,7 @@
       "edge": 23.5,
       "tier": "Medium",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 3.1 3-PT Made. Line: 2.5. Diff: +0.6. DK odds: 138. Model says over at 65.5%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Indiana Pacers @ San Antonio Spurs",
+      "pick": "Victor Wembanyama OVER 2.5 3-PT Made",
+      "odds": "+138",
+      "decimal_odds": 2.38,
+      "edge": 23.5,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",
