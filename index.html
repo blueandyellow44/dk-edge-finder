@@ -327,16 +327,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <h2 style="color:var(--dk-text);margin-bottom:24px;font-size:1.4rem;text-transform:uppercase;font-weight:900">Methodology</h2>
   <div style="background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:24px;margin-bottom:20px;font-size:0.9rem;color:var(--dk-text-2);line-height:1.8;box-shadow:0 1px 3px rgba(0,0,0,0.2)">
     <div style="color:var(--dk-text);font-weight:900;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">The Edge</div>
-    DraftKings sets odds that imply a probability for each outcome. Our model independently estimates the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
+    DraftKings sets odds that imply a probability for each outcome. Our models independently estimate the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
+
+    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Game Edges — Ensemble Model</div>
+    For spreads, moneylines, and totals, we combine two independent prediction sources (DRatings + Dimers) into an ensemble. When both agree, confidence is high. The model uses Skellam distribution (NBA/NFL) and Poisson scoring (NHL/MLB/Soccer) to convert predicted scores into cover probabilities, then compares against DK's implied odds. Minimum 3% edge to qualify.
+
+    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Player Prop Edges — Real DK Odds</div>
+    Player props use real DraftKings odds from The Odds API — not DFS projections. We compare each prop line against the player's last 10 games (ESPN gamelogs) to find where DK's line disagrees with recent performance. Points, rebounds, assists, and threes are supported. Minimum 5% edge to qualify.
 
     <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Kelly Criterion Sizing</div>
-    Instead of betting the same amount on every pick, Kelly sizes each bet proportional to your edge. Bigger edge = bigger bet. A 9% edge gets roughly 3x the wager of a 3% edge. We use half-Kelly (conservative) to reduce volatility — you'll grow slower but survive losing streaks.
+    Instead of flat-betting, Kelly sizes each bet proportional to your edge. Bigger edge = bigger bet. We use half-Kelly (conservative) to reduce volatility — you'll grow slower but survive losing streaks. Each bet is capped at 2% of bankroll to keep individual risk low.
+
+    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Diversification</div>
+    To spread risk, game edges and prop edges have separate budgets — 20% of bankroll for games, 15% for props (35% total daily cap). This prevents one category from crowding out the other and ensures a mix of bet types every day.
 
     <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Safety Rails</div>
-    Max 5% of bankroll on any single bet. Max 15% total daily exposure. Confirmed tanking teams get a 3% penalty. Back-to-back games get a 1.5-2.5% penalty. If a pick conflicts with sharp money movement, Kelly fraction drops 25%.
+    Max 2% of bankroll on any single bet. 35% total daily exposure across all bets. Confirmed tanking teams are skipped entirely. Back-to-back games get a 1.5-2.5% penalty. Contested model predictions (sources disagree by 5+ points) are flagged and down-weighted.
 
     <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Bankroll Tracking</div>
-    When you place bets, the wagered amount is immediately deducted from your available bankroll. Wins add back the wager + profit. Losses stay deducted. This means the number you see is always your real available cash.
+    Your DK app balance is the source of truth. When you place bets, the wagered amount is deducted from available bankroll. Wins add back the wager + profit. Losses stay deducted. The number you see is always your real available cash.
+
+    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Data Sources</div>
+    <span style="color:var(--dk-blue)">Game predictions:</span> DRatings, Dimers (ensemble average) · <span style="color:var(--dk-blue)">Player props:</span> The Odds API (real DK lines) + ESPN gamelogs · <span style="color:var(--dk-blue)">Schedules:</span> ESPN API · <span style="color:var(--dk-blue)">Odds:</span> DraftKings Oregon via The Odds API
   </div>
 </div>
 
