@@ -383,10 +383,10 @@ function render(d){
   const amt=b.available||b.current||0;
   const profit=b.profit||0;
   const rec=b.record||{wins:0,losses:0,pushes:0};
-  const pCnt=b.pending_count||0;
-  const pTot=b.pending_total||0;
-  // Calculate total potential winnings from pending bets
+  // Count pending from actual bets array — never trust bankroll.pending_count (can go stale)
   const pendingBets=(d.bets||[]).filter(x=>x.outcome==='pending');
+  const pCnt=pendingBets.length;
+  const pTot=pendingBets.reduce((sum,bet)=>sum+(bet.wager||0),0);
   const pWin=pendingBets.reduce((sum,bet)=>{const o=parseInt(bet.odds);const tw=o<0?bet.wager*100/Math.abs(o):bet.wager*o/100;return sum+tw;},0);
 
   document.getElementById('subtitle').innerHTML=(d.scan_subtitle||d.scan_date);
