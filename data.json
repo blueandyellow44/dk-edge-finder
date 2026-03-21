@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 513.52,
+    "available": 502.11,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 5,
-    "pending_total": 57.05,
-    "pending_label": "5 bet(s) pending ($57.05)"
+    "pending_count": 6,
+    "pending_total": 68.46,
+    "pending_label": "6 bet(s) pending ($68.46)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -138,7 +138,7 @@
       "edge": 4.6,
       "tier": "High",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings + Dimers): GS 110.8, ATL 118.9 (margin: 8.1). Spread cushion: 2.4 pts. GS on road B2B (-2.5% adj) | ATL on B2B (+1.5% boost)",
       "sources": "DRatings + Dimers, ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Golden State Warriors @ Atlanta Hawks",
+      "pick": "Golden State Warriors +10.5",
+      "odds": "-112",
+      "decimal_odds": 1.893,
+      "edge": 4.6,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",

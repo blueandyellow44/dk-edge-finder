@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 513.52,
+  "current_bankroll": 502.11,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -74,7 +74,21 @@
       "edge_pct": 6.1,
       "tier": "High",
       "bet_size": 11.41
+    },
+    {
+      "id": "gol-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Golden State Warriors @ Atlanta Hawks",
+      "market": "spread",
+      "pick": "Golden State Warriors +10.5",
+      "odds": -112,
+      "decimal_odds": 1.893,
+      "model_prob": 0.574,
+      "edge_pct": 4.6,
+      "tier": "High",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 5
+  "lifetime_bets": 6
 }
