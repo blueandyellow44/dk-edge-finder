@@ -2,12 +2,12 @@
   "scan_date": "2026-03-20",
   "scan_subtitle": "Friday, March 20, 2026 \u2014 BUNDESLIGA (1), EPL (1), LA_LIGA (1), LIGUE_1 (1), MLB (17), NBA (6), NHL (5), SERIE_A (2)",
   "bankroll": {
-    "available": 585.67,
+    "available": 568.61,
     "starting": 500.0,
-    "profit": 85.67,
+    "profit": 68.61,
     "record": {
-      "wins": 9,
-      "losses": 6,
+      "wins": 11,
+      "losses": 8,
       "pushes": 0
     },
     "pending_count": 0,
@@ -246,6 +246,58 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-20",
+      "sport": "EPL",
+      "event": "Manchester United @ AFC Bournemouth",
+      "pick": "UNDER 3.5",
+      "odds": "-175",
+      "decimal_odds": 1.571,
+      "edge": "11.5%",
+      "wager": 29.28,
+      "outcome": "loss",
+      "final_score": "MAN 2, BOU 2 (4 total)",
+      "pnl": -29.28
+    },
+    {
+      "date": "2026-03-20",
+      "sport": "NBA",
+      "event": "Boston Celtics @ Memphis Grizzlies",
+      "pick": "Memphis Grizzlies +15.5",
+      "odds": "-112",
+      "decimal_odds": 1.893,
+      "edge": "11.4%",
+      "wager": 29.28,
+      "outcome": "win",
+      "final_score": "BOS 117, MEM 112 (margin: 5)",
+      "pnl": 26.14
+    },
+    {
+      "date": "2026-03-20",
+      "sport": "NBA",
+      "event": "New York Knicks @ Brooklyn Nets",
+      "pick": "OVER 214.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "6.6%",
+      "wager": 21.24,
+      "outcome": "loss",
+      "final_score": "NY 93, BKN 92 (185 total)",
+      "pnl": -21.24
+    },
+    {
+      "date": "2026-03-20",
+      "sport": "NBA",
+      "event": "Boston Celtics @ Memphis Grizzlies",
+      "pick": "UNDER 229.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "4.3%",
+      "wager": 8.05,
+      "outcome": "win",
+      "final_score": "BOS 117, MEM 112 (229 total)",
+      "pnl": 7.32
+    },
     {
       "date": "2026-03-19",
       "sport": "NHL",
