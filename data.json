@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 570.57,
+    "available": 559.16,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 0,
-    "pending_total": 0,
-    "pending_label": "No unsettled bets"
+    "pending_count": 1,
+    "pending_total": 11.41,
+    "pending_label": "1 bet(s) pending ($11.41)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -33,7 +33,7 @@
       "edge": 11.2,
       "tier": "High",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings + Dimers): MEM 110.0, CHA 122.5 (margin: 12.5). Spread cushion: 5.0 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 5.0 pts. Investigate before betting. MEM on road B2B (-2.5% adj)",
       "sources": "DRatings + Dimers, ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Memphis Grizzlies @ Charlotte Hornets",
+      "pick": "Memphis Grizzlies +17.5",
+      "odds": "-115",
+      "decimal_odds": 1.87,
+      "edge": 11.2,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-20",
       "sport": "EPL",
