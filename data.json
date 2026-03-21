@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 469.07,
+    "available": 457.66,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 9,
-    "pending_total": 101.5,
-    "pending_label": "9 bet(s) pending ($101.50)"
+    "pending_count": 10,
+    "pending_total": 112.91,
+    "pending_label": "10 bet(s) pending ($112.91)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -222,7 +222,7 @@
       "edge": 20.8,
       "tier": "Medium",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 38.1 Points. Line: 32.5. Diff: +5.6. DK odds: -122. Model says over at 75.8%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Los Angeles Lakers @ Orlando Magic",
+      "pick": "Luka Doncic OVER 32.5 Points",
+      "odds": "-122",
+      "decimal_odds": 1.82,
+      "edge": 20.8,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",

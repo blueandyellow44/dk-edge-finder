@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 469.07,
+  "current_bankroll": 457.66,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -130,7 +130,21 @@
       "edge_pct": 23.5,
       "tier": "Medium",
       "bet_size": 11.41
+    },
+    {
+      "id": "luk-player-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Los Angeles Lakers @ Orlando Magic",
+      "market": "player prop",
+      "pick": "Luka Doncic OVER 32.5 Points",
+      "odds": -122,
+      "decimal_odds": 1.82,
+      "model_prob": 0.758,
+      "edge_pct": 20.8,
+      "tier": "Medium",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 9
+  "lifetime_bets": 10
 }
