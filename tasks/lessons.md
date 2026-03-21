@@ -61,3 +61,7 @@
 ## 2026-03-20: PrizePicks rate limits aggressively
 **Mistake:** Multiple rapid calls to PrizePicks API triggered 429 (Too Many Requests) that persists for ~30 seconds.
 **Rule:** Never call PrizePicks more than once per scan session. Add retry-after-10s for 429 errors. Cache the result for the full scan.
+
+## 2026-03-20: Embedded git repos break Netlify deploys
+**Mistake:** Running `git add -A` committed `.claude/worktrees/` directories which contain embedded git repos. Netlify treats these as submodules and fails when there's no `.gitmodules` entry.
+**Rule:** ALWAYS have a .gitignore with `.claude/worktrees/` and `__pycache__/` BEFORE the first `git add`. Never use `git add -A` without verifying .gitignore covers agent artifacts. Prefer `git add <specific files>` over `git add -A`.
