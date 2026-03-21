@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 457.66,
+    "available": 446.25,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 10,
-    "pending_total": 112.91,
-    "pending_label": "10 bet(s) pending ($112.91)"
+    "pending_count": 11,
+    "pending_total": 124.32,
+    "pending_label": "11 bet(s) pending ($124.32)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -243,7 +243,7 @@
       "edge": 18.6,
       "tier": "Medium",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 7.8 Assists. Line: 6.5. Diff: +1.3. DK odds: -105. Model says over at 69.8%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Oklahoma City Thunder @ Washington Wizards",
+      "pick": "Shai Gilgeous-Alexander OVER 6.5 Assists",
+      "odds": "-105",
+      "decimal_odds": 1.952,
+      "edge": 18.6,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",
