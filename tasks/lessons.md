@@ -127,4 +127,8 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 
 ## 2026-03-21: Git push — always verify the correct directory first
 **Mistake:** Repeatedly tried to `git push` from the wrong directory (e.g., "Political Ap" instead of the dk-edge-finder repo). The Cowork mount name ("Betting Skill") does not match the actual Mac directory name.
-**Rule:** Before any git command, run `pwd` and verify you're in a directory with a `.git` folder. The dk-edge-finder repo on Max's Mac is NOT at `~/Desktop/Betting Skill`. Use `find ~ -name ".git" -path "*dk-edge-finder*" 2>/dev/null` to locate it if unsure. Once found, save the path as a shell alias or bookmark it.
+**Rule:** Before any git command, run `pwd` and verify you're in a directory with a `.git` folder. The dk-edge-finder repo on Max's Mac is at `~/Betting Skill` (NOT `~/Desktop/Betting Skill`). Command: `cd ~/Betting\ Skill`. Consider adding a shell alias: `alias cdb='cd ~/Betting\ Skill'`.
+
+## 2026-03-21: Spread evaluation must check BOTH sides
+**Mistake:** `calculate_spread_edge()` only evaluated the underdog side of every spread. If the model predicted a favorite would cover by more than the spread, that edge was invisible. Result: 100% of game edges were underdogs — a systematic bias, not a market insight.
+**Rule:** Always evaluate both the underdog AND favorite side of each spread. Calculate cover probability for each, get DK odds for each, compute edge for each, and return whichever side has the larger edge (if either clears the threshold). Never assume one side of the market is always where the value lives.

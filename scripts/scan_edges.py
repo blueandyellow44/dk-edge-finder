@@ -933,109 +933,152 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     # Model predicted margin (positive = home favored)
     model_home_margin = pred["home_score"] - pred["away_score"]
 
-    # Determine which side to bet (the underdog if model margin < spread)
+    # Evaluate BOTH sides of the spread and pick whichever has a bigger edge
     # ESPN spread: negative = favored. e.g., home_spread = -19.5 means home favored by 19.5
     espn_spread = game["home_spread"]  # from home perspective
 
-    # The bet is on the underdog (positive spread side)
-    # If home is underdog (positive spread), bet home
-    # If away is underdog, bet away
-    if espn_spread > 0:
-        # Home is underdog
-        pick_team = home
-        pick_spread = espn_spread
-        pick_side = "home"
-        # Model probability: does model think home covers?
-        # Home covers if: actual_margin > -spread (home perspective)
-        # Approximate: model_margin vs spread
-        model_margin_for_pick = -model_home_margin  # from underdog perspective
-        spread_cushion = pick_spread - abs(model_home_margin)
-    else:
-        # Away is underdog
-        pick_team = away
-        pick_spread = game["away_spread"]  # positive number
-        pick_side = "away"
-        model_margin_for_pick = model_home_margin  # home winning margin
-        spread_cushion = pick_spread - abs(model_home_margin)
-
-    if pick_spread <= 0:
-        return None  # No underdog spread to bet
-
-    # Convert to cover probability — use Skellam for discrete scoring, normal for high-scoring
+    # Build candidate list: evaluate underdog AND favorite
+    candidates = []
     DISCRETE_SPORTS = {"nhl", "mlb", "mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl"}
+
+    # Identify underdog and favorite
+    if espn_spread > 0:
+        dog_team, dog_spread, dog_side = home, espn_spread, "home"
+        fav_team, fav_spread, fav_side = away, abs(espn_spread), "away"
+    elif espn_spread < 0:
+        dog_team, dog_spread, dog_side = away, game.get("away_spread", abs(espn_spread)), "away"
+        fav_team, fav_spread, fav_side = home, abs(espn_spread), "home"
+    else:
+        return None  # Pick'em, skip for now
+
+    if dog_spread <= 0:
+        return None
+
+    # Calculate underdog cover probability
     if sport.lower() in DISCRETE_SPORTS:
-        # Skellam: P(underdog covers +spread) = P(fav_score - dog_score ≤ floor(spread))
-        # This is the CDF of the Skellam distribution at floor(spread).
         import math as _math
         from skellam import skellam_cdf
-        k = _math.floor(pick_spread)  # +1.5 → 1, +0.5 → 0
-        if pick_side == "home":
-            # Home underdog: favorite is away. D = away - home.
-            model_prob = skellam_cdf(k, pred["away_score"], pred["home_score"])
+        k = _math.floor(dog_spread)
+        if dog_side == "home":
+            dog_prob = skellam_cdf(k, pred["away_score"], pred["home_score"])
         else:
-            # Away underdog: favorite is home. D = home - away.
-            model_prob = skellam_cdf(k, pred["home_score"], pred["away_score"])
-        if model_prob is None or model_prob <= 0:
-            return None
+            dog_prob = skellam_cdf(k, pred["home_score"], pred["away_score"])
+        if dog_prob is None or dog_prob <= 0:
+            dog_prob = None
     else:
-        # Normal CDF: fine for NBA/NFL (high-scoring, CLT applies)
-        model_prob = cushion_to_probability(spread_cushion, sport, "spread")
-        if model_prob is None:
-            return None
+        spread_cushion_dog = dog_spread - abs(model_home_margin)
+        dog_prob = cushion_to_probability(spread_cushion_dog, sport, "spread")
 
-    # Use ACTUAL DK odds from ESPN when available, fall back to defaults
-    # ESPN provides pointSpread.home/away.close.odds with real DK juice
-    if pick_side == "home" and game.get("home_spread_odds"):
-        dk_odds = game["home_spread_odds"]
-    elif pick_side == "away" and game.get("away_spread_odds"):
-        dk_odds = game["away_spread_odds"]
-    else:
-        # Fallback defaults when ESPN doesn't have odds
+    # Favorite cover probability = 1 - underdog cover probability
+    fav_prob = (1 - dog_prob) if dog_prob is not None else None
+
+    # Get DK odds for each side
+    def get_dk_odds(side, spread_val):
+        if side == "home" and game.get("home_spread_odds"):
+            return game["home_spread_odds"]
+        elif side == "away" and game.get("away_spread_odds"):
+            return game["away_spread_odds"]
+        # Fallback defaults
         if sport.lower() == "nhl":
-            dk_odds = -190
+            return -190
         elif sport.lower() == "mlb":
-            dk_odds = -170
+            return -170
         else:
-            dk_odds = -110
-            if pick_spread >= 15:
-                dk_odds = -112
-            if pick_spread >= 18:
-                dk_odds = -115
+            odds = -110
+            if spread_val >= 15:
+                odds = -112
+            if spread_val >= 18:
+                odds = -115
+            return odds
 
-    implied_prob = american_to_implied(dk_odds)
+    # Evaluate underdog side
+    if dog_prob is not None:
+        dog_odds = get_dk_odds(dog_side, dog_spread)
+        dog_implied = american_to_implied(dog_odds)
+        dog_cushion = dog_spread - abs(model_home_margin)
+        candidates.append({
+            "team": dog_team, "side": dog_side, "spread": dog_spread,
+            "pick_label": f"{dog_team['name']} +{dog_spread}",
+            "model_prob": dog_prob, "dk_odds": dog_odds, "implied_prob": dog_implied,
+            "spread_cushion": dog_cushion, "is_favorite": False,
+        })
 
-    # ── Apply situational adjustments ──
+    # Evaluate favorite side
+    if fav_prob is not None:
+        fav_odds = get_dk_odds(fav_side, fav_spread)
+        fav_implied = american_to_implied(fav_odds)
+        fav_cushion = abs(model_home_margin) - fav_spread  # how much the model margin exceeds the spread
+        candidates.append({
+            "team": fav_team, "side": fav_side, "spread": fav_spread,
+            "pick_label": f"{fav_team['name']} -{fav_spread}",
+            "model_prob": fav_prob, "dk_odds": fav_odds, "implied_prob": fav_implied,
+            "spread_cushion": fav_cushion, "is_favorite": True,
+        })
 
-    # Tanking check — confirmed tankers are SKIPPED entirely, not penalized
-    tank_info = TANK_TEAMS_2026.get(pick_team.get("abbr", ""), None)
-    tank_note = ""
-    if tank_info and tank_info["confirmed"]:
-        return None  # Model predictions are unreliable for tanking teams
-    if tank_info and not tank_info["confirmed"]:
-        model_prob -= TANK_PENALTY_SUSPECTED
-        tank_note = f"TANK WATCH: {tank_info['reason']} (-1.5% adj)"
+    if not candidates:
+        return None
 
-    # B2B penalty
-    b2b_note = ""
-    if pick_team.get("abbr", "") in b2b_teams:
-        if pick_side == "away":
-            model_prob -= B2B_ROAD_PENALTY
-            b2b_note = f"{pick_team['abbr']} on road B2B (-2.5% adj)"
-        else:
-            model_prob -= B2B_PENALTY
-            b2b_note = f"{pick_team['abbr']} on B2B (-1.5% adj)"
+    # Apply situational adjustments to each candidate, then pick the best edge
+    source_label = pred.get("source_label", "DRatings")
+    best = None
+    best_edge = -1
 
-    # Opponent B2B bonus
-    opponent = away if pick_side == "home" else home
-    if opponent.get("abbr", "") in b2b_teams:
-        model_prob += REST_ADVANTAGE
-        b2b_note += f" | {opponent['abbr']} on B2B (+1.5% boost)"
+    for cand in candidates:
+        pick_team = cand["team"]
+        pick_side = cand["side"]
+        model_prob = cand["model_prob"]
 
-    # Calculate edge
-    edge = model_prob - implied_prob
+        # Tanking check
+        tank_info = TANK_TEAMS_2026.get(pick_team.get("abbr", ""), None)
+        tank_note = ""
+        if tank_info and tank_info["confirmed"]:
+            continue  # Skip tanking teams
+        if tank_info and not tank_info["confirmed"]:
+            model_prob -= TANK_PENALTY_SUSPECTED
+            tank_note = f"TANK WATCH: {tank_info['reason']} (-1.5% adj)"
 
-    if edge < MIN_EDGE_HIGH:
-        return None  # Below threshold
+        # B2B penalty
+        b2b_note = ""
+        if pick_team.get("abbr", "") in b2b_teams:
+            if pick_side == "away":
+                model_prob -= B2B_ROAD_PENALTY
+                b2b_note = f"{pick_team['abbr']} on road B2B (-2.5% adj)"
+            else:
+                model_prob -= B2B_PENALTY
+                b2b_note = f"{pick_team['abbr']} on B2B (-1.5% adj)"
+
+        # Opponent B2B bonus
+        opponent = away if pick_side == "home" else home
+        if opponent.get("abbr", "") in b2b_teams:
+            model_prob += REST_ADVANTAGE
+            b2b_note += f" | {opponent['abbr']} on B2B (+1.5% boost)"
+
+        # Calculate edge
+        implied_prob = cand["implied_prob"]
+        edge = model_prob - implied_prob
+
+        if edge >= MIN_EDGE_HIGH and edge > best_edge:
+            best_edge = edge
+            best = {
+                "cand": cand, "model_prob": model_prob, "edge": edge,
+                "implied_prob": implied_prob, "tank_note": tank_note, "b2b_note": b2b_note,
+                "tank_info": tank_info,
+            }
+
+    if best is None:
+        return None
+
+    cand = best["cand"]
+    pick_team = cand["team"]
+    pick_side = cand["side"]
+    model_prob = best["model_prob"]
+    edge = best["edge"]
+    implied_prob = best["implied_prob"]
+    dk_odds = cand["dk_odds"]
+    spread_cushion = cand["spread_cushion"]
+    tank_note = best["tank_note"]
+    b2b_note = best["b2b_note"]
+    tank_info = best["tank_info"]
 
     # Flag suspicious edges — don't cap, but warn
     suspicious = edge > SUSPICIOUS_EDGE
@@ -1045,7 +1088,6 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
 
     # Build notes with ensemble info
-    source_label = pred.get("source_label", "DRatings")
     notes_parts = [
         f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (margin: {abs(model_home_margin):.1f}).",
         f"Spread cushion: {spread_cushion:.1f} pts.",
@@ -1076,7 +1118,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "event": game["event_str"],
         "event_short": game["event_short"],
         "market": "Spread",
-        "pick": f"{pick_team['name']} +{pick_spread}",
+        "pick": cand["pick_label"],
         "pick_abbr": pick_team.get("abbr", ""),
         "odds": str(dk_odds),
         "dk_odds_int": dk_odds,
