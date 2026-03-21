@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 429.12,
+    "available": 417.71,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 13,
-    "pending_total": 141.45,
-    "pending_label": "13 bet(s) pending ($141.45)"
+    "pending_count": 14,
+    "pending_total": 152.86,
+    "pending_label": "14 bet(s) pending ($152.86)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -285,7 +285,7 @@
       "edge": 17.0,
       "tier": "Medium",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Last 10g avg: 3.4 3-PT Made. Line: 2.5. Diff: +0.9. DK odds: -125. Model says over at 72.6%.",
       "sources": "The Odds API (DK), ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Cleveland Cavaliers @ New Orleans Pelicans",
+      "pick": "James Harden OVER 2.5 3-PT Made",
+      "odds": "-125",
+      "decimal_odds": 1.8,
+      "edge": 17.0,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NBA",
