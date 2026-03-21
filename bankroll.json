@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 536.34,
+  "current_bankroll": 524.93,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -46,7 +46,21 @@
       "edge_pct": 8.4,
       "tier": "High",
       "bet_size": 11.41
+    },
+    {
+      "id": "phi-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nhl",
+      "event": "Philadelphia Flyers @ San Jose Sharks",
+      "market": "spread",
+      "pick": "Philadelphia Flyers +1.5",
+      "odds": -265,
+      "decimal_odds": 1.377,
+      "model_prob": 0.794,
+      "edge_pct": 6.8,
+      "tier": "High",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 3
+  "lifetime_bets": 4
 }

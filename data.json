@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 536.34,
+    "available": 524.93,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 3,
-    "pending_total": 34.23,
-    "pending_label": "3 bet(s) pending ($34.23)"
+    "pending_count": 4,
+    "pending_total": 45.64,
+    "pending_label": "4 bet(s) pending ($45.64)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -96,7 +96,7 @@
       "edge": 6.8,
       "tier": "High",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings + Dimers): PHI 3.3, SJ 2.8 (margin: 0.5). Spread cushion: 1.0 pts. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers, ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NHL",
+      "event": "Philadelphia Flyers @ San Jose Sharks",
+      "pick": "Philadelphia Flyers +1.5",
+      "odds": "-265",
+      "decimal_odds": 1.377,
+      "edge": 6.8,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "LA_LIGA",
