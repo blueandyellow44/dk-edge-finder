@@ -269,8 +269,22 @@ def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
     return None
 
 
+def _parse_stat_val(raw) -> float | None:
+    """Parse a single ESPN stat value. '3-7' → 3 (made), '28' → 28.0."""
+    try:
+        if isinstance(raw, str) and "-" in raw:
+            return float(raw.split("-")[0])
+        return float(raw)
+    except (ValueError, TypeError):
+        return None
+
+
 def fetch_player_recent_stats(athlete_id: str, sport: str = "nba", n_games: int = 10) -> dict | None:
-    """Fetch player's recent game log from ESPN and compute averages."""
+    """Fetch player's recent game log from ESPN and compute weighted averages.
+
+    Weighting: last 3 games get 50% weight, previous 7 get 50%.
+    Also computes per-stat standard deviations from actual player data.
+    """
     url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{athlete_id}/gamelog"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
 
@@ -281,11 +295,8 @@ def fetch_player_recent_stats(athlete_id: str, sport: str = "nba", n_games: int 
         return None
 
     # Parse game log — structure: seasonTypes[].categories[].events[]
-    # Categories are grouped by month (displayName: "march", "february", etc.)
-    # No "name" field — just grab all events from regular season seasonType
     rows = []
     for st in data.get("seasonTypes", []):
-        # Skip preseason
         if "preseason" in st.get("displayName", "").lower():
             continue
         for cat in st.get("categories", []):
@@ -297,28 +308,59 @@ def fetch_player_recent_stats(athlete_id: str, sport: str = "nba", n_games: int 
     if not rows:
         return None
 
-    # Take the most recent n_games
     recent = rows[:n_games]
 
-    # Compute averages
+    # Compute weighted averages and actual standard deviations
+    # Weighting: last 3 games = 50%, previous games = 50%
     averages = {}
+    actual_sds = {}
+
     for idx in list(PP_TO_ESPN.values()):
         vals = []
         for row in recent:
             raw = row[idx] if idx < len(row) else "0"
-            try:
-                if isinstance(raw, str) and "-" in raw:
-                    val = float(raw.split("-")[0])  # "3-7" → 3 (made)
-                else:
-                    val = float(raw)
-                vals.append(val)
-            except (ValueError, TypeError):
-                continue
+            v = _parse_stat_val(raw)
+            if v is not None:
+                vals.append(v)
+
+        if not vals:
+            continue
+
+        # Weighted average: recent 3 games get 50% weight, older games get 50%
+        if len(vals) >= 5:
+            recent_3 = vals[:3]
+            older = vals[3:]
+            recent_avg = sum(recent_3) / len(recent_3)
+            older_avg = sum(older) / len(older)
+            weighted_avg = recent_avg * 0.5 + older_avg * 0.5
+        else:
+            # Not enough games for split — use flat average
+            weighted_avg = sum(vals) / len(vals)
+
+        averages[idx] = round(weighted_avg, 2)
+
+        # Compute actual SD from player's game-to-game variance
+        if len(vals) >= 3:
+            mean = sum(vals) / len(vals)
+            variance = sum((v - mean) ** 2 for v in vals) / len(vals)
+            actual_sds[idx] = round(variance ** 0.5, 2)
+
+    # Also store flat averages for notes (show both weighted and flat)
+    flat_averages = {}
+    for idx in list(PP_TO_ESPN.values()):
+        vals = []
+        for row in recent:
+            raw = row[idx] if idx < len(row) else "0"
+            v = _parse_stat_val(raw)
+            if v is not None:
+                vals.append(v)
         if vals:
-            averages[idx] = round(sum(vals) / len(vals), 2)
+            flat_averages[idx] = round(sum(vals) / len(vals), 2)
 
     return {
         "averages": averages,
+        "flat_averages": flat_averages,
+        "actual_sds": actual_sds,
         "games_sampled": len(recent),
     }
 
@@ -342,6 +384,9 @@ PROP_SD = {
 
 SUPPORTED_PROPS = set(PROP_SD.keys())
 MIN_PROP_EDGE = 0.05  # 5% minimum for Medium tier
+MAX_PROP_EDGE = 0.15  # Cap at 15% — anything higher is model overconfidence
+BLOWOUT_MARGIN = 12   # Games predicted to have >12pt margin get a prop discount
+BLOWOUT_DISCOUNT = 0.85  # Reduce model_prob by 15% in blowouts (starters sit)
 
 
 def normal_cdf(x: float) -> float:
@@ -361,40 +406,73 @@ def american_to_implied(odds: int) -> float:
     return 100 / (odds + 100)
 
 
-def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
-    """Calculate edge for a single player prop using our projection vs the DK line.
+def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: float = 0.0) -> dict | None:
+    """Calculate edge for a single player prop using improved model.
 
-    Model: player's recent average (last 10 games) vs DK line.
-    Uses normal distribution to estimate probability of over/under.
+    Improvements over v1:
+    1. Weighted recency: last 3 games = 50%, previous 7 = 50%
+    2. Uses player's actual SD when available (falls back to hardcoded)
+    3. Blowout discount: reduces model_prob when predicted margin >12
+    4. Edge cap at 15%: prevents overconfident bets
+    5. Sample size penalty: widens SD when <7 games available
+
+    Args:
+        prop: DK prop odds dict
+        player_stats: ESPN gamelog stats with weighted averages + actual SDs
+        game_margin: predicted absolute margin (from DRatings/Dimers). 0 = unknown.
     """
     stat_type = prop["stat_type"]
     line = prop["line"]
-    sd = PROP_SD.get(stat_type, 0)
+    fallback_sd = PROP_SD.get(stat_type, 0)
 
-    if sd <= 0 or line <= 0:
+    if fallback_sd <= 0 or line <= 0:
         return None
 
     if not player_stats:
         return None
 
     avgs = player_stats.get("averages", {})
+    actual_sds = player_stats.get("actual_sds", {})
+    flat_avgs = player_stats.get("flat_averages", {})
+    games_sampled = player_stats.get("games_sampled", 0)
+
     if not avgs:
         return None
 
-    # Compute our projection for this stat type
+    # Compute our projection for this stat type (already weighted by recency)
     our_projection = None
+    flat_projection = None
 
     if stat_type in PP_TO_ESPN:
         idx = PP_TO_ESPN[stat_type]
         our_projection = avgs.get(idx)
+        flat_projection = flat_avgs.get(idx)
+        player_sd = actual_sds.get(idx)
     elif stat_type in PP_COMBOS:
         indices = PP_COMBOS[stat_type]
         vals = [avgs.get(idx) for idx in indices]
+        flat_vals = [flat_avgs.get(idx) for idx in indices]
         if all(v is not None for v in vals):
             our_projection = sum(vals)
+        if all(v is not None for v in flat_vals):
+            flat_projection = sum(flat_vals)
+        # Sum of SDs (conservative: assume correlation)
+        sd_vals = [actual_sds.get(idx) for idx in indices]
+        if all(v is not None for v in sd_vals):
+            player_sd = sum(sd_vals)
+        else:
+            player_sd = None
+    else:
+        player_sd = None
 
     if our_projection is None:
         return None
+
+    # Use player's actual SD if available, else fall back to hardcoded
+    # Apply sample size penalty: widen SD by 25% when <7 games sampled
+    sd = player_sd if player_sd and player_sd > 0 else fallback_sd
+    if games_sampled < 7:
+        sd *= 1.25  # Less data = wider distribution = less confidence
 
     # Compare our projection to the line
     diff = our_projection - line  # positive = we think OVER
@@ -417,8 +495,26 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
         model_prob = under_prob
         dk_odds = prop["under_odds"]
 
+    # ── Apply adjustments ──
+    adjustments = []
+
+    # Blowout discount: starters sit in garbage time of blowouts
+    # Only discount OVER bets — UNDER bets actually benefit from blowouts
+    if game_margin > BLOWOUT_MARGIN and pick_side == "over":
+        model_prob *= BLOWOUT_DISCOUNT
+        adjustments.append(f"Blowout risk ({game_margin:.0f}pt margin): -15% adj")
+
+    # Calculate raw edge
     implied = american_to_implied(dk_odds)
-    edge = model_prob - implied
+    raw_edge = model_prob - implied
+
+    # Cap edge at MAX_PROP_EDGE — anything higher is model overconfidence
+    if raw_edge > MAX_PROP_EDGE:
+        capped_edge = MAX_PROP_EDGE
+        adjustments.append(f"Edge capped: {raw_edge*100:.1f}% → {capped_edge*100:.1f}%")
+        edge = capped_edge
+    else:
+        edge = raw_edge
 
     if edge < MIN_PROP_EDGE:
         return None
@@ -426,7 +522,14 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
     # Calculate Kelly sizing (1/4 Kelly for Medium tier)
     decimal_odds = 1 + 100 / abs(dk_odds) if dk_odds < 0 else 1 + dk_odds / 100
     kelly = (edge / (decimal_odds - 1)) * 0.25  # Quarter Kelly
-    kelly = min(kelly, 0.035)  # 3.5% max per prop (matches game max)
+    kelly = min(kelly, 0.02)  # 2% max per prop (matches game max)
+
+    # Build notes
+    flat_note = f"Flat avg: {flat_projection:.1f}" if flat_projection and abs(flat_projection - our_projection) > 0.2 else ""
+    sd_note = f"SD: {sd:.1f}" + (" (player)" if player_sd else " (default)")
+    adj_note = " | ".join(adjustments) if adjustments else ""
+
+    notes = f"Weighted {games_sampled}g avg: {our_projection:.1f} {stat_type}. {flat_note+'. ' if flat_note else ''}Line: {line}. Diff: {diff:+.1f}. {sd_note}. DK odds: {dk_odds}. Model says {pick_side} at {model_prob*100:.1f}%.{' | ' + adj_note if adj_note else ''}"
 
     return {
         "sport": "NBA",
@@ -441,10 +544,11 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
         "implied": f"{implied*100:.1f}%",
         "model": f"{model_prob*100:.1f}%",
         "edge": round(edge * 100, 1),
+        "edge_raw": edge,
         "tier": "Medium",
         "confidence": "MEDIUM",
         "kelly_pct": kelly,
-        "notes": f"Last {player_stats['games_sampled']}g avg: {our_projection:.1f} {stat_type}. Line: {line}. Diff: {diff:+.1f}. DK odds: {dk_odds}. Model says {pick_side} at {model_prob*100:.1f}%.",
+        "notes": notes,
         "sources": "The Odds API (DK), ESPN",
         "market": "Player Prop",
         "event": prop.get("event", ""),
@@ -454,15 +558,24 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
 
 # ── Main Scanner ──────────────────────────────────────────
 
-def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 30) -> list[dict]:
+def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 30,
+               game_margins: dict | None = None) -> list[dict]:
     """Scan player props using real DK odds and return edges.
 
     Flow:
     1. Fetch real DK prop odds from The Odds API
     2. For each player with props, fetch ESPN game log
-    3. Calculate edge: our projection (10-game avg) vs DK line
+    3. Calculate edge: weighted projection vs DK line (with adjustments)
     4. Return edges sorted by edge descending
+
+    Args:
+        game_margins: dict mapping event strings to predicted absolute margin
+                      e.g. {"Los Angeles Lakers @ Orlando Magic": 15.2}
+                      Used for blowout discount on props.
     """
+    if game_margins is None:
+        game_margins = {}
+
     print(f"  Fetching DK {sport.upper()} prop odds from The Odds API...")
     props = fetch_dk_prop_odds(sport, max_events=6)
 
@@ -508,7 +621,14 @@ def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 3
 
         # Check each prop for this player
         for prop in player_props:
-            edge = calculate_prop_edge(prop, stats)
+            # Look up predicted game margin for blowout discount
+            event_str = prop.get("event", "")
+            margin = 0.0
+            for key, val in game_margins.items():
+                if key and event_str and (key in event_str or event_str in key):
+                    margin = val
+                    break
+            edge = calculate_prop_edge(prop, stats, game_margin=margin)
             if edge:
                 edges.append(edge)
 

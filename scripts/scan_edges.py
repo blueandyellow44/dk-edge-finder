@@ -1451,9 +1451,19 @@ def main():
             })
 
     # Step 5b: Scan player props using real DK odds from The Odds API
-    print("\n[5b] Scanning player props (real DK odds)...")
+    # Build game margin map for blowout discount on props
+    game_margins = {}
+    for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
+        pred = predictions.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
+        if pred:
+            margin = abs(pred["home_score"] - pred["away_score"])
+            event_str = game.get("event_str", "")
+            if event_str:
+                game_margins[event_str] = margin
+    print(f"\n[5b] Scanning player props (real DK odds, {len(game_margins)} games with margins)...")
     try:
-        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20)
+        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20,
+                                       game_margins=game_margins)
         if prop_edges:
             for pe in prop_edges:
                 impl_str = pe.get("implied", "0%").replace("%", "")
