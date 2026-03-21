@@ -426,6 +426,8 @@ function render(d){
     </div>`;
   });
   pending.forEach(bet=>{
+    const _po=parseInt(bet.odds);
+    const _ptw=_po<0?Math.round(bet.wager*100/Math.abs(_po)*100)/100:Math.round(bet.wager*_po/100*100)/100;
     bannersHtml+=`<div class="result pending">
       <div class="result-left">
         <div class="result-pick">${bet.pick}</div>
@@ -433,7 +435,7 @@ function render(d){
       </div>
       <div class="result-right">
         <span class="result-badge badge b-pending">Pending</span>
-        <div class="result-pnl" style="color:var(--dk-blue)">$${bet.wager.toFixed(2)} at risk</div>
+        <div class="result-pnl" style="color:var(--dk-blue)">$${bet.wager.toFixed(2)} at risk <span style="color:var(--dk-green)">to win $${_ptw.toFixed(2)}</span></div>
       </div>
     </div>`;
   });
@@ -500,6 +502,9 @@ function render(d){
       if(p.result)resultLine=`<div style="color:#222;font-weight:700;margin-top:4px">${p.result}</div>`;
 
       const cardCls=isPlaced?'pick-card placed':'pick-card unplaced';
+      const _w=parseFloat(p.bet.replace('$',''));
+      const _o=parseInt(p.odds);
+      const _tw=_o<0?Math.round(_w*100/Math.abs(_o)*100)/100:Math.round(_w*_o/100*100)/100;
 
       cardsEl.innerHTML+=`
         <div class="${cardCls}" id="card-${i}" onclick="toggleAnalysis(${i})">
@@ -510,7 +515,7 @@ function render(d){
             </div>
             <div class="pick-right">
               <div class="pick-edge">+${p.edge}%</div>
-              <div class="pick-wager">${p.bet}</div>
+              <div class="pick-wager">${p.bet} <span style="color:var(--dk-green);font-size:0.78rem;font-weight:600">to win $${_tw.toFixed(2)}</span></div>
             </div>
           </div>
           <div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-bottom:12px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">
@@ -647,6 +652,8 @@ function renderResults(d,todayBets){
 
   // Pending scorecards
   pending.forEach(bet=>{
+    const _ho=parseInt(bet.odds);
+    const _htw=_ho<0?Math.round(bet.wager*100/Math.abs(_ho)*100)/100:Math.round(bet.wager*_ho/100*100)/100;
     container.innerHTML+=`
       <div class="scorecard pending">
         <div class="sc-header" style="background:rgba(74,144,217,0.1)">
@@ -655,7 +662,7 @@ function renderResults(d,todayBets){
         <div>
           <div class="sc-result pending">IN PROGRESS</div>
           <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:var(--dk-blue)">${bet.odds}</strong></div>
-          <div class="sc-pnl pending">$${bet.wager.toFixed(2)} at risk</div>
+          <div class="sc-pnl pending">$${bet.wager.toFixed(2)} at risk <span style="color:var(--dk-green);font-weight:700">to win $${_htw.toFixed(2)}</span></div>
         </div>
       </div>
     `;
@@ -725,7 +732,7 @@ function renderHistory(d){
           if(bet.outcome==='win'){resultBadge='<span class="badge b-win">WIN</span>';pnlDisplay=`<span style="color:var(--dk-green);font-weight:900">+$${Math.abs(pnl).toFixed(2)}</span>`;}
           else if(bet.outcome==='loss'){resultBadge='<span class="badge b-loss">LOSS</span>';pnlDisplay=`<span style="color:var(--dk-red);font-weight:900">-$${Math.abs(pnl).toFixed(2)}</span>`;}
           else if(bet.outcome==='push'){resultBadge='<span class="badge b-pending">PUSH</span>';pnlDisplay='<span style="color:var(--dk-text-3);font-weight:900">$0</span>';}
-          else{resultBadge='<span class="badge b-pending">PENDING</span>';pnlDisplay=`<span style="color:var(--dk-blue);font-weight:900">$${bet.wager.toFixed(2)} at risk</span>`;}
+          else{const _ro=parseInt(bet.odds);const _rtw=_ro<0?Math.round(bet.wager*100/Math.abs(_ro)*100)/100:Math.round(bet.wager*_ro/100*100)/100;resultBadge='<span class="badge b-pending">PENDING</span>';pnlDisplay=`<span style="color:var(--dk-blue);font-weight:900">$${bet.wager.toFixed(2)} risk</span> <span style="color:var(--dk-green);font-weight:900">to win $${_rtw.toFixed(2)}</span>`;}
           return `
             <div class="hist-item">
               <div class="hist-item-left">
