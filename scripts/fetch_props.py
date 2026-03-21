@@ -1,118 +1,212 @@
 #!/usr/bin/env python3
 """
-Player Prop Edge Scanner
-Fetches projections from PrizePicks API, builds player-specific projections
-using ESPN game logs, and flags edges where our projection disagrees with
-the market line.
+Player Prop Edge Scanner — Real DK Odds Edition
+Fetches actual DraftKings player prop odds from The Odds API,
+builds player-specific projections using ESPN game logs,
+and flags edges where our projection disagrees with the DK line.
 
 Props are Medium confidence tier: 5% min edge, 1/4 Kelly.
 """
 
 import json
 import math
+import os
 import urllib.request
 import urllib.error
+import urllib.parse
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 
-# ── PrizePicks API ────────────────────────────────────────
+# ── The Odds API ─────────────────────────────────────────
 
-NBA_TEAMS = {
-    "ATL", "BOS", "BKN", "CHA", "CHI", "CLE", "DAL", "DEN", "DET", "GS",
-    "HOU", "IND", "LAC", "LAL", "MEM", "MIA", "MIL", "MIN", "NO", "NY",
-    "NYK", "OKC", "ORL", "PHI", "PHX", "POR", "SAC", "SA", "TOR", "UTAH", "WSH",
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "")
+
+# Load from .env if not in environment
+if not ODDS_API_KEY:
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            if line.startswith("ODDS_API_KEY="):
+                ODDS_API_KEY = line.split("=", 1)[1].strip()
+                break
+
+# Odds API sport keys
+SPORT_KEYS = {
+    "nba": "basketball_nba",
+    "nfl": "americanfootball_nfl",
+    "mlb": "baseball_mlb",
+    "nhl": "icehockey_nhl",
 }
 
+# Odds API market keys → our stat type names
+MARKET_TO_STAT = {
+    "player_points": "Points",
+    "player_rebounds": "Rebounds",
+    "player_assists": "Assists",
+    "player_threes": "3-PT Made",
+    "player_blocks": "Blocked Shots",
+    "player_steals": "Steals",
+    "player_turnovers": "Turnovers",
+    "player_points_rebounds_assists": "Pts+Rebs+Asts",
+    "player_points_rebounds": "Pts+Rebs",
+    "player_points_assists": "Pts+Asts",
+    "player_rebounds_assists": "Rebs+Asts",
+}
 
-def fetch_prizepicks_projections(sport: str = "nba") -> list[dict]:
-    """Fetch today's player prop projections from PrizePicks.
+# Which markets to request (costs credits per market group)
+PROP_MARKETS = [
+    "player_points",
+    "player_rebounds",
+    "player_assists",
+    "player_threes",
+]
 
-    Retries once after 10s on rate limit (429).
-    Filters to NBA teams only to exclude college/G-League.
+# Additional markets to add if credits allow
+EXTRA_MARKETS = [
+    "player_points_rebounds_assists",
+    "player_steals",
+    "player_blocks",
+]
+
+
+def fetch_dk_prop_odds(sport: str = "nba", max_events: int = 6) -> list[dict]:
+    """Fetch real DraftKings player prop odds from The Odds API.
+
+    Returns list of props in standardized format:
+    {
+        "player": "Shai Gilgeous-Alexander",
+        "team": "",
+        "stat_type": "Points",
+        "line": 28.5,
+        "over_odds": -110,
+        "under_odds": -116,
+        "event_id": "abc123",
+        "event": "OKC @ WAS",
+        "start_time": "2026-03-21T21:10:00Z",
+    }
     """
-    url = f"https://api.prizepicks.com/projections?sport={sport}"
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json",
-    })
-
-    data = None
-    for attempt in range(2):
-        try:
-            with urllib.request.urlopen(req, timeout=20) as resp:
-                data = json.loads(resp.read())
-            break
-        except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt == 0:
-                print(f"  PrizePicks rate limited, retrying in 10s...")
-                time.sleep(10)
-                continue
-            print(f"  PrizePicks fetch error: {e}")
-            return []
-        except Exception as e:
-            print(f"  PrizePicks fetch error: {e}")
-            return []
-
-    if not data:
+    if not ODDS_API_KEY:
+        print("  WARNING: No ODDS_API_KEY found. Set it in .env or environment.")
         return []
 
-    projections = data.get("data", [])
-    included = {}
-    for item in data.get("included", []):
-        key = f"{item['type']}_{item['id']}"
-        included[key] = item.get("attributes", {})
+    sport_key = SPORT_KEYS.get(sport.lower())
+    if not sport_key:
+        print(f"  Sport '{sport}' not supported for props yet")
+        return []
 
-    props = []
-    for proj in projections:
-        attrs = proj.get("attributes", {})
-        if not attrs.get("today"):
+    # Step 1: Get today's events
+    events_url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/events?apiKey={ODDS_API_KEY}"
+    try:
+        req = urllib.request.Request(events_url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            events = json.loads(resp.read())
+            remaining = resp.headers.get("x-requests-remaining", "?")
+            print(f"  Odds API: {len(events)} events found (credits remaining: {remaining})")
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        print(f"  Odds API events fetch failed: {e}")
+        return []
+
+    if not events:
+        return []
+
+    # Limit events to save credits (each event+market costs ~1-3 credits)
+    # Sort by start time, take the soonest games
+    events.sort(key=lambda e: e.get("commence_time", ""))
+    events = events[:max_events]
+
+    # Step 2: Fetch props for each event
+    markets_str = ",".join(PROP_MARKETS)
+    all_props = []
+
+    for event in events:
+        event_id = event["id"]
+        home = event.get("home_team", "")
+        away = event.get("away_team", "")
+        event_label = f"{away} @ {home}"
+
+        props_url = (
+            f"https://api.the-odds-api.com/v4/sports/{sport_key}/events/{event_id}/odds"
+            f"?apiKey={ODDS_API_KEY}&regions=us&bookmakers=draftkings"
+            f"&oddsFormat=american&markets={markets_str}"
+        )
+
+        try:
+            req = urllib.request.Request(props_url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read())
+                remaining = resp.headers.get("x-requests-remaining", "?")
+        except (urllib.error.URLError, urllib.error.HTTPError) as e:
+            print(f"    {event_label}: fetch failed ({e})")
             continue
 
-        stat_type = attrs.get("stat_type", "")
-        line = attrs.get("line_score")
-        if line is None or stat_type not in SUPPORTED_PROPS:
-            continue
+        # Parse DraftKings bookmaker data
+        for bm in data.get("bookmakers", []):
+            if bm["key"] != "draftkings":
+                continue
 
-        rels = proj.get("relationships", {})
-        player_id = rels.get("new_player", {}).get("data", {}).get("id", "")
-        player_info = included.get(f"new_player_{player_id}", {})
+            for market in bm.get("markets", []):
+                market_key = market["key"]
+                stat_type = MARKET_TO_STAT.get(market_key)
+                if not stat_type:
+                    continue
 
-        player_name = player_info.get("display_name") or player_info.get("name", "Unknown")
-        team = player_info.get("team", "")
-        position = player_info.get("position", "")
+                # Group outcomes by player + point (line)
+                # Each player has Over and Under at the same point
+                player_lines = {}
+                for outcome in market.get("outcomes", []):
+                    name = outcome.get("description", "")
+                    if not name:
+                        continue
+                    point = outcome.get("point")
+                    if point is None:
+                        continue
+                    price = outcome.get("price")
+                    if price is None:
+                        continue
+                    side = outcome.get("name", "").lower()
 
-        # Filter to NBA teams only (skip college, G-League, etc.)
-        if sport == "nba" and team and team.upper() not in NBA_TEAMS:
-            continue
+                    key = (name, point)
+                    if key not in player_lines:
+                        player_lines[key] = {"over": None, "under": None}
 
-        odds_type = attrs.get("odds_type", "standard")
-        if odds_type == "demon":
-            over_odds, under_odds = -105, -115
-        elif odds_type == "goblin":
-            over_odds, under_odds = -120, 100
-        else:
-            over_odds, under_odds = -110, -110
+                    if side == "over":
+                        player_lines[key]["over"] = int(price)
+                    elif side == "under":
+                        player_lines[key]["under"] = int(price)
 
-        props.append({
-            "player": player_name,
-            "team": team,
-            "position": position,
-            "stat_type": stat_type,
-            "line": float(line),
-            "over_odds": over_odds,
-            "under_odds": under_odds,
-            "odds_type": odds_type,
-            "start_time": attrs.get("start_time", ""),
-            "description": attrs.get("description", ""),
-        })
+                # Build prop objects
+                for (player_name, point), sides in player_lines.items():
+                    over_odds = sides.get("over")
+                    under_odds = sides.get("under")
+                    if over_odds is None or under_odds is None:
+                        continue
 
-    return props
+                    all_props.append({
+                        "player": player_name,
+                        "team": "",
+                        "stat_type": stat_type,
+                        "line": float(point),
+                        "over_odds": over_odds,
+                        "under_odds": under_odds,
+                        "event_id": event_id,
+                        "event": event_label,
+                        "start_time": event.get("commence_time", ""),
+                        "description": event_label,
+                    })
+
+        # Brief pause between events to be polite
+        time.sleep(0.3)
+
+    print(f"  Fetched {len(all_props)} DK prop lines across {min(len(events), max_events)} games")
+    print(f"  Odds API credits remaining: {remaining}")
+    return all_props
 
 
 # ── ESPN Player Stats ─────────────────────────────────────
 
-# Map PrizePicks stat names to ESPN gamelog column indices
+# Map our stat names to ESPN gamelog column indices
 # ESPN order: MIN, FG, FG%, 3PT, 3P%, FT, FT%, REB, AST, BLK, STL, PF, TO, PTS
 PP_TO_ESPN = {
     "Points": 13,       # PTS
@@ -141,7 +235,6 @@ def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
     if player_name in _espn_id_cache:
         return _espn_id_cache[player_name]
 
-    # ESPN search endpoint
     query = urllib.parse.quote(player_name)
     url = f"https://site.api.espn.com/apis/common/v3/search?query={query}&limit=5&type=player"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -152,7 +245,6 @@ def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
 
         results = data.get("results", []) or data.get("items", [])
         if not results:
-            # Try alternate structure
             for section in data.get("groups", []):
                 results.extend(section.get("items", []))
 
@@ -177,19 +269,9 @@ def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
     return None
 
 
-import urllib.parse
-
-
 def fetch_player_recent_stats(athlete_id: str, sport: str = "nba", n_games: int = 10) -> dict | None:
-    """Fetch player's recent game log from ESPN and compute averages.
-
-    Returns dict with average stats over last n_games, or None if unavailable.
-    """
-    sport_path = {"nba": "basketball/nba", "nhl": "hockey/nhl", "mlb": "baseball/mlb"}.get(sport)
-    if not sport_path:
-        return None
-
-    url = f"https://site.api.espn.com/apis/common/v3/sports/{sport_path}/athletes/{athlete_id}/gamelog"
+    """Fetch player's recent game log from ESPN and compute averages."""
+    url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{athlete_id}/gamelog"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
 
     try:
@@ -198,43 +280,46 @@ def fetch_player_recent_stats(athlete_id: str, sport: str = "nba", n_games: int 
     except Exception:
         return None
 
-    # Collect all regular season game stats
-    all_stats = []
-    for season_type in data.get("seasonTypes", []):
-        if "Regular" not in season_type.get("displayName", ""):
+    # Parse game log — structure: seasonTypes[].categories[].events[]
+    # Categories are grouped by month (displayName: "march", "february", etc.)
+    # No "name" field — just grab all events from regular season seasonType
+    rows = []
+    for st in data.get("seasonTypes", []):
+        # Skip preseason
+        if "preseason" in st.get("displayName", "").lower():
             continue
-        for cat in season_type.get("categories", []):
-            for event in cat.get("events", []):
-                stats = event.get("stats", [])
-                if stats and len(stats) >= 14:  # Full stat line
-                    all_stats.append(stats)
+        for cat in st.get("categories", []):
+            for event_row in cat.get("events", []):
+                stats_list = event_row.get("stats", [])
+                if stats_list and len(stats_list) >= 14:
+                    rows.append(stats_list)
 
-    if not all_stats:
+    if not rows:
         return None
 
-    # Take last n_games
-    recent = all_stats[:n_games]
+    # Take the most recent n_games
+    recent = rows[:n_games]
 
-    # Compute averages for each stat
-    def parse_stat(val, idx):
-        """Parse a stat value — handle 'made-attempted' format for FG/3PT/FT."""
-        if idx in (1, 3, 5):  # FG, 3PT, FT (made-attempted)
-            parts = str(val).split("-")
-            return float(parts[0]) if parts else 0
-        try:
-            return float(val)
-        except (ValueError, TypeError):
-            return 0
-
+    # Compute averages
     averages = {}
-    for idx in range(14):
-        vals = [parse_stat(g[idx], idx) for g in recent if len(g) > idx]
+    for idx in list(PP_TO_ESPN.values()):
+        vals = []
+        for row in recent:
+            raw = row[idx] if idx < len(row) else "0"
+            try:
+                if isinstance(raw, str) and "-" in raw:
+                    val = float(raw.split("-")[0])  # "3-7" → 3 (made)
+                else:
+                    val = float(raw)
+                vals.append(val)
+            except (ValueError, TypeError):
+                continue
         if vals:
-            averages[idx] = sum(vals) / len(vals)
+            averages[idx] = round(sum(vals) / len(vals), 2)
 
     return {
-        "games_sampled": len(recent),
         "averages": averages,
+        "games_sampled": len(recent),
     }
 
 
@@ -253,15 +338,6 @@ PROP_SD = {
     "Pts+Asts": 9.0,
     "Rebs+Asts": 4.5,
     "Pts+Rebs+Asts": 10.0,
-    "Shots On Goal": 1.5,
-    "Goalie Saves": 8.0,
-    "Goals": 0.8,
-    "Power Play Points": 0.7,
-    "Pitcher Strikeouts": 2.0,
-    "Hits": 1.0,
-    "Total Bases": 1.5,
-    "Home Runs": 0.5,
-    "RBIs": 1.0,
 }
 
 SUPPORTED_PROPS = set(PROP_SD.keys())
@@ -279,16 +355,17 @@ def normal_cdf(x: float) -> float:
 
 
 def american_to_implied(odds: int) -> float:
+    """Convert American odds to implied probability."""
     if odds < 0:
         return abs(odds) / (abs(odds) + 100)
     return 100 / (odds + 100)
 
 
 def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
-    """Calculate edge for a single player prop using our projection vs the line.
+    """Calculate edge for a single player prop using our projection vs the DK line.
 
-    Model: player's recent average (last 10 games) vs PrizePicks line.
-    If our average differs from the line by enough (relative to SD), flag the edge.
+    Model: player's recent average (last 10 games) vs DK line.
+    Uses normal distribution to estimate probability of over/under.
     """
     stat_type = prop["stat_type"]
     line = prop["line"]
@@ -322,23 +399,20 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
     # Compare our projection to the line
     diff = our_projection - line  # positive = we think OVER
 
-    if abs(diff) < 0.5:
+    if abs(diff) < 0.3:
         return None  # Too close to call
 
     # Convert to probability using normal distribution
-    # P(actual > line) = P(Z > (line - projection) / SD) = 1 - Phi((line - proj) / SD)
     z = (line - our_projection) / sd
     over_prob = 1.0 - normal_cdf(z)
     under_prob = normal_cdf(z)
 
     # Determine which side to bet
     if diff > 0:
-        # We think OVER
         pick_side = "over"
         model_prob = over_prob
         dk_odds = prop["over_odds"]
     else:
-        # We think UNDER
         pick_side = "under"
         model_prob = under_prob
         dk_odds = prop["under_odds"]
@@ -352,108 +426,89 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None) -> dict | None:
     # Calculate Kelly sizing (1/4 Kelly for Medium tier)
     decimal_odds = 1 + 100 / abs(dk_odds) if dk_odds < 0 else 1 + dk_odds / 100
     kelly = (edge / (decimal_odds - 1)) * 0.25  # Quarter Kelly
-    kelly = min(kelly, 0.03)  # 3% max per prop
+    kelly = min(kelly, 0.035)  # 3.5% max per prop (matches game max)
 
     return {
         "sport": "NBA",
         "player": prop["player"],
-        "team": prop["team"],
+        "team": prop.get("team", ""),
         "stat_type": stat_type,
         "pick": f"{prop['player']} {'OVER' if pick_side == 'over' else 'UNDER'} {line} {stat_type}",
         "line": line,
         "our_projection": round(our_projection, 1),
         "pick_side": pick_side,
-        "odds": str(dk_odds),
+        "odds": f"{dk_odds:+d}" if dk_odds > 0 else str(dk_odds),
         "implied": f"{implied*100:.1f}%",
         "model": f"{model_prob*100:.1f}%",
         "edge": round(edge * 100, 1),
         "tier": "Medium",
         "confidence": "MEDIUM",
         "kelly_pct": kelly,
-        "notes": f"Last {player_stats['games_sampled']}g avg: {our_projection:.1f} {stat_type}. Line: {line}. Diff: {diff:+.1f}. Model says {pick_side} at {model_prob*100:.1f}%.",
-        "sources": "PrizePicks, ESPN",
+        "notes": f"Last {player_stats['games_sampled']}g avg: {our_projection:.1f} {stat_type}. Line: {line}. Diff: {diff:+.1f}. DK odds: {dk_odds}. Model says {pick_side} at {model_prob*100:.1f}%.",
+        "sources": "The Odds API (DK), ESPN",
         "market": "Player Prop",
-        "event": prop.get("description", ""),
+        "event": prop.get("event", ""),
+        "dk_link": "",
     }
 
 
 # ── Main Scanner ──────────────────────────────────────────
 
 def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 30) -> list[dict]:
-    """Scan player props and return edges.
+    """Scan player props using real DK odds and return edges.
 
-    Limits ESPN lookups to max_lookups to avoid rate limiting.
-    Prioritizes highest-volume stat types (points, rebounds, assists).
+    Flow:
+    1. Fetch real DK prop odds from The Odds API
+    2. For each player with props, fetch ESPN game log
+    3. Calculate edge: our projection (10-game avg) vs DK line
+    4. Return edges sorted by edge descending
     """
-    print(f"  Fetching PrizePicks {sport.upper()} props...")
-    props = fetch_prizepicks_projections(sport)
-    print(f"  Found {len(props)} props ({sum(1 for p in props if p['stat_type'] in SUPPORTED_PROPS)} supported)")
+    print(f"  Fetching DK {sport.upper()} prop odds from The Odds API...")
+    props = fetch_dk_prop_odds(sport, max_events=6)
 
     if not props:
+        print("  No prop odds available")
         return []
 
     # Group by player, prioritize main stats
     by_player = {}
-    priority_stats = ["Points", "Rebounds", "Assists", "3-PT Made", "Pts+Rebs+Asts"]
     for p in props:
-        if p["stat_type"] in priority_stats:
+        if p["stat_type"] in SUPPORTED_PROPS:
             name = p["player"]
             if name not in by_player:
                 by_player[name] = []
             by_player[name].append(p)
 
-    # Fetch stats for top players (limit lookups)
-    # Sort by highest points line — stars first, better chance of finding edges
+    print(f"  {len(by_player)} players with supported prop lines")
+
+    # Fetch stats for players (limit lookups to save ESPN rate limits)
+    # Sort by highest points line — stars first
     def player_max_line(item):
         _, props_list = item
         return max((p["line"] for p in props_list if p["stat_type"] == "Points"), default=0)
 
     edges = []
     lookups = 0
-    player_stats_cache = {}
 
     for player_name, player_props in sorted(by_player.items(), key=player_max_line, reverse=True):
         if lookups >= max_lookups:
             break
 
-        # Find ESPN ID (1 API call)
+        # Find ESPN ID
         espn_id = find_espn_athlete_id(player_name)
         if not espn_id:
             continue
         lookups += 1
 
-        # Fetch game log (1 API call)
+        # Fetch game log
         stats = fetch_player_recent_stats(espn_id, sport)
         if not stats:
             continue
         lookups += 1
-        player_stats_cache[player_name] = stats
 
-        # For each stat type, find the main line (closest to player's average)
-        # then calculate edge only on that line. Alt lines are noise.
-        by_stat = {}
+        # Check each prop for this player
         for prop in player_props:
-            st = prop["stat_type"]
-            if st not in by_stat:
-                by_stat[st] = []
-            by_stat[st].append(prop)
-
-        for st, stat_props in by_stat.items():
-            # Get our projection for this stat
-            proj = None
-            if st in PP_TO_ESPN:
-                proj = stats["averages"].get(PP_TO_ESPN[st])
-            elif st in PP_COMBOS:
-                vals = [stats["averages"].get(idx) for idx in PP_COMBOS[st]]
-                if all(v is not None for v in vals):
-                    proj = sum(vals)
-            if proj is None:
-                continue
-
-            # Pick the line closest to our projection (the "main" DK-style line)
-            main_prop = min(stat_props, key=lambda p: abs(p["line"] - proj))
-
-            edge = calculate_prop_edge(main_prop, stats)
+            edge = calculate_prop_edge(prop, stats)
             if edge:
                 edges.append(edge)
 
@@ -469,8 +524,8 @@ def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 3
 
 
 if __name__ == "__main__":
-    print("=== Player Prop Edge Scanner ===\n")
-    edges = scan_props("nba", bankroll=585.67, max_lookups=20)
+    print("=== Player Prop Edge Scanner (Real DK Odds) ===\n")
+    edges = scan_props("nba", bankroll=570.57, max_lookups=20)
     print(f"\nFound {len(edges)} edges:")
     for e in edges[:10]:
         print(f"  {e['pick']} ({e['odds']}) — {e['edge']}% edge | Proj: {e['our_projection']}, Line: {e['line']}")

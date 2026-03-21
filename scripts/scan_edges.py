@@ -1406,10 +1406,24 @@ def main():
                 "reason": reason,
             })
 
-    # Step 5b: Player props DISABLED — PrizePicks lines are projections, not DK odds.
-    # Re-enable when we have a source for actual DK prop odds (The Odds API or scraper).
-    # See lessons.md 2026-03-21 for details.
-    print("\n[5b] Player props: DISABLED (no reliable DK odds source yet)")
+    # Step 5b: Scan player props using real DK odds from The Odds API
+    print("\n[5b] Scanning player props (real DK odds)...")
+    try:
+        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20)
+        if prop_edges:
+            for pe in prop_edges:
+                impl_str = pe.get("implied", "0%").replace("%", "")
+                model_str = pe.get("model", "0%").replace("%", "")
+                pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
+                pe["model_prob"] = float(model_str) / 100 if model_str else 0
+                pe["event_short"] = pe.get("event", "")
+                pe["tier"] = pe.get("tier", "Medium")
+            picks.extend(prop_edges)
+            print(f"  Found {len(prop_edges)} prop edges")
+        else:
+            print("  No prop edges found")
+    except Exception as e:
+        print(f"  Prop scanning error: {e}", file=sys.stderr)
 
     # Sort picks by edge descending
     picks.sort(key=lambda x: x["edge"], reverse=True)

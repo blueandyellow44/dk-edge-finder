@@ -23,6 +23,8 @@ jobs:
 
       - name: Run full edge scan
         working-directory: scripts
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python scan_edges.py
 
       - name: Check for changes

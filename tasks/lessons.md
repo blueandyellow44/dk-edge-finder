@@ -89,3 +89,13 @@
 - "Verify JS syntax before push" → TODO: add pre-commit hook
 - "Don't change git remote" → TODO: add check that warns if remote URL changes
 If a lesson can only be a doc (like "verify odds on DK"), tag it `[MANUAL]`. If it should be code, tag it `[AUTOMATE]` until the code exists.
+
+## 2026-03-21: PrizePicks lines are NOT DK odds — never use them for edge calculation
+**Mistake:** Used PrizePicks projections (e.g. SGA OVER 0.5 3-PT Made at -120) as if they were DraftKings betting lines. PrizePicks is a DFS contest platform — their "lines" are projection points, not odds. Real DK odds for SGA OVER 0.5 3PT would be -700+. This produced fake 20%+ edges on bets that either don't exist on DK or are priced completely differently.
+**Rule:** Only use actual sportsbook odds for edge calculation. The Odds API (`api.the-odds-api.com`) provides real DK prop lines with American odds. Never treat DFS projections as betting odds.
+**Code fix:** Replaced PrizePicks fetcher with The Odds API fetcher in fetch_props.py. API key stored in .env (local) and GitHub Actions secret (CI).
+
+## 2026-03-21: ESPN gamelog categories are by month, not by "regular"/"preseason"
+**Mistake:** `fetch_player_recent_stats()` filtered categories by `cat.get("name") == "regular"`, but ESPN's gamelog API groups categories by month (displayName: "march", "february", etc.) with no "name" field. Every player returned 0 stats.
+**Rule:** Don't filter on `cat.get("name")`. Instead skip the preseason seasonType by checking `st.get("displayName")` and take all events from remaining seasonTypes.
+**Code fix:** Updated `fetch_player_recent_stats()` in fetch_props.py.
