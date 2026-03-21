@@ -99,3 +99,17 @@ If a lesson can only be a doc (like "verify odds on DK"), tag it `[MANUAL]`. If 
 **Mistake:** `fetch_player_recent_stats()` filtered categories by `cat.get("name") == "regular"`, but ESPN's gamelog API groups categories by month (displayName: "march", "february", etc.) with no "name" field. Every player returned 0 stats.
 **Rule:** Don't filter on `cat.get("name")`. Instead skip the preseason seasonType by checking `st.get("displayName")` and take all events from remaining seasonTypes.
 **Code fix:** Updated `fetch_player_recent_stats()` in fetch_props.py.
+
+## 2026-03-21: Single exposure pool lets one category crowd out others [AUTOMATE]
+**Mistake:** 20% daily cap with all picks sorted by edge descending meant 6 high-edge props ate the entire budget. Zero game edges made it through.
+**Rule:** Use per-category budgets (games vs props) so neither can crowd out the other. Sort within each category independently.
+**Code fix:** Added MAX_GAME_EXPOSURE (20%) and MAX_PROP_EXPOSURE (15%) with fill_category() function in scan_edges.py.
+
+## 2026-03-21: Never trust bankroll.pending_count — count from actual bets [AUTOMATE]
+**Mistake:** bankroll.pending_count accumulated to 29 across multiple workflow runs but actual pending bets in bets[] was 14. Pending stats card showed wrong number.
+**Rule:** Always derive pending count and total from `bets.filter(x => x.outcome === 'pending')`. Never trust pre-computed fields that can go stale from workflow race conditions.
+**Code fix:** Updated render() in index.html to count from bets[] array instead of bankroll.pending_count.
+
+## 2026-03-21: 10-game average overestimates prop edges — cap or discount [MANUAL]
+**Observation:** Prop edges of 31% (Luka 3s), 23% (Wemby 3s) are suspiciously large. Real sharp edges are 3-8%. Our model (simple 10-game ESPN average vs DK line) doesn't account for matchup, minutes variance, pace, or blowout risk.
+**Rule:** Treat prop edges over 15% as "directionally correct but magnitude overstated." Future fix: weighted recency, opponent defensive rating, sample size confidence discount.
