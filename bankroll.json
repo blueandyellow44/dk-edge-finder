@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 524.93,
+  "current_bankroll": 513.52,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -60,7 +60,21 @@
       "edge_pct": 6.8,
       "tier": "High",
       "bet_size": 11.41
+    },
+    {
+      "id": "mil-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Milwaukee Bucks @ Phoenix Suns",
+      "market": "spread",
+      "pick": "Milwaukee Bucks +11.5",
+      "odds": -110,
+      "decimal_odds": 1.909,
+      "model_prob": 0.584,
+      "edge_pct": 6.1,
+      "tier": "High",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 4
+  "lifetime_bets": 5
 }

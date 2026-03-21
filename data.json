@@ -2,7 +2,7 @@
   "scan_date": "2026-03-21",
   "scan_subtitle": "Saturday, March 21, 2026 \u2014 BUNDESLIGA (5), EPL (5), LA_LIGA (5), LIGUE_1 (3), MLB (15), MLS (10), NBA (10), NHL (11), SERIE_A (3)",
   "bankroll": {
-    "available": 524.93,
+    "available": 513.52,
     "starting": 500.0,
     "profit": 70.57,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 8,
       "pushes": 0
     },
-    "pending_count": 4,
-    "pending_total": 45.64,
-    "pending_label": "4 bet(s) pending ($45.64)"
+    "pending_count": 5,
+    "pending_total": 57.05,
+    "pending_label": "5 bet(s) pending ($57.05)"
   },
   "games_analyzed": 67,
   "best_bet": {
@@ -117,7 +117,7 @@
       "edge": 6.1,
       "tier": "High",
       "bet": "$11.41",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings + Dimers): MIL 105.3, PHX 114.4 (margin: 9.1). Spread cushion: 2.4 pts.",
       "sources": "DRatings + Dimers, ESPN",
@@ -711,6 +711,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-21",
+      "sport": "NBA",
+      "event": "Milwaukee Bucks @ Phoenix Suns",
+      "pick": "Milwaukee Bucks +11.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": 6.1,
+      "wager": 11.41,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-21",
       "sport": "NHL",
