@@ -16,33 +16,12 @@
   },
   "games_analyzed": 67,
   "best_bet": {
-    "title": "Shai Gilgeous-Alexander OVER 0.5 3-PT Made (-120) \u2014 18.0% Edge (Medium Tier)",
-    "desc": "Last 10g avg: 1.4 3-PT Made. Line: 0.5. Diff: +0.9. Model says over at 72.6%."
+    "title": "Memphis Grizzlies +17.5 (-115) \u2014 11.2% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): MEM 110.0, CHA 122.5 (margin: 12.5). Spread cushion: 5.0 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 5.0 pts. Investigate before betting. MEM on road B2B "
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "NBA",
-      "event": "OKC vs WAS",
-      "event_short": "OKC vs WAS",
-      "market": "Player Prop",
-      "pick": "Shai Gilgeous-Alexander OVER 0.5 3-PT Made",
-      "odds": "-120",
-      "implied": "54.5%",
-      "model": "72.6%",
-      "edge": 18.0,
-      "tier": "Medium",
-      "bet": "$17.12",
-      "status": "",
-      "result": "",
-      "notes": "Last 10g avg: 1.4 3-PT Made. Line: 0.5. Diff: +0.9. Model says over at 72.6%.",
-      "sources": "PrizePicks, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 2,
       "sport": "NBA",
       "event": "Memphis Grizzlies @ Charlotte Hornets",
       "event_short": "MEM @ CHA",
@@ -63,7 +42,7 @@
       "type": "game"
     },
     {
-      "rank": 3,
+      "rank": 2,
       "sport": "SERIE_A",
       "event": "Torino @ AC Milan",
       "event_short": "TOR @ MIL",
@@ -84,28 +63,7 @@
       "type": "game"
     },
     {
-      "rank": 4,
-      "sport": "NBA",
-      "event": "HOU vs MIA",
-      "event_short": "HOU vs MIA",
-      "market": "Player Prop",
-      "pick": "Kevin Durant UNDER 34.5 Pts+Rebs+Asts",
-      "odds": "100",
-      "implied": "50.0%",
-      "model": "58.3%",
-      "edge": 8.3,
-      "tier": "Medium",
-      "bet": "$11.86",
-      "status": "",
-      "result": "",
-      "notes": "Last 10g avg: 32.4 Pts+Rebs+Asts. Line: 34.5. Diff: -2.1. Model says under at 58.3%.",
-      "sources": "PrizePicks, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 5,
+      "rank": 3,
       "sport": "LA_LIGA",
       "event": "Getafe @ Espanyol",
       "event_short": "GET @ ESP",
@@ -126,7 +84,7 @@
       "type": "game"
     },
     {
-      "rank": 6,
+      "rank": 4,
       "sport": "NHL",
       "event": "Philadelphia Flyers @ San Jose Sharks",
       "event_short": "PHI @ SJ",
@@ -147,7 +105,7 @@
       "type": "game"
     },
     {
-      "rank": 7,
+      "rank": 5,
       "sport": "NBA",
       "event": "Milwaukee Bucks @ Phoenix Suns",
       "event_short": "MIL @ PHX",
@@ -158,13 +116,34 @@
       "model": "58.4%",
       "edge": 6.1,
       "tier": "High",
-      "bet": "$5.25",
+      "bet": "$19.01",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers): MIL 105.3, PHX 114.4 (margin: 9.1). Spread cushion: 2.4 pts.",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/33841205?outcomes=0HC83933145P1150_3",
+      "type": "game"
+    },
+    {
+      "rank": 6,
+      "sport": "NBA",
+      "event": "Golden State Warriors @ Atlanta Hawks",
+      "event_short": "GS @ ATL",
+      "market": "Spread",
+      "pick": "Golden State Warriors +10.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "57.4%",
+      "edge": 4.6,
+      "tier": "High",
+      "bet": "$14.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): GS 110.8, ATL 118.9 (margin: 8.1). Spread cushion: 2.4 pts. GS on road B2B (-2.5% adj) | ATL on B2B (+1.5% boost)",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33841195?outcomes=0HC83933098P1050_3",
       "type": "game"
     }
   ],
@@ -190,7 +169,7 @@
     {
       "sport": "NBA",
       "event": "MIA @ HOU",
-      "line": "HOU -2.5",
+      "line": "HOU -1.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -376,7 +355,7 @@
     {
       "sport": "MLS",
       "event": "ORL @ NSH",
-      "line": "NSH -215",
+      "line": "NSH -225",
       "reason": "No model data"
     },
     {
@@ -460,7 +439,7 @@
     {
       "sport": "BUNDESLIGA",
       "event": "B04 @ HDH",
-      "line": "B04 -200",
+      "line": "B04 -205",
       "reason": "No model data"
     },
     {
@@ -472,13 +451,13 @@
     {
       "sport": "BUNDESLIGA",
       "event": "BMG @ KOE",
-      "line": "KOE +125",
+      "line": "KOE +130",
       "reason": "No model data"
     },
     {
       "sport": "BUNDESLIGA",
       "event": "SVW @ WOB",
-      "line": "WOB +135",
+      "line": "WOB +130",
       "reason": "No model data"
     },
     {
@@ -510,12 +489,6 @@
       "event": "PSG @ NICE",
       "line": "PSG -225",
       "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "GS @ ATL",
-      "line": "Golden State Warriors +10.5 (-112)",
-      "reason": "Edge exists (4.6%) but daily exposure limit reached"
     },
     {
       "sport": "NBA",

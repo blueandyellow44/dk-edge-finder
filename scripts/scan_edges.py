@@ -1230,14 +1230,19 @@ def main():
     today_iso = get_today_iso()
     print(f"DK Edge Finder — Scanning for {today_iso}")
 
-    # Step 0: Clean stale git lock if present (prevents "Another git process" errors)
-    git_lock = REPO_ROOT / ".git" / "index.lock"
-    if git_lock.exists():
-        try:
-            git_lock.unlink()
-            print("  Removed stale .git/index.lock")
-        except OSError:
-            pass  # Permission denied in some envs — user can remove manually
+    # Step 0: Clean ALL stale git locks (prevents "Another git process" errors)
+    git_locks = [
+        REPO_ROOT / ".git" / "index.lock",
+        REPO_ROOT / ".git" / "HEAD.lock",
+        REPO_ROOT / ".git" / "objects" / "maintenance.lock",
+    ]
+    for lock in git_locks:
+        if lock.exists():
+            try:
+                lock.unlink()
+                print(f"  Removed stale {lock.relative_to(REPO_ROOT)}")
+            except OSError:
+                pass  # Permission denied in some envs — user can remove manually
 
     # Step 1: Resolve pending bets first
     print("\n[1] Resolving pending bets...")
@@ -1401,30 +1406,10 @@ def main():
                 "reason": reason,
             })
 
-    # Step 5b: Scan player props (NBA only for now)
-    print("\n[5b] Scanning player props...")
-    try:
-        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=10)
-        if prop_edges:
-            # Normalize prop edge format to match game edge format
-            for pe in prop_edges:
-                # Parse formatted strings back to floats
-                impl_str = pe.get("implied", "0%").replace("%", "")
-                model_str = pe.get("model", "0%").replace("%", "")
-                pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
-                pe["model_prob"] = float(model_str) / 100 if model_str else 0
-                # Build event from team + opponent (description has opponent abbr)
-                team = pe.get("team", "")
-                opp = pe.get("event", "")  # PrizePicks puts opponent abbr in description
-                pe["event"] = f"{team} vs {opp}" if team and opp else team or opp or ""
-                pe["event_short"] = pe["event"]
-                pe["tier"] = pe.get("tier", "Medium")
-            picks.extend(prop_edges)
-            print(f"  Found {len(prop_edges)} prop edges")
-        else:
-            print("  No prop edges found")
-    except Exception as e:
-        print(f"  Prop scanning error: {e}", file=sys.stderr)
+    # Step 5b: Player props DISABLED — PrizePicks lines are projections, not DK odds.
+    # Re-enable when we have a source for actual DK prop odds (The Odds API or scraper).
+    # See lessons.md 2026-03-21 for details.
+    print("\n[5b] Player props: DISABLED (no reliable DK odds source yet)")
 
     # Sort picks by edge descending
     picks.sort(key=lambda x: x["edge"], reverse=True)
