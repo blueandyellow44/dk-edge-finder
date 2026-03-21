@@ -503,9 +503,11 @@ function render(d){
     }
 
     d.picks.forEach((p,i)=>{
+      // Placed/pending picks are shown as expandable banners above — skip them here
+      const isPlaced=p.status==='PLACED'||p.status==='WIN'||p.status==='LOSS'||p.status==='PUSH'||p.status==='PENDING';
+      if(isPlaced) return;
       const conf=p.confidence||p.tier||'HIGH';
       const tierCls=conf==='HIGH'?'b-high':conf==='MEDIUM'?'b-med':'b-low';
-      const isPlaced=p.status==='PLACED'||p.status==='WIN'||p.status==='LOSS'||p.status==='PUSH'||p.status==='PENDING';
 
       let statusBadge='';
       if(p.status==='WIN')statusBadge='<span class="badge b-win">WIN</span>';

@@ -113,3 +113,18 @@ If a lesson can only be a doc (like "verify odds on DK"), tag it `[MANUAL]`. If 
 ## 2026-03-21: 10-game average overestimates prop edges — cap or discount [MANUAL]
 **Observation:** Prop edges of 31% (Luka 3s), 23% (Wemby 3s) are suspiciously large. Real sharp edges are 3-8%. Our model (simple 10-game ESPN average vs DK line) doesn't account for matchup, minutes variance, pace, or blowout risk.
 **Rule:** Treat prop edges over 15% as "directionally correct but magnitude overstated." Future fix: weighted recency, opponent defensive rating, sample size confidence discount.
+
+## 2026-03-21: NEVER say "fixed" without verifying the rendered output [AUTOMATE]
+**Pattern:** Multiple times this session, Claude declared a UI change "done" and told Max to push, but the change either didn't work, was reverted by a later edit, or had the wrong behavior. Max had to screenshot the broken state each time. This wastes Max's time and erodes trust.
+**Rule:** Before telling Max a UI change is ready to push:
+1. Read the actual code that renders the affected section — not from memory, from the file
+2. Trace the logic: if condition X is true, what HTML gets rendered? Walk through it line by line
+3. Check for accidental reverts: did a later edit undo the fix?
+4. Check brace/paren/backtick balance on the whole file
+5. If possible, run a lightweight simulation of the rendering logic in Node
+6. Only THEN say "push it"
+Never say "done" based on writing the edit. Verify the edit survived and works.
+
+## 2026-03-21: Git push — always verify the correct directory first
+**Mistake:** Repeatedly tried to `git push` from the wrong directory (e.g., "Political Ap" instead of the dk-edge-finder repo). The Cowork mount name ("Betting Skill") does not match the actual Mac directory name.
+**Rule:** Before any git command, run `pwd` and verify you're in a directory with a `.git` folder. The dk-edge-finder repo on Max's Mac is NOT at `~/Desktop/Betting Skill`. Use `find ~ -name ".git" -path "*dk-edge-finder*" 2>/dev/null` to locate it if unsure. Once found, save the path as a shell alias or bookmark it.
