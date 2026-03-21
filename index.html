@@ -470,6 +470,9 @@ function render(d){
           <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${origP.implied||'—'}</div></div>
           <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${origP.confidence||origP.tier||'—'}</div></div>
         </div>`:''}
+        <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
+          <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${amt>0?(bet.wager/amt*100).toFixed(1):'?'}% of $${amt.toFixed(0)} bankroll.${origP.edge?` Model sees ${origP.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
+        </div>
         ${origP.notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px">${origP.notes}${origP.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+origP.sources+'</span>':''}</div>`:''}
       </div>
     </div>`;
@@ -576,6 +579,9 @@ function render(d){
               <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
               <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
               <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${conf}</div></div>
+            </div>
+            <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
+              <strong style="color:var(--dk-text-2)">Sizing:</strong> $${wager.toFixed(2)} = ${amt>0?(wager/amt*100).toFixed(1):'?'}% of $${amt.toFixed(0)} bankroll. Model sees ${p.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).
             </div>`;
             })()}
           </div>
@@ -719,7 +725,10 @@ function renderResults(d,todayBets){
             <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${implied||'—'}</div></div>
             <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${conf||'—'}</div></div>
           </div>`:''}
-          ${notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:10px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">${notes}${sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+sources+'</span>':''}</div>`:''}
+          <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
+            <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${((d.bankroll||{}).available||(d.bankroll||{}).current||0)>0?(bet.wager/((d.bankroll||{}).available||(d.bankroll||{}).current||0)*100).toFixed(1):'?'}% of $${((d.bankroll||{}).available||(d.bankroll||{}).current||0).toFixed(0)} bankroll.${edge?` Model sees ${edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
+          </div>
+          ${notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">${notes}${sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+sources+'</span>':''}</div>`:''}
         </div>
       </div>
     `;
@@ -812,6 +821,9 @@ function renderHistory(d){
                 <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${origP.implied||'—'}</div></div>
                 <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${origP.confidence||origP.tier||'—'}</div></div>
               </div>`:''}
+              <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
+                <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${((d.bankroll||{}).available||(d.bankroll||{}).current||0)>0?(bet.wager/((d.bankroll||{}).available||(d.bankroll||{}).current||0)*100).toFixed(1):'?'}% of $${((d.bankroll||{}).available||(d.bankroll||{}).current||0).toFixed(0)} bankroll.${origP.edge?` Model sees ${origP.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
+              </div>
               ${origP.notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px">${origP.notes}${origP.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+origP.sources+'</span>':''}</div>`:''}
             </div>`;
           }
