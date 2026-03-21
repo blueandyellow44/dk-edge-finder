@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 570.57,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 559.16,
+  "current_bankroll": 547.75,
   "last_updated": "2026-03-21T12:00:00-07:00",
   "pending_bets": [
     {
@@ -18,7 +18,21 @@
       "edge_pct": 11.2,
       "tier": "High",
       "bet_size": 11.41
+    },
+    {
+      "id": "ove-over/u-20260321",
+      "date": "2026-03-21",
+      "sport": "serie_a",
+      "event": "Torino @ AC Milan",
+      "market": "over/under",
+      "pick": "OVER 2.5",
+      "odds": -125,
+      "decimal_odds": 1.8,
+      "model_prob": 0.644,
+      "edge_pct": 8.8,
+      "tier": "High",
+      "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 1
+  "lifetime_bets": 2
 }
