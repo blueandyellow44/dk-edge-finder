@@ -10,8 +10,8 @@
       "losses": 12,
       "pushes": 0
     },
-    "pending_count": 3,
-    "pending_total": 33.04,
+    "pending_count": 1,
+    "pending_total": 10.22,
     "pending_label": "3 bet(s) pending ($33.04)"
   },
   "games_analyzed": 52,
@@ -504,28 +504,6 @@
       "outcome": "win",
       "pnl": 10.37,
       "final_score": "MIL 108, PHX 105"
-    },
-    {
-      "date": "2026-03-21",
-      "sport": "LA_LIGA",
-      "event": "Getafe @ Espanyol",
-      "pick": "OVER 1.5",
-      "odds": "-150",
-      "decimal_odds": 1.667,
-      "edge": 8.4,
-      "wager": 11.41,
-      "outcome": "pending"
-    },
-    {
-      "date": "2026-03-21",
-      "sport": "SERIE_A",
-      "event": "Torino @ AC Milan",
-      "pick": "OVER 2.5",
-      "odds": "-125",
-      "decimal_odds": 1.8,
-      "edge": 8.8,
-      "wager": 11.41,
-      "outcome": "pending"
     },
     {
       "date": "2026-03-21",
