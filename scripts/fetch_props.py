@@ -228,6 +228,8 @@ PP_COMBOS = {
 
 # ESPN athlete ID cache (player name → ESPN ID)
 _espn_id_cache = {}
+# Player team cache (ESPN ID → team abbreviation)
+_player_team_cache: dict[str, str] = {}
 
 
 def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
@@ -266,6 +268,31 @@ def find_espn_athlete_id(player_name: str, team: str = "") -> str | None:
     except Exception:
         pass
 
+    return None
+
+
+def fetch_player_team(athlete_id: str) -> str | None:
+    """Fetch a player's current team abbreviation from ESPN.
+
+    Uses the common athlete endpoint. Cached per session.
+    Returns team abbreviation (e.g. 'OKC', 'LAL') or None.
+    """
+    if athlete_id in _player_team_cache:
+        return _player_team_cache[athlete_id]
+
+    url = f"https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/{athlete_id}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        team_abbr = data.get("athlete", {}).get("team", {}).get("abbreviation")
+        if team_abbr:
+            _player_team_cache[athlete_id] = team_abbr
+            return team_abbr
+    except Exception:
+        pass
+
+    _player_team_cache[athlete_id] = ""
     return None
 
 
@@ -389,6 +416,96 @@ BLOWOUT_MARGIN = 12   # Games predicted to have >12pt margin get a prop discount
 BLOWOUT_DISCOUNT = 0.85  # Reduce model_prob by 15% in blowouts (starters sit)
 
 
+# ── Opponent Defensive Rating ─────────────────────────────
+# Adjusts player projections based on how many points the opponent allows.
+# League average PPG allowed ≈ 112 (2025-26 season).
+# Good defenses (< 108) make it harder for players → discount projection.
+# Bad defenses (> 116) make it easier → boost projection.
+# The adjustment is capped at ±8% to avoid overreacting.
+
+LEAGUE_AVG_PPG_ALLOWED = 112.0
+MAX_DEF_ADJUSTMENT = 0.08  # Cap at ±8% multiplier
+
+# Session-level cache: team_abbr → avgPointsAgainst
+_defense_cache: dict[str, float | None] = {}
+
+# ESPN team abbreviation normalization (Odds API names → ESPN abbr)
+_TEAM_NAME_TO_ABBR = {
+    "atlanta hawks": "ATL", "boston celtics": "BOS", "brooklyn nets": "BKN",
+    "charlotte hornets": "CHA", "chicago bulls": "CHI", "cleveland cavaliers": "CLE",
+    "dallas mavericks": "DAL", "denver nuggets": "DEN", "detroit pistons": "DET",
+    "golden state warriors": "GS", "houston rockets": "HOU", "indiana pacers": "IND",
+    "los angeles clippers": "LAC", "los angeles lakers": "LAL", "memphis grizzlies": "MEM",
+    "miami heat": "MIA", "milwaukee bucks": "MIL", "minnesota timberwolves": "MIN",
+    "new orleans pelicans": "NO", "new york knicks": "NY", "oklahoma city thunder": "OKC",
+    "orlando magic": "ORL", "philadelphia 76ers": "PHI", "phoenix suns": "PHX",
+    "portland trail blazers": "POR", "sacramento kings": "SAC", "san antonio spurs": "SA",
+    "toronto raptors": "TOR", "utah jazz": "UTAH", "washington wizards": "WSH",
+}
+
+
+def _team_name_to_abbr(name: str) -> str | None:
+    """Convert full team name to ESPN abbreviation."""
+    return _TEAM_NAME_TO_ABBR.get(name.lower().strip())
+
+
+def fetch_team_defensive_rating(team_abbr: str) -> float | None:
+    """Fetch a team's average points allowed per game from ESPN.
+
+    Returns avgPointsAgainst or None if unavailable. Cached per session.
+    """
+    if team_abbr in _defense_cache:
+        return _defense_cache[team_abbr]
+
+    url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team_abbr}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+
+        team = data.get("team", {})
+        record = team.get("record", {})
+        for item in record.get("items", []):
+            if item.get("type") == "total":
+                for stat in item.get("stats", []):
+                    if stat.get("name") == "avgPointsAgainst":
+                        ppg = float(stat["value"])
+                        _defense_cache[team_abbr] = ppg
+                        return ppg
+    except Exception:
+        pass
+
+    _defense_cache[team_abbr] = None
+    return None
+
+
+def get_defense_multiplier(opponent_abbr: str) -> tuple[float, str]:
+    """Get a projection multiplier based on opponent defensive strength.
+
+    Returns (multiplier, note_string).
+    multiplier > 1.0 = bad defense (boost projection)
+    multiplier < 1.0 = good defense (discount projection)
+    multiplier == 1.0 = average defense or unknown
+    """
+    ppg_allowed = fetch_team_defensive_rating(opponent_abbr)
+    if ppg_allowed is None:
+        return 1.0, ""
+
+    # How far from league average? Positive = bad defense, negative = good defense
+    diff_pct = (ppg_allowed - LEAGUE_AVG_PPG_ALLOWED) / LEAGUE_AVG_PPG_ALLOWED
+
+    # Cap the adjustment
+    adj = max(-MAX_DEF_ADJUSTMENT, min(MAX_DEF_ADJUSTMENT, diff_pct))
+
+    if abs(adj) < 0.01:
+        return 1.0, ""
+
+    multiplier = 1.0 + adj
+    direction = "boost" if adj > 0 else "discount"
+    note = f"vs {opponent_abbr} ({ppg_allowed:.1f} PPG allowed, {direction} {abs(adj)*100:.1f}%)"
+    return multiplier, note
+
+
 def normal_cdf(x: float) -> float:
     """Standard normal CDF approximation."""
     if x < 0:
@@ -406,7 +523,8 @@ def american_to_implied(odds: int) -> float:
     return 100 / (odds + 100)
 
 
-def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: float = 0.0) -> dict | None:
+def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: float = 0.0,
+                        defense_multiplier: float = 1.0, defense_note: str = "") -> dict | None:
     """Calculate edge for a single player prop using improved model.
 
     Improvements over v1:
@@ -415,11 +533,14 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: floa
     3. Blowout discount: reduces model_prob when predicted margin >12
     4. Edge cap at 15%: prevents overconfident bets
     5. Sample size penalty: widens SD when <7 games available
+    6. Opponent defensive rating: adjusts projection based on opponent PPG allowed
 
     Args:
         prop: DK prop odds dict
         player_stats: ESPN gamelog stats with weighted averages + actual SDs
         game_margin: predicted absolute margin (from DRatings/Dimers). 0 = unknown.
+        defense_multiplier: opponent defense adjustment (>1.0 = bad defense, <1.0 = good)
+        defense_note: human-readable note about the defense adjustment
     """
     stat_type = prop["stat_type"]
     line = prop["line"]
@@ -468,6 +589,12 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: floa
     if our_projection is None:
         return None
 
+    # Apply opponent defensive rating adjustment to projection
+    # Bad defense (mult > 1.0) = player likely scores more → boost projection
+    # Good defense (mult < 1.0) = player likely scores less → discount projection
+    if defense_multiplier != 1.0:
+        our_projection = round(our_projection * defense_multiplier, 2)
+
     # Use player's actual SD if available, else fall back to hardcoded
     # Apply sample size penalty: widen SD by 25% when <7 games sampled
     sd = player_sd if player_sd and player_sd > 0 else fallback_sd
@@ -497,6 +624,10 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: floa
 
     # ── Apply adjustments ──
     adjustments = []
+
+    # Opponent defensive rating (already applied to projection above)
+    if defense_note:
+        adjustments.append(f"Def adj: {defense_note}")
 
     # Blowout discount: starters sit in garbage time of blowouts
     # Only discount OVER bets — UNDER bets actually benefit from blowouts
@@ -619,6 +750,9 @@ def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 3
             continue
         lookups += 1
 
+        # Fetch player's team to determine opponent for defensive adjustment
+        player_team_abbr = fetch_player_team(espn_id)
+
         # Check each prop for this player
         for prop in player_props:
             # Look up predicted game margin for blowout discount
@@ -628,7 +762,24 @@ def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 3
                 if key and event_str and (key in event_str or event_str in key):
                     margin = val
                     break
-            edge = calculate_prop_edge(prop, stats, game_margin=margin)
+
+            # Determine opponent team for defensive rating adjustment
+            def_mult, def_note = 1.0, ""
+            if player_team_abbr and event_str:
+                # Event format: "Away Team @ Home Team" (full names from Odds API)
+                # Identify opponent: if player is on the away team, opponent is home (and vice versa)
+                parts = event_str.split(" @ ")
+                if len(parts) == 2:
+                    away_name, home_name = parts[0].strip(), parts[1].strip()
+                    away_abbr = _team_name_to_abbr(away_name)
+                    home_abbr = _team_name_to_abbr(home_name)
+                    if player_team_abbr == away_abbr and home_abbr:
+                        def_mult, def_note = get_defense_multiplier(home_abbr)
+                    elif player_team_abbr == home_abbr and away_abbr:
+                        def_mult, def_note = get_defense_multiplier(away_abbr)
+
+            edge = calculate_prop_edge(prop, stats, game_margin=margin,
+                                       defense_multiplier=def_mult, defense_note=def_note)
             if edge:
                 edges.append(edge)
 

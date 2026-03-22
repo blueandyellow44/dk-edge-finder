@@ -142,3 +142,13 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 ## 2026-03-21: Spread evaluation must check BOTH sides
 **Mistake:** `calculate_spread_edge()` only evaluated the underdog side of every spread. If the model predicted a favorite would cover by more than the spread, that edge was invisible. Result: 100% of game edges were underdogs — a systematic bias, not a market insight.
 **Rule:** Always evaluate both the underdog AND favorite side of each spread. Calculate cover probability for each, get DK odds for each, compute edge for each, and return whichever side has the larger edge (if either clears the threshold). Never assume one side of the market is always where the value lives.
+
+## 2026-03-21: Opponent defense matters for props — adjust projections [AUTOMATE - DONE]
+**Observation:** A player's 10-game average doesn't account for tonight's matchup. Scoring 30 PPG against bottom defenses doesn't mean 30 against Boston (107 PPG allowed vs league avg 112).
+**Rule:** Adjust player projections by opponent defensive rating before computing edge. ESPN's `/teams/{abbr}` endpoint provides `avgPointsAgainst` for free, no auth needed. Multiplier = (opponent PPG allowed / league avg), capped at ±8% to avoid overreaction. Cache per session — never re-fetch the same team twice.
+**Code fix:** Added `fetch_team_defensive_rating()`, `get_defense_multiplier()`, and `fetch_player_team()` to fetch_props.py. Integrated into `calculate_prop_edge()` and `scan_props()`.
+
+## 2026-03-21: Game-only scans preserve prop picks from last full scan [AUTOMATE - DONE]
+**Observation:** When `--games-only` mode runs, it doesn't scan props, so `formatted_picks` only contains game edges. Writing this to data.json would wipe all prop picks from the last full scan.
+**Rule:** In games-only mode, preserve existing prop picks (`type == "prop"`) from the current data.json and append them to the new game-only picks before writing. Props only get refreshed during full scans.
+**Code fix:** Added preservation logic in scan_edges.py Step 7 that merges existing prop picks when `games_only=True`.

@@ -1,10 +1,12 @@
-name: Full Scan (Games + Props)
+name: Game Scan (No Props)
 
 on:
   schedule:
-    # 6 AM PT (1 PM UTC during PDT) and 3 PM PT (10 PM UTC during PDT)
-    # Uses Odds API credits for prop scanning (~24 credits per run)
-    - cron: '0 13,22 * * *'
+    # Every 3 hours during game-relevant window (PT times shown for PDT):
+    # 9 AM PT (4 PM UTC), 12 PM PT (7 PM UTC), 6 PM PT (1 AM UTC), 9 PM PT (4 AM UTC)
+    # Skips 6 AM and 3 PM PT since full-scan.yml covers those
+    # FREE — uses DRatings/Dimers/ESPN only, zero Odds API credits
+    - cron: '0 4,16,19,1 * * *'
   workflow_dispatch: # Manual trigger
 
 permissions:
@@ -22,11 +24,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run full edge scan (games + props)
+      - name: Run game-only edge scan (no API credits)
         working-directory: scripts
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python scan_edges.py
+        run: python scan_edges.py --games-only
 
       - name: Check for changes
         id: changes
@@ -39,5 +41,5 @@ jobs:
           git config user.name "DK Edge Bot"
           git config user.email "max.sheahan@icloud.com"
           git add data.json bankroll.json
-          git commit -m "Full scan: $(date +%Y-%m-%d_%H%M) — games + props"
+          git commit -m "Game scan: $(date +%Y-%m-%d_%H%M) — games only (no props)"
           git push

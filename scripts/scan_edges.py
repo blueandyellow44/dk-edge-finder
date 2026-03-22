@@ -1269,7 +1269,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
 
 # ── Main ────────────────────────────────────────────
-def main():
+def main(games_only: bool = False):
     today = get_today_str()
     today_iso = get_today_iso()
     print(f"DK Edge Finder — Scanning for {today_iso}")
@@ -1451,33 +1451,37 @@ def main():
             })
 
     # Step 5b: Scan player props using real DK odds from The Odds API
-    # Build game margin map for blowout discount on props
-    game_margins = {}
-    for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
-        pred = predictions.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
-        if pred:
-            margin = abs(pred["home_score"] - pred["away_score"])
-            event_str = game.get("event_str", "")
-            if event_str:
-                game_margins[event_str] = margin
-    print(f"\n[5b] Scanning player props (real DK odds, {len(game_margins)} games with margins)...")
-    try:
-        prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20,
-                                       game_margins=game_margins)
-        if prop_edges:
-            for pe in prop_edges:
-                impl_str = pe.get("implied", "0%").replace("%", "")
-                model_str = pe.get("model", "0%").replace("%", "")
-                pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
-                pe["model_prob"] = float(model_str) / 100 if model_str else 0
-                pe["event_short"] = pe.get("event", "")
-                pe["tier"] = pe.get("tier", "Medium")
-            picks.extend(prop_edges)
-            print(f"  Found {len(prop_edges)} prop edges")
-        else:
-            print("  No prop edges found")
-    except Exception as e:
-        print(f"  Prop scanning error: {e}", file=sys.stderr)
+    # Skipped in --games-only mode (saves API credits)
+    if games_only:
+        print("\n[5b] Skipping player props (--games-only mode, no API credits used)")
+    else:
+        # Build game margin map for blowout discount on props
+        game_margins = {}
+        for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
+            pred = predictions.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
+            if pred:
+                margin = abs(pred["home_score"] - pred["away_score"])
+                event_str = game.get("event_str", "")
+                if event_str:
+                    game_margins[event_str] = margin
+        print(f"\n[5b] Scanning player props (real DK odds, {len(game_margins)} games with margins)...")
+        try:
+            prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20,
+                                           game_margins=game_margins)
+            if prop_edges:
+                for pe in prop_edges:
+                    impl_str = pe.get("implied", "0%").replace("%", "")
+                    model_str = pe.get("model", "0%").replace("%", "")
+                    pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
+                    pe["model_prob"] = float(model_str) / 100 if model_str else 0
+                    pe["event_short"] = pe.get("event", "")
+                    pe["tier"] = pe.get("tier", "Medium")
+                picks.extend(prop_edges)
+                print(f"  Found {len(prop_edges)} prop edges")
+            else:
+                print("  No prop edges found")
+        except Exception as e:
+            print(f"  Prop scanning error: {e}", file=sys.stderr)
 
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
     # Split picks into game edges and prop edges, sort each by edge descending
@@ -1591,6 +1595,14 @@ def main():
     pend_total = sum(b.get("wager", 0) for b in all_bets if b.get("outcome") == "pending")
     profit = round(available - starting, 2) if override else round(resolved_pnl, 2)
 
+    # In games-only mode, preserve existing prop picks from last full scan
+    final_picks = formatted_picks
+    if games_only:
+        existing_prop_picks = [p for p in data.get("picks", []) if p.get("type") == "prop"]
+        if existing_prop_picks:
+            final_picks = formatted_picks + existing_prop_picks
+            print(f"  Preserved {len(existing_prop_picks)} prop picks from last full scan")
+
     new_data = {
         "scan_date": today_iso,
         "scan_subtitle": subtitle,
@@ -1605,7 +1617,7 @@ def main():
         },
         "games_analyzed": len(all_games),
         "best_bet": best_bet,
-        "picks": formatted_picks,
+        "picks": final_picks,
         "no_edge_games": no_edge,
         "bets": existing_bets,
     }
@@ -1616,4 +1628,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    games_only = "--games-only" in sys.argv
+    if games_only:
+        print("Mode: GAMES ONLY (no prop scan, no API credits used)")
+    main(games_only=games_only)

@@ -1,6 +1,6 @@
 # DK Edge Finder — Current TODO
 
-## Status as of March 21, 2026
+## Status as of March 21, 2026 (Session 2)
 
 **Bankroll:** $570.57 (11W-8L, +$70.57 profit)
 **Last scan:** March 21, 2026 — 15 edges found (7 game, 8 props)
@@ -8,7 +8,24 @@
 
 ---
 
-## Completed (March 21)
+## Completed (March 21 — Session 2)
+
+- [x] **Split GitHub Actions workflows** — game-only scans every 3hrs (free, no API credits) + full scans 2x/day (6 AM + 3 PM PT)
+  - Created `.github/workflows/game-scan.yml` (cron: 9 AM, 12 PM, 6 PM, 9 PM PT)
+  - Updated `.github/workflows/morning-scan.yml` to run at 6 AM + 3 PM PT
+  - Added `--games-only` flag to `scan_edges.py` that skips prop scanning
+  - Games-only mode preserves existing prop picks from last full scan (doesn't wipe them)
+- [x] **Opponent defensive rating adjustment** — prop projections now adjusted by opponent PPG allowed
+  - ESPN API provides team defensive stats (avgPointsAgainst)
+  - Good defenses (BOS 107 PPG) → discount projection by ~4.5%
+  - Bad defenses (WSH 123.8 PPG) → boost projection by up to 8% (capped)
+  - League avg ~112 PPG, adjustment capped at ±8%
+  - Player team fetched via ESPN athlete API, opponent determined from event string
+  - All data cached per session (no repeated API calls)
+- [x] **Daily exposure already at 25%** — was already set (15% games + 10% props)
+- [x] **Verified morning scan status** — no automated scans have run yet (all commits are manual pushes). Workflow schedule will activate after next push.
+
+## Completed (March 21 — Session 1)
 
 - [x] Corrected bankroll to $570.57 (DK app balance override)
 - [x] Removed 3 unplaced bets from March 20 history
@@ -20,17 +37,19 @@
 - [x] Lowered per-bet max from 3.5% to 2% for more diversification
 - [x] Added "to win" amounts on pick cards, pending bets, and pending stats card
 - [x] Fixed pending count to use actual bets[] count instead of stale bankroll.pending_count
+- [x] Both-sides spread evaluation (underdogs + favorites)
+- [x] Improved prop model (weighted recency, player SD, blowout discount, 15% edge cap)
+- [x] Bankroll sizing logic in all 4 expandable UI sections
 
 ## In Progress
 
-- [ ] **Push index.html UI fixes** — "to win" amounts + pending count fix (Max needs to commit + push)
+- [ ] **Push all changes** — Max needs to commit + push from Mac (`cd ~/Betting\ Skill && git add -A && git push`)
 
 ## Backlog — Short Term
 
-- [ ] **Lower daily exposure cap** — 35% → 25% total (too aggressive today at $164)
-- [ ] **Cap prop edges at 15%** — model overconfident (31% edge on Luka 3s is unrealistic)
-- [ ] **Better prop model** — weighted recency, opponent defensive rating, confidence discount
-- [ ] **Verify GitHub Actions auto-scan** — trigger manual workflow run, check Actions tab
+- [ ] **Verify GitHub Actions auto-scan after push** — trigger manual workflow run, confirm cron schedules work
+- [ ] **Odds API credit budgeting** — ~349 remaining, full scan costs ~24 credits, game-only scan costs 0. At 2 full scans/day = ~48 credits/day ≈ 7 days of headroom
+- [ ] **Prop history tracking** — log all prop picks/results to measure true model calibration over time
 
 ## Backlog — Multi-User (Next Major Feature)
 
@@ -54,14 +73,12 @@
 - [ ] Bet tracking ROI by sport/tier/type (reporting dashboard)
 - [ ] CSV export for bet history
 - [ ] Email/push notifications for qualifying picks
-- [ ] Odds API credit budgeting (349 remaining, ~24/scan, ~14 days of headroom)
 
 ---
 
 ## Next Session Should Start With
 
-1. Push index.html (pending count fix + "to win" amounts)
-2. Lower daily exposure to 25% and cap prop edges at 15%
-3. Check if morning scan auto-ran (GitHub Actions)
-4. Verify bankroll matches DK app after today's bets resolve
-5. Begin multi-user planning: audit React app, map Firestore schema changes
+1. Verify GitHub Actions workflows ran (check Actions tab for game-scan and full-scan runs)
+2. Verify bankroll matches DK app after today's bets resolve
+3. Review prop model accuracy — are defensive adjustments improving or hurting picks?
+4. Begin multi-user planning: audit React app, map Firestore schema changes
