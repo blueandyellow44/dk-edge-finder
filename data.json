@@ -6,13 +6,13 @@
     "starting": 500.0,
     "profit": 108.33,
     "record": {
-      "wins": 17,
+      "wins": 18,
       "losses": 12,
       "pushes": 0
     },
-    "pending_count": 1,
-    "pending_total": 10.22,
-    "pending_label": "3 bet(s) pending ($33.04)"
+    "pending_count": 0,
+    "pending_total": 0,
+    "pending_label": "No unsettled bets"
   },
   "games_analyzed": 52,
   "best_bet": {
@@ -477,7 +477,9 @@
       "decimal_odds": 1.952,
       "edge": 3.4,
       "wager": 10.22,
-      "outcome": "pending"
+      "outcome": "win",
+      "pnl": 9.73,
+      "final_score": "MEM 101, CHA 124"
     },
     {
       "date": "2026-03-21",
