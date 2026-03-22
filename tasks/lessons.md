@@ -152,3 +152,7 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 **Observation:** When `--games-only` mode runs, it doesn't scan props, so `formatted_picks` only contains game edges. Writing this to data.json would wipe all prop picks from the last full scan.
 **Rule:** In games-only mode, preserve existing prop picks (`type == "prop"`) from the current data.json and append them to the new game-only picks before writing. Props only get refreshed during full scans.
 **Code fix:** Added preservation logic in scan_edges.py Step 7 that merges existing prop picks when `games_only=True`.
+
+## 2026-03-22: Variable scope — all_predictions not predictions
+**Mistake:** Step 5b (game margins for blowout discount) used `predictions` which doesn't exist in `main()` scope. The actual variable is `all_predictions` (dict keyed by sport). Caused NameError crash on every full scan.
+**Rule:** After any refactor that changes variable names, grep for ALL usages of the old name. `predictions` was the old name from before the ensemble refactor; `all_predictions` is the current one. The game margins builder needs `all_predictions.get("nba", {})` to get the NBA-specific predictions dict.

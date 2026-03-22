@@ -1457,8 +1457,9 @@ def main(games_only: bool = False):
     else:
         # Build game margin map for blowout discount on props
         game_margins = {}
+        nba_preds = all_predictions.get("nba", {})
         for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
-            pred = predictions.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
+            pred = nba_preds.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
             if pred:
                 margin = abs(pred["home_score"] - pred["away_score"])
                 event_str = game.get("event_str", "")

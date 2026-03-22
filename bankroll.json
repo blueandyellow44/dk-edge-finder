@@ -1,24 +1,10 @@
 {
   "starting_bankroll": 500.0,
-  "balance_override": 570.57,
+  "balance_override": 608.33,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 417.71,
-  "last_updated": "2026-03-21T12:00:00-07:00",
+  "current_bankroll": 437.53,
+  "last_updated": "2026-03-22T19:29:08.620253+00:00",
   "pending_bets": [
-    {
-      "id": "mem-spread-20260321",
-      "date": "2026-03-21",
-      "sport": "nba",
-      "event": "Memphis Grizzlies @ Charlotte Hornets",
-      "market": "spread",
-      "pick": "Memphis Grizzlies +17.5",
-      "odds": -115,
-      "decimal_odds": 1.87,
-      "model_prob": 0.6459999999999999,
-      "edge_pct": 11.2,
-      "tier": "High",
-      "bet_size": 11.41
-    },
     {
       "id": "ove-over/u-20260321",
       "date": "2026-03-21",
@@ -58,34 +44,6 @@
       "decimal_odds": 1.377,
       "model_prob": 0.794,
       "edge_pct": 6.8,
-      "tier": "High",
-      "bet_size": 11.41
-    },
-    {
-      "id": "mil-spread-20260321",
-      "date": "2026-03-21",
-      "sport": "nba",
-      "event": "Milwaukee Bucks @ Phoenix Suns",
-      "market": "spread",
-      "pick": "Milwaukee Bucks +11.5",
-      "odds": -110,
-      "decimal_odds": 1.909,
-      "model_prob": 0.584,
-      "edge_pct": 6.1,
-      "tier": "High",
-      "bet_size": 11.41
-    },
-    {
-      "id": "gol-spread-20260321",
-      "date": "2026-03-21",
-      "sport": "nba",
-      "event": "Golden State Warriors @ Atlanta Hawks",
-      "market": "spread",
-      "pick": "Golden State Warriors +10.5",
-      "odds": -112,
-      "decimal_odds": 1.893,
-      "model_prob": 0.574,
-      "edge_pct": 4.6,
       "tier": "High",
       "bet_size": 11.41
     },
@@ -202,5 +160,60 @@
       "bet_size": 11.41
     }
   ],
-  "lifetime_bets": 14
+  "lifetime_bets": 14,
+  "lifetime_wins": 12,
+  "lifetime_losses": 10,
+  "lifetime_pushes": 0,
+  "lifetime_profit": 56.16,
+  "roi_pct": 12.5,
+  "resolved_bets": [
+    {
+      "id": "mem-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Memphis Grizzlies @ Charlotte Hornets",
+      "market": "spread",
+      "pick": "Memphis Grizzlies +17.5",
+      "odds": -115,
+      "decimal_odds": 1.87,
+      "model_prob": 0.6459999999999999,
+      "edge_pct": 11.2,
+      "tier": "High",
+      "bet_size": 11.41,
+      "outcome": "loss",
+      "pnl": -11.41
+    },
+    {
+      "id": "mil-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Milwaukee Bucks @ Phoenix Suns",
+      "market": "spread",
+      "pick": "Milwaukee Bucks +11.5",
+      "odds": -110,
+      "decimal_odds": 1.909,
+      "model_prob": 0.584,
+      "edge_pct": 6.1,
+      "tier": "High",
+      "bet_size": 11.41,
+      "outcome": "win",
+      "pnl": 10.37
+    },
+    {
+      "id": "gol-spread-20260321",
+      "date": "2026-03-21",
+      "sport": "nba",
+      "event": "Golden State Warriors @ Atlanta Hawks",
+      "market": "spread",
+      "pick": "Golden State Warriors +10.5",
+      "odds": -112,
+      "decimal_odds": 1.893,
+      "model_prob": 0.574,
+      "edge_pct": 4.6,
+      "tier": "High",
+      "bet_size": 11.41,
+      "outcome": "loss",
+      "pnl": -11.41
+    }
+  ]
 }
