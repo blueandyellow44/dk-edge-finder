@@ -16,8 +16,8 @@
   },
   "games_analyzed": 52,
   "best_bet": {
-    "title": "Washington Wizards +21.5 (-112) \u2014 11.2% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers): WSH 106.2, NY 122.9 (margin: 16.7). Spread cushion: 4.8 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 4.8 pts. Investigate before betting. WSH on road B2B ("
+    "title": "Washington Wizards +21.5 (-110) \u2014 10.3% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): WSH 106.0, NY 123.1 (margin: 17.1). Spread cushion: 4.4 pts. \u26a0 SUSPICIOUS EDGE (10.3%): Model disagrees with market by 4.4 pts. Investigate before betting. WSH on road B2B ("
   },
   "picks": [
     {
@@ -27,15 +27,15 @@
       "event_short": "WSH @ NY",
       "market": "Spread",
       "pick": "Washington Wizards +21.5",
-      "odds": "-112",
-      "implied": "52.8%",
-      "model": "64.0%",
-      "edge": 11.2,
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "62.7%",
+      "edge": 10.3,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): WSH 106.2, NY 122.9 (margin: 16.7). Spread cushion: 4.8 pts. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 4.8 pts. Investigate before betting. WSH on road B2B (-2.5% adj)",
+      "notes": "Model (DRatings + Dimers): WSH 106.0, NY 123.1 (margin: 17.1). Spread cushion: 4.4 pts. \u26a0 SUSPICIOUS EDGE (10.3%): Model disagrees with market by 4.4 pts. Investigate before betting. WSH on road B2B (-2.5% adj)",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/33847582?outcomes=0HC83950408P2150_3",
@@ -69,10 +69,10 @@
       "event_short": "CBJ @ NYI",
       "market": "Spread",
       "pick": "New York Islanders +1.5",
-      "odds": "-250",
-      "implied": "71.4%",
+      "odds": "-238",
+      "implied": "70.4%",
       "model": "74.5%",
-      "edge": 3.1,
+      "edge": 4.1,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
@@ -82,130 +82,13 @@
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33853625?outcomes=0HC83969889P150_1",
       "type": "game"
-    },
-    {
-      "rank": 4,
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "event_short": "Portland Trail Blazers @ Denver Nuggets",
-      "market": "Player Prop",
-      "pick": "Nikola Jokic UNDER 1.5 3-PT Made",
-      "odds": "+104",
-      "implied": "49.0%",
-      "model": "64.3%",
-      "edge": 15.0,
-      "tier": "Medium",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Weighted 10g avg: 1.1 3-PT Made. Line: 1.5. Diff: -0.4. SD: 1.0 (player). DK odds: 104. Model says under at 64.3%. | Def adj: vs POR (117.1 PPG allowed, boost 4.5%) | Edge capped: 15.2% \u2192 15.0%",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 5,
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "event_short": "Portland Trail Blazers @ Denver Nuggets",
-      "market": "Player Prop",
-      "pick": "Deni Avdija UNDER 25.5 Points",
-      "odds": "-119",
-      "implied": "54.3%",
-      "model": "70.5%",
-      "edge": 15.0,
-      "tier": "Medium",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Weighted 10g avg: 20.2 Points. Flat avg: 17.2. Line: 25.5. Diff: -5.3. SD: 9.8 (player). DK odds: -119. Model says under at 70.5%. | Def adj: vs DEN (116.5 PPG allowed, boost 4.0%) | Edge capped: 16.2% \u2192 15.0%",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 6,
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "event_short": "Portland Trail Blazers @ Denver Nuggets",
-      "market": "Player Prop",
-      "pick": "Deni Avdija UNDER 1.5 3-PT Made",
-      "odds": "+133",
-      "implied": "42.9%",
-      "model": "72.1%",
-      "edge": 15.0,
-      "tier": "Medium",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Weighted 10g avg: 1.0 3-PT Made. Line: 1.5. Diff: -0.5. SD: 0.9 (player). DK odds: 133. Model says under at 72.1%. | Def adj: vs DEN (116.5 PPG allowed, boost 4.0%) | Edge capped: 29.2% \u2192 15.0%",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 7,
-      "sport": "NBA",
-      "event": "Washington Wizards @ New York Knicks",
-      "event_short": "Washington Wizards @ New York Knicks",
-      "market": "Player Prop",
-      "pick": "Jalen Brunson OVER 7.5 Assists",
-      "odds": "-103",
-      "implied": "50.7%",
-      "model": "81.8%",
-      "edge": 15.0,
-      "tier": "Medium",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Weighted 10g avg: 10.1 Assists. Flat avg: 9.6. Line: 7.5. Diff: +2.6. SD: 2.8 (player). DK odds: -103. Model says over at 81.8%. | Def adj: vs WSH (123.8 PPG allowed, boost 8.0%) | Edge capped: 31.1% \u2192 15.0%",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
-    },
-    {
-      "rank": 8,
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "event_short": "Minnesota Timberwolves @ Boston Celtics",
-      "market": "Player Prop",
-      "pick": "Jaylen Brown OVER 5.5 Assists",
-      "odds": "+111",
-      "implied": "47.4%",
-      "model": "72.4%",
-      "edge": 15.0,
-      "tier": "Medium",
-      "bet": "$12.15",
-      "status": "",
-      "result": "",
-      "notes": "Weighted 10g avg: 6.3 Assists. Line: 5.5. Diff: +0.8. SD: 1.4 (player). DK odds: 111. Model says over at 72.4%. | Def adj: vs MIN (114.8 PPG allowed, boost 2.5%) | Edge capped: 25.0% \u2192 15.0%",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "",
-      "type": "prop"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "POR @ DEN",
-      "line": "DEN -8.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "BKN @ SAC",
-      "line": "SAC -6.5",
-      "reason": "Tank penalty applied \u2014 17-51, eliminated, traded stars"
-    },
-    {
-      "sport": "NBA",
       "event": "TOR @ PHX",
-      "line": "TOR -3.5",
+      "line": "TOR -4.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -234,12 +117,6 @@
     },
     {
       "sport": "MLB",
-      "event": "ATH @ COL",
-      "line": "N/A",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
       "event": "SEA @ CHW",
       "line": "N/A",
       "reason": "No model data"
@@ -258,129 +135,9 @@
     },
     {
       "sport": "MLS",
-      "event": "LA @ POR",
-      "line": "POR +135",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLS",
       "event": "RSL @ SD",
-      "line": "SD +105",
+      "line": "SD -120",
       "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "ATM @ RMA",
-      "line": "RMA +105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "INT @ FIO",
-      "line": "INT -165",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "STR @ NAN",
-      "line": "STR +115",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "Washington Wizards @ New York Knicks",
-      "line": "Karl-Anthony Towns OVER 11.5 Rebounds (-132)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Julius Randle UNDER 1.5 3-PT Made (-145)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "line": "Nikola Jokic UNDER 27.5 Points (-103)",
-      "reason": "Edge exists (13.4%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Jayson Tatum UNDER 21.5 Points (-109)",
-      "reason": "Edge exists (12.5%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Washington Wizards @ New York Knicks",
-      "line": "Jalen Brunson OVER 3.5 Rebounds (-108)",
-      "reason": "Edge exists (11.6%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Jaylen Brown OVER 25.5 Points (-112)",
-      "reason": "Edge exists (11.2%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Julius Randle UNDER 6.5 Rebounds (-116)",
-      "reason": "Edge exists (9.4%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Jayson Tatum OVER 7.5 Rebounds (-122)",
-      "reason": "Edge exists (9.2%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Washington Wizards @ New York Knicks",
-      "line": "Jalen Brunson UNDER 2.5 3-PT Made (-145)",
-      "reason": "Edge exists (8.8%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "line": "Jamal Murray OVER 4.5 Rebounds (-108)",
-      "reason": "Edge exists (8.8%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "line": "Nikola Jokic OVER 10.5 Assists (+100)",
-      "reason": "Edge exists (8.1%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Jayson Tatum UNDER 4.5 Assists (-150)",
-      "reason": "Edge exists (8.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Julius Randle UNDER 4.5 Assists (-134)",
-      "reason": "Edge exists (7.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Toronto Raptors @ Phoenix Suns",
-      "line": "Devin Booker OVER 26.5 Points (-105)",
-      "reason": "Edge exists (6.8%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Boston Celtics",
-      "line": "Julius Randle UNDER 21.5 Points (-112)",
-      "reason": "Edge exists (6.6%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Portland Trail Blazers @ Denver Nuggets",
-      "line": "Jamal Murray OVER 6.5 Assists (-102)",
-      "reason": "Edge exists (6.1%) but category exposure limit reached"
     }
   ],
   "bets": [
