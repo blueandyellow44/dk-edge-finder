@@ -607,8 +607,12 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: floa
     if abs(diff) < 0.3:
         return None  # Too close to call
 
-    # Convert to probability using normal distribution
+    # Z-score gate: require meaningful statistical separation
+    # |z| >= 0.5 means projection is at least half a SD from the line
+    # Without this, tiny diffs (0.4 on SD 1.0) produce fake edges
     z = (line - our_projection) / sd
+    if abs(z) < 0.5:
+        return None  # Not enough separation — noise, not signal
     over_prob = 1.0 - normal_cdf(z)
     under_prob = normal_cdf(z)
 
@@ -655,12 +659,29 @@ def calculate_prop_edge(prop: dict, player_stats: dict | None, game_margin: floa
     kelly = (edge / (decimal_odds - 1)) * 0.25  # Quarter Kelly
     kelly = min(kelly, 0.02)  # 2% max per prop (matches game max)
 
-    # Build notes
-    flat_note = f"Flat avg: {flat_projection:.1f}" if flat_projection and abs(flat_projection - our_projection) > 0.2 else ""
-    sd_note = f"SD: {sd:.1f}" + (" (player)" if player_sd else " (default)")
+    # Build narrative-first notes
+    # Lead with WHY this is a bet, not a stat dump
+    z_score = abs(diff) / sd if sd > 0 else 0
     adj_note = " | ".join(adjustments) if adjustments else ""
 
-    notes = f"Weighted {games_sampled}g avg: {our_projection:.1f} {stat_type}. {flat_note+'. ' if flat_note else ''}Line: {line}. Diff: {diff:+.1f}. {sd_note}. DK odds: {dk_odds}. Model says {pick_side} at {model_prob*100:.1f}%.{' | ' + adj_note if adj_note else ''}"
+    # Narrative lead: "Player averages X, line is Y — Z of cushion"
+    direction_word = "over" if diff > 0 else "under"
+    cushion = abs(diff)
+    narrative = f"{prop['player']} averages {our_projection:.1f} {stat_type} (last {games_sampled}g), line is {line} — {cushion:.1f} {direction_word} with {z_score:.1f}σ separation."
+
+    # Flat avg comparison if meaningfully different
+    if flat_projection and abs(flat_projection - our_projection) > 0.5:
+        trend_dir = "trending up" if our_projection > flat_projection else "trending down"
+        narrative += f" {trend_dir.capitalize()} (season avg: {flat_projection:.1f})."
+
+    # Raw edge visibility when capped
+    if raw_edge > MAX_PROP_EDGE:
+        narrative += f" Raw edge: {raw_edge*100:.1f}% (capped at {MAX_PROP_EDGE*100:.0f}%)."
+
+    if adj_note:
+        narrative += f" {adj_note}."
+
+    notes = narrative
 
     return {
         "sport": "NBA",

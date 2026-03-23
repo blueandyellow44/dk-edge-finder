@@ -1057,7 +1057,14 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         implied_prob = cand["implied_prob"]
         edge = model_prob - implied_prob
 
-        if edge >= MIN_EDGE_HIGH and edge > best_edge:
+        # Heavy juice filter: picks at -200 or worse need 5% edge, not 3%
+        # Rationale: at -250, you risk $250 to win $100. A 3% edge isn't worth it.
+        dk_odds_val = cand.get("dk_odds", -110)
+        min_edge = MIN_EDGE_HIGH  # default 3%
+        if dk_odds_val < -200:
+            min_edge = 0.05  # 5% for heavy favorites
+
+        if edge >= min_edge and edge > best_edge:
             best_edge = edge
             best = {
                 "cand": cand, "model_prob": model_prob, "edge": edge,
@@ -1087,10 +1094,9 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     decimal_odds = american_to_decimal(dk_odds)
     kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
 
-    # Build notes with ensemble info
+    # Build notes — narrative first, then data
     notes_parts = [
-        f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (margin: {abs(model_home_margin):.1f}).",
-        f"Spread cushion: {spread_cushion:.1f} pts.",
+        f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (margin: {abs(model_home_margin):.1f}). {spread_cushion:.1f} pts of cushion beyond the spread.",
     ]
     # Ensemble disagreement warning
     if pred.get("contested"):
@@ -1487,7 +1493,27 @@ def main(games_only: bool = False):
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
     # Split picks into game edges and prop edges, sort each by edge descending
     game_picks = sorted([p for p in picks if p.get("market") != "Player Prop"], key=lambda x: x["edge"], reverse=True)
-    prop_picks = sorted([p for p in picks if p.get("market") == "Player Prop"], key=lambda x: x["edge"], reverse=True)
+    all_prop_picks = sorted([p for p in picks if p.get("market") == "Player Prop"], key=lambda x: x["edge"], reverse=True)
+
+    # Cap at 2 props per game — prevents clustering 3+ picks from one matchup
+    MAX_PROPS_PER_GAME = 2
+    prop_picks = []
+    props_per_game: dict[str, int] = {}
+    for p in all_prop_picks:
+        game_key = p.get("event", "")
+        count = props_per_game.get(game_key, 0)
+        if count < MAX_PROPS_PER_GAME:
+            prop_picks.append(p)
+            props_per_game[game_key] = count + 1
+        else:
+            no_edge.append({
+                "sport": p["sport"],
+                "event": p.get("event_short", p.get("event", "")),
+                "line": f"{p['pick']} ({p['odds']})",
+                "reason": f"Max {MAX_PROPS_PER_GAME} props per game (edge: {p['edge']}%)",
+            })
+    if len(all_prop_picks) > len(prop_picks):
+        print(f"    Props filtered: {len(all_prop_picks)} → {len(prop_picks)} (max {MAX_PROPS_PER_GAME}/game)")
 
     game_budget = available * MAX_GAME_EXPOSURE
     prop_budget = available * MAX_PROP_EXPOSURE
