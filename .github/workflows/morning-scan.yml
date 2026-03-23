@@ -2,9 +2,10 @@ name: Full Scan (Games + Props)
 
 on:
   schedule:
-    # 6 AM PT (1 PM UTC during PDT) and 3 PM PT (10 PM UTC during PDT)
-    # Uses Odds API credits for prop scanning (~24 credits per run)
-    - cron: '0 13,22 * * *'
+    # 6 AM PT (1 PM UTC during PDT) — one full scan per day
+    # Props + games ready when Max wakes up. European soccer covered (games start ~4 AM PT).
+    # Uses Odds API credits (~24 credits per run)
+    - cron: '0 13 * * *'
   workflow_dispatch: # Manual trigger
 
 permissions:
