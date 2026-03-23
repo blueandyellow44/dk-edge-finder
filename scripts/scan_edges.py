@@ -1653,6 +1653,36 @@ def main(games_only: bool = False):
     print(f"\nDone. {len(formatted_picks)} edges found, {len(no_edge)} games no edge.")
     print(f"Total suggested exposure: ${total_exposure:.2f} ({(total_exposure/available*100):.1f}% of bankroll)")
 
+    # Step 8: Append picks to pick_history.json for paper-trading analysis
+    HISTORY_JSON = REPO_ROOT / "pick_history.json"
+    try:
+        history = json.loads(HISTORY_JSON.read_text()) if HISTORY_JSON.exists() else []
+    except (json.JSONDecodeError, Exception):
+        history = []
+
+    for pick in final_picks:
+        history.append({
+            "scan_date": today_iso,
+            "sport": pick.get("sport", ""),
+            "event": pick.get("event", ""),
+            "market": pick.get("market", ""),
+            "pick": pick.get("pick", ""),
+            "odds": pick.get("odds", ""),
+            "implied": pick.get("implied", ""),
+            "model": pick.get("model", ""),
+            "edge": pick.get("edge", 0),
+            "tier": pick.get("tier", ""),
+            "confidence": pick.get("confidence", ""),
+            "type": pick.get("type", ""),
+            "notes": pick.get("notes", ""),
+            "outcome": "pending",
+            "final_score": "",
+            "pnl_if_bet": 0,
+        })
+
+    HISTORY_JSON.write_text(json.dumps(history, indent=2) + "\n")
+    print(f"[8] Appended {len(final_picks)} picks to pick_history.json (total: {len(history)} tracked)")
+
 
 if __name__ == "__main__":
     games_only = "--games-only" in sys.argv

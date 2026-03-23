@@ -320,6 +320,105 @@ def main():
 
     print(f"\nResolved {resolved_count} bet(s). Done.")
 
+    # ── Resolve pick_history.json (paper-trading tracker) ──────────────
+    resolve_pick_history(all_games)
+
+
+def resolve_pick_history(all_games: list[dict]):
+    """Resolve pending picks in pick_history.json for paper-trading analysis.
+    Uses the same ESPN scores already fetched. Resolves ALL picks, not just placed bets.
+    """
+    HISTORY_JSON = REPO_ROOT / "pick_history.json"
+    if not HISTORY_JSON.exists():
+        return
+
+    try:
+        history = json.loads(HISTORY_JSON.read_text())
+    except (json.JSONDecodeError, Exception):
+        return
+
+    if not history:
+        return
+
+    pending = [h for h in history if h.get("outcome") == "pending"]
+    if not pending:
+        return
+
+    # Fetch scores for any dates not already in all_games
+    extra_dates = set()
+    for h in pending:
+        d = h.get("scan_date", "").replace("-", "")
+        if d:
+            extra_dates.add(d)
+
+    # Fetch any missing dates
+    existing_dates = set()
+    for g in all_games:
+        # We don't have date on individual games, so just fetch all pending dates
+        pass
+
+    for date_str in extra_dates:
+        games = fetch_nba_scores(date_str)
+        all_games.extend(games)
+
+    resolved_count = 0
+    for h in history:
+        if h.get("outcome") != "pending":
+            continue
+
+        game = find_game_score(all_games, h.get("event", ""))
+        if not game or not game["is_final"]:
+            continue
+
+        home_score = game["home"]["score"]
+        away_score = game["away"]["score"]
+        score_str = f"{game['away']['abbr']} {away_score}, {game['home']['abbr']} {home_score}"
+
+        pick = h.get("pick", "")
+        pick_upper = pick.strip().upper()
+
+        # Determine outcome — same logic as main resolver
+        if "ML" in pick:
+            outcome = resolve_moneyline(pick, home_score, away_score, h.get("event", ""))
+        elif pick_upper.startswith("OVER ") or pick_upper.startswith("UNDER "):
+            outcome = resolve_total(pick, home_score, away_score)
+        elif "+" in pick or "-" in pick.split(" ")[-1]:
+            outcome = resolve_spread(pick, home_score, away_score, h.get("event", ""))
+        else:
+            outcome = "unknown"
+
+        if outcome == "unknown":
+            continue
+
+        # Calculate hypothetical P/L (what we WOULD have made)
+        odds_str = h.get("odds", "-110")
+        try:
+            dk_odds = int(odds_str)
+        except (ValueError, TypeError):
+            dk_odds = -110
+        decimal_odds = 1 + 100 / abs(dk_odds) if dk_odds < 0 else 1 + dk_odds / 100
+        wager = 10.00  # Standardized $10 paper bet for comparison
+
+        if outcome == "win":
+            pnl = round(wager * (decimal_odds - 1), 2)
+        elif outcome == "loss":
+            pnl = round(-wager, 2)
+        else:
+            pnl = 0.0
+
+        h["outcome"] = outcome
+        h["final_score"] = score_str
+        h["pnl_if_bet"] = pnl
+        resolved_count += 1
+
+    if resolved_count > 0:
+        HISTORY_JSON.write_text(json.dumps(history, indent=2) + "\n")
+        total = len(history)
+        wins = sum(1 for h in history if h.get("outcome") == "win")
+        losses = sum(1 for h in history if h.get("outcome") == "loss")
+        still_pending = sum(1 for h in history if h.get("outcome") == "pending")
+        print(f"\nPick history: resolved {resolved_count} paper picks. Record: {wins}W-{losses}L, {still_pending} pending (of {total} total)")
+
 
 if __name__ == "__main__":
     main()

@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name "DK Edge Bot"
           git config user.email "max.sheahan@icloud.com"
-          git add data.json bankroll.json
+          git add data.json bankroll.json pick_history.json
           git commit -m "Auto-resolve: $(date +%Y-%m-%d) bet results"
           git push
