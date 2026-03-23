@@ -120,6 +120,39 @@ def resolve_moneyline(pick_str: str, home_score: int, away_score: int, event_str
     return "unknown"
 
 
+def resolve_total(pick_str: str, home_score: int, away_score: int) -> str:
+    """Determine WIN/LOSS/PUSH for a totals (OVER/UNDER) bet.
+    pick_str like 'OVER 220.5' or 'UNDER 234.5'
+    """
+    parts = pick_str.strip().split()
+    if len(parts) != 2:
+        return "unknown"
+
+    direction = parts[0].upper()
+    try:
+        total_line = float(parts[1])
+    except (ValueError, IndexError):
+        return "unknown"
+
+    actual_total = home_score + away_score
+
+    if direction == "OVER":
+        if actual_total > total_line:
+            return "win"
+        elif actual_total < total_line:
+            return "loss"
+        else:
+            return "push"
+    elif direction == "UNDER":
+        if actual_total < total_line:
+            return "win"
+        elif actual_total > total_line:
+            return "loss"
+        else:
+            return "push"
+    return "unknown"
+
+
 def main():
     # Load current state
     if not DATA_JSON.exists():
@@ -172,8 +205,11 @@ def main():
 
         # Determine outcome
         pick = bet["pick"]
+        pick_upper = pick.strip().upper()
         if "ML" in pick:
             outcome = resolve_moneyline(pick, home_score, away_score, bet["event"])
+        elif pick_upper.startswith("OVER ") or pick_upper.startswith("UNDER "):
+            outcome = resolve_total(pick, home_score, away_score)
         elif "+" in pick or "-" in pick.split(" ")[-1]:
             outcome = resolve_spread(pick, home_score, away_score, bet["event"])
         else:

@@ -1,5 +1,9 @@
 # DK Edge Finder — Lessons Learned
 
+## 2026-03-22: Always git pull --rebase before pushing when automated scans are running
+**Mistake:** Every push from local fails with "non-fast-forward" because GitHub Actions game-scan and morning-scan workflows commit to main between local work sessions. This has now happened 3+ times.
+**Rule:** ALWAYS run `git stash && git pull --rebase && git stash pop` before pushing. Automated scans commit data.json changes to remote main every few hours. Local will always be behind. If data.json conflicts during rebase, take `--theirs` (remote) since the next scan regenerates it anyway. Tell Max this upfront every time, not after the push fails.
+
 ## 2026-03-17: Deduct bankroll on bet placement
 **Mistake:** Kept bankroll at $586.60 after user placed $48.50 in bets. Dashboard showed pre-bet balance as "current."
 **Rule:** When bets are placed, immediately deduct wager total from current bankroll. Available = current - pending wagers. Kelly sizing uses available balance only. On resolution: WIN adds wager + profit, LOSS stays deducted, PUSH returns wager.
@@ -152,6 +156,11 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 **Observation:** When `--games-only` mode runs, it doesn't scan props, so `formatted_picks` only contains game edges. Writing this to data.json would wipe all prop picks from the last full scan.
 **Rule:** In games-only mode, preserve existing prop picks (`type == "prop"`) from the current data.json and append them to the new game-only picks before writing. Props only get refreshed during full scans.
 **Code fix:** Added preservation logic in scan_edges.py Step 7 that merges existing prop picks when `games_only=True`.
+
+## 2026-03-22: resolve_bets.py must handle ALL bet types, not just spreads/ML [AUTOMATE - DONE]
+**Mistake:** `resolve_bets.py` only handled spread and moneyline bets. Totals (OVER/UNDER) bets fell through to `outcome = "unknown"` and stayed pending forever. Grizzlies UNDER 234.5 was stuck as PENDING even though the game was final (total 225).
+**Rule:** Every bet type the scan can produce (spread, moneyline, total, prop) must have a corresponding resolver in `resolve_bets.py`. When adding a new bet type to the scan pipeline, add its resolver in the same commit.
+**Code fix:** Added `resolve_total()` function and detection for `OVER`/`UNDER` pick strings in the resolution logic.
 
 ## 2026-03-22: Variable scope — all_predictions not predictions
 **Mistake:** Step 5b (game margins for blowout discount) used `predictions` which doesn't exist in `main()` scope. The actual variable is `all_predictions` (dict keyed by sport). Caused NameError crash on every full scan.
