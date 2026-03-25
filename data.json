@@ -69,10 +69,10 @@
       "event_short": "NYY @ SF",
       "market": "Spread",
       "pick": "San Francisco Giants +1.5",
-      "odds": "-176",
-      "implied": "63.8%",
+      "odds": "-175",
+      "implied": "63.6%",
       "model": "68.9%",
-      "edge": 5.1,
+      "edge": 5.3,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
@@ -94,7 +94,7 @@
     {
       "sport": "NBA",
       "event": "LAL @ IND",
-      "line": "LAL -10.5",
+      "line": "LAL -9.5",
       "reason": "Tank penalty applied \u2014 15-53, eliminated, traded Siakam"
     },
     {
@@ -106,7 +106,7 @@
     {
       "sport": "NBA",
       "event": "OKC @ BOS",
-      "line": "OKC -1.5",
+      "line": "OKC -2.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -118,7 +118,7 @@
     {
       "sport": "NBA",
       "event": "WSH @ UTAH",
-      "line": "UTAH -4.5",
+      "line": "UTAH -3.5",
       "reason": "No model data"
     },
     {
@@ -130,7 +130,7 @@
     {
       "sport": "NBA",
       "event": "DAL @ DEN",
-      "line": "DEN -12.5",
+      "line": "DEN -11.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -142,13 +142,13 @@
     {
       "sport": "NBA",
       "event": "TOR @ LAC",
-      "line": "LAC -4.5",
+      "line": "LAC -3.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "BOS @ BUF",
-      "line": "BUF -205",
+      "line": "BUF -218",
       "reason": "Edge below 3% threshold"
     },
     {
