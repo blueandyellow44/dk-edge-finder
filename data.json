@@ -16,8 +16,8 @@
   },
   "games_analyzed": 15,
   "best_bet": {
-    "title": "Memphis Grizzlies +16.5 (-108) \u2014 10.6% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers): SA 123.3, MEM 110.4 (margin: 12.9). 3.6 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.6%): Model disagrees with market by 3.6 pts. Investigate before betting."
+    "title": "Memphis Grizzlies +16.5 (-105) \u2014 11.3% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): SA 123.3, MEM 110.4 (margin: 12.9). 3.6 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.3%): Model disagrees with market by 3.6 pts. Investigate before betting."
   },
   "picks": [
     {
@@ -27,15 +27,15 @@
       "event_short": "SA @ MEM",
       "market": "Spread",
       "pick": "Memphis Grizzlies +16.5",
-      "odds": "-108",
-      "implied": "51.9%",
+      "odds": "-105",
+      "implied": "51.2%",
       "model": "62.5%",
-      "edge": 10.6,
+      "edge": 11.3,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): SA 123.3, MEM 110.4 (margin: 12.9). 3.6 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.6%): Model disagrees with market by 3.6 pts. Investigate before betting.",
+      "notes": "Model (DRatings + Dimers): SA 123.3, MEM 110.4 (margin: 12.9). 3.6 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.3%): Model disagrees with market by 3.6 pts. Investigate before betting.",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/33863439?outcomes=0HC83992050P1650_1",
@@ -71,8 +71,8 @@
       "pick": "San Francisco Giants +1.5",
       "odds": "-176",
       "implied": "63.8%",
-      "model": "69.2%",
-      "edge": 5.4,
+      "model": "68.9%",
+      "edge": 5.1,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
@@ -81,27 +81,6 @@
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33745947?outcomes=0HC83692115P150_1",
-      "type": "game"
-    },
-    {
-      "rank": 4,
-      "sport": "NBA",
-      "event": "Los Angeles Lakers @ Indiana Pacers",
-      "event_short": "LAL @ IND",
-      "market": "Over/Under",
-      "pick": "UNDER 239.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "56.5%",
-      "edge": 4.1,
-      "tier": "High",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers): LAL 124.0, IND 112.7 (total: 236.7). Line: 239.5. Cushion: 2.8 pts.",
-      "sources": "DRatings + Dimers, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33863434?outcomes=0OU83992039U23950_3",
       "type": "game"
     }
   ],
@@ -114,14 +93,20 @@
     },
     {
       "sport": "NBA",
+      "event": "LAL @ IND",
+      "line": "LAL -10.5",
+      "reason": "Tank penalty applied \u2014 15-53, eliminated, traded Siakam"
+    },
+    {
+      "sport": "NBA",
       "event": "CHI @ PHI",
-      "line": "PHI -5.5",
+      "line": "PHI -6.5",
       "reason": "No model data"
     },
     {
       "sport": "NBA",
       "event": "OKC @ BOS",
-      "line": "OKC -2.5",
+      "line": "OKC -1.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -151,7 +136,7 @@
     {
       "sport": "NBA",
       "event": "BKN @ GS",
-      "line": "GS -11.5",
+      "line": "GS -12.5",
       "reason": "Tank penalty applied \u2014 17-51, eliminated, traded stars"
     },
     {
