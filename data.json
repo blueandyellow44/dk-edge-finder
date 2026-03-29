@@ -2,7 +2,7 @@
   "scan_date": "2026-03-29",
   "scan_subtitle": "Sunday, March 29, 2026 \u2014 MLB (12), NBA (9), NHL (6)",
   "bankroll": {
-    "available": 571.82,
+    "available": 559.65,
     "starting": 500.0,
     "profit": 108.33,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 12,
       "pushes": 0
     },
-    "pending_count": 3,
-    "pending_total": 36.51,
-    "pending_label": "3 bet(s) pending ($36.51)"
+    "pending_count": 4,
+    "pending_total": 48.68,
+    "pending_label": "4 bet(s) pending ($48.68)"
   },
   "games_analyzed": 27,
   "best_bet": {
@@ -159,7 +159,7 @@
       "edge": 4.1,
       "tier": "High",
       "bet": "$12.17",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): KC 3.6, ATL 4.1 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | ATL on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
@@ -312,6 +312,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-29",
+      "sport": "MLB",
+      "event": "Kansas City Royals @ Atlanta Braves",
+      "pick": "Kansas City Royals +1.5",
+      "odds": "-163",
+      "decimal_odds": 1.613,
+      "edge": 4.1,
+      "wager": 12.17,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-29",
       "sport": "MLB",
