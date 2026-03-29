@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: place-bets
+  cancel-in-progress: false
+
 jobs:
   place:
     runs-on: ubuntu-latest
@@ -38,4 +42,5 @@ jobs:
           git config user.email "max.sheahan@icloud.com"
           git add data.json bankroll.json
           git commit -m "Bets placed: $(date +%Y-%m-%d)"
+          git pull --rebase origin main
           git push
