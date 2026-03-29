@@ -2,8 +2,8 @@
   "starting_bankroll": 500.0,
   "balance_override": 608.33,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 437.53,
-  "last_updated": "2026-03-22T19:29:08.620253+00:00",
+  "current_bankroll": 596.16,
+  "last_updated": "2026-03-29T12:00:00-07:00",
   "pending_bets": [
     {
       "id": "ove-over/u-20260321",
@@ -158,9 +158,23 @@
       "edge_pct": 17.0,
       "tier": "Medium",
       "bet_size": 11.41
+    },
+    {
+      "id": "new-spread-20260329",
+      "date": "2026-03-29",
+      "sport": "mlb",
+      "event": "Pittsburgh Pirates @ New York Mets",
+      "market": "spread",
+      "pick": "New York Mets -1.5",
+      "odds": 119,
+      "decimal_odds": 2.19,
+      "model_prob": 0.565,
+      "edge_pct": 10.8,
+      "tier": "High",
+      "bet_size": 12.17
     }
   ],
-  "lifetime_bets": 14,
+  "lifetime_bets": 15,
   "lifetime_wins": 12,
   "lifetime_losses": 10,
   "lifetime_pushes": 0,
