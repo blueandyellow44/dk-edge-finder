@@ -2,7 +2,7 @@
   "scan_date": "2026-03-29",
   "scan_subtitle": "Sunday, March 29, 2026 \u2014 MLB (12), NBA (9), NHL (6)",
   "bankroll": {
-    "available": 583.99,
+    "available": 571.82,
     "starting": 500.0,
     "profit": 108.33,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 12,
       "pushes": 0
     },
-    "pending_count": 2,
-    "pending_total": 24.34,
-    "pending_label": "2 bet(s) pending ($24.34)"
+    "pending_count": 3,
+    "pending_total": 36.51,
+    "pending_label": "3 bet(s) pending ($36.51)"
   },
   "games_analyzed": 27,
   "best_bet": {
@@ -96,7 +96,7 @@
       "edge": 7.2,
       "tier": "High",
       "bet": "$12.17",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): BOS 4.3, CIN 4.0 (margin: 0.3). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
@@ -312,6 +312,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-03-29",
+      "sport": "MLB",
+      "event": "Boston Red Sox @ Cincinnati Reds",
+      "pick": "Cincinnati Reds +1.5",
+      "odds": "-143",
+      "decimal_odds": 1.699,
+      "edge": 7.2,
+      "wager": 12.17,
+      "outcome": "pending"
+    },
     {
       "date": "2026-03-29",
       "sport": "MLB",

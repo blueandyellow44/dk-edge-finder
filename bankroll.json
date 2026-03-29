@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 608.33,
   "override_note": "Set from DK app balance on 2026-03-21. Clear this field to use calculated PnL instead.",
-  "current_bankroll": 583.99,
+  "current_bankroll": 571.82,
   "last_updated": "2026-03-29T12:00:00-07:00",
   "pending_bets": [
     {
@@ -186,9 +186,23 @@
       "edge_pct": 10.4,
       "tier": "High",
       "bet_size": 12.17
+    },
+    {
+      "id": "cin-spread-20260329",
+      "date": "2026-03-29",
+      "sport": "mlb",
+      "event": "Boston Red Sox @ Cincinnati Reds",
+      "market": "spread",
+      "pick": "Cincinnati Reds +1.5",
+      "odds": -143,
+      "decimal_odds": 1.699,
+      "model_prob": 0.6609999999999999,
+      "edge_pct": 7.2,
+      "tier": "High",
+      "bet_size": 12.17
     }
   ],
-  "lifetime_bets": 16,
+  "lifetime_bets": 17,
   "lifetime_wins": 12,
   "lifetime_losses": 10,
   "lifetime_pushes": 0,
