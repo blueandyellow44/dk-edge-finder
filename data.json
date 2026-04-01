@@ -15,146 +15,234 @@
     "pending_label": "4 bet(s) pending ($48.68)"
   },
   "games_analyzed": 27,
-  "best_bet": null,
-  "picks": [],
+  "best_bet": {
+    "title": "New York Yankees +1.5 (164) \u2014 26.7% Edge (High Tier)",
+    "desc": "Model (DRatings only): NYY 3.9, SEA 4.4 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (26.7%): Model "
+  },
+  "picks": [
+    {
+      "rank": 1,
+      "sport": "MLB",
+      "event": "New York Yankees @ Seattle Mariners",
+      "event_short": "NYY @ SEA",
+      "market": "Spread",
+      "pick": "New York Yankees +1.5",
+      "odds": "164",
+      "implied": "37.9%",
+      "model": "64.6%",
+      "edge": 26.7,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): NYY 3.9, SEA 4.4 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (26.7%): Model disagrees with market by 1.0 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33910466?outcomes=0HC84116401N150_3",
+      "type": "game"
+    },
+    {
+      "rank": 2,
+      "sport": "MLB",
+      "event": "Minnesota Twins @ Kansas City Royals",
+      "event_short": "MIN @ KC",
+      "market": "Spread",
+      "pick": "Kansas City Royals +1.5",
+      "odds": "-177",
+      "implied": "63.9%",
+      "model": "76.8%",
+      "edge": 12.9,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): MIN 3.4, KC 3.8 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (12.9%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33910467?outcomes=0HC84116402P150_1",
+      "type": "game"
+    },
+    {
+      "rank": 3,
+      "sport": "NBA",
+      "event": "New York Knicks @ Memphis Grizzlies",
+      "event_short": "NY @ MEM",
+      "market": "Spread",
+      "pick": "Memphis Grizzlies +14.5",
+      "odds": "-105",
+      "implied": "51.2%",
+      "model": "59.6%",
+      "edge": 8.4,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): NY 119.7, MEM 107.5 (margin: 12.2). 2.3 pts of cushion beyond the spread. | NY on B2B (+1.5% boost)",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33903368?outcomes=0HC84097891P1450_1",
+      "type": "game"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
+      "event": "Indiana Pacers @ Chicago Bulls",
+      "event_short": "IND @ CHI",
+      "market": "Over/Under",
+      "pick": "UNDER 248.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "61.0%",
+      "edge": 8.2,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): IND 119.6, CHI 124.1 (total: 243.7). Line: 248.5. Cushion: 4.8 pts.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33903366?outcomes=0OU84097889U24850_3",
+      "type": "game"
+    },
+    {
+      "rank": 5,
+      "sport": "MLB",
+      "event": "Cleveland Guardians @ Los Angeles Dodgers",
+      "event_short": "CLE @ LAD",
+      "market": "Spread",
+      "pick": "Los Angeles Dodgers -1.5",
+      "odds": "-120",
+      "implied": "54.5%",
+      "model": "61.2%",
+      "edge": 6.6,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): CLE 2.6, LAD 4.8 (margin: 2.2). 0.7 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | CLE on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33910468?outcomes=0HC84116403N150_1",
+      "type": "game"
+    },
+    {
+      "rank": 6,
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Golden State Warriors",
+      "event_short": "SA @ GS",
+      "market": "Spread",
+      "pick": "Golden State Warriors +13.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "57.0%",
+      "edge": 5.1,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): SA 119.1, GS 107.6 (margin: 11.5). 2.0 pts of cushion beyond the spread.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33903372?outcomes=0HC84097905P1350_1",
+      "type": "game"
+    },
+    {
+      "rank": 7,
+      "sport": "NBA",
+      "event": "Milwaukee Bucks @ Houston Rockets",
+      "event_short": "MIL @ HOU",
+      "market": "Spread",
+      "pick": "Milwaukee Bucks +18.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "56.7%",
+      "edge": 4.4,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): MIL 101.0, HOU 117.3 (margin: 16.3). 2.2 pts of cushion beyond the spread. MIL on road B2B (-2.5% adj) | HOU on B2B (+1.5% boost)",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33903367?outcomes=0HC84097890P1850_3",
+      "type": "game"
+    },
+    {
+      "rank": 8,
+      "sport": "NBA",
+      "event": "Milwaukee Bucks @ Houston Rockets",
+      "event_short": "MIL @ HOU",
+      "market": "Over/Under",
+      "pick": "OVER 215.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "56.5%",
+      "edge": 4.1,
+      "tier": "High",
+      "bet": "$6.06",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): MIL 101.0, HOU 117.3 (total: 218.3). Line: 215.5. Cushion: 2.8 pts.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33903367?outcomes=0OU84097890O21550_1",
+      "type": "game"
+    }
+  ],
   "no_edge_games": [
     {
       "sport": "NBA",
       "event": "PHI @ WSH",
-      "line": "PHI -13.5",
+      "line": "PHI -14.5",
       "reason": "No model data"
     },
     {
       "sport": "NBA",
       "event": "ATL @ ORL",
-      "line": "ATL -3.5",
-      "reason": "No model data"
+      "line": "ATL -2.5",
+      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
       "event": "BOS @ MIA",
       "line": "BOS -4.5",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "NY @ MEM",
-      "line": "NY -14.5",
-      "reason": "No model data"
+      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
       "event": "SAC @ TOR",
-      "line": "TOR -13.5",
+      "line": "TOR -12.5",
       "reason": "Tank penalty applied \u2014 18-51, eliminated, Fox shut down"
     },
     {
       "sport": "NBA",
-      "event": "IND @ CHI",
-      "line": "CHI -3.5",
-      "reason": "Tank penalty applied \u2014 15-53, eliminated, traded Siakam"
-    },
-    {
-      "sport": "NBA",
-      "event": "MIL @ HOU",
-      "line": "HOU -17.5",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
       "event": "DEN @ UTAH",
-      "line": "DEN -16.5",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "SA @ GS",
-      "line": "SA -14.5",
+      "line": "DEN -17.5",
       "reason": "No model data"
     },
     {
       "sport": "NHL",
       "event": "VAN @ COL",
       "line": "COL -470",
-      "reason": "No model data"
+      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "STL @ LA",
-      "line": "LA -142",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NHL",
-      "event": "ANA @ SJ",
-      "line": "ANA -115",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "WSH @ PHI",
-      "line": "PHI -285",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "COL @ TOR",
-      "line": "TOR -293",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "CHW @ MIA",
-      "line": "MIA -149",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "TB @ MIL",
-      "line": "MIL -143",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "BOS @ HOU",
-      "line": "BOS -150",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "LAA @ CHC",
-      "line": "CHC -168",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "DET @ ARI",
-      "line": "DET -163",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYY @ SEA",
-      "line": "SEA -118",
+      "line": "LA -148",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
       "event": "SF @ SD",
-      "line": "SD -156",
-      "reason": "No model data"
+      "line": "SD -153",
+      "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLB",
-      "event": "MIN @ KC",
-      "line": "MIN -120",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "CLE @ LAD",
-      "line": "LAD -280",
-      "reason": "No model data"
+      "sport": "NHL",
+      "event": "ANA @ SJ",
+      "line": "Anaheim Ducks -1.5 (225)",
+      "reason": "Edge exists (3.9%) but category exposure limit reached"
     }
   ],
   "bets": [
