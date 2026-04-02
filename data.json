@@ -16,8 +16,8 @@
   },
   "games_analyzed": 24,
   "best_bet": {
-    "title": "UNDER 231.5 (-105) \u2014 7.8% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 231.5. Cushion: 3.9 pts."
+    "title": "UNDER 232.5 (-115) \u2014 7.7% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 232.5. Cushion: 4.9 pts."
   },
   "picks": [
     {
@@ -26,19 +26,19 @@
       "event": "Los Angeles Lakers @ Oklahoma City Thunder",
       "event_short": "LAL @ OKC",
       "market": "Over/Under",
-      "pick": "UNDER 231.5",
-      "odds": "-105",
-      "implied": "51.2%",
-      "model": "59.0%",
-      "edge": 7.8,
+      "pick": "UNDER 232.5",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "61.2%",
+      "edge": 7.7,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 231.5. Cushion: 3.9 pts.",
+      "notes": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 232.5. Cushion: 4.9 pts.",
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33909625?outcomes=0OU84113815U23150_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/33909625?outcomes=0OU84113815U23250_3",
       "type": "game"
     },
     {
@@ -127,38 +127,59 @@
     },
     {
       "rank": 6,
-      "sport": "MLB",
-      "event": "Minnesota Twins @ Kansas City Royals",
-      "event_short": "MIN @ KC",
+      "sport": "NHL",
+      "event": "Toronto Maple Leafs @ San Jose Sharks",
+      "event_short": "TOR @ SJ",
       "market": "Spread",
-      "pick": "Kansas City Royals -1.5",
-      "odds": "129",
-      "implied": "43.7%",
-      "model": "47.7%",
-      "edge": 4.0,
+      "pick": "Toronto Maple Leafs +1.5",
+      "odds": "-218",
+      "implied": "68.6%",
+      "model": "74.3%",
+      "edge": 5.7,
       "tier": "High",
-      "bet": "$9.39",
+      "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): MIN 3.9, KC 5.3 (margin: 1.4). -0.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): TOR 3.4, SJ 3.0 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. TANK WATCH: 36-32, playoff push (-1.5% adj) TOR on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33915729?outcomes=0HC84131072N150_1",
+      "dk_link": "https://sportsbook.draftkings.com/event/33915209?outcomes=0HC84136303P150_3",
       "type": "game"
     },
     {
       "rank": 7,
+      "sport": "NBA",
+      "event": "Phoenix Suns @ Charlotte Hornets",
+      "event_short": "PHX @ CHA",
+      "market": "Over/Under",
+      "pick": "UNDER 225.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "56.9%",
+      "edge": 5.0,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers): PHX 108.5, CHA 114.0 (total: 222.5). Line: 225.5. Cushion: 3.0 pts.",
+      "sources": "DRatings + Dimers, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33909595?outcomes=0OU84113752U22550_3",
+      "type": "game"
+    },
+    {
+      "rank": 8,
       "sport": "MLB",
       "event": "New York Mets @ San Francisco Giants",
       "event_short": "NYM @ SF",
       "market": "Spread",
       "pick": "San Francisco Giants +1.5",
-      "odds": "-168",
-      "implied": "62.7%",
+      "odds": "-163",
+      "implied": "62.0%",
       "model": "65.9%",
-      "edge": 3.2,
+      "edge": 3.9,
       "tier": "High",
-      "bet": "$12.17",
+      "bet": "$6.06",
       "status": "",
       "result": "",
       "notes": "Model (DRatings only): NYM 4.2, SF 3.8 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
@@ -171,12 +192,6 @@
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "PHX @ CHA",
-      "line": "CHA -5.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
       "event": "MIN @ DET",
       "line": "DET -3.5",
       "reason": "Edge below 3% threshold"
@@ -184,7 +199,7 @@
     {
       "sport": "NBA",
       "event": "CLE @ GS",
-      "line": "CLE -10.5",
+      "line": "CLE -9.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -208,13 +223,13 @@
     {
       "sport": "NHL",
       "event": "PIT @ TB",
-      "line": "TB -180",
+      "line": "TB -170",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "DET @ PHI",
-      "line": "PHI -115",
+      "line": "PHI -110",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -232,7 +247,7 @@
     {
       "sport": "NHL",
       "event": "WPG @ DAL",
-      "line": "DAL -166",
+      "line": "DAL -155",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -245,12 +260,6 @@
       "sport": "NHL",
       "event": "CGY @ VGK",
       "line": "VGK -250",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "TOR @ SJ",
-      "line": "SJ -120",
       "reason": "Edge below 3% threshold"
     },
     {
