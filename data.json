@@ -16,54 +16,33 @@
   },
   "games_analyzed": 66,
   "best_bet": {
-    "title": "Tampa Bay Rays +1.5 (153) \u2014 33.1% Edge (High Tier)",
-    "desc": "Model (DRatings only): TB 4.7, MIN 4.5 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (33.1%): Model d"
+    "title": "Baltimore Orioles +1.5 (153) \u2014 25.2% Edge (High Tier)",
+    "desc": "Model (DRatings only): BAL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (25.2%): Model "
   },
   "picks": [
     {
       "rank": 1,
       "sport": "MLB",
-      "event": "Tampa Bay Rays @ Minnesota Twins",
-      "event_short": "TB @ MIN",
-      "market": "Spread",
-      "pick": "Tampa Bay Rays +1.5",
-      "odds": "153",
-      "implied": "39.5%",
-      "model": "72.6%",
-      "edge": 33.1,
-      "tier": "High",
-      "bet": "$12.17",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): TB 4.7, MIN 4.5 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (33.1%): Model disagrees with market by 1.3 pts. Investigate before betting. | MIN on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33925739?outcomes=0HC84159098N150_3",
-      "type": "game"
-    },
-    {
-      "rank": 2,
-      "sport": "MLB",
       "event": "Baltimore Orioles @ Pittsburgh Pirates",
       "event_short": "BAL @ PIT",
       "market": "Spread",
       "pick": "Baltimore Orioles +1.5",
-      "odds": "144",
-      "implied": "41.0%",
+      "odds": "153",
+      "implied": "39.5%",
       "model": "64.8%",
-      "edge": 23.8,
+      "edge": 25.2,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): BAL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (23.8%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): BAL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (25.2%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33925733?outcomes=0HC84159092N150_3",
       "type": "game"
     },
     {
-      "rank": 3,
+      "rank": 2,
       "sport": "MLB",
       "event": "Atlanta Braves @ Arizona Diamondbacks",
       "event_short": "ATL @ ARI",
@@ -84,7 +63,7 @@
       "type": "game"
     },
     {
-      "rank": 4,
+      "rank": 3,
       "sport": "MLB",
       "event": "Milwaukee Brewers @ Kansas City Royals",
       "event_short": "MIL @ KC",
@@ -105,28 +84,28 @@
       "type": "game"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "sport": "MLB",
       "event": "Milwaukee Brewers @ Kansas City Royals",
       "event_short": "MIL @ KC",
       "market": "Spread",
       "pick": "Milwaukee Brewers +1.5",
-      "odds": "146",
-      "implied": "40.7%",
+      "odds": "147",
+      "implied": "40.5%",
       "model": "54.9%",
-      "edge": 14.2,
+      "edge": 14.4,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): MIL 3.9, KC 4.9 (margin: 1.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (14.2%): Model disagrees with market by 0.5 pts. Investigate before betting. MIL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): MIL 3.9, KC 4.9 (margin: 1.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (14.4%): Model disagrees with market by 0.5 pts. Investigate before betting. MIL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33930691?outcomes=0HC84172573N150_3",
       "type": "game"
     },
     {
-      "rank": 6,
+      "rank": 5,
       "sport": "MLB",
       "event": "Philadelphia Phillies @ Colorado Rockies",
       "event_short": "PHI @ COL",
@@ -147,24 +126,45 @@
       "type": "game"
     },
     {
-      "rank": 7,
+      "rank": 6,
       "sport": "MLB",
       "event": "St. Louis Cardinals @ Detroit Tigers",
       "event_short": "STL @ DET",
       "market": "Spread",
       "pick": "Detroit Tigers -1.5",
-      "odds": "135",
-      "implied": "42.6%",
-      "model": "51.5%",
+      "odds": "131",
+      "implied": "43.3%",
+      "model": "52.8%",
+      "edge": 9.5,
+      "tier": "High",
+      "bet": "$12.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): STL 3.8, DET 5.5 (margin: 1.7). 0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33925729?outcomes=0HC84159082N150_1",
+      "type": "game"
+    },
+    {
+      "rank": 7,
+      "sport": "MLS",
+      "event": "Portland Timbers @ Vancouver Whitecaps",
+      "event_short": "POR @ VAN",
+      "market": "Over/Under",
+      "pick": "UNDER 3.5",
+      "odds": "-115",
+      "implied": "53.5%",
+      "model": "62.4%",
       "edge": 8.9,
       "tier": "High",
       "bet": "$12.17",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): STL 3.8, DET 5.5 (margin: 1.6). 0.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): POR 0.8, VAN 2.1 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 DRatings only.",
       "sources": "DRatings only, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33925729?outcomes=0HC84159082N150_1",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33862038?outcomes=0OU83988787U350_3",
       "type": "game"
     },
     {
@@ -205,7 +205,7 @@
     {
       "sport": "NHL",
       "event": "MIN @ OTT",
-      "line": "OTT -120",
+      "line": "OTT -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -217,7 +217,7 @@
     {
       "sport": "NHL",
       "event": "MTL @ NJ",
-      "line": "MTL -125",
+      "line": "MTL -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -229,7 +229,7 @@
     {
       "sport": "NHL",
       "event": "NYI @ CAR",
-      "line": "CAR -245",
+      "line": "CAR -258",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -247,7 +247,7 @@
     {
       "sport": "NHL",
       "event": "TOR @ LA",
-      "line": "LA -185",
+      "line": "LA -198",
       "reason": "No model data"
     },
     {
@@ -300,6 +300,12 @@
     },
     {
       "sport": "MLB",
+      "event": "TB @ MIN",
+      "line": "MIN -112",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
       "event": "CHC @ CLE",
       "line": "CHC -136",
       "reason": "Edge below 3% threshold"
@@ -307,7 +313,7 @@
     {
       "sport": "MLB",
       "event": "NYM @ SF",
-      "line": "NYM -112",
+      "line": "NYM -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -319,7 +325,7 @@
     {
       "sport": "MLS",
       "event": "COL @ TOR",
-      "line": "TOR +100",
+      "line": "TOR +105",
       "reason": "No model data"
     },
     {
@@ -343,7 +349,7 @@
     {
       "sport": "MLS",
       "event": "PHI @ CLT",
-      "line": "CLT +115",
+      "line": "CLT +125",
       "reason": "No model data"
     },
     {
@@ -355,7 +361,7 @@
     {
       "sport": "MLS",
       "event": "ATX @ MIA",
-      "line": "MIA -250",
+      "line": "MIA -255",
       "reason": "No model data"
     },
     {
@@ -385,7 +391,7 @@
     {
       "sport": "MLS",
       "event": "ORL @ LAFC",
-      "line": "LAFC -340",
+      "line": "LAFC -350",
       "reason": "No model data"
     },
     {
@@ -402,14 +408,8 @@
     },
     {
       "sport": "LA_LIGA",
-      "event": "RMA @ MLL",
-      "line": "RMA -170",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
       "event": "ESP @ BET",
-      "line": "BET -140",
+      "line": "BET -120",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -421,26 +421,14 @@
     {
       "sport": "BUNDESLIGA",
       "event": "DOR @ VFB",
-      "line": "VFB +120",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "FIO @ VER",
-      "line": "FIO +100",
+      "line": "VFB +130",
       "reason": "No model data"
     },
     {
       "sport": "SERIE_A",
       "event": "PAR @ LAZ",
-      "line": "LAZ -125",
+      "line": "LAZ -120",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "NICE @ STR",
-      "line": "STR -105",
-      "reason": "No model data"
     },
     {
       "sport": "LIGUE_1",
@@ -455,28 +443,22 @@
       "reason": "No model data"
     },
     {
-      "sport": "MLS",
-      "event": "POR @ VAN",
-      "line": "UNDER 3.5 (-120)",
-      "reason": "Edge exists (7.8%) but category exposure limit reached"
-    },
-    {
       "sport": "MLB",
       "event": "CIN @ TEX",
       "line": "Cincinnati Reds +1.5 (-175)",
       "reason": "Edge exists (6.6%) but category exposure limit reached"
     },
     {
-      "sport": "NBA",
-      "event": "WSH @ MIA",
-      "line": "Washington Wizards +17.5 (-108)",
-      "reason": "Edge exists (5.5%) but category exposure limit reached"
-    },
-    {
       "sport": "NHL",
       "event": "DET @ NYR",
-      "line": "New York Rangers +1.5 (-205)",
-      "reason": "Edge exists (5.5%) but category exposure limit reached"
+      "line": "New York Rangers +1.5 (-198)",
+      "reason": "Edge exists (6.3%) but category exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "WSH @ MIA",
+      "line": "Washington Wizards +17.5 (-105)",
+      "reason": "Edge exists (6.2%) but category exposure limit reached"
     },
     {
       "sport": "NHL",
