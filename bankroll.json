@@ -1,8 +1,8 @@
 {
   "starting_bankroll": 500.0,
-  "balance_override": 599.00,
-  "override_note": "DK app balance on 2026-04-04. Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 599.00,
+  "balance_override": 599.96,
+  "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
+  "current_bankroll": 599.96,
   "last_updated": "2026-04-04T00:00:00.000000+00:00",
   "pending_bets": [],
   "lifetime_bets": 18,
