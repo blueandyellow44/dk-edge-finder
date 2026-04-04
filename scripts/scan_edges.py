@@ -51,6 +51,10 @@ EDGE_DISCOUNT_TIERS = [
     (0.10, 0.08),   # 10-12% → size as 8%
 ]
 
+# MLB run line calibration: model overestimates due to right-skewed margins.
+# Even with widened SD, require higher min edge for MLB.
+MLB_SPREAD_MIN_EDGE = 0.05              # 5% min for MLB run lines
+
 # Single-source Kelly penalty (25% reduction for DRatings-only picks)
 SINGLE_SOURCE_KELLY_DISCOUNT = 0.75
 
@@ -127,11 +131,15 @@ GAME_SD = {
     "nhl_spread": 1.78,
     # "nhl_total": None,  # BLOCKED — no measured value
 
-    # MLB — MEASURED then ADJUSTED (Mysterious Lights: 2.538 * 1.3 model error buffer)
+    # MLB — MEASURED then ADJUSTED (April 2026 re-calibration)
     # Raw run margin SD: 2.538 runs (single season, ~2430 games — MEDIUM confidence)
-    # Applying 30% model error buffer: 2.538 * 1.3 = 3.30 (accounts for DRatings vs market gap)
+    # Previous: 2.538 * 1.3 = 3.30 (30% buffer). Produced 20-25% edges — far too aggressive.
+    # MLB run margins are right-skewed (blowouts), so normal CDF overestimates +1.5 cover rates.
+    # Historical +1.5 underdogs cover ~57-59%, but SD=3.30 produces 62-65% model probs.
+    # Fix: widen to 2.538 * 1.8 = 4.57 (80% buffer accounts for skewness + model error).
+    # At SD=4.57: +1.5 cover with 1-run cushion ≈ 58.7% — matches historical data.
     # Totals SD: NOT measured — no published O/U margin SD for MLB
-    "mlb_spread": 3.30,
+    "mlb_spread": 4.57,
     # "mlb_total": None,  # BLOCKED — no measured value
 }
 
@@ -918,6 +926,9 @@ def get_effective_min_edge(sport: str, market: str, spread_points: float, base_m
         if abs_spread > NBA_LARGE_SPREAD_THRESHOLD:
             return max(base_min_edge, NBA_LARGE_SPREAD_MIN_EDGE)
         return max(base_min_edge, NBA_SPREAD_MIN_EDGE)
+    # MLB run line: model overestimates due to right-skewed margins
+    if sport.lower() == "mlb" and market.lower() in ("spread", "spreads"):
+        return max(base_min_edge, MLB_SPREAD_MIN_EDGE)
     return base_min_edge
 
 
