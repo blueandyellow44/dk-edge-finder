@@ -48,15 +48,15 @@
       "event_short": "BAL @ PIT",
       "market": "Spread",
       "pick": "Baltimore Orioles +1.5",
-      "odds": "151",
-      "implied": "39.8%",
+      "odds": "152",
+      "implied": "39.7%",
       "model": "64.8%",
-      "edge": 24.9,
+      "edge": 25.1,
       "tier": "High",
       "bet": "$12.00",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): BAL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (24.9%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): BAL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (25.1%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33925733?outcomes=0HC84159092N150_3",
@@ -90,15 +90,15 @@
       "event_short": "MIL @ KC",
       "market": "Spread",
       "pick": "Milwaukee Brewers +1.5",
-      "odds": "148",
-      "implied": "40.3%",
+      "odds": "150",
+      "implied": "40.0%",
       "model": "54.9%",
-      "edge": 14.5,
+      "edge": 14.9,
       "tier": "High",
       "bet": "$12.00",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): MIL 3.9, KC 4.9 (margin: 1.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.5%): Model disagrees with market by 0.5 pts. Investigate before betting. MIL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings only): MIL 3.9, KC 4.9 (margin: 1.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.9%): Model disagrees with market by 0.5 pts. Investigate before betting. MIL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33930691?outcomes=0HC84172573N150_3",
@@ -155,7 +155,7 @@
       "pick": "New York Yankees -1.5",
       "odds": "113",
       "implied": "46.9%",
-      "model": "55.3%",
+      "model": "55.2%",
       "edge": 8.3,
       "tier": "High",
       "bet": "$12.00",
@@ -297,27 +297,9 @@
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "WSH @ MIA",
-      "line": "MIA -18.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "SA @ DEN",
-      "line": "SA -1.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
       "event": "DET @ PHI",
       "line": "DET -3.5",
       "reason": "No model data"
-    },
-    {
-      "sport": "NHL",
-      "event": "COL @ DAL",
-      "line": "COL -120",
-      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
@@ -388,7 +370,7 @@
     {
       "sport": "MLB",
       "event": "HOU @ ATH",
-      "line": "HOU -115",
+      "line": "ATH -110",
       "reason": "No model data"
     },
     {
@@ -400,7 +382,7 @@
     {
       "sport": "MLB",
       "event": "CHC @ CLE",
-      "line": "CHC -143",
+      "line": "CHC -136",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -494,46 +476,16 @@
       "reason": "No model data"
     },
     {
-      "sport": "LA_LIGA",
-      "event": "BAR @ ATM",
-      "line": "BAR +105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "PAR @ LAZ",
-      "line": "LAZ -105",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "RCL @ LILL",
-      "line": "RCL +145",
-      "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Denver Nuggets",
-      "line": "Nikola Jokic OVER 10.5 Assists (-128)",
-      "reason": "Max 2 props per game (edge: 13.1%)"
-    },
-    {
       "sport": "MLB",
       "event": "CIN @ TEX",
       "line": "Cincinnati Reds +1.5 (-175)",
-      "reason": "Edge exists (6.5%) but category exposure limit reached"
+      "reason": "Edge exists (6.6%) but category exposure limit reached"
     },
     {
       "sport": "NHL",
       "event": "BOS @ TB",
       "line": "Tampa Bay Lightning -1.5 (140)",
       "reason": "Edge exists (3.8%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Philadelphia 76ers",
-      "line": "Tyrese Maxey OVER 3.5 Rebounds (-153)",
-      "reason": "Edge exists (10.1%) but category exposure limit reached"
     }
   ],
   "bets": [
