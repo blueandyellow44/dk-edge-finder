@@ -2,15 +2,15 @@
   "starting_bankroll": 500.0,
   "balance_override": 599.96,
   "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 599.96,
-  "last_updated": "2026-04-04T00:00:00.000000+00:00",
+  "current_bankroll": 557.52,
+  "last_updated": "2026-04-04T18:43:20.914650+00:00",
   "pending_bets": [],
   "lifetime_bets": 18,
-  "lifetime_wins": 11,
-  "lifetime_losses": 7,
+  "lifetime_wins": 20,
+  "lifetime_losses": 14,
   "lifetime_pushes": 0,
-  "lifetime_profit": 99.00,
-  "roi_pct": 19.8,
+  "lifetime_profit": 57.52,
+  "roi_pct": 9.9,
   "resolved_bets": [
     {
       "id": "mem-spread-20260321",
@@ -108,7 +108,7 @@
       "tier": "High",
       "bet_size": 11.41,
       "outcome": "win",
-      "pnl": 4.30,
+      "pnl": 4.3,
       "final_score": "Flyers 4, Sharks 1"
     },
     {
@@ -227,7 +227,7 @@
       "tier": "Medium",
       "bet_size": 5.72,
       "outcome": "win",
-      "pnl": 4.80,
+      "pnl": 4.8,
       "final_score": "Luka: 8 ast"
     },
     {

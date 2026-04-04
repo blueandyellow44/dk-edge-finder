@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 DK Edge Finder — Bet Resolution Script
 Runs via GitHub Actions. Checks final scores, resolves pending bets,

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 DK Edge Finder — Autonomous Edge Scanner
 Runs via GitHub Actions at 6 AM PT daily. No Claude, no Mac needed.

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations
 """
 Player Prop Edge Scanner — Real DK Odds Edition
 Fetches actual DraftKings player prop odds from The Odds API,
