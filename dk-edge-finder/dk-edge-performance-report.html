@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK Edge Finder — Performance Report</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0e17; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 4px; color: #f8fafc; }
+  .subtitle { color: #94a3b8; font-size: 0.9rem; margin-bottom: 24px; }
+  .section-title { font-size: 1.2rem; font-weight: 600; color: #f8fafc; margin: 32px 0 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+
+  /* KPI Cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .kpi-card { background: #111827; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; }
+  .kpi-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px; }
+  .kpi-value { font-size: 1.6rem; font-weight: 700; }
+  .kpi-sub { font-size: 0.8rem; color: #94a3b8; margin-top: 2px; }
+  .green { color: #22c55e; }
+  .red { color: #ef4444; }
+  .yellow { color: #eab308; }
+  .blue { color: #3b82f6; }
+
+  /* Newly resolved banner */
+  .banner { background: linear-gradient(135deg, #1e3a5f, #172554); border: 1px solid #1e40af; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+  .banner-title { font-weight: 600; color: #60a5fa; margin-bottom: 8px; }
+  .banner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 8px; }
+  .banner-bet { background: #0f172a; border-radius: 6px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .banner-pick { font-size: 0.85rem; }
+  .banner-result { font-weight: 700; font-size: 0.85rem; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 16px; }
+  th { text-align: left; padding: 10px 8px; background: #111827; color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.5px; border-bottom: 2px solid #1e293b; }
+  td { padding: 10px 8px; border-bottom: 1px solid #1e293b; }
+  tr:hover { background: #111827; }
+  .win-row { border-left: 3px solid #22c55e; }
+  .loss-row { border-left: 3px solid #ef4444; }
+
+  /* Charts */
+  .chart-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .chart-card { background: #111827; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; }
+  .chart-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; color: #f8fafc; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 8px; }
+  .bar-label { width: 90px; font-size: 0.8rem; color: #94a3b8; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 24px; background: #1e293b; border-radius: 4px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font-size: 0.7rem; font-weight: 600; min-width: 30px; }
+  .bar-fill.green-bg { background: linear-gradient(90deg, #166534, #22c55e); }
+  .bar-fill.red-bg { background: linear-gradient(90deg, #991b1b, #ef4444); }
+  .bar-record { font-size: 0.75rem; color: #94a3b8; margin-left: 8px; width: 70px; flex-shrink: 0; }
+
+  /* Insights */
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .insight-card { background: #111827; border-radius: 10px; padding: 16px; border-left: 3px solid; }
+  .insight-card.strength { border-color: #22c55e; }
+  .insight-card.growth { border-color: #eab308; }
+  .insight-card.danger { border-color: #ef4444; }
+  .insight-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: 600; }
+  .insight-card.strength .insight-label { color: #22c55e; }
+  .insight-card.growth .insight-label { color: #eab308; }
+  .insight-card.danger .insight-label { color: #ef4444; }
+  .insight-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; color: #f8fafc; }
+  .insight-body { font-size: 0.85rem; color: #cbd5e1; }
+
+  /* Full bet log */
+  .bet-log { max-height: 500px; overflow-y: auto; border: 1px solid #1e293b; border-radius: 10px; }
+  .bet-log table { margin-bottom: 0; }
+
+  .footer { text-align: center; color: #475569; font-size: 0.75rem; margin-top: 40px; padding-top: 16px; border-top: 1px solid #1e293b; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>DK Edge Finder — Performance Report</h1>
+<p class="subtitle">Full History: March 15 – April 3, 2026 &nbsp;|&nbsp; Report Generated: April 3, 2026</p>
+
+<!-- KPI Cards -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-label">Record</div>
+    <div class="kpi-value green">20-14-0</div>
+    <div class="kpi-sub">58.8% win rate</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Lifetime Profit</div>
+    <div class="kpi-value green">+$99.96</div>
+    <div class="kpi-sub">$500 → ~$600</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">ROI</div>
+    <div class="kpi-value green">20.0%</div>
+    <div class="kpi-sub">On starting bankroll</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Avg Edge Taken</div>
+    <div class="kpi-value blue">10.8%</div>
+    <div class="kpi-sub">Winners: 10.1% / Losers: 11.9%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Best Bet Type</div>
+    <div class="kpi-value green">NHL Puck</div>
+    <div class="kpi-sub">3-0 (100%)</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Worst Bet Type</div>
+    <div class="kpi-value red">NBA Spreads</div>
+    <div class="kpi-sub">5-7 (41.7%)</div>
+  </div>
+</div>
+
+<!-- Newly Resolved Bets -->
+<div class="banner">
+  <div class="banner-title">🆕 Newly Resolved — March 29 MLB Bets (2W-2L, -$8.37)</div>
+  <div class="banner-grid">
+    <div class="banner-bet">
+      <span class="banner-pick">KC Royals +1.5 @ ATL &nbsp;(4.1% edge)</span>
+      <span class="banner-result green">✓ WIN +$7.46</span>
+    </div>
+    <div class="banner-bet">
+      <span class="banner-pick">CIN Reds +1.5 vs BOS &nbsp;(7.2% edge)</span>
+      <span class="banner-result green">✓ WIN +$8.51</span>
+    </div>
+    <div class="banner-bet">
+      <span class="banner-pick">STL Cardinals +1.5 vs TB &nbsp;(10.4% edge)</span>
+      <span class="banner-result red">✗ LOSS -$12.17</span>
+    </div>
+    <div class="banner-bet">
+      <span class="banner-pick">NYM Mets -1.5 vs PIT &nbsp;(10.8% edge)</span>
+      <span class="banner-result red">✗ LOSS -$12.17</span>
+    </div>
+  </div>
+</div>
+
+<!-- Performance by Sport -->
+<div class="section-title">Performance by Sport</div>
+<div class="chart-container">
+  <div class="chart-card">
+    <div class="chart-title">Win Rate by Sport</div>
+    <div class="bar-row">
+      <div class="bar-label">NHL</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:100%">100%</div></div>
+      <div class="bar-record">3-0</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">NBA</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:57.7%">57.7%</div></div>
+      <div class="bar-record">15-11</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">MLB</div>
+      <div class="bar-track"><div class="bar-fill" style="width:50%; background: linear-gradient(90deg, #854d0e, #eab308);">50%</div></div>
+      <div class="bar-record">2-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">EPL</div>
+      <div class="bar-track"><div class="bar-fill red-bg" style="width:15%">0%</div></div>
+      <div class="bar-record">0-1</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">Win Rate by Market Type</div>
+    <div class="bar-row">
+      <div class="bar-label">NHL Puck</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:100%">100%</div></div>
+      <div class="bar-record">3-0</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Player Props</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:71.4%">71.4%</div></div>
+      <div class="bar-record">5-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">NBA Totals</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:66.7%">66.7%</div></div>
+      <div class="bar-record">4-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Moneyline</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:100%">100%</div></div>
+      <div class="bar-record">1-0</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">MLB Run Line</div>
+      <div class="bar-track"><div class="bar-fill" style="width:50%; background: linear-gradient(90deg, #854d0e, #eab308);">50%</div></div>
+      <div class="bar-record">2-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">NBA Spreads</div>
+      <div class="bar-track"><div class="bar-fill red-bg" style="width:41.7%">41.7%</div></div>
+      <div class="bar-record">5-7</div>
+    </div>
+  </div>
+</div>
+
+<!-- Edge Bucket Analysis -->
+<div class="section-title">Edge Bucket Analysis</div>
+<div class="chart-container">
+  <div class="chart-card">
+    <div class="chart-title">Win Rate by Edge Size</div>
+    <div class="bar-row">
+      <div class="bar-label">5-8%</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:75%">75.0%</div></div>
+      <div class="bar-record">6-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">10%+</div>
+      <div class="bar-track"><div class="bar-fill green-bg" style="width:58.8%">58.8%</div></div>
+      <div class="bar-record">10-7</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">3-5%</div>
+      <div class="bar-track"><div class="bar-fill" style="width:50%; background: linear-gradient(90deg, #854d0e, #eab308);">50.0%</div></div>
+      <div class="bar-record">4-4</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">8-10%</div>
+      <div class="bar-track"><div class="bar-fill red-bg" style="width:15%">0%</div></div>
+      <div class="bar-record">0-1</div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">NBA Spread Performance by Size</div>
+    <div class="bar-row">
+      <div class="bar-label">≤10 pts</div>
+      <div class="bar-track"><div class="bar-fill red-bg" style="width:33.3%">33%</div></div>
+      <div class="bar-record">1-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">11-14 pts</div>
+      <div class="bar-track"><div class="bar-fill" style="width:50%; background: linear-gradient(90deg, #854d0e, #eab308);">50%</div></div>
+      <div class="bar-record">2-2</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">15+ pts</div>
+      <div class="bar-track"><div class="bar-fill red-bg" style="width:40%">40%</div></div>
+      <div class="bar-record">2-3</div>
+    </div>
+    <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 12px;">NBA spreads are the model's weakest link (5-7, 41.7%). Large spreads involving bad/tanking teams are especially unreliable.</p>
+  </div>
+</div>
+
+<!-- Key Insight: Edge Magnitude -->
+<div class="section-title">Critical Finding: Edge Size ≠ Win Rate</div>
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Winners (n=20)</th>
+      <th>Losers (n=14)</th>
+      <th>Delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Average Edge</td>
+      <td class="green">10.1%</td>
+      <td class="red">11.9%</td>
+      <td class="yellow">Losers have HIGHER avg edge</td>
+    </tr>
+    <tr>
+      <td>Best Edge Bucket</td>
+      <td colspan="3">5-8% edge is the sweet spot (75% win rate, 6-2)</td>
+    </tr>
+    <tr>
+      <td>Worst Edge Bucket</td>
+      <td colspan="3">10%+ edges only hit 58.8% — model overestimates large edges</td>
+    </tr>
+    <tr>
+      <td>Biggest Edge Loss</td>
+      <td colspan="3">Luka OVER 3.5 3PT (31.2% edge) — LOSS. UNDER 237.5 TOR@CHI (26.3%) — LOSS</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Strengths & Growth Areas -->
+<div class="section-title">Model Strengths</div>
+<div class="insight-grid">
+  <div class="insight-card strength">
+    <div class="insight-label">Strength</div>
+    <div class="insight-title">NHL Puck Lines: Perfect 3-0</div>
+    <div class="insight-body">DRatings consensus data is excellent for hockey. All three picks were +1.5 underdogs with 13-18% edges. Every one converted. This is the model's most reliable market — lean into it as NHL playoffs approach.</div>
+  </div>
+  <div class="insight-card strength">
+    <div class="insight-label">Strength</div>
+    <div class="insight-title">Player Props: 5-2 (71.4%)</div>
+    <div class="insight-body">Despite early concerns about prop model accuracy, the ESPN-stats-based approach works. The opponent defense adjustment and 15% edge cap are paying off. UNDER props (Mitchell, Luka assists) are especially reliable.</div>
+  </div>
+  <div class="insight-card strength">
+    <div class="insight-label">Strength</div>
+    <div class="insight-title">NBA Totals: 4-2 (66.7%)</div>
+    <div class="insight-body">UNDER totals are 4-1. The model has a genuine edge here, likely because public money biases toward OVER, giving the book reason to shade UNDER lines favorably. The one OVER pick (NYK@BKN) lost — consider UNDER-only for totals.</div>
+  </div>
+  <div class="insight-card strength">
+    <div class="insight-label">Strength</div>
+    <div class="insight-title">5-8% Edge Bucket: 75% Win Rate</div>
+    <div class="insight-body">The model's most profitable zone. These are genuine edges — large enough to overcome vig, small enough that the model isn't overestimating. This should be the primary bet size tier.</div>
+  </div>
+</div>
+
+<div class="section-title">Areas for Growth</div>
+<div class="insight-grid">
+  <div class="insight-card danger">
+    <div class="insight-label">Critical Issue</div>
+    <div class="insight-title">NBA Spreads: 5-7 (41.7%) — Below Breakeven</div>
+    <div class="insight-body">This is the single biggest drag on the model. NBA spread bets are actively losing money. Large spreads (15+ pts) on bad/tanking teams are the worst offenders. The tank penalty helps but isn't enough. Consider: raising min edge to 5% for all NBA spreads, 8% for spreads >12 pts, or skipping NBA spreads entirely and redeploying that capital to totals and props.</div>
+  </div>
+  <div class="insight-card growth">
+    <div class="insight-label">Growth Area</div>
+    <div class="insight-title">10%+ Edges Underperform (58.8%)</div>
+    <div class="insight-body">Large model edges don't convert at a higher rate — they convert LOWER than 5-8% edges. This confirms the model systematically overestimates large edges. The 15% cap was a good first step. Next step: apply a graduated discount (10-12% edges → treat as 8%, 12-15% → treat as 10%). Size bets based on discounted edge, not raw edge.</div>
+  </div>
+  <div class="insight-card growth">
+    <div class="insight-label">Growth Area</div>
+    <div class="insight-title">MLB First Week: 2-2 (50%) — Neutral Start</div>
+    <div class="insight-body">First 4 MLB bets split even. Run line bets on underdogs (+1.5) went 2-1 but the favorite (-1.5) lost. Early-season MLB has high variance — pitching matchups matter more than team strength models. Consider adding starter ERA/WHIP adjustments before sizing MLB edges.</div>
+  </div>
+  <div class="insight-card growth">
+    <div class="insight-label">Growth Area</div>
+    <div class="insight-title">Single-Source Risk (DRatings Only)</div>
+    <div class="insight-body">Most recent picks are DRatings-only (no Dimers cross-validation). Single-source picks are flagged as "MEDIUM confidence" but still sized at full Kelly tier. Consider: reduce Kelly fraction by 25% when only one source is available. Ensemble beats single-source every time.</div>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<div class="section-title">Actionable Recommendations</div>
+<table>
+  <thead>
+    <tr>
+      <th>Priority</th>
+      <th>Action</th>
+      <th>Expected Impact</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span style="color:#ef4444; font-weight:700;">P0</span></td>
+      <td>Raise NBA spread min edge from 3% to 5% (8% for spreads >12 pts)</td>
+      <td>Would have avoided 4 of 7 losses (BKN +19.5, SAC +13.5, DAL +8.5, GS +10.5)</td>
+    </tr>
+    <tr>
+      <td><span style="color:#ef4444; font-weight:700;">P0</span></td>
+      <td>Settle March 29 bets in bankroll.json and data.json (currently still "pending")</td>
+      <td>Accurate bankroll tracking — system shows $608.33, reality is ~$600</td>
+    </tr>
+    <tr>
+      <td><span style="color:#eab308; font-weight:700;">P1</span></td>
+      <td>Apply graduated edge discount: 10-12% → treat as 8%, 12-15% → treat as 10%</td>
+      <td>Better sizing — stops overweighting edges that don't convert at claimed rate</td>
+    </tr>
+    <tr>
+      <td><span style="color:#eab308; font-weight:700;">P1</span></td>
+      <td>Reduce Kelly fraction by 25% for single-source (DRatings-only) picks</td>
+      <td>Lower exposure on lower-confidence picks without eliminating them</td>
+    </tr>
+    <tr>
+      <td><span style="color:#3b82f6; font-weight:700;">P2</span></td>
+      <td>Add MLB pitcher matchup data (ERA, WHIP, recent form) to model</td>
+      <td>Better calibration for baseball — team strength alone isn't enough</td>
+    </tr>
+    <tr>
+      <td><span style="color:#3b82f6; font-weight:700;">P2</span></td>
+      <td>Increase NHL bet volume — it's the highest-conviction market</td>
+      <td>More capital deployed to the model's strongest sport</td>
+    </tr>
+    <tr>
+      <td><span style="color:#3b82f6; font-weight:700;">P2</span></td>
+      <td>Consider UNDER-only strategy for NBA totals (4-1 on UNDERs vs 0-1 on OVERs)</td>
+      <td>Higher win rate on totals by leaning into public-bias exploit</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Full Bet Log -->
+<div class="section-title">Full Bet Log (34 Bets)</div>
+<div class="bet-log">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Date</th>
+      <th>Sport</th>
+      <th>Pick</th>
+      <th>Edge</th>
+      <th>Wager</th>
+      <th>Result</th>
+      <th>P&L</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="win-row"><td>1</td><td>3/15</td><td>NBA</td><td>76ers ML +270</td><td>11.0%</td><td>$25.00</td><td class="green">WIN</td><td class="green">+$67.50</td></tr>
+    <tr class="win-row"><td>2</td><td>3/16</td><td>NBA</td><td>Suns +8.5</td><td>7.6%</td><td>$18.37</td><td class="green">WIN</td><td class="green">+$16.69</td></tr>
+    <tr class="win-row"><td>3</td><td>3/17</td><td>NBA</td><td>Wizards +18</td><td>7.6%</td><td>$24.00</td><td class="green">WIN</td><td class="green">+$21.82</td></tr>
+    <tr class="loss-row"><td>4</td><td>3/17</td><td>NBA</td><td>Pacers +15.5</td><td>4.1%</td><td>$13.00</td><td class="red">LOSS</td><td class="red">-$13.00</td></tr>
+    <tr class="loss-row"><td>5</td><td>3/17</td><td>NBA</td><td>Kings +13.5</td><td>3.5%</td><td>$11.50</td><td class="red">LOSS</td><td class="red">-$11.50</td></tr>
+    <tr class="loss-row"><td>6</td><td>3/18</td><td>NBA</td><td>Nets +19.5</td><td>9.2%</td><td>$29.00</td><td class="red">LOSS</td><td class="red">-$29.00</td></tr>
+    <tr class="loss-row"><td>7</td><td>3/18</td><td>NBA</td><td>Jazz +13.5</td><td>7.9%</td><td>$25.00</td><td class="red">LOSS</td><td class="red">-$25.00</td></tr>
+    <tr class="win-row"><td>8</td><td>3/18</td><td>NBA</td><td>Grizzlies +13.5</td><td>4.6%</td><td>$16.00</td><td class="green">WIN</td><td class="green">+$13.55</td></tr>
+    <tr class="loss-row"><td>9</td><td>3/18</td><td>NBA</td><td>Mavericks +8.5</td><td>3.7%</td><td>$12.00</td><td class="red">LOSS</td><td class="red">-$12.00</td></tr>
+    <tr class="win-row"><td>10</td><td>3/18</td><td>NBA</td><td>UNDER 246.5 DEN@MEM</td><td>5.7%</td><td>$22.44</td><td class="green">WIN</td><td class="green">+$20.77</td></tr>
+    <tr class="win-row"><td>11</td><td>3/18</td><td>NBA</td><td>UNDER 237.5 LAC@NO</td><td>5.7%</td><td>$24.98</td><td class="green">WIN</td><td class="green">+$23.79</td></tr>
+    <tr class="loss-row"><td>12</td><td>3/18</td><td>NBA</td><td>UNDER 237.5 TOR@CHI</td><td>26.3%</td><td>$24.98</td><td class="red">LOSS</td><td class="red">-$24.98</td></tr>
+    <tr class="win-row"><td>13</td><td>3/19</td><td>NHL</td><td>Red Wings +1.5</td><td>13.6%</td><td>$27.43</td><td class="green">WIN</td><td class="green">+$9.62</td></tr>
+    <tr class="win-row"><td>14</td><td>3/19</td><td>NHL</td><td>Islanders +1.5</td><td>17.5%</td><td>$27.43</td><td class="green">WIN</td><td class="green">+$12.58</td></tr>
+    <tr class="win-row"><td>15</td><td>3/19</td><td>NHL</td><td>Panthers +1.5</td><td>18.2%</td><td>$27.43</td><td class="green">WIN</td><td class="green">+$14.83</td></tr>
+    <tr class="win-row"><td>16</td><td>3/20</td><td>NBA</td><td>Grizzlies +15.5</td><td>11.4%</td><td>$29.28</td><td class="green">WIN</td><td class="green">+$26.14</td></tr>
+    <tr class="loss-row"><td>17</td><td>3/20</td><td>NBA</td><td>OVER 214.5 NYK@BKN</td><td>6.6%</td><td>$21.24</td><td class="red">LOSS</td><td class="red">-$21.24</td></tr>
+    <tr class="win-row"><td>18</td><td>3/20</td><td>NBA</td><td>UNDER 229.5 BOS@MEM</td><td>4.3%</td><td>$8.05</td><td class="green">WIN</td><td class="green">+$7.32</td></tr>
+    <tr class="loss-row"><td>19</td><td>3/20</td><td>EPL</td><td>UNDER 3.5 MAN@BOU</td><td>11.5%</td><td>$29.28</td><td class="red">LOSS</td><td class="red">-$29.28</td></tr>
+    <tr class="win-row"><td>20</td><td>3/21</td><td>NBA</td><td>Harden OVER 2.5 3PT</td><td>17.0%</td><td>$11.41</td><td class="green">WIN</td><td class="green">+$9.12</td></tr>
+    <tr class="win-row"><td>21</td><td>3/21</td><td>NBA</td><td>Luka UNDER 8.5 AST</td><td>14.1%</td><td>$5.72</td><td class="green">WIN</td><td class="green">+$4.80</td></tr>
+    <tr class="win-row"><td>22</td><td>3/21</td><td>NBA</td><td>Mitchell UNDER 2.5 3PT</td><td>17.0%</td><td>$11.41</td><td class="green">WIN</td><td class="green">+$8.20</td></tr>
+    <tr class="win-row"><td>23</td><td>3/21</td><td>NBA</td><td>SGA OVER 6.5 AST</td><td>18.6%</td><td>$11.41</td><td class="green">WIN</td><td class="green">+$10.86</td></tr>
+    <tr class="win-row"><td>24</td><td>3/21</td><td>NBA</td><td>Luka OVER 32.5 PTS</td><td>20.8%</td><td>$11.41</td><td class="green">WIN</td><td class="green">+$9.35</td></tr>
+    <tr class="loss-row"><td>25</td><td>3/21</td><td>NBA</td><td>Wemby OVER 2.5 3PT</td><td>23.5%</td><td>$11.41</td><td class="red">LOSS</td><td class="red">-$11.41</td></tr>
+    <tr class="loss-row"><td>26</td><td>3/21</td><td>NBA</td><td>Luka OVER 3.5 3PT</td><td>31.2%</td><td>$11.41</td><td class="red">LOSS</td><td class="red">-$11.41</td></tr>
+    <tr class="win-row"><td>27</td><td>3/21</td><td>NBA</td><td>UNDER 234.5 MEM@CHA</td><td>3.4%</td><td>$10.22</td><td class="green">WIN</td><td class="green">+$9.73</td></tr>
+    <tr class="loss-row"><td>28</td><td>3/21</td><td>NBA</td><td>Warriors +10.5</td><td>4.6%</td><td>$11.41</td><td class="red">LOSS</td><td class="red">-$11.41</td></tr>
+    <tr class="win-row"><td>29</td><td>3/21</td><td>NBA</td><td>Bucks +11.5</td><td>6.1%</td><td>$11.41</td><td class="green">WIN</td><td class="green">+$10.37</td></tr>
+    <tr class="loss-row"><td>30</td><td>3/21</td><td>NBA</td><td>Grizzlies +17.5</td><td>11.2%</td><td>$11.41</td><td class="red">LOSS</td><td class="red">-$11.41</td></tr>
+    <tr class="win-row" style="background:#0f2318;"><td>31</td><td>3/29</td><td>MLB</td><td>KC Royals +1.5 @ ATL</td><td>4.1%</td><td>$12.17</td><td class="green">WIN</td><td class="green">+$7.46</td></tr>
+    <tr class="win-row" style="background:#0f2318;"><td>32</td><td>3/29</td><td>MLB</td><td>CIN Reds +1.5 vs BOS</td><td>7.2%</td><td>$12.17</td><td class="green">WIN</td><td class="green">+$8.51</td></tr>
+    <tr class="loss-row" style="background:#1f0f0f;"><td>33</td><td>3/29</td><td>MLB</td><td>STL Cardinals +1.5 vs TB</td><td>10.4%</td><td>$12.17</td><td class="red">LOSS</td><td class="red">-$12.17</td></tr>
+    <tr class="loss-row" style="background:#1f0f0f;"><td>34</td><td>3/29</td><td>MLB</td><td>NYM Mets -1.5 vs PIT</td><td>10.8%</td><td>$12.17</td><td class="red">LOSS</td><td class="red">-$12.17</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="footer">
+  DK Edge Finder Performance Report — Generated April 3, 2026<br>
+  Model: DRatings + Dimers Ensemble | Kelly Criterion Sizing | 34 lifetime bets
+</div>
+
+</div>
+</body>
+</html>

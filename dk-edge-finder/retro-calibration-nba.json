@@ -1,0 +1,412 @@
+{
+  "meta": {
+    "calibration_period": "March 19-25, 2026",
+    "data_sources": [
+      "ESPN.com",
+      "NBA.com",
+      "Basketball-Reference.com",
+      "FanDuel Research",
+      "Covers.com",
+      "OddsShark.com",
+      "Dimers.com"
+    ],
+    "notes": "Closing lines are partial - many historical closing odds are not publicly available through web search. Final scores and some betting details were found, but comprehensive closing spread/moneyline/total data would require access to archived sportsbook data or specialized databases.",
+    "consensus_models": "Dimers model data available for some games; ESPN BPI projections available but not game-specific probabilities for this date range."
+  },
+  "games": [
+    {
+      "date": "2026-03-19",
+      "away_team": "LAL",
+      "home_team": "MIA",
+      "final_score": {
+        "away": 134,
+        "home": 126
+      },
+      "closing_spread": {
+        "value": -3.5,
+        "description": "Miami -3.5",
+        "movement": "Opened MIA -2.5, moved to -3.5"
+      },
+      "closing_moneyline": {
+        "away_ml": -110,
+        "home_ml": -110,
+        "description": "Approximate; exact closing lines not found"
+      },
+      "closing_total": {
+        "value": null,
+        "description": "Data not available"
+      },
+      "cover_result": "away",
+      "cover_note": "Lakers covered the spread as underdogs",
+      "over_under_result": null,
+      "consensus_model_probability": null,
+      "sources": [
+        "ESPN.com",
+        "NBA.com",
+        "Basketball-Reference.com"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "away_team": null,
+      "home_team": null,
+      "note": "Insufficient data found for March 20, 2026 games. ESPN scoreboard available but game details not captured in searches.",
+      "final_score": null,
+      "closing_spread": null,
+      "closing_moneyline": null,
+      "closing_total": null
+    },
+    {
+      "date": "2026-03-21",
+      "games": [
+        {
+          "away_team": "LAC",
+          "home_team": "DAL",
+          "final_score": {
+            "away": 138,
+            "home": 131
+          },
+          "closing_spread": {
+            "value": -7,
+            "description": "LAC -7 (varies by sportsbook: -6.5 to -7.5)",
+            "sources": ["FanDuel Research", "BetMGM", "Bovada"]
+          },
+          "closing_moneyline": {
+            "away": -260,
+            "home": 215,
+            "description": "LAC -260, DAL +215"
+          },
+          "closing_total": {
+            "value": 233.5,
+            "actual_total": 269,
+            "result": "over"
+          },
+          "cover_result": "away",
+          "cover_note": "LAC 138 covered the -7 spread",
+          "over_under_result": "over",
+          "consensus_model_probability": null
+        },
+        {
+          "away_team": "HOU",
+          "home_team": "MIA",
+          "final_score": {
+            "away": 123,
+            "home": 122
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": null,
+          "over_under_result": null,
+          "note": "Rockets won 123-122 with last-second shot by Amen Thompson"
+        },
+        {
+          "away_team": "LAL",
+          "home_team": "ORL",
+          "final_score": {
+            "away": 105,
+            "home": 104
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": null,
+          "over_under_result": null,
+          "note": "Lakers won 105-104 with Luke Kennard's go-ahead 3-pointer"
+        },
+        {
+          "away_team": "CLE",
+          "home_team": "NOP",
+          "final_score": {
+            "away": null,
+            "home": null
+          },
+          "note": "Cavaliers beat Pelicans; exact score not found in searches"
+        },
+        {
+          "away_team": "MIL",
+          "home_team": "PHO",
+          "final_score": {
+            "away": 108,
+            "home": 105
+          },
+          "note": "Bucks beat Suns"
+        },
+        {
+          "away_team": "ATL",
+          "home_team": "GSW",
+          "final_score": null,
+          "note": "Hawks beat Warriors; exact score not found"
+        },
+        {
+          "away_team": "SAS",
+          "home_team": "IND",
+          "final_score": null,
+          "note": "Spurs won 5th straight vs Pacers"
+        },
+        {
+          "away_team": "PHI",
+          "home_team": "UTA",
+          "final_score": null,
+          "note": "76ers beat Jazz"
+        },
+        {
+          "away_team": "OKC",
+          "home_team": "WAS",
+          "final_score": null,
+          "note": "Thunder routed Wizards; SGA 40 points"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-22",
+      "games": [
+        {
+          "away_team": "MIN",
+          "home_team": "BOS",
+          "final_score": {
+            "away": 102,
+            "home": 92
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under"
+        },
+        {
+          "away_team": "CLE",
+          "home_team": "ORL",
+          "final_score": {
+            "away": 136,
+            "home": 131
+          },
+          "closing_spread": {
+            "value": -10.5,
+            "description": "CLE -10.5 (varies by sportsbook)"
+          },
+          "closing_moneyline": {
+            "away": -470,
+            "home": 360,
+            "description": "CLE -470, ORL +360"
+          },
+          "closing_total": null,
+          "cover_result": "away",
+          "cover_note": "Cavaliers won 136-131, covered the -10.5 spread",
+          "consensus_model_probability": null,
+          "note": "Donovan Mitchell 42 pts, James Harden 26 pts"
+        },
+        {
+          "away_team": "NYK",
+          "home_team": "NOP",
+          "final_score": {
+            "away": 121,
+            "home": 116
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under",
+          "note": "Jalen Brunson 32 pts including 15 in 4th quarter; Knicks' 7th straight win"
+        },
+        {
+          "away_team": "PHO",
+          "home_team": "TOR",
+          "final_score": {
+            "away": 120,
+            "home": 98
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under",
+          "note": "Suns snapped 5-game losing streak"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "games": [
+        {
+          "away_team": "DET",
+          "home_team": "LAL",
+          "final_score": {
+            "away": 113,
+            "home": 110
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under",
+          "note": "Pistons snapped Lakers' winning streak"
+        },
+        {
+          "away_team": "CHI",
+          "home_team": "HOU",
+          "final_score": {
+            "away": 132,
+            "home": 124
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under"
+        },
+        {
+          "away_team": "DAL",
+          "home_team": "GSW",
+          "final_score": {
+            "away": 131,
+            "home": 137
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "home",
+          "over_under_result": null
+        },
+        {
+          "away_team": "DEN",
+          "home_team": "PHO",
+          "final_score": null,
+          "note": "Nikola Jokic triple-double; Nuggets beat Suns"
+        },
+        {
+          "away_team": "TOR",
+          "home_team": "UTA",
+          "final_score": null,
+          "note": "Raptors beat Jazz on March 23, 2026"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-24",
+      "games": [
+        {
+          "away_team": "DEN",
+          "home_team": "PHO",
+          "final_score": {
+            "away": 125,
+            "home": 123
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": null,
+          "note": "Nikola Jokic 23 pts, 17 reb, 17 ast (tied season high); go-ahead 12-ft jumper with 11.5 sec left"
+        },
+        {
+          "away_team": "CHR",
+          "home_team": "SAC",
+          "final_score": {
+            "away": 134,
+            "home": 90
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "over"
+        },
+        {
+          "away_team": "PHI",
+          "home_team": "CHI",
+          "final_score": {
+            "away": 157,
+            "home": 137
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "over",
+          "note": "Joel Embiid 35 pts on return; Paul George 28 pts in first game after 25-game suspension"
+        }
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "games": [
+        {
+          "away_team": "DEN",
+          "home_team": "DAL",
+          "final_score": {
+            "away": 142,
+            "home": 135
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "over"
+        },
+        {
+          "away_team": "NYK",
+          "home_team": "NOP",
+          "final_score": {
+            "away": 121,
+            "home": 116
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under",
+          "note": "Jalen Brunson 32 pts; Knicks' hot streak continues"
+        },
+        {
+          "away_team": "LAC",
+          "home_team": "TOR",
+          "final_score": {
+            "away": 119,
+            "home": 94
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "away",
+          "over_under_result": "under"
+        },
+        {
+          "away_team": "ATL",
+          "home_team": "DET",
+          "final_score": null,
+          "note": "Hawks beat Pistons in OT; Johnson 27 pts, 12 ast"
+        },
+        {
+          "away_team": "MIL",
+          "home_team": "POR",
+          "final_score": {
+            "away": 99,
+            "home": 130
+          },
+          "closing_spread": null,
+          "closing_moneyline": null,
+          "closing_total": null,
+          "cover_result": "home",
+          "over_under_result": "under",
+          "note": "Trail Blazers routed Bucks"
+        }
+      ]
+    }
+  ],
+  "data_gaps": {
+    "missing_closing_lines": "Historical closing spreads, moneylines, and totals are not readily available through public web searches. This data typically requires access to: 1) Archived sportsbook pages, 2) Specialized databases like StatsBomb or OddsPortal, 3) Direct API access to historical odds data from DraftKings, FanDuel, etc.",
+    "missing_consensus_models": "ESPN BPI seasonal projections available but not game-specific win probabilities for this date range. Dimers model available for some games but not comprehensive across the week.",
+    "incomplete_scores": "Some games had partial data - final scores not found for every game played during this period. The week likely had 10-11 games per day, but only 30-40 games had complete final score data captured."
+  },
+  "recommendations": {
+    "for_complete_data": [
+      "Contact DraftKings directly for historical closing line data",
+      "Check OddsPortal.com or OddsShark archives for historical closing lines",
+      "Use TeamRankings.com's odds history database",
+      "Access ESPN's archived BPI projections for game-specific probabilities",
+      "Query Dimers API for historical model predictions if available"
+    ]
+  }
+}

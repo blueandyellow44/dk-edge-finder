@@ -50,6 +50,77 @@ def fetch_nba_scores(date_str: str) -> list[dict]:
         return []
 
 
+def fetch_espn_scores(sport_path: str, date_str: str) -> list[dict]:
+    """Generic ESPN scoreboard fetcher. sport_path like 'hockey/nhl', 'baseball/mlb', etc."""
+    url = f"https://site.api.espn.com/apis/site/v2/sports/{sport_path}/scoreboard?dates={date_str}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode())
+        games = []
+        for event in data.get("events", []):
+            competition = event["competitions"][0]
+            status = competition["status"]["type"]["name"]
+            teams = {}
+            for competitor in competition["competitors"]:
+                hoa = competitor["homeAway"]
+                teams[hoa] = {
+                    "name": competitor["team"]["displayName"],
+                    "abbr": competitor["team"]["abbreviation"],
+                    "score": int(competitor.get("score", 0)),
+                }
+            games.append({
+                "home": teams.get("home", {}),
+                "away": teams.get("away", {}),
+                "status": status,
+                "is_final": status == "STATUS_FINAL",
+                "event_id": event.get("id", ""),
+            })
+        return games
+    except Exception as e:
+        print(f"ESPN API error ({sport_path}): {e}", file=sys.stderr)
+        return []
+
+
+def fetch_nhl_scores(date_str: str) -> list[dict]:
+    """Fetch NHL scores from ESPN API."""
+    return fetch_espn_scores("hockey/nhl", date_str)
+
+
+def fetch_mlb_scores(date_str: str) -> list[dict]:
+    """Fetch MLB scores from ESPN API."""
+    return fetch_espn_scores("baseball/mlb", date_str)
+
+
+# ESPN soccer league paths
+SOCCER_LEAGUES = {
+    "epl": "soccer/eng.1",
+    "la_liga": "soccer/esp.1",
+    "bundesliga": "soccer/ger.1",
+    "serie_a": "soccer/ita.1",
+    "ligue_1": "soccer/fra.1",
+    "ucl": "soccer/uefa.champions",
+    "mls": "soccer/usa.1",
+}
+
+
+def fetch_soccer_scores(league: str, date_str: str) -> list[dict]:
+    """Fetch soccer scores from ESPN API for a specific league."""
+    path = SOCCER_LEAGUES.get(league.lower(), f"soccer/{league}")
+    return fetch_espn_scores(path, date_str)
+
+
+# Sport → fetcher mapping
+SPORT_FETCHERS = {
+    "nba": lambda d: fetch_nba_scores(d),
+    "nhl": lambda d: fetch_nhl_scores(d),
+    "mlb": lambda d: fetch_mlb_scores(d),
+}
+# Soccer leagues use sport-specific fetchers
+for league_key in SOCCER_LEAGUES:
+    SPORT_FETCHERS[league_key] = lambda d, lk=league_key: fetch_soccer_scores(lk, d)
+
+
 def find_game_score(games: list[dict], event_str: str) -> Optional[dict]:
     """Match a bet's event string (e.g. 'Pistons @ Wizards') to an ESPN game."""
     # Parse "Away @ Home" format
@@ -171,19 +242,26 @@ def main():
 
     print(f"Found {len(pending)} pending bet(s). Fetching scores...")
 
-    # Get unique dates from pending bets
-    dates = set()
+    # Get unique (sport, date) pairs from pending bets
+    sport_dates = set()
     for bet in pending:
         d = bet.get("date", "")
+        sport = bet.get("sport", "nba").lower()
         if d:
-            dates.add(d.replace("-", ""))
+            sport_dates.add((sport, d.replace("-", "")))
 
-    # Fetch scores for each date
-    all_games = []
-    for date_str in dates:
-        games = fetch_nba_scores(date_str)
-        all_games.extend(games)
-        print(f"  Fetched {len(games)} games for {date_str}")
+    # Fetch scores for each sport/date combination
+    all_games = {}  # keyed by sport
+    for sport, date_str in sport_dates:
+        fetcher = SPORT_FETCHERS.get(sport)
+        if not fetcher:
+            print(f"  No score fetcher for sport: {sport}")
+            continue
+        games = fetcher(date_str)
+        if sport not in all_games:
+            all_games[sport] = []
+        all_games[sport].extend(games)
+        print(f"  Fetched {len(games)} {sport.upper()} games for {date_str}")
 
     # Resolve each pending bet
     resolved_count = 0
@@ -191,7 +269,9 @@ def main():
         if bet.get("outcome") != "pending":
             continue
 
-        game = find_game_score(all_games, bet["event"])
+        sport = bet.get("sport", "nba").lower()
+        sport_games = all_games.get(sport, [])
+        game = find_game_score(sport_games, bet["event"])
         if not game:
             print(f"  Could not find game: {bet['event']}")
             continue
@@ -324,9 +404,10 @@ def main():
     resolve_pick_history(all_games)
 
 
-def resolve_pick_history(all_games: list[dict]):
+def resolve_pick_history(all_games: dict):
     """Resolve pending picks in pick_history.json for paper-trading analysis.
     Uses the same ESPN scores already fetched. Resolves ALL picks, not just placed bets.
+    all_games is a dict keyed by sport.
     """
     HISTORY_JSON = REPO_ROOT / "pick_history.json"
     if not HISTORY_JSON.exists():
@@ -344,29 +425,25 @@ def resolve_pick_history(all_games: list[dict]):
     if not pending:
         return
 
-    # Fetch scores for any dates not already in all_games
-    extra_dates = set()
+    # Fetch scores for any sport/date combos not already fetched
     for h in pending:
         d = h.get("scan_date", "").replace("-", "")
-        if d:
-            extra_dates.add(d)
-
-    # Fetch any missing dates
-    existing_dates = set()
-    for g in all_games:
-        # We don't have date on individual games, so just fetch all pending dates
-        pass
-
-    for date_str in extra_dates:
-        games = fetch_nba_scores(date_str)
-        all_games.extend(games)
+        sport = h.get("sport", "nba").lower() if h.get("sport") else "nba"
+        if not d:
+            continue
+        fetcher = SPORT_FETCHERS.get(sport)
+        if fetcher and sport not in all_games:
+            games = fetcher(d)
+            all_games[sport] = games
 
     resolved_count = 0
     for h in history:
         if h.get("outcome") != "pending":
             continue
 
-        game = find_game_score(all_games, h.get("event", ""))
+        sport = h.get("sport", "nba").lower() if h.get("sport") else "nba"
+        sport_games = all_games.get(sport, [])
+        game = find_game_score(sport_games, h.get("event", ""))
         if not game or not game["is_final"]:
             continue
 

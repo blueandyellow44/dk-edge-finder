@@ -37,6 +37,23 @@ MAX_DAILY_EXPOSURE = 0.25  # 25% total daily cap
 MAX_GAME_EXPOSURE = 0.15   # 15% budget for game edges (spreads/ML/totals)
 MAX_PROP_EXPOSURE = 0.10   # 10% budget for prop edges
 
+# ── CALIBRATION OVERRIDES (April 2026) ────────────────
+# NBA spreads: 5-7 (41.7%) — model's weakest market.
+NBA_SPREAD_MIN_EDGE = 0.05           # 5% base for NBA spreads
+NBA_LARGE_SPREAD_MIN_EDGE = 0.08     # 8% for spreads >12 pts
+NBA_LARGE_SPREAD_THRESHOLD = 12.0
+
+# Graduated edge discount for bet sizing.
+# 10%+ edges hit only 58.8% vs 75% for 5-8% edges.
+EDGE_DISCOUNT_TIERS = [
+    (0.15, 0.10),   # 15%+ → size as 10%
+    (0.12, 0.10),   # 12-15% ��� size as 10%
+    (0.10, 0.08),   # 10-12% → size as 8%
+]
+
+# Single-source Kelly penalty (25% reduction for DRatings-only picks)
+SINGLE_SOURCE_KELLY_DISCOUNT = 0.75
+
 # ── GAME OUTCOME STANDARD DEVIATIONS ───────────────
 # These are the SDs of (actual outcome - market prediction).
 # For NBA/NFL: measured from closing line ATS data (Boyd's Bets).
@@ -883,6 +900,27 @@ def calc_kelly(edge: float, decimal_odds: float, fraction: float) -> float:
     return kelly * fraction
 
 
+def discount_edge_for_sizing(raw_edge: float) -> float:
+    """Reduce large edges to realistic levels for Kelly calculation.
+    Raw edge is used for filtering; discounted edge is used for sizing.
+    10%+ edges hit only 58.8% vs 75% for 5-8% edges."""
+    for floor, cap in EDGE_DISCOUNT_TIERS:
+        if raw_edge >= floor:
+            return cap
+    return raw_edge
+
+
+def get_effective_min_edge(sport: str, market: str, spread_points: float, base_min_edge: float) -> float:
+    """Apply sport-specific min edge overrides.
+    NBA spreads are 5-7 (41.7%) — raise threshold."""
+    if sport.lower() == "nba" and market.lower() in ("spread", "spreads"):
+        abs_spread = abs(spread_points) if spread_points else 0
+        if abs_spread > NBA_LARGE_SPREAD_THRESHOLD:
+            return max(base_min_edge, NBA_LARGE_SPREAD_MIN_EDGE)
+        return max(base_min_edge, NBA_SPREAD_MIN_EDGE)
+    return base_min_edge
+
+
 def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "nba") -> dict | None:
     """
     Calculate edge for a single game's spread.
@@ -1064,6 +1102,10 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         if dk_odds_val < -200:
             min_edge = 0.05  # 5% for heavy favorites
 
+        # NBA spread calibration override (April 2026): 5% base, 8% for >12pt spreads
+        spread_pts = cand.get("spread", 0)
+        min_edge = get_effective_min_edge(sport, "spread", spread_pts, min_edge)
+
         if edge >= min_edge and edge > best_edge:
             best_edge = edge
             best = {
@@ -1090,9 +1132,14 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     # Flag suspicious edges — don't cap, but warn
     suspicious = edge > SUSPICIOUS_EDGE
 
-    # Kelly sizing
+    # Kelly sizing — apply graduated edge discount and single-source penalty
+    sizing_edge = discount_edge_for_sizing(edge)
     decimal_odds = american_to_decimal(dk_odds)
-    kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
+    kelly_fraction = KELLY_FRACTION_HIGH
+    is_single_source = pred.get("sources", 1) == 1
+    if is_single_source:
+        kelly_fraction *= SINGLE_SOURCE_KELLY_DISCOUNT
+    kelly_pct = calc_kelly(sizing_edge, decimal_odds, kelly_fraction)
 
     # Build notes — narrative first, then data
     notes_parts = [
@@ -1101,8 +1148,8 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     # Ensemble disagreement warning
     if pred.get("contested"):
         notes_parts.append(f"⚠ CONTESTED: Sources disagree by {pred['disagreement']:.1f} pts (DRatings: {pred.get('dr_margin', '?'):+.1f}, Dimers: {pred.get('dm_margin', '?'):+.1f}). Lower confidence.")
-    elif pred.get("sources", 1) == 1:
-        notes_parts.append(f"Single source — {source_label}. Lower confidence without cross-validation.")
+    elif is_single_source:
+        notes_parts.append(f"Single source — {source_label}. Lower confidence without cross-validation. Kelly reduced 25%.")
     if suspicious:
         notes_parts.append(f"⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model disagrees with market by {spread_cushion:.1f} pts. Investigate before betting.")
     if tank_note:
@@ -1236,17 +1283,22 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     # Flag suspicious edges — don't cap, but warn
     suspicious = edge > SUSPICIOUS_EDGE
 
-    # Kelly sizing
+    # Kelly sizing — apply graduated edge discount and single-source penalty
+    sizing_edge = discount_edge_for_sizing(edge)
     decimal_odds = american_to_decimal(dk_odds)
-    kelly_pct = calc_kelly(edge, decimal_odds, KELLY_FRACTION_HIGH)
+    kelly_fraction = KELLY_FRACTION_HIGH
+    is_single_source = pred.get("sources", 1) == 1
+    if is_single_source:
+        kelly_fraction *= SINGLE_SOURCE_KELLY_DISCOUNT
+    kelly_pct = calc_kelly(sizing_edge, decimal_odds, kelly_fraction)
 
     # Build notes with ensemble info
     source_label = pred.get("source_label", "DRatings")
     notes = f"Model ({source_label}): {away_abbr} {pred['away_score']:.1f}, {home_abbr} {pred['home_score']:.1f} (total: {model_total:.1f}). Line: {espn_total}. Cushion: {cushion:.1f} pts."
     if pred.get("contested"):
         notes += f" ⚠ CONTESTED: Sources disagree by {pred['disagreement']:.1f} pts."
-    elif pred.get("sources", 1) == 1:
-        notes += f" Single source — {source_label}."
+    elif is_single_source:
+        notes += f" Single source — {source_label}. Kelly reduced 25%."
     if suspicious:
         notes += f" ⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model predicts {model_total:.1f} vs market {espn_total} — {cushion:.1f} pt gap."
 
