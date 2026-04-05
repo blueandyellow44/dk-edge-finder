@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 599.96,
   "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 587.96,
+  "current_bankroll": 575.96,
   "last_updated": "2026-04-05T12:00:00-07:00",
   "pending_bets": [
     {
@@ -18,9 +18,23 @@
       "edge_pct": 33.8,
       "tier": "High",
       "bet_size": 12.0
+    },
+    {
+      "id": "tam-spread-20260405",
+      "date": "2026-04-05",
+      "sport": "mlb",
+      "event": "Tampa Bay Rays @ Minnesota Twins",
+      "market": "spread",
+      "pick": "Tampa Bay Rays +1.5",
+      "odds": 148,
+      "decimal_odds": 2.48,
+      "model_prob": 0.696,
+      "edge_pct": 29.3,
+      "tier": "High",
+      "bet_size": 12.0
     }
   ],
-  "lifetime_bets": 19,
+  "lifetime_bets": 20,
   "lifetime_wins": 20,
   "lifetime_losses": 14,
   "lifetime_pushes": 0,

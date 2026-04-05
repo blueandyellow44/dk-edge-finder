@@ -2,7 +2,7 @@
   "scan_date": "2026-04-05",
   "scan_subtitle": "Sunday, April 05, 2026 \u2014 BUNDESLIGA (2), LA_LIGA (4), LIGUE_1 (5), MLB (16), NBA (11), NHL (7), SERIE_A (3)",
   "bankroll": {
-    "available": 587.96,
+    "available": 575.96,
     "starting": 500.0,
     "profit": 99.96,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 14,
       "pushes": 0
     },
-    "pending_count": 1,
-    "pending_total": 12.0,
-    "pending_label": "1 bet(s) pending ($12.00)"
+    "pending_count": 2,
+    "pending_total": 24.0,
+    "pending_label": "2 bet(s) pending ($24.00)"
   },
   "games_analyzed": 48,
   "best_bet": {
@@ -75,7 +75,7 @@
       "edge": 29.3,
       "tier": "High",
       "bet": "$12.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): TB 4.5, MIN 4.5 (margin: 0.0). 1.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (29.3%): Model disagrees with market by 1.5 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
@@ -408,6 +408,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-04-05",
+      "sport": "MLB",
+      "event": "Tampa Bay Rays @ Minnesota Twins",
+      "pick": "Tampa Bay Rays +1.5",
+      "odds": "148",
+      "decimal_odds": 2.48,
+      "edge": 29.3,
+      "wager": 12.0,
+      "outcome": "pending"
+    },
     {
       "date": "2026-04-05",
       "sport": "MLB",
