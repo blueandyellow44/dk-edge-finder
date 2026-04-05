@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 599.96,
   "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 575.96,
+  "current_bankroll": 563.96,
   "last_updated": "2026-04-05T12:00:00-07:00",
   "pending_bets": [
     {
@@ -32,9 +32,23 @@
       "edge_pct": 29.3,
       "tier": "High",
       "bet_size": 12.0
+    },
+    {
+      "id": "cle-spread-20260405",
+      "date": "2026-04-05",
+      "sport": "mlb",
+      "event": "Chicago Cubs @ Cleveland Guardians",
+      "market": "spread",
+      "pick": "Cleveland Guardians +1.5",
+      "odds": -149,
+      "decimal_odds": 1.671,
+      "model_prob": 0.7190000000000001,
+      "edge_pct": 12.1,
+      "tier": "High",
+      "bet_size": 12.0
     }
   ],
-  "lifetime_bets": 20,
+  "lifetime_bets": 21,
   "lifetime_wins": 20,
   "lifetime_losses": 14,
   "lifetime_pushes": 0,
