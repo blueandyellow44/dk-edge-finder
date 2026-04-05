@@ -2,7 +2,7 @@
   "scan_date": "2026-04-05",
   "scan_subtitle": "Sunday, April 05, 2026 \u2014 BUNDESLIGA (2), LA_LIGA (4), LIGUE_1 (5), MLB (16), NBA (11), NHL (7), SERIE_A (3)",
   "bankroll": {
-    "available": 521.97,
+    "available": 509.97,
     "starting": 500.0,
     "profit": 99.96,
     "record": {
@@ -138,7 +138,7 @@
       "edge": 9.0,
       "tier": "High",
       "bet": "$12.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): CHC 3.5, CLE 3.5 (margin: 0.0). 1.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
