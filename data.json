@@ -2,7 +2,7 @@
   "scan_date": "2026-04-05",
   "scan_subtitle": "Sunday, April 05, 2026 \u2014 BUNDESLIGA (2), LA_LIGA (4), LIGUE_1 (5), MLB (16), NBA (11), NHL (7), SERIE_A (3)",
   "bankroll": {
-    "available": 599.96,
+    "available": 587.96,
     "starting": 500.0,
     "profit": 99.96,
     "record": {
@@ -33,7 +33,7 @@
       "edge": 7.8,
       "tier": "High",
       "bet": "$12.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings + Dimers): WSH 2.8, NYR 3.2 (margin: 0.4). 1.1 pts of cushion beyond the spread. | WSH on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers, ESPN",
