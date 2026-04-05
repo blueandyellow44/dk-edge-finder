@@ -518,17 +518,21 @@ def fetch_dimers_predictions(date_str: str, sport: str = "nba") -> dict:
     today_iso = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}"
 
     try:
-        # Determine season year: NBA/NHL 2025-26 uses Season=2025
+        # Determine season year
         year = int(date_str[:4])
         month = int(date_str[4:6])
-        season = year - 1 if month < 7 else year  # Before July = previous year's season
+        # MLB season starts in March and uses the current year (2026 season = Season=2026)
+        # NBA/NHL seasons span two years and use the starting year (2025-26 = Season=2025)
+        if api_sport == "MLB":
+            season = year  # MLB 2026 season = Season=2026
+        else:
+            season = year - 1 if month < 7 else year  # Before July = previous year's season
 
         # Search for today's round by scanning recent rounds
-        # Strategy: find round where the SIMatchID date-stamp matches today
-        # SIMatchID format: SPORT_SEASON_ROUND_AWAY_HOME
-        # We also check MatchData.Date, but it's in UTC (evening games show next day).
-        # Use DateStamp (Unix epoch) or check if majority of games match the target date.
-        base_round = {"NBA": 150, "NHL": 163, "MLB": 160, "NFL": 15}.get(api_sport, 100)
+        # MLB rounds start at 1 for Opening Day (~late March), incrementing ~1/day
+        # NBA/NHL rounds are higher numbers late in the season
+        # Base rounds updated April 2026 — NBA ~167, NHL ~181 by season end
+        base_round = {"NBA": 165, "NHL": 178, "MLB": 10, "NFL": 15}.get(api_sport, 100)
 
         # Find the round matching today's date.
         # Challenge: Levy Edge uses UTC dates, so March 18 evening ET = March 19 UTC.
@@ -587,9 +591,6 @@ def fetch_dimers_predictions(date_str: str, sport: str = "nba") -> dict:
             pred_away = pre.get("PredAwayScore")
             pred_home = pre.get("PredHomeScore")
 
-            if pred_away is None or pred_home is None:
-                continue
-
             # Extract team abbreviations from SIMatchID (format: SPORT_SEASON_ROUND_AWAY_HOME)
             parts = sid.split("_")
             if len(parts) >= 5:
@@ -597,6 +598,41 @@ def fetch_dimers_predictions(date_str: str, sport: str = "nba") -> dict:
                 home_abbr = parts[4]
             else:
                 continue
+
+            # If predicted scores are missing (common for MLB early season),
+            # derive implied scores from Pythagorean win probabilities.
+            # margin = norm.ppf(home_win_prob) * sport_SD
+            # Then split into scores using a sport-typical total.
+            if pred_away is None or pred_home is None:
+                pythag_home = pre.get("PythagHome")
+                pythag_away = pre.get("PythagAway")
+                if pythag_home is None or pythag_away is None:
+                    continue
+                # Derive margin from win probability using inverse normal CDF
+                # For MLB: typical total ~8.5 runs, SD ~4.5
+                # For others: skip (they should have PredScores)
+                if api_sport == "MLB":
+                    from math import erfc, sqrt, log
+                    # Rational approximation of inverse normal CDF (Beasley-Springer-Moro)
+                    def _norm_ppf(p: float) -> float:
+                        """Inverse normal CDF approximation (good to ~1e-6)."""
+                        if p <= 0 or p >= 1:
+                            return 0.0
+                        # Use symmetry for p < 0.5
+                        if p < 0.5:
+                            return -_norm_ppf(1 - p)
+                        t = sqrt(-2 * log(1 - p))
+                        # Abramowitz & Stegun 26.2.23 rational approx
+                        c0, c1, c2 = 2.515517, 0.802853, 0.010328
+                        d1, d2, d3 = 1.432788, 0.189269, 0.001308
+                        return t - (c0 + c1 * t + c2 * t * t) / (1 + d1 * t + d2 * t * t + d3 * t * t * t)
+
+                    implied_margin = _norm_ppf(pythag_home) * GAME_SD.get("mlb_spread", 4.57)
+                    typical_total = 8.5  # MLB average game total
+                    pred_home = round((typical_total + implied_margin) / 2, 1)
+                    pred_away = round((typical_total - implied_margin) / 2, 1)
+                else:
+                    continue
 
             key = f"{away_abbr}@{home_abbr}"
             predictions[key] = {
