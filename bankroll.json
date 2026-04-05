@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 599.96,
   "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 539.96,
+  "current_bankroll": 533.97,
   "last_updated": "2026-04-05T12:00:00-07:00",
   "pending_bets": [
     {
@@ -74,9 +74,23 @@
       "edge_pct": 8.7,
       "tier": "High",
       "bet_size": 12.0
+    },
+    {
+      "id": "new-spread-20260405",
+      "date": "2026-04-05",
+      "sport": "nhl",
+      "event": "Washington Capitals @ New York Rangers",
+      "market": "spread",
+      "pick": "New York Rangers +1.5",
+      "odds": -278,
+      "decimal_odds": 1.36,
+      "model_prob": 0.805,
+      "edge_pct": 6.9,
+      "tier": "High",
+      "bet_size": 5.99
     }
   ],
-  "lifetime_bets": 23,
+  "lifetime_bets": 24,
   "lifetime_wins": 20,
   "lifetime_losses": 14,
   "lifetime_pushes": 0,

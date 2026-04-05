@@ -2,7 +2,7 @@
   "scan_date": "2026-04-05",
   "scan_subtitle": "Sunday, April 05, 2026 \u2014 BUNDESLIGA (2), LA_LIGA (4), LIGUE_1 (5), MLB (16), NBA (11), NHL (7), SERIE_A (3)",
   "bankroll": {
-    "available": 539.96,
+    "available": 533.97,
     "starting": 500.0,
     "profit": 99.96,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 14,
       "pushes": 0
     },
-    "pending_count": 5,
-    "pending_total": 60.0,
-    "pending_label": "5 bet(s) pending ($60.00)"
+    "pending_count": 6,
+    "pending_total": 65.99,
+    "pending_label": "6 bet(s) pending ($65.99)"
   },
   "games_analyzed": 48,
   "best_bet": {
@@ -180,7 +180,7 @@
       "edge": 6.9,
       "tier": "High",
       "bet": "$5.99",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): WSH 2.8, NYR 3.2 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. | WSH on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
@@ -408,6 +408,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-04-05",
+      "sport": "NHL",
+      "event": "Washington Capitals @ New York Rangers",
+      "pick": "New York Rangers +1.5",
+      "odds": "-278",
+      "decimal_odds": 1.36,
+      "edge": 6.9,
+      "wager": 5.99,
+      "outcome": "pending"
+    },
     {
       "date": "2026-04-05",
       "sport": "MLB",
