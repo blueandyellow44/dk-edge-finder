@@ -2,7 +2,7 @@
   "starting_bankroll": 500.0,
   "balance_override": 599.96,
   "override_note": "Previous $608.33 adjusted by MLB March 29 results (-$8.37). All bets resolved.",
-  "current_bankroll": 533.97,
+  "current_bankroll": 521.97,
   "last_updated": "2026-04-05T12:00:00-07:00",
   "pending_bets": [
     {
@@ -88,9 +88,23 @@
       "edge_pct": 6.9,
       "tier": "High",
       "bet_size": 5.99
+    },
+    {
+      "id": "new-spread-20260405",
+      "date": "2026-04-05",
+      "sport": "mlb",
+      "event": "New York Mets @ San Francisco Giants",
+      "market": "spread",
+      "pick": "New York Mets +1.5",
+      "odds": 165,
+      "decimal_odds": 2.65,
+      "model_prob": 0.772,
+      "edge_pct": 39.5,
+      "tier": "High",
+      "bet_size": 12.0
     }
   ],
-  "lifetime_bets": 24,
+  "lifetime_bets": 25,
   "lifetime_wins": 20,
   "lifetime_losses": 14,
   "lifetime_pushes": 0,

@@ -2,7 +2,7 @@
   "scan_date": "2026-04-05",
   "scan_subtitle": "Sunday, April 05, 2026 \u2014 BUNDESLIGA (2), LA_LIGA (4), LIGUE_1 (5), MLB (16), NBA (11), NHL (7), SERIE_A (3)",
   "bankroll": {
-    "available": 533.97,
+    "available": 521.97,
     "starting": 500.0,
     "profit": 99.96,
     "record": {
@@ -10,9 +10,9 @@
       "losses": 14,
       "pushes": 0
     },
-    "pending_count": 6,
-    "pending_total": 65.99,
-    "pending_label": "6 bet(s) pending ($65.99)"
+    "pending_count": 7,
+    "pending_total": 77.99,
+    "pending_label": "7 bet(s) pending ($77.99)"
   },
   "games_analyzed": 48,
   "best_bet": {
@@ -33,7 +33,7 @@
       "edge": 39.5,
       "tier": "High",
       "bet": "$12.00",
-      "status": "",
+      "status": "PLACED",
       "result": "",
       "notes": "Model (DRatings only): NYM 4.0, SF 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (39.5%): Model disagrees with market by 1.0 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only, ESPN",
@@ -408,6 +408,17 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-04-05",
+      "sport": "MLB",
+      "event": "New York Mets @ San Francisco Giants",
+      "pick": "New York Mets +1.5",
+      "odds": "165",
+      "decimal_odds": 2.65,
+      "edge": 39.5,
+      "wager": 12.0,
+      "outcome": "pending"
+    },
     {
       "date": "2026-04-05",
       "sport": "NHL",
