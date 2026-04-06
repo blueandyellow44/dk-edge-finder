@@ -3,1057 +3,1209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DK Edge Finder — Positive EV Sports Bets</title>
-<meta name="description" content="Find positive expected value bets on DraftKings Oregon. Multi-source ensemble model with real DK odds.">
-<meta property="og:title" content="DK Edge Finder">
-<meta property="og:description" content="Automated edge detection for DraftKings Oregon. NBA, NHL, MLB, Soccer.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#0d0d0d">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>DK Edge Finder</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Saira+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --dk-bg:#0d0d0d;
-  --dk-surface:#1a1a1e;
-  --dk-surface-2:#242428;
-  --dk-surface-3:#2e2e34;
-  --dk-border:rgba(255,255,255,0.06);
-  --dk-green:#53d337;
-  --dk-green-hover:#47b82f;
-  --dk-red:#e5383b;
-  --dk-gold:#c4982a;
-  --dk-text:#ffffff;
-  --dk-text-2:#b0b0b8;
-  --dk-text-3:#6e6e78;
-  --dk-blue:#4a90d9;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #121212;
+  --surface: #242424;
+  --elevated: #373737;
+  --border: #4d4d4d;
+  --green: #53d337;
+  --gold: #fbd002;
+  --text: #ffffff;
+  --text2: #c5c5c5;
+  --text3: #ababab;
+  --muted: #6f6f6f;
+  --red: #b81427;
+  --blue: #076cdf;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--dk-bg);color:var(--dk-text);line-height:1.6;min-height:100vh}
-.container{max-width:1000px;margin:0 auto;padding:16px 20px}
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
 /* Header */
-.header{background:var(--dk-surface);color:var(--dk-text);padding:20px 0;margin-bottom:28px;border-bottom:1px solid var(--dk-border)}
-.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.header-left{display:flex;align-items:center;gap:12px}
-.header-crown{width:28px;height:28px;display:flex;align-items:center;justify-content:center}
-.header-crown svg{width:100%;height:100%;filter:drop-shadow(0 0 4px rgba(83,211,55,0.3))}
-.header h1{font-size:1.9rem;font-weight:900;letter-spacing:-0.6px;text-transform:uppercase;color:var(--dk-green);margin:0}
-.header-balance{text-align:right;font-family:'SF Mono','Roboto Mono','Courier New',monospace;font-size:1.3rem;font-weight:800;color:var(--dk-green)}
-.header-sub{color:var(--dk-text-2);font-size:0.8rem;display:flex;align-items:center;gap:6px;letter-spacing:0.2px}
-.pulse{width:7px;height:7px;border-radius:50%;background:var(--dk-green);display:inline-block;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.dk-header {
+  background: var(--surface);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.dk-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dk-header-left svg { flex-shrink: 0; }
+.dk-header-title {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+.dk-header-bankroll {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--green);
+}
+.dk-subheader {
+  background: var(--surface);
+  padding: 0 20px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text2);
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(83,211,55,0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(83,211,55,0); }
+}
 
-/* Stats strip */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:0 0 24px 0}
-.stat{background:var(--dk-surface-2);border:1px solid var(--dk-border);border-radius:10px;padding:16px;text-align:center;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
-.stat:hover{background:var(--dk-surface-3);border-color:rgba(255,255,255,0.1)}
-.stat-label{font-size:0.7rem;color:var(--dk-text-3);text-transform:uppercase;letter-spacing:0.8px;font-weight:700;margin-bottom:6px}
-.stat-val{font-size:1.4rem;font-weight:900;font-family:'SF Mono','Roboto Mono','Courier New',monospace;color:var(--dk-text)}
+/* Container */
+.dk-container { max-width: 960px; margin: 0 auto; padding: 0 16px 40px; }
+
+/* Stats Strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--bg);
+  margin: 16px 0;
+}
+.stat-card {
+  background: var(--surface);
+  padding: 14px 16px;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+.stat-value.green { color: var(--green); }
+.stat-value.red { color: var(--red); }
 
 /* Tabs */
-.tabs{display:flex;gap:0;border-bottom:2px solid var(--dk-border);margin-bottom:24px;overflow-x:auto}
-.tab{padding:14px 20px;font-size:0.85rem;font-weight:800;color:var(--dk-text-3);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;user-select:none;white-space:nowrap;text-transform:uppercase;letter-spacing:0.4px}
-.tab:hover{color:var(--dk-text-2)}
-.tab.active{color:var(--dk-green);border-bottom-color:var(--dk-green)}
-.tab-badge{background:var(--dk-green);color:var(--dk-bg);font-size:0.65rem;padding:3px 7px;border-radius:4px;margin-left:6px;font-weight:800}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
+.dk-tabs {
+  display: flex;
+  background: var(--surface);
+  margin-bottom: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.dk-tab {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text2);
+  background: none;
+  border: none;
+  border-bottom: 3px solid var(--bg);
+  padding: 12px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.dk-tab:hover { color: var(--text); }
+.dk-tab.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.dk-tab .badge {
+  background: var(--green);
+  color: var(--bg);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  line-height: 1.4;
+}
 
-/* Place All Button */
-.btn-place-all-wrapper{margin-bottom:20px}
-.btn-place-all{background:var(--dk-green);color:var(--dk-bg);padding:14px 24px;border:none;border-radius:10px;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%;transition:all 0.15s;letter-spacing:0.3px;box-shadow:0 2px 8px rgba(83,211,55,0.2);text-transform:uppercase}
-.btn-place-all:hover{background:var(--dk-green-hover);box-shadow:0 4px 12px rgba(83,211,55,0.3);transform:translateY(-1px)}
-.btn-place-all:disabled{background:var(--dk-surface-3);color:var(--dk-text-3);cursor:not-allowed;box-shadow:none}
+/* Tab content */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-/* Pick cards */
-.pick-card{background:var(--dk-surface);border:1px solid var(--dk-border);border-left:4px solid var(--dk-surface-3);border-radius:10px;padding:20px;margin-bottom:14px;transition:all 0.15s;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.pick-card:hover{background:var(--dk-surface-2);border-color:rgba(255,255,255,0.1);box-shadow:0 3px 8px rgba(0,0,0,0.3)}
-.pick-card.unplaced{border-left-color:var(--dk-surface-3)}
-.pick-card.placed{border-left-color:var(--dk-green)}
-.pick-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
-.pick-left{flex:1}
-.pick-title{font-size:1.15rem;font-weight:800;color:var(--dk-text);font-family:'SF Mono','Roboto Mono','Courier New',monospace;margin-bottom:4px}
-.pick-title .odds{color:var(--dk-blue);font-weight:700;margin-left:10px}
-.pick-meta{color:var(--dk-text-3);font-size:0.8rem;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.pick-right{text-align:right;flex-shrink:0}
-.pick-edge{font-size:1.3rem;font-weight:900;color:var(--dk-green);margin-bottom:2px}
-.pick-wager{font-size:1.5rem;font-weight:900;color:var(--dk-text);font-family:'SF Mono','Roboto Mono','Courier New',monospace}
+/* Result Banners */
+.result-banners { margin-bottom: 16px; }
+.result-banner {
+  background: var(--surface);
+  padding: 12px 16px;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid var(--blue);
+}
+.result-banner.win {
+  border-left-color: var(--green);
+  border-top: 3px solid var(--gold);
+}
+.result-banner.loss { border-left-color: var(--red); }
+.result-banner.pending-bet { border-left-color: var(--blue); }
+.banner-left { display: flex; flex-direction: column; gap: 2px; }
+.banner-pick { font-size: 13px; font-weight: 700; }
+.banner-event { font-size: 11px; color: var(--text3); }
+.banner-right { display: flex; align-items: center; gap: 12px; }
+.banner-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+.banner-badge.win-badge { background: rgba(83,211,55,0.15); color: var(--green); }
+.banner-badge.loss-badge { background: rgba(184,20,39,0.15); color: var(--red); }
+.banner-badge.pending-badge { background: rgba(7,108,223,0.15); color: var(--blue); }
+.banner-pnl { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.banner-pnl.pos { color: var(--green); }
+.banner-pnl.neg { color: var(--red); }
 
-.pick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--dk-border)}
-.pick-stat .ps-label{font-size:0.65rem;color:var(--dk-text-3);text-transform:uppercase;letter-spacing:0.6px;font-weight:800}
-.pick-stat .ps-val{font-size:0.95rem;font-weight:700;color:var(--dk-text);margin-top:3px;font-family:'SF Mono','Roboto Mono','Courier New',monospace}
+/* Pick Cards */
+.pick-card {
+  background: var(--surface);
+  border-bottom: 1px solid var(--bg);
+  transition: background 0.15s;
+}
+.pick-card:hover { background: var(--elevated); }
+.pick-card.placed .pick-row { opacity: 0.5; }
+.pick-card.placed .pick-placed-tag { display: inline-block; }
+.pick-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  gap: 12px;
+}
+.pick-left { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.pick-top-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sport-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background: var(--elevated);
+  color: var(--text3);
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.pick-event {
+  font-size: 12px;
+  color: var(--text3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pick-market {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.pick-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.32px;
+  color: var(--text);
+}
+.pick-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.pick-odds-cell {
+  height: 44px;
+  min-width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--bg);
+  padding: 0 10px;
+}
+.pick-edge {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+}
+.pick-bet {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  white-space: nowrap;
+}
+.pick-placed-tag {
+  display: none;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--green);
+  color: var(--bg);
+  padding: 2px 6px;
+  letter-spacing: 0.5px;
+}
 
-.pick-analysis{color:var(--dk-text-2);font-size:0.85rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--dk-border);line-height:1.6;display:none}
-.pick-analysis.open{display:block}
-.pick-analysis .src{color:var(--dk-blue);font-size:0.75rem;font-weight:700;letter-spacing:0.2px}
+/* Pick Details (expandable) */
+.pick-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 16px;
+  background: var(--surface);
+}
+.pick-card.expanded .pick-details {
+  max-height: 400px;
+  padding: 0 16px 16px;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.detail-item {}
+.detail-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.detail-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
+.pick-notes {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.pick-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn-dk {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.15s;
+}
+.btn-dk:hover { opacity: 0.85; }
+.btn-dk-primary {
+  background: var(--green);
+  color: var(--bg);
+}
+.btn-dk-secondary {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+.btn-dk-secondary:hover { border-color: var(--text2); }
 
-.pick-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+/* Place All */
+.place-all-bar {
+  position: sticky;
+  bottom: 0;
+  padding: 12px 16px;
+  background: var(--bg);
+  z-index: 90;
+}
+.place-all-btn {
+  width: 100%;
+  height: 56px;
+  background: var(--green);
+  color: var(--bg);
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  letter-spacing: 0.5px;
+}
+.place-all-btn:hover { opacity: 0.9; }
+.place-all-btn:disabled { opacity: 0.4; cursor: default; }
 
-/* Buttons */
-.btn{border:none;padding:9px 16px;border-radius:8px;font-size:0.8rem;font-weight:800;cursor:pointer;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.3px}
-.btn:active{transform:scale(0.97)}
+/* No-edge games */
+.no-edge-section { margin-top: 16px; }
+.no-edge-toggle {
+  font-size: 12px;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 10px 16px;
+  background: var(--surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.no-edge-toggle:hover { background: var(--elevated); }
+.no-edge-list { display: none; }
+.no-edge-list.open { display: block; }
+.no-edge-row {
+  font-size: 12px;
+  color: var(--text3);
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.no-edge-sport {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 36px;
+  flex-shrink: 0;
+}
+.no-edge-event { flex: 1; margin: 0 12px; }
+.no-edge-reason { color: var(--muted); font-size: 11px; text-align: right; }
 
-.btn-place{background:var(--dk-green);color:var(--dk-bg);box-shadow:0 1px 3px rgba(83,211,55,0.2)}
-.btn-place:hover{background:var(--dk-green-hover);box-shadow:0 2px 6px rgba(83,211,55,0.3)}
+/* Results Tab */
+.daily-summary {
+  background: var(--surface);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.daily-summary-title {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.daily-summary-row {
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.scorecard {
+  background: var(--surface);
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.scorecard-left { display: flex; flex-direction: column; gap: 2px; }
+.scorecard-pick { font-size: 13px; font-weight: 700; }
+.scorecard-event { font-size: 11px; color: var(--text3); }
+.scorecard-score { font-size: 11px; color: var(--muted); }
+.scorecard-right { display: flex; align-items: center; gap: 12px; }
+.cover-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.3px;
+}
+.cover-badge.covered { background: rgba(83,211,55,0.15); color: var(--green); }
+.cover-badge.not-covered { background: rgba(184,20,39,0.15); color: var(--red); }
+.cover-badge.pending-cover { background: rgba(7,108,223,0.15); color: var(--blue); }
 
-.btn-dk{background:var(--dk-green);color:var(--dk-bg);font-weight:800;box-shadow:0 1px 3px rgba(83,211,55,0.2)}
-.btn-dk:hover{background:var(--dk-green-hover);box-shadow:0 2px 6px rgba(83,211,55,0.3)}
+/* History Tab */
+.chart-container {
+  background: var(--surface);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.chart-container svg { width: 100%; display: block; }
+.history-day {
+  margin-bottom: 8px;
+}
+.history-day-header {
+  background: var(--surface);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+.history-day-header .day-record { color: var(--text3); }
+.history-day-header .day-pnl { font-variant-numeric: tabular-nums; }
+.history-bet {
+  background: var(--surface);
+  padding: 10px 16px 10px 32px;
+  border-bottom: 1px solid var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+.history-bet-pick { color: var(--text2); }
+.history-bet-right { display: flex; align-items: center; gap: 10px; font-variant-numeric: tabular-nums; }
+.outcome-badge-sm {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.3px;
+}
+.outcome-badge-sm.win-sm { background: rgba(83,211,55,0.15); color: var(--green); }
+.outcome-badge-sm.loss-sm { background: rgba(184,20,39,0.15); color: var(--red); }
 
-.btn-skip{background:transparent;color:var(--dk-text-3);border:1px solid var(--dk-border)}
-.btn-skip:hover{border-color:var(--dk-text-2);color:var(--dk-text-2)}
+/* Bankroll Tab */
+.bankroll-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--bg);
+  margin-bottom: 16px;
+}
+.bk-card {
+  background: var(--surface);
+  padding: 16px;
+}
+.bk-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+.bk-value {
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+.perf-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--bg);
+}
+.perf-card {
+  background: var(--surface);
+  padding: 14px 16px;
+}
+.perf-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+.perf-value {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
 
-.btn-place:disabled,.btn-dk:disabled{background:var(--dk-surface-3);color:var(--dk-text-3);cursor:not-allowed;box-shadow:none}
-
-/* Badge */
-.badge{display:inline-block;padding:4px 9px;border-radius:5px;font-size:0.7rem;font-weight:800;letter-spacing:0.3px;text-transform:uppercase}
-.b-high{background:rgba(83,211,55,0.15);color:var(--dk-green)}
-.b-med{background:rgba(196,152,42,0.15);color:var(--dk-gold)}
-.b-low{background:rgba(229,56,59,0.15);color:var(--dk-red)}
-.b-win{background:rgba(83,211,55,0.2);color:var(--dk-green);font-weight:900}
-.b-loss{background:rgba(229,56,59,0.2);color:var(--dk-red);font-weight:900}
-.b-pending{background:rgba(74,144,217,0.2);color:var(--dk-blue);font-weight:900}
-.b-placed{background:rgba(196,152,42,0.2);color:var(--dk-gold);font-weight:900}
-
-/* Result cards */
-.result{background:var(--dk-surface);border:1px solid var(--dk-border);border-left:4px solid var(--dk-surface-3);border-radius:10px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.result.win{border-left-color:var(--dk-green);border-top:3px solid var(--dk-gold);box-shadow:inset 0 0 0 1px rgba(196,152,42,0.2),0 1px 3px rgba(0,0,0,0.2)}
-.result.loss{border-left-color:var(--dk-red)}
-.result.pending{border-left-color:var(--dk-blue)}
-.result-left{flex:1}
-.result-pick{font-weight:800;color:var(--dk-text);font-size:0.95rem;font-family:'SF Mono','Roboto Mono','Courier New',monospace;margin-bottom:2px}
-.result-meta{color:var(--dk-text-3);font-size:0.8rem}
-.result-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.result-badge{display:inline-block}
-.result-pnl{font-weight:900;font-family:'SF Mono','Roboto Mono','Courier New',monospace;font-size:0.95rem}
-
-/* Scorecard (Results tab) */
-.scorecard{background:var(--dk-surface);border:1px solid var(--dk-border);border-left:4px solid var(--dk-surface-3);border-radius:10px;padding:20px;margin-bottom:14px;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.scorecard:hover{background:var(--dk-surface-2)}
-
-.scorecard.win{border-left-color:var(--dk-green);border-top:3px solid var(--dk-gold);box-shadow:inset 0 0 0 1px rgba(196,152,42,0.2),0 1px 3px rgba(0,0,0,0.2)}
-.scorecard.loss{border-left-color:var(--dk-red)}
-.scorecard.pending{border-left-color:var(--dk-blue)}
-
-.sc-header{background:var(--dk-surface-2);padding:12px 0;margin-bottom:16px;border-bottom:1px solid var(--dk-border);border-radius:4px}
-.sc-title{font-size:0.8rem;color:var(--dk-text-3);text-transform:uppercase;letter-spacing:0.4px;font-weight:800}
-
-.sc-score{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
-.sc-score-main{font-size:2.2rem;font-weight:900;color:var(--dk-text);font-family:'SF Mono','Roboto Mono','Courier New',monospace}
-.sc-score-sub{font-size:0.9rem;color:var(--dk-text-2)}
-
-.sc-result{font-size:1.15rem;font-weight:900;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px}
-.sc-result.win{color:var(--dk-green)}
-.sc-result.loss{color:var(--dk-red)}
-.sc-result.pending{color:var(--dk-blue)}
-
-.sc-pick{color:var(--dk-text-2);font-size:0.85rem;margin-bottom:10px}
-.sc-pick strong{color:var(--dk-text);font-weight:800}
-
-.sc-pnl{font-size:1.5rem;font-weight:900;margin-top:12px;font-family:'SF Mono','Roboto Mono','Courier New',monospace}
-.sc-pnl.win{color:var(--dk-green)}
-.sc-pnl.loss{color:var(--dk-red)}
-.sc-pnl.pending{color:var(--dk-blue)}
-
-.sc-analysis{margin-top:12px;padding-top:12px;border-top:1px solid var(--dk-border);color:var(--dk-text-2);font-size:0.8rem;display:none;line-height:1.6}
-.sc-analysis.open{display:block}
-
-/* Daily P/L banner */
-.daily-pnl{background:var(--dk-surface);border:1px solid var(--dk-border);border-left:4px solid var(--dk-green);border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.daily-pnl-title{color:var(--dk-text-3);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.6px;font-weight:800;margin-bottom:6px}
-.daily-pnl-main{font-size:2rem;font-weight:900;font-family:'SF Mono','Roboto Mono','Courier New',monospace;color:var(--dk-text)}
-.daily-pnl-record{color:var(--dk-text-2);font-size:0.9rem;margin-top:6px;font-weight:600}
-
-/* Bankroll cards */
-.br-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
-.br-card{background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:18px;transition:all 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.br-card:hover{background:var(--dk-surface-2);border-color:rgba(255,255,255,0.1)}
-.br-label{font-size:0.7rem;color:var(--dk-text-3);text-transform:uppercase;letter-spacing:0.6px;font-weight:800;margin-bottom:6px}
-.br-val{font-size:1.6rem;font-weight:900;font-family:'SF Mono','Roboto Mono','Courier New',monospace;color:var(--dk-text)}
-.br-sub{font-size:0.8rem;color:var(--dk-text-3);margin-top:6px;font-weight:600}
-
-/* Chart */
-.chart-container{background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:24px;margin-bottom:24px;overflow:auto;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.chart-title{font-size:0.95rem;font-weight:900;color:var(--dk-text);margin-bottom:18px;text-transform:uppercase;letter-spacing:0.4px}
-
-/* History */
-.hist-date-group{margin-bottom:24px}
-.hist-date-header{background:var(--dk-surface-2);padding:14px 16px;border-left:4px solid var(--dk-blue);margin-bottom:12px;border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,0.2)}
-.hist-date-title{font-weight:900;color:var(--dk-text);font-size:0.95rem;font-family:'SF Mono','Roboto Mono','Courier New',monospace;margin-bottom:3px}
-.hist-date-summary{color:var(--dk-text-2);font-size:0.8rem;font-weight:600}
-
-.hist-item{background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:8px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.15s;box-shadow:0 1px 2px rgba(0,0,0,0.15)}
-.hist-item:hover{background:var(--dk-surface-2)}
-.hist-item-left{flex:1}
-.hist-item-pick{font-weight:800;color:var(--dk-text);font-size:0.9rem;font-family:'SF Mono','Roboto Mono','Courier New',monospace;margin-bottom:3px}
-.hist-item-meta{color:var(--dk-text-3);font-size:0.75rem}
-.hist-item-right{text-align:right}
-.hist-item-result{margin-bottom:5px;font-weight:800}
-.hist-item-pnl{font-weight:900;font-size:0.9rem;font-family:'SF Mono','Roboto Mono','Courier New',monospace}
-
-/* Summary bar */
-.summary{display:flex;gap:20px;background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:16px 20px;flex-wrap:wrap;font-size:0.85rem;color:var(--dk-text-2);box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.summary strong{color:var(--dk-text);font-weight:800}
-
-/* No-edge list */
-.no-edge-list{background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.ne-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--dk-border);font-size:0.85rem;flex-wrap:wrap;gap:10px}
-.ne-item:last-child{border-bottom:none}
-.ne-game{color:var(--dk-text);font-weight:700;min-width:200px;font-family:'SF Mono','Roboto Mono','Courier New',monospace}
-.ne-line{color:var(--dk-text-3);min-width:100px;font-family:'SF Mono','Roboto Mono','Courier New',monospace}
-.ne-reason{color:var(--dk-text-2);flex:1}
-
-/* No message */
-.no-msg{background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:32px 24px;text-align:center;color:var(--dk-text-3);font-size:0.9rem;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-
-/* Footer */
-.footer{text-align:center;color:var(--dk-text-3);font-size:0.75rem;margin-top:40px;padding:20px 0;border-top:1px solid var(--dk-border);letter-spacing:0.2px}
+/* Methodology Tab */
+.method-section { margin-bottom: 24px; }
+.method-title {
+  font-family: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.method-body {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+.method-body .source-label { color: var(--blue); font-weight: 600; }
 
 /* Toast */
-.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--dk-surface);color:var(--dk-text);padding:14px 24px;border-radius:10px;border:1px solid var(--dk-border);font-size:0.85rem;z-index:999;max-width:90vw;text-align:center;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.4);font-weight:600}
-.toast.show{opacity:1}
-
-/* Alert box */
-.alert-box{background:var(--dk-surface);border:1px solid var(--dk-border);border-left:4px solid var(--dk-blue);border-radius:10px;padding:16px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.alert-box-title{font-weight:800;color:var(--dk-blue);font-size:0.9rem;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.2px}
-.alert-box-desc{color:var(--dk-text-2);font-size:0.85rem;line-height:1.5}
-
-@media(max-width:768px){
-  .header h1{font-size:1.5rem}
-  .header-top{flex-direction:column;align-items:flex-start;gap:8px}
-  .header-balance{text-align:left}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .pick-grid{grid-template-columns:1fr 1fr}
-  .tab{padding:12px 14px;font-size:0.8rem}
-  .br-grid{grid-template-columns:1fr 1fr}
-  .pick-actions{flex-wrap:wrap}
-  .sc-score{flex-direction:column;align-items:flex-start}
-  .sc-score-main{font-size:1.8rem}
-  .summary{flex-direction:column;gap:12px}
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background: var(--surface);
+  color: var(--text);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+  pointer-events: none;
 }
-@media(max-width:420px){
-  .container{padding:12px 12px}
-  .header h1{font-size:1.2rem}
-  .header-balance{font-size:1.1rem}
-  .stats{grid-template-columns:1fr 1fr;gap:6px}
-  .stat-val{font-size:1rem}
-  .tab{padding:10px 10px;font-size:0.72rem}
-  .pick-title{font-size:0.95rem}
-  .pick-edge{font-size:1rem}
-  .pick-wager{font-size:1.1rem}
-  .pick-grid{grid-template-columns:1fr 1fr;gap:6px}
-  .ps-val{font-size:0.8rem}
-  .btn{padding:8px 10px;font-size:0.72rem}
-  .result{flex-direction:column;gap:8px;align-items:flex-start}
-  .result-right{align-self:flex-end}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Footer */
+.dk-footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-strip { grid-template-columns: repeat(2, 1fr); }
+  .bankroll-metrics { grid-template-columns: repeat(2, 1fr); }
+  .perf-row { grid-template-columns: repeat(2, 1fr); }
+  .detail-grid { grid-template-columns: repeat(2, 1fr); }
+  .dk-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .dk-header-bankroll { font-size: 22px; }
+  .dk-tab { padding: 10px 14px; font-size: 12px; }
+}
+@media (max-width: 480px) {
+  .dk-container { padding: 0 8px 32px; }
+  .stat-value { font-size: 16px; }
+  .stat-label { font-size: 10px; }
+  .pick-edge { font-size: 18px; }
+  .pick-right { gap: 10px; }
+  .pick-odds-cell { min-width: 52px; height: 38px; font-size: 10px; }
+  .dk-tab { padding: 8px 10px; font-size: 11px; }
+  .place-all-btn { height: 48px; font-size: 16px; }
+  .bk-value { font-size: 20px; }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div id="toast-el" class="toast"></div>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-top">
-    <div class="header-left">
-      <div class="header-crown">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 9l3 8h12l3-8M5 9l2-3 4 5 4-5 4 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="currentColor" stroke="none" style="fill: var(--dk-green)"/>
-          <circle cx="6" cy="7" r="1.5" fill="var(--dk-gold)"/>
-          <circle cx="12" cy="5" r="1.5" fill="var(--dk-gold)"/>
-          <circle cx="18" cy="7" r="1.5" fill="var(--dk-gold)"/>
-        </svg>
+<!-- Header -->
+<div class="dk-header">
+  <div class="dk-header-left">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#fbd002" stroke="#fbd002" stroke-width="1"/>
+    </svg>
+    <span class="dk-header-title">DK EDGE FINDER</span>
+  </div>
+  <div class="dk-header-bankroll" id="header-bankroll">--</div>
+</div>
+<div class="dk-subheader">
+  <span class="pulse-dot"></span>
+  <span id="scan-subtitle">Loading...</span>
+</div>
+
+<div class="dk-container">
+  <!-- Stats Strip -->
+  <div class="stats-strip" id="stats-strip"></div>
+
+  <!-- Tabs -->
+  <div class="dk-tabs" id="dk-tabs">
+    <button class="dk-tab active" data-tab="picks">Picks <span class="badge" id="picks-badge">0</span></button>
+    <button class="dk-tab" data-tab="results">Results</button>
+    <button class="dk-tab" data-tab="history">History</button>
+    <button class="dk-tab" data-tab="bankroll">Bankroll</button>
+    <button class="dk-tab" data-tab="methodology">Methodology</button>
+  </div>
+
+  <!-- PICKS TAB -->
+  <div class="tab-content active" id="tab-picks">
+    <div class="result-banners" id="result-banners"></div>
+    <div id="picks-list"></div>
+    <div class="no-edge-section" id="no-edge-section"></div>
+  </div>
+
+  <!-- Place All Bar -->
+  <div class="place-all-bar" id="place-all-bar" style="display:none;">
+    <button class="place-all-btn" id="place-all-btn" onclick="placeAll()">PLACE ALL BETS</button>
+  </div>
+
+  <!-- RESULTS TAB -->
+  <div class="tab-content" id="tab-results"></div>
+
+  <!-- HISTORY TAB -->
+  <div class="tab-content" id="tab-history"></div>
+
+  <!-- BANKROLL TAB -->
+  <div class="tab-content" id="tab-bankroll"></div>
+
+  <!-- METHODOLOGY TAB -->
+  <div class="tab-content" id="tab-methodology">
+    <div class="method-section">
+      <div class="method-title">How It Works</div>
+      <div class="method-body">
+        The Edge Finder compares <span class="source-label">DraftKings lines</span> against a composite probability model built from multiple independent sources. When the model's estimated probability exceeds the implied probability from the odds by a meaningful margin, an edge is identified.
       </div>
-      <h1>DK EDGE FINDER</h1>
     </div>
-    <div class="header-balance" id="header-balance">$548.64</div>
+    <div class="method-section">
+      <div class="method-title">Data Sources</div>
+      <div class="method-body">
+        <span class="source-label">DRatings</span> provides power ratings and score predictions across major sports. <span class="source-label">Dimers</span> supplies simulation-based win probabilities. <span class="source-label">ESPN</span> contributes team stats, injury reports, and rest schedules. <span class="source-label">The Odds API</span> provides real-time DraftKings odds for line comparison and player props.
+      </div>
+    </div>
+    <div class="method-section">
+      <div class="method-title">Edge Calculation</div>
+      <div class="method-body">
+        Edge = Model Probability - Implied Probability. Picks must exceed a minimum edge threshold (3% for spreads/totals, 5% for props) to qualify. Higher-edge picks receive larger Kelly-criterion-based bet sizing, capped at 2% of bankroll per wager.
+      </div>
+    </div>
+    <div class="method-section">
+      <div class="method-title">Bet Sizing</div>
+      <div class="method-body">
+        Wager amounts are calculated using a fractional <span class="source-label">Kelly Criterion</span> approach. The formula accounts for edge size, odds, and current bankroll. Bets are capped to limit exposure and maintain bankroll longevity across variance-heavy stretches.
+      </div>
+    </div>
+    <div class="method-section">
+      <div class="method-title">Confidence Levels</div>
+      <div class="method-body">
+        <span class="source-label">HIGH</span>: Multiple sources agree, strong cushion beyond the spread, no schedule red flags.<br>
+        <span class="source-label">MEDIUM</span>: Sources mostly agree, moderate cushion, minor situational concerns.<br>
+        <span class="source-label">LOW</span>: Sources disagree (contested), thin margins, or back-to-back schedule impact.
+      </div>
+    </div>
   </div>
-  <div class="header-sub"><span class="pulse"></span> <span id="subtitle">Loading...</span></div>
-</div>
 
-<!-- STATS -->
-<div class="stats" id="stats"></div>
-
-<!-- TABS -->
-<div class="tabs" id="tabs">
-  <div class="tab active" data-tab="picks">PICKS <span class="tab-badge" id="pick-count">0</span></div>
-  <div class="tab" data-tab="results">RESULTS <span class="tab-badge" id="result-count">0</span></div>
-  <div class="tab" data-tab="history">HISTORY</div>
-  <div class="tab" data-tab="bankroll">BANKROLL</div>
-  <div class="tab" data-tab="how">METHODOLOGY</div>
-</div>
-
-<!-- PICKS TAB -->
-<div class="tab-panel active" id="panel-picks">
-  <div id="place-all-bar"></div>
-  <div id="result-banners"></div>
-  <div id="alert-box"></div>
-  <div id="pick-cards"></div>
-  <div id="no-picks-msg" style="display:none" class="no-msg">No edges today. All lines fairly priced. Patience is edge.</div>
-  <div id="no-edge-section" style="display:none;margin-top:24px">
-    <div style="color:var(--dk-text-3);font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:12px" id="ne-header">No Edge Found</div>
-    <div class="no-edge-list" id="ne-body"></div>
-  </div>
-</div>
-
-<!-- RESULTS TAB -->
-<div class="tab-panel" id="panel-results">
-  <div id="daily-pnl"></div>
-  <div id="scorecard-container"></div>
-  <div id="no-results-msg" style="display:none" class="no-msg">No resolved bets yet today.</div>
-</div>
-
-<!-- HISTORY TAB -->
-<div class="tab-panel" id="panel-history">
-  <div class="chart-container">
-    <div class="chart-title">Cumulative P/L</div>
-    <svg id="pnl-chart" width="100%" height="200" style="max-width:800px;margin:0 auto;display:block"></svg>
-  </div>
-  <div id="hist-groups"></div>
-  <div class="summary" id="hist-summary"></div>
-</div>
-
-<!-- BANKROLL TAB -->
-<div class="tab-panel" id="panel-bankroll">
-  <div class="br-grid" id="br-cards"></div>
-  <div style="color:var(--dk-text-3);font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:16px">Performance</div>
-  <div class="summary" id="perf-summary"></div>
-</div>
-
-<!-- HOW IT WORKS TAB -->
-<div class="tab-panel" id="panel-how">
-  <h2 style="color:var(--dk-text);margin-bottom:24px;font-size:1.4rem;text-transform:uppercase;font-weight:900">Methodology</h2>
-  <div style="background:var(--dk-surface);border:1px solid var(--dk-border);border-radius:10px;padding:24px;margin-bottom:20px;font-size:0.9rem;color:var(--dk-text-2);line-height:1.8;box-shadow:0 1px 3px rgba(0,0,0,0.2)">
-    <div style="color:var(--dk-text);font-weight:900;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">The Edge</div>
-    DraftKings sets odds that imply a probability for each outcome. Our models independently estimate the real probability. When the model says a team covers at 59% but DK's odds imply only 52%, that 7-point gap is the edge — you're getting a better price than the true odds suggest.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Game Edges — Ensemble Model</div>
-    For spreads, moneylines, and totals, we combine two independent prediction sources (DRatings + Dimers) into an ensemble. When both agree, confidence is high. The model uses Skellam distribution (NBA/NFL) and Poisson scoring (NHL/MLB/Soccer) to convert predicted scores into cover probabilities, then compares against DK's implied odds. Minimum 3% edge to qualify.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Player Prop Edges — Real DK Odds</div>
-    Player props use real DraftKings odds from The Odds API — not DFS projections. We compare each prop line against the player's last 10 games (ESPN gamelogs) to find where DK's line disagrees with recent performance. Points, rebounds, assists, and threes are supported. Minimum 5% edge to qualify.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Kelly Criterion Sizing</div>
-    Instead of flat-betting, Kelly sizes each bet proportional to your edge. Bigger edge = bigger bet. We use half-Kelly (conservative) to reduce volatility — you'll grow slower but survive losing streaks. Each bet is capped at 2% of bankroll to keep individual risk low.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Diversification</div>
-    To spread risk, game edges and prop edges have separate budgets — 15% of bankroll for games, 10% for props (25% total daily cap). This prevents one category from crowding out the other and ensures a mix of bet types every day.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Safety Rails</div>
-    Max 2% of bankroll on any single bet. 25% total daily exposure across all bets. Confirmed tanking teams are skipped entirely. Back-to-back games get a 1.5-2.5% penalty. Contested model predictions (sources disagree by 5+ points) are flagged and down-weighted.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Bankroll Tracking</div>
-    Your DK app balance is the source of truth. When you place bets, the wagered amount is deducted from available bankroll. Wins add back the wager + profit. Losses stay deducted. The number you see is always your real available cash.
-
-    <div style="color:var(--dk-text);font-weight:900;margin:18px 0 10px;text-transform:uppercase;letter-spacing:0.3px;font-size:0.95rem">Data Sources</div>
-    <span style="color:var(--dk-blue)">Game predictions:</span> DRatings, Dimers (ensemble average) · <span style="color:var(--dk-blue)">Player props:</span> The Odds API (real DK lines) + ESPN gamelogs · <span style="color:var(--dk-blue)">Schedules:</span> ESPN API · <span style="color:var(--dk-blue)">Odds:</span> DraftKings Oregon via The Odds API
+  <!-- Footer -->
+  <div class="dk-footer" id="dk-footer">
+    Edge Finder v2.0 &middot; Model-driven, not gut-driven &middot; For entertainment purposes
   </div>
 </div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <div id="system-status" style="margin-bottom:8px"></div>
-  All models carry uncertainty. Edges are probabilistic, not guarantees. Bet responsibly.<br>
-  DK Edge Finder &middot; Powered by DraftKings
-</div>
-
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-let DATA=null;
-const REPO='blueandyellow44/dk-edge-finder';
-function americanToDecimal(odds){return odds<0?1+100/Math.abs(odds):1+odds/100;}
+const REPO = 'blueandyellow44/dk-edge-finder';
+let DATA = null;
 
-// Tab switching
-document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
-  };
-});
-
-async function loadData(){
-  try{
-    const r=await fetch('data.json?'+Date.now());
-    DATA=await r.json();
-    applyLocalPlacements(DATA);
-    render(DATA);
-  }catch(e){
-    document.getElementById('subtitle').textContent='Error loading data';
-    console.error(e);
-  }
+function americanToDecimal(odds) {
+  if (!odds) return 1;
+  const o = typeof odds === 'string' ? parseInt(odds, 10) : odds;
+  if (isNaN(o)) return 1;
+  return o > 0 ? (o / 100) + 1 : (100 / Math.abs(o)) + 1;
 }
 
-function render(d){
-  const b=d.bankroll;
-  const amt=b.available||b.current||0;
-  const profit=b.profit||0;
-  const rec=b.record||{wins:0,losses:0,pushes:0};
-  // Count pending from actual bets array — never trust bankroll.pending_count (can go stale)
-  const pendingBets=(d.bets||[]).filter(x=>x.outcome==='pending');
-  const pCnt=pendingBets.length;
-  const pTot=pendingBets.reduce((sum,bet)=>sum+(bet.wager||0),0);
-  const pWin=pendingBets.reduce((sum,bet)=>{const o=parseInt(bet.odds);const tw=o<0?bet.wager*100/Math.abs(o):bet.wager*o/100;return sum+tw;},0);
+function loadData() {
+  fetch('data.json?'+Date.now())
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(d) {
+      DATA = d;
+      applyLocalPlacements(d);
+      render(d);
+    })
+    .catch(function(e) {
+      document.getElementById('picks-list').innerHTML =
+        '<div style="padding:40px;text-align:center;color:var(--red)">Failed to load data.json: ' + e.message + '</div>';
+    });
+}
 
-  document.getElementById('subtitle').innerHTML=(d.scan_subtitle||d.scan_date);
-  document.getElementById('header-balance').textContent='$'+amt.toFixed(2);
+function render(d) {
+  if (!d) return;
+  var b = d.bankroll || {};
+  var rec = b.record || { wins: 0, losses: 0, pushes: 0 };
+  var picks = d.picks || [];
+  var bets = d.bets || [];
+  var noEdge = d.no_edge_games || [];
+
+  // Header
+  document.getElementById('header-bankroll').textContent = '$' + (b.available || 0).toFixed(2);
+  document.getElementById('scan-subtitle').textContent = d.scan_subtitle || d.scan_date || '';
 
   // Stats strip
-  document.getElementById('stats').innerHTML=`
-    <div class="stat"><div class="stat-label">Available</div><div class="stat-val" style="color:var(--dk-green)">$${amt.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">Record</div><div class="stat-val" style="color:${rec.wins>rec.losses?'var(--dk-green)':rec.losses>rec.wins?'var(--dk-red)':'var(--dk-text)'}">${rec.wins}-${rec.losses}-${rec.pushes}</div></div>
-    <div class="stat"><div class="stat-label">P/L</div><div class="stat-val" style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
-    <div class="stat"><div class="stat-label">${pCnt>0?'Pending':'Edges'}</div><div class="stat-val" style="color:${pCnt>0?'var(--dk-gold)':'var(--dk-blue)'}">${pCnt>0?pCnt+' ($'+pTot.toFixed(2)+')<br><span style="color:var(--dk-green);font-size:0.85rem">to win $'+pWin.toFixed(2)+'</span>':((d.picks||[]).length)}</div></div>
-  `;
+  var totalBets = rec.wins + rec.losses + rec.pushes;
+  var pendingBets = bets.filter(function(x) { return x.outcome === 'pending'; });
+  var todayBets = bets.filter(function(x) { return x.date === d.scan_date; });
+
+  document.getElementById('stats-strip').innerHTML =
+    '<div class="stat-card"><div class="stat-label">Available</div><div class="stat-value green">$' + (b.available || 0).toFixed(2) + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Record</div><div class="stat-value">' + rec.wins + 'W - ' + rec.losses + 'L' + (rec.pushes ? ' - ' + rec.pushes + 'P' : '') + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Profit / Loss</div><div class="stat-value ' + (b.profit >= 0 ? 'green' : 'red') + '">' + (b.profit >= 0 ? '+' : '') + '$' + (b.profit || 0).toFixed(2) + '</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Pending / Edges</div><div class="stat-value">' + (b.pending_count || 0) + ' / ' + picks.length + '</div></div>';
 
   // Tab badges
-  document.getElementById('pick-count').textContent=(d.picks||[]).filter(p=>!p.status||p.status==='').length;
-  const todayBets=(d.bets||[]).filter(x=>x.date===d.scan_date);
-  const resolved=todayBets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
-  document.getElementById('result-count').textContent=resolved.length;
+  document.getElementById('picks-badge').textContent = picks.length;
 
-  // Today's bets
-  const pending=todayBets.filter(x=>x.outcome==='pending');
-
-  // Result banners for bets
-  let bannersHtml='';
-  resolved.forEach(bet=>{
-    const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-    const isWin=bet.outcome==='win';
-    const badgeClass=isWin?'b-win':'b-loss';
-    const badgeText=isWin?'Won':'Lost';
-    const resultClass=isWin?'win':'loss';
-    bannersHtml+=`<div class="result ${resultClass}">
-      <div class="result-left">
-        <div class="result-pick">${bet.pick}</div>
-        <div class="result-meta">${bet.final_score||''}</div>
-      </div>
-      <div class="result-right">
-        <span class="result-badge badge ${badgeClass}">${badgeText}</span>
-        <div class="result-pnl" style="color:${pnl>=0?'var(--dk-green)':'var(--dk-red)'}">${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
-      </div>
-    </div>`;
+  // Result banners (today's bets)
+  var bannersHTML = '';
+  todayBets.forEach(function(bet) {
+    var oc = (bet.outcome || 'pending').toLowerCase();
+    var cls = oc === 'win' ? 'win' : oc === 'loss' ? 'loss' : 'pending-bet';
+    var badgeCls = oc === 'win' ? 'win-badge' : oc === 'loss' ? 'loss-badge' : 'pending-badge';
+    var badgeText = oc === 'win' ? 'WIN' : oc === 'loss' ? 'LOSS' : 'PENDING';
+    var pnl = typeof bet.pnl === 'number' ? bet.pnl : 0;
+    var pnlStr = oc === 'pending' ? '$' + (bet.wager || 0).toFixed(2) :
+      (pnl >= 0 ? '+$' + pnl.toFixed(2) : '-$' + Math.abs(pnl).toFixed(2));
+    var pnlCls = oc === 'pending' ? '' : (pnl >= 0 ? 'pos' : 'neg');
+    bannersHTML += '<div class="result-banner ' + cls + '">' +
+      '<div class="banner-left"><div class="banner-pick">' + (bet.pick || '') + '</div>' +
+      '<div class="banner-event">' + (bet.event || '') + (bet.final_score ? ' &middot; ' + bet.final_score : '') + '</div></div>' +
+      '<div class="banner-right"><span class="banner-badge ' + badgeCls + '">' + badgeText + '</span>' +
+      '<span class="banner-pnl ' + pnlCls + '">' + pnlStr + '</span></div></div>';
   });
-  pending.forEach((bet,pi)=>{
-    const _po=parseInt(bet.odds);
-    const _ptw=_po<0?Math.round(bet.wager*100/Math.abs(_po)*100)/100:Math.round(bet.wager*_po/100*100)/100;
-    const _ppay=Math.round((bet.wager+_ptw)*100)/100;
-    const origP=(d.picks||[]).find(p=>p.pick===bet.pick)||{};
-    const bId='banner-detail-'+pi;
-    bannersHtml+=`<div class="result pending" style="cursor:pointer;flex-direction:column" onclick="const el=document.getElementById('${bId}');el.style.display=el.style.display==='none'?'block':'none'">
-      <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-        <div class="result-left">
-          <div class="result-pick">${bet.pick} <span style="font-size:0.65rem;opacity:0.5">▼</span></div>
-          <div class="result-meta">${bet.event||''}</div>
-        </div>
-        <div class="result-right">
-          <span class="result-badge badge b-pending">Pending</span>
-          <div class="result-pnl" style="color:var(--dk-blue)">$${bet.wager.toFixed(2)} at risk <span style="color:var(--dk-green)">to win $${_ptw.toFixed(2)}</span></div>
-        </div>
-      </div>
-      <div id="${bId}" style="display:none;width:100%;padding:12px 0 4px;border-top:1px solid var(--dk-border);margin-top:10px" onclick="event.stopPropagation()">
-        <div class="pick-grid">
-          <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${bet.odds}</div></div>
-          <div class="pick-stat"><div class="ps-label">Risk</div><div class="ps-val" style="color:var(--dk-red)">$${bet.wager.toFixed(2)}</div></div>
-          <div class="pick-stat"><div class="ps-label">To Win</div><div class="ps-val" style="color:var(--dk-green)">$${_ptw.toFixed(2)}</div></div>
-          <div class="pick-stat"><div class="ps-label">Payout</div><div class="ps-val" style="color:var(--dk-green)">$${_ppay.toFixed(2)}</div></div>
-        </div>
-        ${origP.edge?`<div class="pick-grid" style="margin-top:6px">
-          <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${origP.edge}%</div></div>
-          <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${origP.model||'—'}</div></div>
-          <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${origP.implied||'—'}</div></div>
-          <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${origP.confidence||origP.tier||'—'}</div></div>
-        </div>`:''}
-        <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
-          <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${amt>0?(bet.wager/amt*100).toFixed(1):'?'}% of $${amt.toFixed(0)} bankroll.${origP.edge?` Model sees ${origP.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
-        </div>
-        ${origP.notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px">${origP.notes}${origP.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+origP.sources+'</span>':''}</div>`:''}
-      </div>
-    </div>`;
+  document.getElementById('result-banners').innerHTML = bannersHTML;
+
+  // Picks
+  var picksHTML = '';
+  picks.forEach(function(p, i) {
+    var placed = p._placed || false;
+    picksHTML += '<div class="pick-card' + (placed ? ' placed' : '') + '" id="pick-' + i + '">' +
+      '<div class="pick-row" onclick="toggleAnalysis(' + i + ')">' +
+        '<div class="pick-left">' +
+          '<div class="pick-top-row">' +
+            '<span class="sport-badge">' + (p.sport || '') + '</span>' +
+            '<span class="pick-event">' + (p.event_short || p.event || '') + '</span>' +
+            '<span class="pick-placed-tag">PLACED</span>' +
+          '</div>' +
+          '<div class="pick-name">' + (p.pick || '') + '</div>' +
+          '<div class="pick-market">' + (p.market || '') + '</div>' +
+        '</div>' +
+        '<div class="pick-right">' +
+          '<div class="pick-odds-cell">' + (p.odds || '') + '</div>' +
+          '<div class="pick-edge">' + (typeof p.edge === 'number' ? p.edge.toFixed(1) : p.edge) + '%</div>' +
+          '<div class="pick-bet">' + (p.bet || '') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pick-details">' +
+        '<div class="detail-grid">' +
+          '<div class="detail-item"><div class="detail-label">Implied</div><div class="detail-value">' + (p.implied || '--') + '</div></div>' +
+          '<div class="detail-item"><div class="detail-label">Model</div><div class="detail-value">' + (p.model || '--') + '</div></div>' +
+          '<div class="detail-item"><div class="detail-label">Confidence</div><div class="detail-value">' + (p.confidence || '--') + '</div></div>' +
+          '<div class="detail-item"><div class="detail-label">Sources</div><div class="detail-value">' + (p.sources || '--') + '</div></div>' +
+        '</div>' +
+        (p.notes ? '<div class="pick-notes">' + p.notes + '</div>' : '') +
+        '<div class="pick-actions">' +
+          (p.dk_link ? '<a class="btn-dk btn-dk-primary" href="' + p.dk_link + '" target="_blank" rel="noopener">Open in DK</a>' : '') +
+          '<button class="btn-dk btn-dk-primary" onclick="event.stopPropagation();placeBet(' + i + ')">Mark Placed</button>' +
+          '<button class="btn-dk btn-dk-secondary" onclick="event.stopPropagation();skipBet(' + i + ')">Skip</button>' +
+        '</div>' +
+        '<div style="margin-top:10px;font-size:11px;color:var(--muted)">' + kellyExplainer(p, b.available) + '</div>' +
+      '</div>' +
+    '</div>';
   });
-  document.getElementById('result-banners').innerHTML=bannersHtml;
+  document.getElementById('picks-list').innerHTML = picksHTML;
 
-  // Alert
-  const alertEl=document.getElementById('alert-box');
-  const unplaced=(d.picks||[]).filter(p=>!p.status||p.status==='');
-  if(d.best_bet&&unplaced.length>0){
-    alertEl.innerHTML=`<div class="alert-box">
-      <div class="alert-box-title">${d.best_bet.title}</div>
-      <div class="alert-box-desc">${d.best_bet.desc}</div>
-    </div>`;
-  }else{alertEl.innerHTML='';}
-
-  // Pick cards
-  const cardsEl=document.getElementById('pick-cards');
-  const noMsg=document.getElementById('no-picks-msg');
-  const placeBar=document.getElementById('place-all-bar');
-  cardsEl.innerHTML='';placeBar.innerHTML='';
-
-  if(!d.picks||d.picks.length===0){
-    noMsg.style.display='block';
-  }else{
-    noMsg.style.display='none';
-    const hasUnplaced=d.picks.some(p=>!p.status||p.status==='');
-    if(hasUnplaced){
-      const totalW=d.picks.filter(p=>!p.status||p.status==='').reduce((s,p)=>s+parseFloat(p.bet.replace('$','')),0);
-      placeBar.innerHTML=`<div class="btn-place-all-wrapper"><button class="btn-place-all" onclick="placeAll()">Place All Bets • $${totalW.toFixed(2)}</button></div>`;
-    }
-
-    d.picks.forEach((p,i)=>{
-      // Placed/pending picks are shown as expandable banners above — skip them here
-      const isPlaced=p.status==='PLACED'||p.status==='WIN'||p.status==='LOSS'||p.status==='PUSH'||p.status==='PENDING';
-      if(isPlaced) return;
-      const conf=p.confidence||p.tier||'HIGH';
-      const tierCls=conf==='HIGH'?'b-high':conf==='MEDIUM'?'b-med':'b-low';
-
-      let statusBadge='';
-      if(p.status==='WIN')statusBadge='<span class="badge b-win">WIN</span>';
-      else if(p.status==='LOSS')statusBadge='<span class="badge b-loss">LOSS</span>';
-      else if(p.status==='PLACED')statusBadge='<span class="badge b-placed">PLACED</span>';
-      else if(p.status==='PENDING')statusBadge='<span class="badge b-pending">PENDING</span>';
-
-      // Use direct DK bet slip link when available, fall back to league page
-      const dkSportMap={NBA:'basketball/nba',NHL:'hockey/nhl',MLB:'baseball/mlb',NFL:'football/nfl',MLS:'soccer/mls',EPL:'soccer/england---premier-league'};
-      const dkLeague=dkSportMap[(p.sport||'NBA').toUpperCase()]||'';
-      const dkFallback=dkLeague?'https://sportsbook.draftkings.com/leagues/'+dkLeague:'https://sportsbook.draftkings.com';
-      const dkUrl=p.dk_link||dkFallback;
-
-      let actionsHtml='';
-      if(!isPlaced){
-        actionsHtml=`
-          <a href="${dkUrl}" target="_blank" class="btn btn-dk" onclick="event.stopPropagation()">Open in DK</a>
-          <button class="btn btn-place" onclick="event.stopPropagation();placeBet(${i})">Mark Placed</button>
-          <button class="btn btn-skip" onclick="event.stopPropagation();skipBet(${i})">Skip</button>
-        `;
-      }else{
-        actionsHtml=statusBadge;
-        if(p.status==='PLACED'||p.status==='PENDING'){
-          actionsHtml+=` <a href="${dkUrl}" target="_blank" class="btn btn-dk" style="margin-left:8px" onclick="event.stopPropagation()">View on DK</a>`;
-        }
-      }
-
-      let resultLine='';
-      if(p.result)resultLine=`<div style="color:#222;font-weight:700;margin-top:4px">${p.result}</div>`;
-
-      const cardCls=isPlaced?'pick-card placed':'pick-card unplaced';
-      const _w=parseFloat(p.bet.replace('$',''));
-      const _o=parseInt(p.odds);
-      const _tw=_o<0?Math.round(_w*100/Math.abs(_o)*100)/100:Math.round(_w*_o/100*100)/100;
-
-      cardsEl.innerHTML+=`
-        <div class="${cardCls}" id="card-${i}" onclick="const det=document.getElementById('pick-detail-${i}');det.style.display=det.style.display==='none'?'block':'none'">
-          <div class="pick-top">
-            <div class="pick-left">
-              <div class="pick-title">${p.pick} <span class="odds">${p.odds}</span> <span style="font-size:0.65rem;opacity:0.5">▼</span></div>
-              <div class="pick-meta">${p.sport} · ${p.event} · ${p.market} · <span class="badge ${tierCls}">${conf}</span></div>
-            </div>
-            <div class="pick-right">
-              <div class="pick-edge">+${p.edge}%</div>
-              <div class="pick-wager">${p.bet} <span style="color:var(--dk-green);font-size:0.78rem;font-weight:600">to win $${_tw.toFixed(2)}</span></div>
-            </div>
-          </div>
-          <div id="pick-detail-${i}" style="display:none">
-            <div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-bottom:12px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">
-              ${p.notes||'No model data available.'}
-              ${p.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+p.sources+'</span>':''}
-            </div>
-            ${(() => {
-              const wager=parseFloat(p.bet.replace('$',''));
-              const odds=parseInt(p.odds);
-              const toWin=odds<0?Math.round(wager*100/Math.abs(odds)*100)/100:Math.round(wager*odds/100*100)/100;
-              const payout=Math.round((wager+toWin)*100)/100;
-              return `<div class="pick-grid">
-              <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${p.odds}</div></div>
-              <div class="pick-stat"><div class="ps-label">Risk</div><div class="ps-val" style="color:var(--dk-red)">$${wager.toFixed(2)}</div></div>
-              <div class="pick-stat"><div class="ps-label">To Win</div><div class="ps-val" style="color:var(--dk-green)">$${toWin.toFixed(2)}</div></div>
-              <div class="pick-stat"><div class="ps-label">Payout</div><div class="ps-val" style="color:var(--dk-green)">$${payout.toFixed(2)}</div></div>
-            </div>
-            <div class="pick-grid" style="margin-top:6px">
-              <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${p.edge}%</div></div>
-              <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${p.model||'—'}</div></div>
-              <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${p.implied||'—'}</div></div>
-              <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${conf}</div></div>
-            </div>
-            <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
-              <strong style="color:var(--dk-text-2)">Sizing:</strong> $${wager.toFixed(2)} = ${amt>0?(wager/amt*100).toFixed(1):'?'}% of $${amt.toFixed(0)} bankroll. Model sees ${p.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).
-            </div>`;
-            })()}
-          </div>
-          <div class="pick-actions" id="actions-${i}" onclick="event.stopPropagation()">
-            ${actionsHtml}
-          </div>
-        </div>
-      `;
-    });
+  // Place All bar
+  var unplaced = picks.filter(function(p) { return !p._placed && !p._skipped; });
+  var bar = document.getElementById('place-all-bar');
+  var btn = document.getElementById('place-all-btn');
+  if (unplaced.length > 0) {
+    bar.style.display = 'block';
+    var total = 0;
+    unplaced.forEach(function(p) { total += parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0; });
+    btn.textContent = 'PLACE ALL ' + unplaced.length + ' BETS ($' + total.toFixed(2) + ')';
+  } else {
+    bar.style.display = 'none';
   }
 
   // No-edge games
-  const neSection=document.getElementById('no-edge-section');
-  if(d.no_edge_games&&d.no_edge_games.length>0){
-    neSection.style.display='block';
-    document.getElementById('ne-header').textContent='No Edge ('+d.no_edge_games.length+' games)';
-    let neH='';
-    d.no_edge_games.forEach(g=>{
-      neH+=`<div class="ne-item"><span class="ne-game">${g.sport} · ${g.event}</span><span class="ne-line">${g.line}</span><span class="ne-reason">${g.reason}</span></div>`;
+  if (noEdge.length > 0) {
+    var neHTML = '<div class="no-edge-toggle" onclick="var l=this.nextElementSibling;l.classList.toggle(\'open\');this.querySelector(\'span:last-child\').textContent=l.classList.contains(\'open\')?\'\\u25B2\':\'\\u25BC\'">' +
+      '<span>No-Edge Games (' + noEdge.length + ')</span><span>&#x25BC;</span></div><div class="no-edge-list">';
+    noEdge.forEach(function(g) {
+      neHTML += '<div class="no-edge-row"><span class="no-edge-sport">' + (g.sport || '') + '</span>' +
+        '<span class="no-edge-event">' + (g.event || '') + ' ' + (g.line || '') + '</span>' +
+        '<span class="no-edge-reason">' + (g.reason || '') + '</span></div>';
     });
-    document.getElementById('ne-body').innerHTML=neH;
-  }else{neSection.style.display='none';}
+    neHTML += '</div>';
+    document.getElementById('no-edge-section').innerHTML = neHTML;
+  }
 
-  // RESULTS TAB
-  renderResults(d,todayBets);
-
-  // HISTORY TAB
+  // Render other tabs
+  renderResults(d, todayBets);
   renderHistory(d);
+  renderBankroll(d, b, rec, b.available, b.profit);
 
-  // BANKROLL TAB
-  renderBankroll(d,b,rec,amt,profit);
-
-  // System status
-  document.getElementById('system-status').innerHTML=`
-    <span style="color:var(--dk-text-3);font-size:0.8rem;letter-spacing:0.2px">Last scan: ${d.scan_date} · Next scan: 6 AM PT · Auto-resolve: 10 PM PT · <span style="color:var(--dk-green);font-weight:800">System active</span></span>
-  `;
+  // Footer status
+  document.getElementById('dk-footer').innerHTML =
+    'Edge Finder v2.0 &middot; ' + (d.games_analyzed || 0) + ' games analyzed &middot; ' + d.scan_date +
+    '<br>Model-driven, not gut-driven &middot; For entertainment purposes';
 }
 
-function renderResults(d,todayBets){
-  const resolved=todayBets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
-  const pending=todayBets.filter(x=>x.outcome==='pending');
-  const container=document.getElementById('scorecard-container');
-  const pnlDiv=document.getElementById('daily-pnl');
-  const noMsg=document.getElementById('no-results-msg');
+function renderResults(d, todayBets) {
+  if (!d) return;
+  var bets = d.bets || [];
+  var today = d.scan_date || '';
+  if (!todayBets) todayBets = bets.filter(function(x) { return x.date === today; });
 
-  container.innerHTML='';pnlDiv.innerHTML='';
+  var resolved = todayBets.filter(function(x) { return x.outcome === 'win' || x.outcome === 'loss'; });
+  var pending = todayBets.filter(function(x) { return x.outcome === 'pending'; });
 
-  if(resolved.length===0&&pending.length===0){
-    noMsg.style.display='block';
-    return;
-  }
-  noMsg.style.display='none';
+  var wins = resolved.filter(function(x) { return x.outcome === 'win'; }).length;
+  var losses = resolved.filter(function(x) { return x.outcome === 'loss'; }).length;
+  var dayPnl = 0;
+  resolved.forEach(function(x) { dayPnl += (typeof x.pnl === 'number' ? x.pnl : 0); });
 
-  // Daily P/L summary
-  let w=0,l=0,totalPnl=0;
-  resolved.forEach(bet=>{
-    if(bet.outcome==='win')w++;
-    else if(bet.outcome==='loss')l++;
-    const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-    totalPnl+=pnl;
-  });
-  if(w>0||l>0||pending.length>0){
-    const borderColor=totalPnl>=0?'var(--dk-green)':'var(--dk-red)';
-    const topBorder=totalPnl>=0?'3px solid var(--dk-gold)':'none';
-    pnlDiv.innerHTML=`
-      <div class="daily-pnl" style="border-left-color:${borderColor};border-top:${topBorder}">
-        <div class="daily-pnl-title">Tonight</div>
-        <div class="daily-pnl-main" style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)'}">${totalPnl>=0?'+':''}$${Math.abs(totalPnl).toFixed(2)}</div>
-        <div class="daily-pnl-record">${w}W-${l}L${pending.length>0?' · '+pending.length+' pending':''}</div>
-      </div>
-    `;
-  }
+  var html = '<div class="daily-summary">' +
+    '<div class="daily-summary-title">Today\'s Results</div>' +
+    '<div class="daily-summary-row">' +
+      '<span>Record: ' + wins + 'W - ' + losses + 'L</span>' +
+      '<span>P/L: <span style="color:' + (dayPnl >= 0 ? 'var(--green)' : 'var(--red)') + '">' +
+        (dayPnl >= 0 ? '+' : '') + '$' + dayPnl.toFixed(2) + '</span></span>' +
+      '<span>Pending: ' + pending.length + '</span>' +
+    '</div></div>';
 
   // Resolved scorecards
-  resolved.forEach(bet=>{
-    const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-    const isWin=bet.outcome==='win';
-    const score=bet.final_score||'Final score TBD';
+  if (resolved.length > 0) {
+    html += '<div style="margin-bottom:8px;font-family:\'Saira Condensed\',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;color:var(--text3);padding:8px 0;">Resolved</div>';
+    resolved.forEach(function(bet) {
+      var covered = bet.outcome === 'win';
+      var pnl = typeof bet.pnl === 'number' ? bet.pnl : 0;
+      html += '<div class="scorecard">' +
+        '<div class="scorecard-left">' +
+          '<div class="scorecard-pick">' + (bet.pick || '') + '</div>' +
+          '<div class="scorecard-event">' + (bet.event || '') + '</div>' +
+          (bet.final_score ? '<div class="scorecard-score">' + bet.final_score + '</div>' : '') +
+        '</div>' +
+        '<div class="scorecard-right">' +
+          '<span class="cover-badge ' + (covered ? 'covered' : 'not-covered') + '">' + (covered ? 'COVERED' : 'DID NOT COVER') + '</span>' +
+          '<span class="banner-pnl ' + (pnl >= 0 ? 'pos' : 'neg') + '">' + (pnl >= 0 ? '+$' + pnl.toFixed(2) : '-$' + Math.abs(pnl).toFixed(2)) + '</span>' +
+        '</div></div>';
+    });
+  }
 
-    // Parse score for display
-    let homeScore='',awayScore='',homeTeam='',awayTeam='';
-    const scoreMatch=score.match(/(\w+)\s+(\d+)[,\s]+(\w+)\s+(\d+)/);
-    if(scoreMatch){
-      homeTeam=scoreMatch[1];homeScore=scoreMatch[2];
-      awayTeam=scoreMatch[3];awayScore=scoreMatch[4];
-    }
+  // Pending scorecards
+  if (pending.length > 0) {
+    html += '<div style="margin:16px 0 8px;font-family:\'Saira Condensed\',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;color:var(--text3);padding:8px 0;">Pending</div>';
+    pending.forEach(function(bet) {
+      html += '<div class="scorecard">' +
+        '<div class="scorecard-left">' +
+          '<div class="scorecard-pick">' + (bet.pick || '') + '</div>' +
+          '<div class="scorecard-event">' + (bet.event || '') + '</div>' +
+        '</div>' +
+        '<div class="scorecard-right">' +
+          '<span class="cover-badge pending-cover">PENDING</span>' +
+          '<span style="color:var(--text2);font-size:13px;">$' + (bet.wager || 0).toFixed(2) + '</span>' +
+        '</div></div>';
+    });
+  }
 
-    const cardCls=isWin?'scorecard win':bet.outcome==='loss'?'scorecard loss':'scorecard pending';
-
-    container.innerHTML+=`
-      <div class="${cardCls}" id="sc-${bet.pick}">
-        <div class="sc-header">
-          <div class="sc-title">${bet.sport} · ${bet.event}</div>
-        </div>
-        <div>
-          <div class="sc-score">
-            <div class="sc-score-main">${homeScore} – ${awayScore}</div>
-            <div class="sc-score-sub">${homeTeam} vs ${awayTeam}</div>
-          </div>
-          <div class="sc-result ${isWin?'win':'loss'}">${isWin?'COVERED':'DID NOT COVER'} ${bet.pick.match(/([+-]\d+\.?\d*)/)?'('+bet.pick.match(/([+-]\d+\.?\d*)/)[1]+')':''}</div>
-          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:var(--dk-blue)">${bet.odds}</strong> · Wagered <strong>$${bet.wager.toFixed(2)}</strong></div>
-          <div class="sc-pnl ${isWin?'win':'loss'}">${isWin?'Won':'Lost'} ${pnl>=0?'+':''}$${Math.abs(pnl).toFixed(2)}</div>
-        </div>
-      </div>
-    `;
-  });
-
-  // Pending scorecards — expandable with full pick details
-  pending.forEach((bet,bi)=>{
-    const _ho=parseInt(bet.odds);
-    const _htw=_ho<0?Math.round(bet.wager*100/Math.abs(_ho)*100)/100:Math.round(bet.wager*_ho/100*100)/100;
-    const _hpay=Math.round((bet.wager+_htw)*100)/100;
-    // Match to original pick for edge/model/notes/sources
-    const origPick=(d.picks||[]).find(p=>p.pick===bet.pick)||{};
-    const edge=origPick.edge||bet.edge||'';
-    const model=origPick.model||'';
-    const implied=origPick.implied||'';
-    const conf=origPick.confidence||origPick.tier||'';
-    const notes=origPick.notes||'';
-    const sources=origPick.sources||'';
-    const scId='pending-sc-'+bi;
-    container.innerHTML+=`
-      <div class="scorecard pending" style="cursor:pointer" onclick="document.getElementById('${scId}').style.display=document.getElementById('${scId}').style.display==='none'?'block':'none'">
-        <div class="sc-header" style="background:rgba(74,144,217,0.1)">
-          <div class="sc-title" style="color:var(--dk-blue)">PENDING · ${bet.event} <span style="font-size:0.7rem;opacity:0.6">▼ tap for details</span></div>
-        </div>
-        <div>
-          <div class="sc-pick">Your pick: <strong>${bet.pick}</strong> at <strong style="color:var(--dk-blue)">${bet.odds}</strong></div>
-          <div class="sc-pnl pending">$${bet.wager.toFixed(2)} at risk <span style="color:var(--dk-green);font-weight:700">to win $${_htw.toFixed(2)}</span></div>
-        </div>
-        <div id="${scId}" style="display:none;padding:12px 16px;border-top:1px solid var(--dk-border)">
-          <div class="pick-grid">
-            <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${bet.odds}</div></div>
-            <div class="pick-stat"><div class="ps-label">Risk</div><div class="ps-val" style="color:var(--dk-red)">$${bet.wager.toFixed(2)}</div></div>
-            <div class="pick-stat"><div class="ps-label">To Win</div><div class="ps-val" style="color:var(--dk-green)">$${_htw.toFixed(2)}</div></div>
-            <div class="pick-stat"><div class="ps-label">Payout</div><div class="ps-val" style="color:var(--dk-green)">$${_hpay.toFixed(2)}</div></div>
-          </div>
-          ${edge?`<div class="pick-grid" style="margin-top:6px">
-            <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${edge}%</div></div>
-            <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${model||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${implied||'—'}</div></div>
-            <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${conf||'—'}</div></div>
-          </div>`:''}
-          <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
-            <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${((d.bankroll||{}).available||(d.bankroll||{}).current||0)>0?(bet.wager/((d.bankroll||{}).available||(d.bankroll||{}).current||0)*100).toFixed(1):'?'}% of $${((d.bankroll||{}).available||(d.bankroll||{}).current||0).toFixed(0)} bankroll.${edge?` Model sees ${edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
-          </div>
-          ${notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:10px 12px;background:var(--dk-surface-2);border-radius:6px">${notes}${sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+sources+'</span>':''}</div>`:''}
-        </div>
-      </div>
-    `;
-  });
+  document.getElementById('tab-results').innerHTML = html;
 }
 
-function renderHistory(d){
-  const bets=d.bets||[];
-  const histGroups=document.getElementById('hist-groups');
-  const histSum=document.getElementById('hist-summary');
-  histGroups.innerHTML='';
+function renderHistory(d) {
+  if (!d || !d.bets) return;
+  var bets = d.bets.slice().sort(function(a, b) {
+    if (a.date < b.date) return 1;
+    if (a.date > b.date) return -1;
+    return 0;
+  });
 
   // Group by date
-  const byDate={};
-  bets.forEach(bet=>{
-    if(!byDate[bet.date])byDate[bet.date]=[];
-    byDate[bet.date].push(bet);
+  var groups = {};
+  var order = [];
+  bets.forEach(function(bet) {
+    if (!groups[bet.date]) { groups[bet.date] = []; order.push(bet.date); }
+    groups[bet.date].push(bet);
   });
 
-  let totalWins=0,totalLoss=0,totalPnl=0,totalWager=0,totalW=0,totalL=0,totalP=0;
-  const pnlData=[];
+  // Build chart data
+  var chartData = [];
+  var running = 0;
+  // chronological for chart
+  var chronBets = d.bets.slice().filter(function(x) { return x.outcome === 'win' || x.outcome === 'loss'; });
+  chronBets.sort(function(a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  chartData.push(0);
+  chronBets.forEach(function(bet) {
+    var pnl = typeof bet.pnl === 'number' ? bet.pnl : (typeof bet.profit === 'number' ? bet.profit : 0);
+    running += pnl;
+    chartData.push(running);
+  });
 
-  // Build chart data in chronological order (ascending) first
-  const datesAsc=Object.keys(byDate).sort();
-  let chartPnl=0;
-  datesAsc.forEach(date=>{
-    const dayBets=byDate[date];
-    let dayPnl=0;
-    dayBets.forEach(bet=>{
-      if(bet.outcome==='win'){dayPnl+=bet.pnl||(bet.wager*(bet.decimal_odds-1));}
-      else if(bet.outcome==='loss'){dayPnl-=bet.wager;}
+  var html = '<div class="chart-container"><svg id="pnl-chart" viewBox="0 0 900 200" preserveAspectRatio="none"></svg></div>';
+
+  order.forEach(function(date) {
+    var dayBets = groups[date];
+    var dWins = 0, dLosses = 0, dPnl = 0;
+    dayBets.forEach(function(b) {
+      if (b.outcome === 'win') dWins++;
+      if (b.outcome === 'loss') dLosses++;
+      var p = typeof b.pnl === 'number' ? b.pnl : (typeof b.profit === 'number' ? b.profit : 0);
+      if (b.outcome === 'win' || b.outcome === 'loss') dPnl += p;
     });
-    chartPnl+=dayPnl;
-    if(dayBets.some(b=>b.outcome==='win'||b.outcome==='loss'||b.outcome==='push')){
-      pnlData.push({date:date,pnl:chartPnl});
-    }
-  });
-
-  // Now render history cards in descending order (newest first)
-  const dates=Object.keys(byDate).sort().reverse();
-  dates.forEach(date=>{
-    const dayBets=byDate[date];
-    let dayW=0,dayL=0,dayPnl=0,dayWager=0;
-    dayBets.forEach(bet=>{
-      dayWager+=bet.wager;
-      if(bet.outcome==='win'){
-        const p=bet.pnl||(bet.wager*(bet.decimal_odds-1));
-        dayPnl+=p;dayW++;totalW++;totalWins+=p;
-      }else if(bet.outcome==='loss'){
-        dayPnl-=bet.wager;dayL++;totalL++;totalLoss+=bet.wager;
-      }else if(bet.outcome==='push'){
-        totalP++;
-      }
-      totalWager+=bet.wager;
+    html += '<div class="history-day"><div class="history-day-header"><span>' + date + '</span>' +
+      '<span class="day-record">' + dWins + 'W-' + dLosses + 'L</span>' +
+      '<span class="day-pnl" style="color:' + (dPnl >= 0 ? 'var(--green)' : 'var(--red)') + '">' +
+        (dPnl >= 0 ? '+' : '') + '$' + dPnl.toFixed(2) + '</span></div>';
+    dayBets.forEach(function(bet) {
+      var oc = (bet.outcome || 'pending').toLowerCase();
+      if (oc === 'pending') return;
+      var pnl = typeof bet.pnl === 'number' ? bet.pnl : (typeof bet.profit === 'number' ? bet.profit : 0);
+      html += '<div class="history-bet"><span class="history-bet-pick">' + (bet.pick || '') + ' (' + (bet.odds || '') + ')</span>' +
+        '<div class="history-bet-right">' +
+          '<span class="outcome-badge-sm ' + (oc === 'win' ? 'win-sm' : 'loss-sm') + '">' + oc.toUpperCase() + '</span>' +
+          '<span style="color:' + (pnl >= 0 ? 'var(--green)' : 'var(--red)') + '">' +
+            (pnl >= 0 ? '+$' + pnl.toFixed(2) : '-$' + Math.abs(pnl).toFixed(2)) + '</span>' +
+        '</div></div>';
     });
-    totalPnl+=dayPnl;
-
-    histGroups.innerHTML+=`
-      <div class="hist-date-group">
-        <div class="hist-date-header">
-          <div class="hist-date-title">${date}</div>
-          <div class="hist-date-summary">${dayW}W-${dayL}L · ${dayPnl>=0?'+':''}$${Math.abs(dayPnl).toFixed(2)}</div>
-        </div>
-        ${dayBets.map((bet,bIdx)=>{
-          const pnl=bet.pnl||(bet.outcome==='win'?bet.wager*(bet.decimal_odds-1):bet.outcome==='loss'?-bet.wager:0);
-          let resultBadge='',pnlDisplay='';
-          if(bet.outcome==='win'){resultBadge='<span class="badge b-win">WIN</span>';pnlDisplay=`<span style="color:var(--dk-green);font-weight:900">+$${Math.abs(pnl).toFixed(2)}</span>`;}
-          else if(bet.outcome==='loss'){resultBadge='<span class="badge b-loss">LOSS</span>';pnlDisplay=`<span style="color:var(--dk-red);font-weight:900">-$${Math.abs(pnl).toFixed(2)}</span>`;}
-          else if(bet.outcome==='push'){resultBadge='<span class="badge b-pending">PUSH</span>';pnlDisplay='<span style="color:var(--dk-text-3);font-weight:900">$0</span>';}
-          else{const _ro=parseInt(bet.odds);const _rtw=_ro<0?Math.round(bet.wager*100/Math.abs(_ro)*100)/100:Math.round(bet.wager*_ro/100*100)/100;resultBadge='<span class="badge b-pending">PENDING</span>';pnlDisplay=`<span style="color:var(--dk-blue);font-weight:900">$${bet.wager.toFixed(2)} risk</span> <span style="color:var(--dk-green);font-weight:900">to win $${_rtw.toFixed(2)}</span>`;}
-          // For pending bets, add expandable details
-          const isPending=bet.outcome==='pending';
-          const hId='hist-detail-'+date+'-'+bIdx;
-          const origP=isPending?(d.picks||[]).find(p=>p.pick===bet.pick)||{}:{};
-          const _hro=parseInt(bet.odds);
-          const _hrtw=_hro<0?Math.round(bet.wager*100/Math.abs(_hro)*100)/100:Math.round(bet.wager*_hro/100*100)/100;
-          const _hrpay=Math.round((bet.wager+_hrtw)*100)/100;
-          let detailHtml='';
-          if(isPending){
-            detailHtml=`<div id="${hId}" style="display:none;padding:10px 12px;border-top:1px solid var(--dk-border);margin-top:8px">
-              <div class="pick-grid">
-                <div class="pick-stat"><div class="ps-label">DK Odds</div><div class="ps-val" style="color:var(--dk-blue)">${bet.odds}</div></div>
-                <div class="pick-stat"><div class="ps-label">Risk</div><div class="ps-val" style="color:var(--dk-red)">$${bet.wager.toFixed(2)}</div></div>
-                <div class="pick-stat"><div class="ps-label">To Win</div><div class="ps-val" style="color:var(--dk-green)">$${_hrtw.toFixed(2)}</div></div>
-                <div class="pick-stat"><div class="ps-label">Payout</div><div class="ps-val" style="color:var(--dk-green)">$${_hrpay.toFixed(2)}</div></div>
-              </div>
-              ${origP.edge?`<div class="pick-grid" style="margin-top:6px">
-                <div class="pick-stat"><div class="ps-label">Edge</div><div class="ps-val" style="color:var(--dk-green)">+${origP.edge}%</div></div>
-                <div class="pick-stat"><div class="ps-label">Model</div><div class="ps-val" style="color:var(--dk-green)">${origP.model||'—'}</div></div>
-                <div class="pick-stat"><div class="ps-label">Implied</div><div class="ps-val">${origP.implied||'—'}</div></div>
-                <div class="pick-stat"><div class="ps-label">Confidence</div><div class="ps-val">${origP.confidence||origP.tier||'—'}</div></div>
-              </div>`:''}
-              <div style="margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px;font-size:0.82rem;color:var(--dk-text-2);line-height:1.5">
-                <strong style="color:var(--dk-text-2)">Sizing:</strong> $${bet.wager.toFixed(2)} = ${((d.bankroll||{}).available||(d.bankroll||{}).current||0)>0?(bet.wager/((d.bankroll||{}).available||(d.bankroll||{}).current||0)*100).toFixed(1):'?'}% of $${((d.bankroll||{}).available||(d.bankroll||{}).current||0).toFixed(0)} bankroll.${origP.edge?` Model sees ${origP.edge}% edge — Kelly sizes bets proportional to edge (half-Kelly, 2% cap).`:''}
-              </div>
-              ${origP.notes?`<div style="color:var(--dk-text-2);font-size:0.82rem;line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--dk-surface-2);border-radius:6px">${origP.notes}${origP.sources?'<br><span style="color:var(--dk-blue);font-size:0.75rem;font-weight:700">Sources: '+origP.sources+'</span>':''}</div>`:''}
-            </div>`;
-          }
-          return `
-            <div class="hist-item" ${isPending?'style="cursor:pointer" onclick="const el=document.getElementById(\''+hId+'\');el.style.display=el.style.display===\'none\'?\'block\':\'none\'"':''}>
-              <div class="hist-item-left">
-                <div class="hist-item-pick">${bet.pick} ${isPending?'<span style="font-size:0.65rem;opacity:0.5">▼</span>':''}</div>
-                <div class="hist-item-meta">${bet.event} · ${bet.odds} · $${bet.wager.toFixed(2)} risked${bet.outcome==='win'?' → won $'+Math.abs(bet.pnl||(bet.wager*(bet.decimal_odds-1))).toFixed(2):bet.outcome==='loss'?' → lost $'+bet.wager.toFixed(2):''}</div>
-              </div>
-              <div class="hist-item-right">
-                <div class="hist-item-result">${resultBadge}</div>
-                <div class="hist-item-pnl">${pnlDisplay}</div>
-              </div>
-              ${detailHtml}
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `;
+    html += '</div>';
   });
 
-  // Chart
-  drawPnlChart(pnlData);
+  document.getElementById('tab-history').innerHTML = html;
 
-  // Summary
-  const roi=totalWager>0?((totalPnl/totalWager)*100).toFixed(1):'0.0';
-  histSum.innerHTML=`
-    <span><strong>Record:</strong> ${totalW}W-${totalL}L-${totalP}P</span>
-    <span><strong>Wagered:</strong> $${totalWager.toFixed(2)}</span>
-    <span><strong>P/L:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${totalPnl>=0?'+':''}$${totalPnl.toFixed(2)}</span></span>
-    <span><strong>ROI:</strong> <span style="color:${totalPnl>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${roi}%</span></span>
-  `;
+  // Draw chart after DOM update
+  setTimeout(function() { drawPnlChart(chartData); }, 50);
 }
 
-function drawPnlChart(data){
-  const svg=document.getElementById('pnl-chart');
-  if(!svg||data.length===0)return;
+function drawPnlChart(data) {
+  var svg = document.getElementById('pnl-chart');
+  if (!svg || !data || data.length < 2) return;
 
-  const width=svg.clientWidth||800;
-  const height=200;
-  const padding=30;
+  var w = 900, h = 200;
+  var min = Math.min.apply(null, data);
+  var max = Math.max.apply(null, data);
+  var range = max - min || 1;
+  var pad = 20;
 
-  const minPnl=Math.min(0,...data.map(d=>d.pnl));
-  const maxPnl=Math.max(0,...data.map(d=>d.pnl));
-  const range=maxPnl-minPnl||1;
-
-  const xScale=x=>(padding+(x/(data.length-1||1))*(width-2*padding));
-  const yScale=y=>(height-padding-(((y-minPnl)/range)*(height-2*padding)));
-
-  // Clear SVG
-  svg.innerHTML='';
-
-  // Zero line
-  const y0=yScale(0);
-  svg.innerHTML+=`<line x1="${padding}" y1="${y0}" x2="${width-padding}" y2="${y0}" stroke="var(--dk-border)" stroke-width="1" stroke-dasharray="4,4"/>`;
-
-  // Chart area background
-  if(maxPnl>0){
-    const pathFill=[`M${xScale(0)},${y0}`,...data.map((d,i)=>`L${xScale(i)},${yScale(d.pnl)}`),`L${xScale(data.length-1)},${y0}`].join(' ');
-    svg.innerHTML+=`<path d="${pathFill}" fill="url(#grad)" opacity="0.2"/>`;
-  }
-
-  // Gradient
-  svg.innerHTML=`<defs><linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-    <stop offset="0%" style="stop-color:#53d337;stop-opacity:0.4"/><stop offset="100%" style="stop-color:#53d337;stop-opacity:0"/></linearGradient></defs>${svg.innerHTML}`;
-
-  // Line
-  const line=data.map((d,i)=>`${i===0?'M':'L'}${xScale(i)},${yScale(d.pnl)}`).join(' ');
-  svg.innerHTML+=`<path d="${line}" stroke="${maxPnl>0?'#53d337':'#e5383b'}" stroke-width="2" fill="none"/>`;
-
-  // Points
-  data.forEach((d,i)=>{
-    svg.innerHTML+=`<circle cx="${xScale(i)}" cy="${yScale(d.pnl)}" r="3" fill="${d.pnl>=0?'#53d337':'#e5383b'}" stroke="#0d0d0d" stroke-width="1"/>`;
+  var points = data.map(function(v, i) {
+    var x = (i / (data.length - 1)) * w;
+    var y = pad + ((max - v) / range) * (h - 2 * pad);
+    return x.toFixed(1) + ',' + y.toFixed(1);
   });
 
-  // Axes
-  svg.innerHTML+=`<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height-padding}" stroke="var(--dk-border)" stroke-width="1"/>`;
-  svg.innerHTML+=`<line x1="${padding}" y1="${height-padding}" x2="${width-padding}" y2="${height-padding}" stroke="var(--dk-border)" stroke-width="1"/>`;
+  var lastY = pad + ((max - data[data.length - 1]) / range) * (h - 2 * pad);
+  var fillPoints = points.join(' ') + ' ' + w + ',' + h + ' 0,' + h;
 
-  // Labels
-  svg.innerHTML+=`<text x="${padding-5}" y="${height-padding+3}" text-anchor="end" font-size="11" fill="#6e6e78">$0</text>`;
-  if(maxPnl>0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(maxPnl)+3}" text-anchor="end" font-size="11" fill="#53d337">$${maxPnl.toFixed(0)}</text>`;
-  if(minPnl<0)svg.innerHTML+=`<text x="${padding-5}" y="${yScale(minPnl)+3}" text-anchor="end" font-size="11" fill="#e5383b">$${minPnl.toFixed(0)}</text>`;
+  svg.innerHTML =
+    '<defs><linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="#53d337" stop-opacity="0.3"/>' +
+      '<stop offset="100%" stop-color="#53d337" stop-opacity="0.02"/>' +
+    '</linearGradient></defs>' +
+    '<polygon points="' + fillPoints + '" fill="url(#gfill)"/>' +
+    '<polyline points="' + points.join(' ') + '" fill="none" stroke="#53d337" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<line x1="0" y1="' + (pad + (max / range) * (h - 2 * pad)).toFixed(1) + '" x2="' + w + '" y2="' + (pad + (max / range) * (h - 2 * pad)).toFixed(1) + '" stroke="#4d4d4d" stroke-width="0.5" stroke-dasharray="4,4"/>';
 }
 
-function renderBankroll(d,b,rec,amt,profit){
-  const totalGames=rec.wins+rec.losses+rec.pushes;
-  const winRate=totalGames>0?((rec.wins/totalGames)*100).toFixed(0):'0';
-  const bets=d.bets||[];
-  const resolved=bets.filter(x=>x.outcome==='win'||x.outcome==='loss'||x.outcome==='push');
-  let totalWager=0,bestWin=0,bestWinPick='—';
-  resolved.forEach(bet=>{
-    totalWager+=bet.wager;
-    if(bet.outcome==='win'){
-      const p=bet.pnl||(bet.wager*(bet.decimal_odds-1));
-      if(p>bestWin){bestWin=p;bestWinPick=bet.pick;}
-    }
+function renderBankroll(d, b, rec, amt, profit) {
+  if (!b) return;
+  var totalBets = rec.wins + rec.losses + rec.pushes;
+  var winRate = totalBets > 0 ? ((rec.wins / totalBets) * 100).toFixed(1) : '0.0';
+  var roi = b.starting > 0 ? ((profit / b.starting) * 100).toFixed(1) : '0.0';
+
+  // Find best win
+  var bestWin = 0;
+  (d.bets || []).forEach(function(bet) {
+    var p = typeof bet.pnl === 'number' ? bet.pnl : (typeof bet.profit === 'number' ? bet.profit : 0);
+    if (p > bestWin) bestWin = p;
   });
 
-  document.getElementById('br-cards').innerHTML=`
-    <div class="br-card"><div class="br-label">Available</div><div class="br-val" style="color:var(--dk-green)">$${amt.toFixed(2)}</div><div class="br-sub">After pending</div></div>
-    <div class="br-card"><div class="br-label">Starting</div><div class="br-val">$${(b.starting||500).toFixed(2)}</div></div>
-    <div class="br-card"><div class="br-label">Lifetime P/L</div><div class="br-val" style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)'}">${profit>=0?'+':''}$${profit.toFixed(2)}</div></div>
-    <div class="br-card"><div class="br-label">Record</div><div class="br-val" style="color:${rec.wins>rec.losses?'var(--dk-green)':'var(--dk-text)'}">${rec.wins}W-${rec.losses}L-${rec.pushes}P</div><div class="br-sub">${winRate}% win rate</div></div>
-  `;
-  document.getElementById('perf-summary').innerHTML=`
-    <span><strong>Total Bets:</strong> ${totalGames}</span>
-    <span><strong>Avg Wager:</strong> $${totalGames>0?(totalWager/totalGames).toFixed(2):'0.00'}</span>
-    <span><strong>ROI:</strong> <span style="color:${profit>=0?'var(--dk-green)':'var(--dk-red)'};font-weight:900">${totalWager>0?((profit/totalWager)*100).toFixed(1):'0.0'}%</span></span>
-    <span><strong>Best Win:</strong> <span style="color:var(--dk-green)">${bestWin>0?bestWinPick+' +$'+bestWin.toFixed(2):'—'}</span></span>
-  `;
-}
-
-function toggleAnalysis(i){
-  document.getElementById('analysis-'+i).classList.toggle('open');
-}
-
-function kellyExplainer(p,bankroll){
-  const edge=p.edge;
-  const wager=parseFloat(p.bet.replace('$',''));
-  const pct=bankroll>0?((wager/bankroll)*100).toFixed(1):'?';
-  return `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--dk-border);color:var(--dk-text-3);font-size:0.8rem">
-    <strong style="color:var(--dk-text-2)">Why ${p.bet}?</strong> Model sees a ${edge}% edge. Kelly criterion sizes bets proportional to edge — bigger edge = bigger bet. At half-Kelly (conservative), that's ${pct}% of your $${bankroll.toFixed(0)} bankroll.
-  </div>`;
-}
-
-// Local placement cache — survives refresh until GitHub Action commits
-function getLocalPlacements(){
-  try{return JSON.parse(localStorage.getItem('dk_placed')||'{}');}catch(e){return {};}
-}
-function saveLocalPlacement(pickIndices){
-  const cache=getLocalPlacements();
-  const date=DATA.scan_date;
-  if(!cache[date])cache[date]=[];
-  if(pickIndices==='all'){
-    DATA.picks.forEach((p,i)=>{if(!p.status||p.status==='')cache[date].push(i);});
-  }else{
-    pickIndices.forEach(i=>cache[date].push(i));
-  }
-  localStorage.setItem('dk_placed',JSON.stringify(cache));
-}
-function applyLocalPlacements(d){
-  const cache=getLocalPlacements();
-  const placed=cache[d.scan_date]||[];
-  placed.forEach(i=>{
-    if(d.picks[i]&&(!d.picks[i].status||d.picks[i].status===''))d.picks[i].status='PLACED';
+  // Average wager
+  var totalWagered = 0;
+  var wagerCount = 0;
+  (d.bets || []).forEach(function(bet) {
+    if (bet.wager) { totalWagered += bet.wager; wagerCount++; }
   });
-  // Recalculate bankroll if we have local placements not yet in bets[]
-  const localWager=placed.reduce((s,i)=>{
-    const p=d.picks[i];
-    if(p&&!d.bets.some(b=>b.pick===p.pick&&b.date===d.scan_date)){
-      return s+parseFloat(p.bet.replace('$',''));
-    }
-    return s;
-  },0);
-  if(localWager>0){
-    d.bankroll.available=(d.bankroll.available||d.bankroll.current||500)-localWager;
-    d.bankroll.pending_count=(d.bankroll.pending_count||0)+placed.length;
-    d.bankroll.pending_total=(d.bankroll.pending_total||0)+localWager;
+  var avgWager = wagerCount > 0 ? (totalWagered / wagerCount).toFixed(2) : '0.00';
+
+  var html = '<div class="bankroll-metrics">' +
+    '<div class="bk-card"><div class="bk-label">Available</div><div class="bk-value" style="color:var(--green)">$' + amt.toFixed(2) + '</div></div>' +
+    '<div class="bk-card"><div class="bk-label">Starting</div><div class="bk-value">$' + (b.starting || 0).toFixed(2) + '</div></div>' +
+    '<div class="bk-card"><div class="bk-label">Lifetime P/L</div><div class="bk-value" style="color:' + (profit >= 0 ? 'var(--green)' : 'var(--red)') + '">' + (profit >= 0 ? '+' : '') + '$' + profit.toFixed(2) + '</div></div>' +
+    '<div class="bk-card"><div class="bk-label">Record</div><div class="bk-value">' + rec.wins + 'W - ' + rec.losses + 'L' + (rec.pushes ? ' - ' + rec.pushes + 'P' : '') + '</div></div>' +
+  '</div>' +
+  '<div class="perf-row">' +
+    '<div class="perf-card"><div class="perf-label">Total Bets</div><div class="perf-value">' + totalBets + '</div></div>' +
+    '<div class="perf-card"><div class="perf-label">Avg Wager</div><div class="perf-value">$' + avgWager + '</div></div>' +
+    '<div class="perf-card"><div class="perf-label">ROI</div><div class="perf-value" style="color:' + (parseFloat(roi) >= 0 ? 'var(--green)' : 'var(--red)') + '">' + roi + '%</div></div>' +
+    '<div class="perf-card"><div class="perf-label">Best Win</div><div class="perf-value" style="color:var(--green)">+$' + bestWin.toFixed(2) + '</div></div>' +
+  '</div>';
+
+  document.getElementById('tab-bankroll').innerHTML = html;
+}
+
+function toggleAnalysis(i) {
+  var card = document.getElementById('pick-' + i);
+  if (!card) return;
+  card.classList.toggle('expanded');
+}
+
+function kellyExplainer(p, bankroll) {
+  if (!p || !bankroll) return '';
+  var edge = typeof p.edge === 'number' ? p.edge : parseFloat(p.edge) || 0;
+  var dec = americanToDecimal(p.odds);
+  var betAmt = parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0;
+  var pct = bankroll > 0 ? ((betAmt / bankroll) * 100).toFixed(1) : '0.0';
+  return 'Kelly: ' + edge.toFixed(1) + '% edge at ' + dec.toFixed(3) + ' decimal odds = ' +
+    pct + '% of bankroll ($' + betAmt.toFixed(2) + ')';
+}
+
+function getLocalPlacements() {
+  try {
+    var raw = localStorage.getItem('dk-edge-placements');
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch (e) {
+    console.error('[getLocalPlacements] corrupt data, resetting', e);
+    return {};
   }
 }
 
-// Bet placement
-async function triggerPlacement(indices){
-  const str=indices==='all'?'all':indices.join(',');
-  try{
-    const token=localStorage.getItem('gh_token');
-    if(!token){promptToken(indices);return;}
-    const resp=await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/place-bets.yml/dispatches`,{
-      method:'POST',
-      headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-      body:JSON.stringify({ref:'main',inputs:{picks:str}})
-    });
-    if(resp.status===204){
-      saveLocalPlacement(indices);
-      // Mark picks as placed AND add to bets[] AND deduct bankroll
-      const placedPicks=indices==='all'?DATA.picks.filter(p=>!p.status||p.status===''):indices.map(i=>DATA.picks[i]).filter(Boolean);
-      let totalDeducted=0;
-      placedPicks.forEach(p=>{
-        p.status='PLACED';
-        const wager=parseFloat(p.bet.replace('$',''));
-        totalDeducted+=wager;
-        // Add to bets[] so it shows in Results/History immediately
-        if(!DATA.bets.some(b=>b.pick===p.pick&&b.date===DATA.scan_date)){
-          DATA.bets.push({
-            date:DATA.scan_date,sport:p.sport,event:p.event,
-            pick:p.pick,odds:p.odds,
-            decimal_odds:p.odds?americanToDecimal(parseInt(p.odds)):1.909,
-            edge:p.edge+'%',wager:wager,outcome:'pending'
-          });
-        }
-      });
-      // Deduct from bankroll
-      DATA.bankroll.available=Math.round((DATA.bankroll.available-totalDeducted)*100)/100;
-      DATA.bankroll.pending_count=(DATA.bankroll.pending_count||0)+placedPicks.length;
-      DATA.bankroll.pending_total=Math.round(((DATA.bankroll.pending_total||0)+totalDeducted)*100)/100;
-      DATA.bankroll.pending_label=DATA.bankroll.pending_count+' bet(s) pending ($'+DATA.bankroll.pending_total.toFixed(2)+')';
-      render(DATA);
-      toast('Placed '+placedPicks.length+' bet(s) for $'+totalDeducted.toFixed(2)+'. Bankroll: $'+DATA.bankroll.available.toFixed(2));
-    }else if(resp.status===401||resp.status===403){
-      localStorage.removeItem('gh_token');promptToken(indices);
-    }else{toast('Error ('+resp.status+'). Try again.');}
-  }catch(e){toast('Network error.');console.error(e);}
+function saveLocalPlacement(pickIndices) {
+  if (!DATA) return;
+  var placements = getLocalPlacements();
+  var dateKey = DATA.scan_date || 'unknown';
+  if (!placements[dateKey]) placements[dateKey] = [];
+  pickIndices.forEach(function(idx) {
+    if (placements[dateKey].indexOf(idx) === -1) {
+      placements[dateKey].push(idx);
+    }
+  });
+  try {
+    localStorage.setItem('dk-edge-placements', JSON.stringify(placements));
+  } catch (e) {
+    console.error('[saveLocalPlacement] failed to save', e);
+  }
 }
 
-function placeBet(i){
-  if(confirm('Mark "'+DATA.picks[i].pick+'" as placed for '+DATA.picks[i].bet+'?')){triggerPlacement([i]);}
-}
-function placeAll(){
-  const u=DATA.picks.filter(p=>!p.status||p.status==='');
-  const t=u.reduce((s,p)=>s+parseFloat(p.bet.replace('$','')),0);
-  if(confirm('Place all '+u.length+' bets for $'+t.toFixed(2)+'?')){triggerPlacement('all');}
-}
-function skipBet(i){
-  const c=document.getElementById('card-'+i);
-  if(c){c.style.opacity='0.5';c.style.pointerEvents='none';}
-  document.getElementById('actions-'+i).innerHTML='<span style="color:var(--dk-text-3);font-size:0.8rem">Skipped</span>';
-}
-function promptToken(pending){
-  const t=prompt('Enter GitHub personal access token (repo + workflow scope).\nStored in your browser only.');
-  if(t){localStorage.setItem('gh_token',t.trim());triggerPlacement(pending);}
-}
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),4000);
+function applyLocalPlacements(d) {
+  if (!d || !d.picks) return;
+  var placements = getLocalPlacements();
+  var dateKey = d.scan_date || 'unknown';
+  var placed = placements[dateKey] || [];
+  placed.forEach(function(idx) {
+    if (d.picks[idx]) d.picks[idx]._placed = true;
+  });
 }
 
+function triggerPlacement(indices) {
+  if (!DATA || !indices || !indices.length) return;
+  saveLocalPlacement(indices);
+  indices.forEach(function(idx) {
+    if (DATA.picks[idx]) DATA.picks[idx]._placed = true;
+  });
+  render(DATA);
+  toast(indices.length === 1 ? 'Bet marked as placed' : indices.length + ' bets marked as placed');
+}
+
+function placeBet(i) {
+  triggerPlacement([i]);
+}
+
+function placeAll() {
+  if (!DATA || !DATA.picks) return;
+  var indices = [];
+  DATA.picks.forEach(function(p, i) {
+    if (!p._placed && !p._skipped) indices.push(i);
+  });
+  if (indices.length === 0) {
+    toast('No unplaced bets remaining');
+    return;
+  }
+  triggerPlacement(indices);
+}
+
+function skipBet(i) {
+  if (!DATA || !DATA.picks || !DATA.picks[i]) return;
+  DATA.picks[i]._skipped = true;
+  var card = document.getElementById('pick-' + i);
+  if (card) {
+    card.style.opacity = '0.3';
+    card.style.pointerEvents = 'none';
+  }
+  // Update place-all bar
+  var unplaced = DATA.picks.filter(function(p) { return !p._placed && !p._skipped; });
+  var bar = document.getElementById('place-all-bar');
+  var btn = document.getElementById('place-all-btn');
+  if (unplaced.length > 0) {
+    bar.style.display = 'block';
+    var total = 0;
+    unplaced.forEach(function(p) { total += parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0; });
+    btn.textContent = 'PLACE ALL ' + unplaced.length + ' BETS ($' + total.toFixed(2) + ')';
+  } else {
+    bar.style.display = 'none';
+  }
+  toast('Bet skipped');
+}
+
+function promptToken(pending) {
+  var msg = 'You have ' + pending + ' pending bet(s). Enter your DraftKings session token to auto-place:';
+  var token = prompt(msg);
+  if (!token || !token.trim()) {
+    toast('Token entry cancelled');
+    return null;
+  }
+  return token.trim();
+}
+
+function toast(msg) {
+  var el = document.getElementById('toast-el');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function() { el.classList.remove('show'); }, 2500);
+}
+
+// Tab switching
+document.getElementById('dk-tabs').addEventListener('click', function(e) {
+  var tab = e.target.closest('.dk-tab');
+  if (!tab) return;
+  var target = tab.getAttribute('data-tab');
+  // Deactivate all
+  document.querySelectorAll('.dk-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+  // Activate target
+  tab.classList.add('active');
+  var content = document.getElementById('tab-' + target);
+  if (content) content.classList.add('active');
+  // Show/hide place-all bar
+  var bar = document.getElementById('place-all-bar');
+  if (target === 'picks') {
+    if (DATA && DATA.picks) {
+      var unplaced = DATA.picks.filter(function(p) { return !p._placed && !p._skipped; });
+      bar.style.display = unplaced.length > 0 ? 'block' : 'none';
+    }
+  } else {
+    bar.style.display = 'none';
+  }
+  // Redraw chart if history tab
+  if (target === 'history' && DATA) {
+    setTimeout(function() { renderHistory(DATA); }, 50);
+  }
+});
+
+// Init
 loadData();
 </script>
-
 </body>
 </html>
