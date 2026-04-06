@@ -23,6 +23,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from skellam import poisson_spread_probability
 from fetch_props import scan_props as scan_player_props
+from fetch_sources import fetch_all_sources
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -656,16 +657,20 @@ def fetch_dimers_predictions(date_str: str, sport: str = "nba") -> dict:
     return predictions
 
 
-def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
+def build_ensemble(dratings: dict, dimers: dict, sport: str, extra_sources: dict = None) -> dict:
     """
-    Average predictions from DRatings and Dimers into an ensemble.
+    Average predictions from all available sources into an ensemble.
 
-    Key matching: DRatings and Dimers may use different home/away ordering
+    Primary sources: DRatings (always has correct H/A from ESPN) and Dimers.
+    Extra sources: dict of {"source_name": predictions_dict} from fetch_sources.py.
+
+    Key matching: Sources may use different home/away ordering
     for the same game (e.g., "MTL@DET" vs "DET@MTL"). We match by canonical
     key (sorted team pair) and normalize to DRatings' perspective if available.
 
     Returns dict keyed by "AWAY@HOME" (DRatings perspective) with ensemble predictions.
     """
+    extra_sources = extra_sources or {}
     # Disagreement thresholds by sport
     disagree_thresh = {"nba": 3.0, "nfl": 3.0, "nhl": 0.5, "mlb": 0.5,
                        "epl": 0.3, "mls": 0.3}
@@ -810,6 +815,114 @@ def build_ensemble(dratings: dict, dimers: dict, sport: str) -> dict:
         if dm_key not in dimers_matched:
             ensemble[dm_key] = {**dm, "sources": 1, "source_label": "Dimers only",
                                 "contested": False, "disagreement": 0}
+
+    # ── Integrate extra sources (Massey, OddsShark, Sagarin, Club Elo, etc.) ──
+    if extra_sources:
+        for game_key, ens_val in ensemble.items():
+            extra_margins = []
+            extra_names = []
+
+            for src_name, src_preds in extra_sources.items():
+                # Try to match this game across the source
+                matched_pred = None
+                for sk, sv in src_preds.items():
+                    m, rev = teams_match(game_key, sk)
+                    if m:
+                        matched_pred = sv
+                        if rev:
+                            # Flip margin if home/away reversed
+                            matched_pred = {**sv, "margin": -sv["margin"]}
+                        break
+
+                if matched_pred is not None:
+                    extra_margins.append(matched_pred["margin"])
+                    extra_names.append(src_name)
+
+            if extra_margins:
+                # Recalculate ensemble with all sources
+                # Primary margin (from DRatings/Dimers ensemble)
+                primary_margin = ens_val["margin"]
+                all_margins = [primary_margin] + extra_margins
+                avg_margin = round(sum(all_margins) / len(all_margins), 1)
+
+                # Update source count and label
+                old_sources = ens_val.get("sources", 1)
+                old_label = ens_val.get("source_label", "")
+                new_count = old_sources + len(extra_margins)
+                new_label = old_label + " + " + " + ".join(extra_names)
+
+                # Recalculate scores from averaged margin
+                total = ens_val["away_score"] + ens_val["home_score"]
+                new_home = round((total + avg_margin) / 2, 1)
+                new_away = round((total - avg_margin) / 2, 1)
+
+                # Check for disagreement across ALL sources
+                margin_spread = max(all_margins) - min(all_margins)
+                contested = margin_spread > thresh * 2  # Higher bar with more sources
+
+                ens_val.update({
+                    "away_score": new_away,
+                    "home_score": new_home,
+                    "margin": avg_margin,
+                    "sources": new_count,
+                    "source_label": new_label,
+                    "contested": contested,
+                    "disagreement": round(margin_spread, 1),
+                    "all_margins": all_margins,
+                })
+
+        # Add games found ONLY in extra sources (not in DRatings or Dimers)
+        extra_only_keys = set()
+        for src_name, src_preds in extra_sources.items():
+            for sk in src_preds:
+                # Check if already in ensemble
+                already = False
+                for ek in ensemble:
+                    m, _ = teams_match(ek, sk)
+                    if m:
+                        already = True
+                        break
+                if not already:
+                    extra_only_keys.add(sk)
+
+        for sk in extra_only_keys:
+            margins = []
+            names = []
+            base_pred = None
+            for src_name, src_preds in extra_sources.items():
+                for ssk, sv in src_preds.items():
+                    m, rev = teams_match(sk, ssk)
+                    if m:
+                        if base_pred is None:
+                            base_pred = sv if not rev else {
+                                **sv,
+                                "away_abbr": sv["home_abbr"], "home_abbr": sv["away_abbr"],
+                                "away_score": sv["home_score"], "home_score": sv["away_score"],
+                                "margin": -sv["margin"],
+                            }
+                        margin = sv["margin"] if not rev else -sv["margin"]
+                        margins.append(margin)
+                        names.append(src_name)
+                        break
+
+            if base_pred and margins:
+                avg_margin = round(sum(margins) / len(margins), 1)
+                total = base_pred["away_score"] + base_pred["home_score"]
+                new_home = round((total + avg_margin) / 2, 1)
+                new_away = round((total - avg_margin) / 2, 1)
+                ensemble[sk] = {
+                    "away_abbr": base_pred["away_abbr"],
+                    "home_abbr": base_pred["home_abbr"],
+                    "away_name": base_pred.get("away_name", ""),
+                    "home_name": base_pred.get("home_name", ""),
+                    "away_score": new_away,
+                    "home_score": new_home,
+                    "margin": avg_margin,
+                    "sources": len(margins),
+                    "source_label": " + ".join(names),
+                    "contested": False,
+                    "disagreement": round(max(margins) - min(margins), 1) if len(margins) > 1 else 0,
+                }
 
     return ensemble
 
@@ -1473,10 +1586,25 @@ def main(games_only: bool = False):
         return
 
     # Step 3: Fetch model predictions from multiple sources and build ensemble
-    print("\n[3] Fetching predictions (DRatings + Dimers ensemble)...")
+    print("\n[3] Fetching predictions (multi-source ensemble)...")
     all_dratings = {}
     all_dimers = {}
+    all_extra = {}
+
+    # Extract matchups from schedule for rating-based sources
+    sport_matchups = {}
+    for game in upcoming:
+        sport_key = game.get("sport", "nba").lower()
+        if sport_key not in sport_matchups:
+            sport_matchups[sport_key] = []
+        away_abbr = game.get("away", {}).get("abbr", "")
+        home_abbr = game.get("home", {}).get("abbr", "")
+        if away_abbr and home_abbr:
+            sport_matchups[sport_key].append((away_abbr, home_abbr))
+
     for sport in all_sports:
+        matchups = sport_matchups.get(sport.lower(), [])
+
         # Fetch DRatings
         try:
             dr_preds = fetch_dratings_predictions(today, sport)
@@ -1496,15 +1624,30 @@ def main(games_only: bool = False):
         else:
             all_dimers[sport] = {}
 
-        # Build ensemble for this sport
-        ensemble = build_ensemble(all_dratings.get(sport, {}), all_dimers.get(sport, {}), sport)
+        # Fetch additional sources (Massey, OddsShark, Sagarin, Club Elo, Forebet, FanGraphs, Accuscore)
+        try:
+            extra = fetch_all_sources(today, sport, matchups)
+            all_extra[sport] = extra
+        except Exception as e:
+            print(f"  {sport.upper()} extra sources error: {e}", file=sys.stderr)
+            all_extra[sport] = {}
+
+        # Build ensemble for this sport (DRatings + Dimers + all extra sources)
+        ensemble = build_ensemble(
+            all_dratings.get(sport, {}),
+            all_dimers.get(sport, {}),
+            sport,
+            extra_sources=all_extra.get(sport, {}),
+        )
         all_predictions[sport] = ensemble
 
         # Log ensemble stats
-        n_both = sum(1 for v in ensemble.values() if v.get("sources", 0) == 2)
+        n_multi = sum(1 for v in ensemble.values() if v.get("sources", 0) >= 2)
         n_contested = sum(1 for v in ensemble.values() if v.get("contested", False))
+        max_src = max((v.get("sources", 0) for v in ensemble.values()), default=0)
         if ensemble:
-            print(f"  {sport.upper()} ensemble: {len(ensemble)} games ({n_both} dual-source, {n_contested} contested)")
+            print(f"  {sport.upper()} ensemble: {len(ensemble)} games ({n_multi} multi-source, "
+                  f"max {max_src} sources, {n_contested} contested)")
 
     # Step 4: Check B2B teams (NBA only for now; NHL could use same logic)
     print("\n[4] Checking back-to-back schedule...")
