@@ -823,6 +823,7 @@ body {
         placements[key] = action;
         savePlacements();
         renderPicks();
+        renderPending();
         renderPositions();
         showToast(action === 'placed' ? 'Bet marked as placed' : 'Bet skipped', 'success');
       });
@@ -840,6 +841,7 @@ body {
         });
         savePlacements();
         renderPicks();
+        renderPending();
         renderPositions();
         showToast(count + ' pick(s) marked as placed', 'success');
       });
@@ -1201,6 +1203,8 @@ body {
   document.getElementById('clearPlacements').addEventListener('click', function() {
     placements = {};
     savePlacements();
+    renderPicks();
+    renderPending();
     renderPositions();
     showToast('All placement data cleared', 'info');
   });
@@ -1218,6 +1222,8 @@ body {
       }
     });
     savePlacements();
+    renderPicks();
+    renderPending();
     renderPositions();
     showToast(count + ' pick(s) marked as placed', 'success');
   });
