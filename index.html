@@ -471,6 +471,7 @@ body {
 .pick-name { font-size: 14px; font-weight: 700; color: #111; }
 .pick-event { font-size: 12px; color: #888; margin-top: 1px; }
 .pick-market-tag { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.3px; }
+.pick-time-tag { font-size: 11px; color: #c9a633; font-weight: 600; margin-left: 4px; }
 .pick-right-cluster {
   display: flex;
   align-items: center;
@@ -770,7 +771,7 @@ body {
           '<div class="pick-sport-badge">' + esc(p.sport) + '</div>' +
           '<div class="pick-info">' +
             '<div class="pick-name">' + esc(p.pick) + '</div>' +
-            '<div class="pick-event">' + esc(p.event) + ' <span class="pick-market-tag">' + esc(p.market || '') + '</span></div>' +
+            '<div class="pick-event">' + esc(p.event) + (formatGameTime(p.start_time) ? ' <span class="pick-time-tag">' + formatGameTime(p.start_time) + '</span>' : '') + ' <span class="pick-market-tag">' + esc(p.market || '') + '</span></div>' +
           '</div>' +
           '<div class="pick-right-cluster">' +
             '<div class="pick-odds-box">' + esc(p.odds) + '</div>' +
@@ -1281,6 +1282,19 @@ body {
     var parts = d.split('-');
     if (parts.length !== 3) return d;
     return parts[1] + '/' + parts[2];
+  }
+
+  function formatGameTime(iso) {
+    if (!iso) return '';
+    try {
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return '';
+      var h = d.getHours();
+      var m = d.getMinutes();
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ampm;
+    } catch(e) { return ''; }
   }
 
   function esc(s) {

@@ -337,6 +337,7 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             "under_odds": under_odds,
             "event_str": f"{away.get('name', '?')} @ {home.get('name', '?')}",
             "event_short": f"{away.get('abbr', '?')} @ {home.get('abbr', '?')}",
+            "start_time": event.get("date", ""),
             "odds_details": details,
             "dk_spread_links": dk_spread_links,
             "dk_total_links": dk_total_links,
@@ -1236,6 +1237,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "spread_cushion": spread_cushion,
         "confidence": confidence,
         "dk_link": game.get("dk_spread_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
+        "start_time": game.get("start_time", ""),
     }
 
 
@@ -1371,6 +1373,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         "tank_risk": False,
         "spread_cushion": cushion,
         "dk_link": game.get("dk_total_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
+        "start_time": game.get("start_time", ""),
     }
 
 
@@ -1681,6 +1684,7 @@ def main(games_only: bool = False):
             "confidence": pick.get("confidence", "HIGH"),
             "dk_link": pick.get("dk_link", ""),
             "type": "prop" if pick.get("market") == "Player Prop" else "game",
+            "start_time": pick.get("start_time", ""),
         })
         print(f"  #{rank}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
 

@@ -39,7 +39,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937444?outcomes=0HC84191347N150_3",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-06T20:10Z"
     },
     {
       "rank": 2,
@@ -60,7 +61,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937446?outcomes=0HC84191359N150_3",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-06T22:10Z"
     },
     {
       "rank": 3,
@@ -81,7 +83,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937476?outcomes=0HC84191407N150_3",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-07T00:05Z"
     },
     {
       "rank": 4,
@@ -102,7 +105,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937449?outcomes=0HC84191362P150_1",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-06T22:45Z"
     },
     {
       "rank": 5,
@@ -123,7 +127,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937472?outcomes=0HC84191396P150_1",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-06T22:45Z"
     },
     {
       "rank": 6,
@@ -144,7 +149,8 @@
       "sources": "DRatings + Dimers, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33937477?outcomes=0HC84191408P150_1",
-      "type": "game"
+      "type": "game",
+      "start_time": "2026-04-07T00:40Z"
     }
   ],
   "no_edge_games": [
