@@ -504,6 +504,13 @@ body {
   min-width: 56px;
   text-align: right;
 }
+.pick-to-win, .pos-to-win {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4CAF50;
+  margin-top: 1px;
+}
 .pick-expand {
   display: none;
   margin-top: 14px;
@@ -781,6 +788,7 @@ body {
     }
 
     var totalWager = 0;
+    var totalPotentialWin = 0;
     var html = '<div class="pick-list">';
     picks.forEach(function(p, i) {
       var edgeTier = (p.tier || '').toLowerCase();
@@ -788,7 +796,10 @@ body {
       var placementKey = p.pick + '|' + p.event;
       var placement = placements[placementKey] || null;
       var betAmt = parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0;
-      if (placement !== 'skipped') totalWager += betAmt;
+      if (placement !== 'skipped') {
+        totalWager += betAmt;
+        totalPotentialWin += calcToWin(betAmt, p.odds);
+      }
       var placedClass = placement === 'placed' || p.status === 'PLACED' ? ' style="opacity:0.5"' : '';
       var skippedClass = placement === 'skipped' ? ' style="text-decoration:line-through;opacity:0.4"' : '';
 
@@ -802,7 +813,7 @@ body {
           '<div class="pick-right-cluster">' +
             '<div class="pick-odds-box">' + esc(p.odds) + '</div>' +
             '<div class="pick-edge-pct ' + edgeTier + '">' + p.edge + '%</div>' +
-            '<div class="pick-wager">' + esc(p.bet) + '</div>' +
+            '<div class="pick-wager">' + esc(p.bet) + '<span class="pick-to-win">wins ' + formatMoney(calcToWin(betAmt, p.odds)) + '</span></div>' +
           '</div>' +
         '</div>' +
         '<div class="pick-expand">' +
@@ -812,7 +823,8 @@ body {
             '<div><div class="pick-detail-label">Confidence</div><div class="pick-detail-value conf-' + (p.confidence || 'medium').toLowerCase() + '">' + esc(p.confidence || '—') + '</div></div>' +
             '<div><div class="pick-detail-label">Sources</div><div class="pick-detail-value">' + esc(p.sources || '—') + '</div></div>' +
             '<div><div class="pick-detail-label">Edge</div><div class="pick-detail-value" style="color:#c9a633">' + p.edge + '%</div></div>' +
-            '<div><div class="pick-detail-label">Kelly Size</div><div class="pick-detail-value">' + esc(p.bet) + '</div></div>' +
+            '<div><div class="pick-detail-label">Wager</div><div class="pick-detail-value">' + esc(p.bet) + '</div></div>' +
+            '<div><div class="pick-detail-label">To Win</div><div class="pick-detail-value" style="color:#4CAF50">' + formatMoney(calcToWin(betAmt, p.odds)) + '</div></div>' +
           '</div>' +
           (p.notes ? '<div class="pick-notes-text">' + esc(p.notes) + '</div>' : '') +
           '<div class="pick-actions-row">' +
@@ -823,7 +835,7 @@ body {
     });
     html += '</div>';
     html += '<div class="pick-place-all-bar">' +
-      '<button class="pick-place-all-btn" id="pickPlaceAll">Place All ' + picks.length + ' Picks — $' + totalWager.toFixed(2) + '</button>' +
+      '<button class="pick-place-all-btn" id="pickPlaceAll">Place All ' + picks.length + ' Picks — $' + totalWager.toFixed(2) + ' to win $' + totalPotentialWin.toFixed(2) + '</button>' +
     '</div>';
 
     // No-edge / below-threshold games
@@ -967,6 +979,7 @@ body {
         pick: p.pick,
         event: p.event,
         sport: p.sport,
+        odds: p.odds,
         wager: betAmt,
         outcome: 'pending',
         _fromUI: true
@@ -985,17 +998,21 @@ body {
     }
 
     var totalPending = 0;
+    var totalToWin = 0;
     var html = '<div class="tx-list">' +
-      '<div class="tx-header"><div>Date</div><div>Description</div><div style="text-align:right">Amount</div><div style="text-align:right">Status</div></div>';
+      '<div class="tx-header"><div>Date</div><div>Description</div><div style="text-align:right">Wager</div><div style="text-align:right">To Win</div></div>';
 
     allPending.forEach(function(b) {
       totalPending += (b.wager || 0);
+      var odds = b.odds || b._odds || '';
+      var toWin = calcToWin(b.wager || 0, odds);
+      totalToWin += toWin;
       html += '<div class="tx-row pending">' +
         '<div class="tx-date">' + formatDate(b.date) + '</div>' +
         '<div class="tx-desc">' + esc(b.pick) + '<span class="tx-sport">' + esc(b.sport) + '</span>' +
           '<span class="tx-event">' + esc(b.event) + '</span></div>' +
         '<div class="tx-amount debit" style="text-align:right">-' + formatMoney(b.wager) + '</div>' +
-        '<div style="text-align:right"><span class="pending-badge">Pending</span></div>' +
+        '<div class="tx-amount" style="text-align:right;color:#4CAF50">' + (toWin > 0 ? '+' + formatMoney(toWin) : '<span class="pending-badge">Pending</span>') + '</div>' +
       '</div>';
     });
 
@@ -1003,7 +1020,7 @@ body {
       '<div class="tx-date"></div>' +
       '<div class="tx-desc" style="color:#888">' + allPending.length + ' pending bet' + (allPending.length !== 1 ? 's' : '') + '</div>' +
       '<div class="tx-amount debit" style="text-align:right">-' + formatMoney(totalPending) + '</div>' +
-      '<div></div>' +
+      '<div class="tx-amount" style="text-align:right;color:#4CAF50;font-weight:700">' + (totalToWin > 0 ? '+' + formatMoney(totalToWin) : '') + '</div>' +
     '</div>';
 
     html += '</div>';
@@ -1094,13 +1111,14 @@ body {
             '<span class="pos-event">' + esc(p.event_short || p.event) + '</span></div>' +
           '<div class="pos-odds">' + esc(p.odds) + '</div>' +
           '<div class="pos-edge ' + edgeTier + '">' + p.edge + '%</div>' +
-          '<div class="pos-bet">' + esc(p.bet) + '</div>' +
+          '<div class="pos-bet">' + esc(p.bet) + '<span class="pos-to-win">wins ' + formatMoney(calcToWin(parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')), p.odds)) + '</span></div>' +
         '</div>' +
         '<div class="pos-details" id="pos-detail-' + i + '">' +
           '<div class="detail-row"><div class="detail-label">Market</div><div>' + esc(p.market) + ' &middot; ' + esc(p.type || 'game') + '</div></div>' +
           '<div class="detail-row"><div class="detail-label">Implied</div><div>' + esc(p.implied || '') + '</div></div>' +
           '<div class="detail-row"><div class="detail-label">Model</div><div>' + esc(p.model || '') + '</div></div>' +
           '<div class="detail-row"><div class="detail-label">Confidence</div><div class="conf-' + (p.confidence || 'medium').toLowerCase() + '">' + esc(p.confidence || '') + '</div></div>' +
+          '<div class="detail-row"><div class="detail-label">To Win</div><div style="color:#4CAF50;font-weight:600">' + formatMoney(calcToWin(parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')), p.odds)) + '</div></div>' +
           '<div class="detail-row"><div class="detail-label">Sources</div><div>' + esc(p.sources || '') + '</div></div>' +
           '<div class="detail-row"><div class="detail-label">Notes</div><div>' + esc(p.notes || '') + '</div></div>' +
           '<div class="pos-actions">' +
@@ -1373,6 +1391,15 @@ body {
     if (typeof bet.pnl === 'number') return bet.pnl;
     if (typeof bet.profit === 'number') return bet.profit;
     return 0;
+  }
+
+  function calcToWin(wager, oddsStr) {
+    // Convert American odds string to profit amount
+    if (!wager || !oddsStr) return 0;
+    var odds = parseInt(String(oddsStr).replace(/[^0-9\-+]/g, ''), 10);
+    if (isNaN(odds) || odds === 0) return 0;
+    if (odds > 0) return wager * (odds / 100);
+    return wager * (100 / Math.abs(odds));
   }
 
   function formatMoney(n) {
