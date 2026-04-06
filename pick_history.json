@@ -895,9 +895,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers): CHI 111.5, OKC 125.1 (margin: 13.6). 5.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 3.1 pts (DRatings: +13.6, Dimers: +16.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (17.6%): Model disagrees with market by 5.9 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 113, OKC 131",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-03-27",
@@ -931,9 +931,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): HOU 118.5, MEM 108.1 (margin: 10.4). 3.1 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 119, MEM 109",
+    "pnl_if_bet": 8.47
   },
   {
     "scan_date": "2026-03-27",
@@ -949,9 +949,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): WSH 109.9, GS 121.5 (margin: 11.6). 1.9 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 126, GS 131",
+    "pnl_if_bet": 9.8
   },
   {
     "scan_date": "2026-03-27",
@@ -985,9 +985,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): CHI 111.5, OKC 125.1 (total: 236.6). Line: 239.5. Cushion: 2.9 pts. \u26a0 CONTESTED: Sources disagree by 3.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 113, OKC 131",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-03-27",
@@ -1039,9 +1039,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): CHI 111.3, OKC 125.3 (margin: 14.0). 5.5 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (16.4%): Model disagrees with market by 5.5 pts. Investigate before betting.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 113, OKC 131",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-03-27",
@@ -1075,9 +1075,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): HOU 118.5, MEM 108.1 (margin: 10.4). 2.1 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 119, MEM 109",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-03-27",
@@ -1093,9 +1093,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): WSH 109.9, GS 121.5 (margin: 11.6). 1.9 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 126, GS 131",
+    "pnl_if_bet": 9.8
   },
   {
     "scan_date": "2026-03-27",
@@ -1165,9 +1165,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): CHI 111.7, OKC 124.8 (margin: 13.1). 5.4 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (16.0%): Model disagrees with market by 5.4 pts. Investigate before betting.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 113, OKC 131",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-03-27",
@@ -1201,9 +1201,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): HOU 118.5, MEM 108.1 (margin: 10.4). 3.1 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 119, MEM 109",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-03-27",
@@ -1255,9 +1255,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): WSH 110.2, GS 121.6 (margin: 11.4). 2.1 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 126, GS 131",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-03-27",
@@ -3271,9 +3271,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.5, ARI 4.2 (margin: 0.3). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | ATL on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-04-02",
@@ -3361,9 +3361,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.2, SF 3.8 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3415,9 +3415,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.5, ARI 4.2 (margin: 0.3). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | ATL on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-04-02",
@@ -3487,9 +3487,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.2, SF 3.8 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3541,9 +3541,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.5, ARI 4.2 (margin: 0.3). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | ATL on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-04-02",
@@ -3631,9 +3631,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.2, SF 3.8 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3721,9 +3721,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.1, SF 4.0 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3775,9 +3775,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): SEA 5.5, LAA 3.5 (margin: 2.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SEA 7, LAA 8",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3847,9 +3847,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.1, SF 4.0 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3883,9 +3883,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): SEA 5.5, LAA 3.5 (margin: 2.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SEA 7, LAA 8",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3973,9 +3973,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.1, SF 4.0 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -4009,9 +4009,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): SEA 5.5, LAA 3.5 (margin: 2.0). 0.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SEA 7, LAA 8",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -4117,9 +4117,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.6, ARI 4.8 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (22.5%): Model disagrees with market by 1.3 pts. Investigate before betting. ATL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 14.1
   },
   {
     "scan_date": "2026-04-04",
@@ -4189,9 +4189,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): STL 3.8, DET 5.5 (margin: 1.6). 0.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 5, DET 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4207,9 +4207,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.4, NYY 5.3 (margin: 1.9). 0.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4243,9 +4243,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.6, ARI 4.8 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (22.5%): Model disagrees with market by 1.3 pts. Investigate before betting. ATL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 14.1
   },
   {
     "scan_date": "2026-04-04",
@@ -4315,9 +4315,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): STL 3.8, DET 5.5 (margin: 1.7). 0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 5, DET 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4351,9 +4351,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.4, NYY 5.3 (margin: 1.9). 0.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4405,9 +4405,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.6, ARI 4.8 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (23.0%): Model disagrees with market by 1.3 pts. Investigate before betting. ATL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 14.4
   },
   {
     "scan_date": "2026-04-04",
@@ -4477,9 +4477,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.4, NYY 5.3 (margin: 1.9). 0.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4639,9 +4639,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 4.6, ARI 4.8 (margin: 0.2). 1.3 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (23.0%): Model disagrees with market by 1.3 pts. Investigate before betting. ATL on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 14.4
   },
   {
     "scan_date": "2026-04-04",
@@ -4711,9 +4711,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.4, NYY 5.3 (margin: 1.9). 0.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4837,9 +4837,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.0, SF 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (39.5%): Model disagrees with market by 1.0 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": 16.5
   },
   {
     "scan_date": "2026-04-05",
@@ -4855,9 +4855,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 5.1, ARI 4.5 (margin: 0.6). 0.9 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (33.8%): Model disagrees with market by 0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 13.8
   },
   {
     "scan_date": "2026-04-05",
@@ -4945,9 +4945,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.0, NYY 5.7 (margin: 2.7). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. | MIA on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -4963,9 +4963,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): WSH 2.8, NYR 3.2 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. | WSH on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 1, NYR 8",
+    "pnl_if_bet": 3.6
   },
   {
     "scan_date": "2026-04-05",
@@ -4981,9 +4981,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 4.0, SF 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (39.4%): Model disagrees with market by 1.0 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": 16.4
   },
   {
     "scan_date": "2026-04-05",
@@ -4999,9 +4999,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 5.1, ARI 4.5 (margin: 0.6). 0.9 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (33.8%): Model disagrees with market by 0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 13.8
   },
   {
     "scan_date": "2026-04-05",
@@ -5107,9 +5107,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MIA 3.0, NYY 5.7 (margin: 2.7). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. | MIA on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 7, NYY 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -5125,9 +5125,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): ATL 5.1, ARI 4.5 (margin: 0.7). 0.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (33.7%): Model disagrees with market by 0.8 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 5, ARI 6",
+    "pnl_if_bet": 13.7
   },
   {
     "scan_date": "2026-04-05",
@@ -5179,9 +5179,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): NYM 3.9, SF 3.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYM 5, SF 2",
+    "pnl_if_bet": 4.67
   },
   {
     "scan_date": "2026-04-05",
@@ -5197,9 +5197,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): WSH 2.8, NYR 3.2 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. | WSH on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 1, NYR 8",
+    "pnl_if_bet": 3.6
   },
   {
     "scan_date": "2026-04-05",
@@ -5215,9 +5215,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): STL 4.2, DET 5.5 (margin: 1.3). -0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. DET on B2B (-1.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 5, DET 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -5251,9 +5251,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers): WSH 2.8, NYR 3.2 (margin: 0.4). 1.1 pts of cushion beyond the spread. | WSH on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "WSH 1, NYR 8",
+    "pnl_if_bet": 3.77
   },
   {
     "scan_date": "2026-04-05",
@@ -5269,9 +5269,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers): STL 4.3, DET 5.7 (margin: 1.3). -0.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 0.6 pts (DRatings: +1.3, Dimers: +0.7). Lower confidence. DET on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 5, DET 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
