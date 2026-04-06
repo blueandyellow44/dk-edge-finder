@@ -440,6 +440,131 @@ body {
   font-weight: 600;
 }
 
+/* ── Pick Cards (Suggested Bets) ── */
+.pick-list { padding: 0; }
+.pick-card {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.1s;
+}
+.pick-card:hover { background: #f9f9f9; }
+.pick-card:last-child { border-bottom: none; }
+.pick-card-header {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.pick-sport-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #c9a633;
+  background: #1a1a1a;
+  text-transform: uppercase;
+  padding: 4px 0;
+  border-radius: 2px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.pick-info { min-width: 0; }
+.pick-name { font-size: 14px; font-weight: 700; color: #111; }
+.pick-event { font-size: 12px; color: #888; margin-top: 1px; }
+.pick-market-tag { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.3px; }
+.pick-right-cluster {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.pick-odds-box {
+  background: #f2f2f2;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 4px;
+  min-width: 56px;
+  text-align: center;
+}
+.pick-edge-pct {
+  font-size: 18px;
+  font-weight: 800;
+  color: #c9a633;
+  min-width: 60px;
+  text-align: center;
+}
+.pick-edge-pct.high { color: #00a651; }
+.pick-edge-pct.low { color: #b85c00; }
+.pick-wager {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  min-width: 56px;
+  text-align: right;
+}
+.pick-expand {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.7;
+}
+.pick-card.expanded .pick-expand { display: block; }
+.pick-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.pick-detail-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pick-detail-value { font-size: 13px; font-weight: 600; color: #333; margin-top: 2px; }
+.pick-notes-text { font-size: 12px; color: #666; line-height: 1.7; margin-bottom: 10px; }
+.pick-actions-row {
+  display: flex;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+.tab-badge {
+  background: #c9a633;
+  color: #111;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+.pick-place-all-bar {
+  padding: 12px 20px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+.pick-place-all-btn {
+  width: 100%;
+  padding: 12px;
+  background: #c9a633;
+  color: #111;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pick-place-all-btn:hover { background: #b8952a; }
+
 /* ── Responsive ── */
 @media (max-width: 800px) {
   .page { grid-template-columns: 1fr; }
@@ -449,6 +574,10 @@ body {
   .tx-balance-col { display: none; }
   .pos-summary { grid-template-columns: 40px 1fr 60px 60px; }
   .pos-bet { display: none; }
+  .pick-card-header { grid-template-columns: 36px 1fr; gap: 8px; }
+  .pick-right-cluster { grid-column: 1 / -1; margin-top: 8px; justify-content: flex-start; }
+  .pick-detail-grid { grid-template-columns: repeat(2, 1fr); }
+  .pick-edge-pct { font-size: 16px; }
 }
 </style>
 </head>
@@ -479,14 +608,18 @@ body {
 
       <!-- Tabs -->
       <div class="tabs" id="tabBar">
-        <div class="tab active" data-tab="pending">Pending</div>
+        <div class="tab active" data-tab="picks">Picks</div>
+        <div class="tab" data-tab="pending">Pending</div>
         <div class="tab" data-tab="activity">Activity</div>
         <div class="tab" data-tab="positions">Positions</div>
         <div class="tab" data-tab="settings">Settings</div>
       </div>
 
+      <!-- Picks tab (model suggestions) -->
+      <div class="tab-content active" id="tab-picks"></div>
+
       <!-- Pending tab -->
-      <div class="tab-content active" id="tab-pending"></div>
+      <div class="tab-content" id="tab-pending"></div>
 
       <!-- Activity tab -->
       <div class="tab-content" id="tab-activity"></div>
@@ -579,6 +712,7 @@ body {
   function render() {
     if (!data) return;
     renderBalance();
+    renderPicks();
     renderPending();
     renderActivity();
     renderPositions();
@@ -605,6 +739,124 @@ body {
         '<div><div class="balance-stat-label">Record</div><div class="balance-stat-value">' + rec.wins + 'W - ' + rec.losses + 'L' + (rec.pushes ? ' - ' + rec.pushes + 'P' : '') + '</div></div>' +
         '<div><div class="balance-stat-label">Pending</div><div class="balance-stat-value">' + (b.pending_count || 0) + ' bets</div></div>' +
       '</div>';
+  }
+
+  // ── Picks (Model Suggestions) ──
+  function renderPicks() {
+    var picks = data.picks || [];
+    // Update tab badge
+    var picksTab = document.querySelector('.tab[data-tab="picks"]');
+    if (picksTab) picksTab.innerHTML = 'Picks <span class="tab-badge">' + picks.length + '</span>';
+
+    if (picks.length === 0) {
+      document.getElementById('tab-picks').innerHTML = '<div class="empty-state">No edge picks found in today\'s scan.</div>';
+      return;
+    }
+
+    var totalWager = 0;
+    var html = '<div class="pick-list">';
+    picks.forEach(function(p, i) {
+      var edgeTier = (p.tier || '').toLowerCase();
+      if (!edgeTier) edgeTier = p.edge >= 7 ? 'high' : p.edge >= 4 ? 'medium' : 'low';
+      var placementKey = p.pick + '|' + p.event;
+      var placement = placements[placementKey] || null;
+      var betAmt = parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0;
+      if (placement !== 'skipped') totalWager += betAmt;
+      var placedClass = placement === 'placed' || p.status === 'PLACED' ? ' style="opacity:0.5"' : '';
+      var skippedClass = placement === 'skipped' ? ' style="text-decoration:line-through;opacity:0.4"' : '';
+
+      html += '<div class="pick-card" data-pick-idx="' + i + '">' +
+        '<div class="pick-card-header"' + (skippedClass || placedClass) + '>' +
+          '<div class="pick-sport-badge">' + esc(p.sport) + '</div>' +
+          '<div class="pick-info">' +
+            '<div class="pick-name">' + esc(p.pick) + '</div>' +
+            '<div class="pick-event">' + esc(p.event) + ' <span class="pick-market-tag">' + esc(p.market || '') + '</span></div>' +
+          '</div>' +
+          '<div class="pick-right-cluster">' +
+            '<div class="pick-odds-box">' + esc(p.odds) + '</div>' +
+            '<div class="pick-edge-pct ' + edgeTier + '">' + p.edge + '%</div>' +
+            '<div class="pick-wager">' + esc(p.bet) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="pick-expand">' +
+          '<div class="pick-detail-grid">' +
+            '<div><div class="pick-detail-label">Implied Prob</div><div class="pick-detail-value">' + (p.implied_prob ? p.implied_prob + '%' : p.implied || '—') + '</div></div>' +
+            '<div><div class="pick-detail-label">Model Prob</div><div class="pick-detail-value">' + (p.model_prob ? p.model_prob + '%' : p.model || '—') + '</div></div>' +
+            '<div><div class="pick-detail-label">Confidence</div><div class="pick-detail-value conf-' + (p.confidence || 'medium').toLowerCase() + '">' + esc(p.confidence || '—') + '</div></div>' +
+            '<div><div class="pick-detail-label">Sources</div><div class="pick-detail-value">' + esc(p.sources || '—') + '</div></div>' +
+            '<div><div class="pick-detail-label">Edge</div><div class="pick-detail-value" style="color:#c9a633">' + p.edge + '%</div></div>' +
+            '<div><div class="pick-detail-label">Kelly Size</div><div class="pick-detail-value">' + esc(p.bet) + '</div></div>' +
+          '</div>' +
+          (p.notes ? '<div class="pick-notes-text">' + esc(p.notes) + '</div>' : '') +
+          '<div class="pick-actions-row">' +
+            renderPickButtons(placementKey, p, placement) +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+    html += '<div class="pick-place-all-bar">' +
+      '<button class="pick-place-all-btn" id="pickPlaceAll">Place All ' + picks.length + ' Picks — $' + totalWager.toFixed(2) + '</button>' +
+    '</div>';
+
+    document.getElementById('tab-picks').innerHTML = html;
+
+    // Expand/collapse
+    document.querySelectorAll('.pick-card').forEach(function(card) {
+      card.querySelector('.pick-card-header').addEventListener('click', function() {
+        card.classList.toggle('expanded');
+      });
+    });
+
+    // Placement buttons
+    document.querySelectorAll('#tab-picks [data-action]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var action = btn.getAttribute('data-action');
+        var key = btn.getAttribute('data-key');
+        if (action === 'opendk') {
+          var url = btn.getAttribute('data-url');
+          if (url) window.open(url, '_blank');
+          return;
+        }
+        placements[key] = action;
+        savePlacements();
+        renderPicks();
+        renderPositions();
+        showToast(action === 'placed' ? 'Bet marked as placed' : 'Bet skipped', 'success');
+      });
+    });
+
+    // Place All button
+    var placeAllBtn = document.getElementById('pickPlaceAll');
+    if (placeAllBtn) {
+      placeAllBtn.addEventListener('click', function() {
+        var count = 0;
+        picks.forEach(function(p) {
+          if (p.status === 'PLACED') return;
+          var key = p.pick + '|' + p.event;
+          if (placements[key] !== 'placed') { placements[key] = 'placed'; count++; }
+        });
+        savePlacements();
+        renderPicks();
+        renderPositions();
+        showToast(count + ' pick(s) marked as placed', 'success');
+      });
+    }
+  }
+
+  function renderPickButtons(key, pick, placement) {
+    if (pick.status === 'PLACED' || placement === 'placed') {
+      return '<span class="btn btn-sm btn-placed">✓ Placed</span>';
+    }
+    if (placement === 'skipped') {
+      return '<span class="btn btn-sm btn-skipped">Skipped</span>' +
+        '<button class="btn btn-sm btn-outline" data-action="placed" data-key="' + esc(key) + '">Undo — Place</button>';
+    }
+    var dkBtn = pick.dk_link ? '<button class="btn btn-sm btn-link-dk" data-action="opendk" data-key="' + esc(key) + '" data-url="' + esc(pick.dk_link) + '">Open on DK</button>' : '';
+    return '<button class="btn btn-sm btn-primary" data-action="placed" data-key="' + esc(key) + '">Place</button>' +
+      '<button class="btn btn-sm btn-outline" data-action="skipped" data-key="' + esc(key) + '">Skip</button>' +
+      dkBtn;
   }
 
   // ── Pending ──
