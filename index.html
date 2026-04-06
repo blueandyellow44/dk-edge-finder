@@ -529,6 +529,73 @@ body {
   font-variant-numeric: tabular-nums;
   margin-top: 4px;
 }
+.balance-sync {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.balance-sync-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.balance-sync-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.balance-sync-dollar {
+  background: var(--elevated);
+  color: var(--text2);
+  padding: 10px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-right: none;
+}
+.balance-sync-input {
+  flex: 1;
+  background: var(--bg);
+  color: var(--text1);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Open Sans', sans-serif;
+  outline: none;
+  min-width: 0;
+}
+.balance-sync-input:focus {
+  border-color: var(--green);
+}
+.balance-sync-input::placeholder {
+  color: var(--text3);
+}
+.balance-sync-btn {
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  border-radius: 0 !important;
+  white-space: nowrap;
+}
+.balance-sync-hint {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 8px;
+}
+/* Hide number input spinners */
+.balance-sync-input::-webkit-outer-spin-button,
+.balance-sync-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.balance-sync-input[type=number] {
+  -moz-appearance: textfield;
+}
 .perf-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -741,9 +808,49 @@ function loadData() {
     });
 }
 
+function getBalanceOverride() {
+  try {
+    var val = localStorage.getItem('dk_balance_override');
+    if (val === null) return null;
+    var num = parseFloat(val);
+    return isNaN(num) ? null : num;
+  } catch (e) { return null; }
+}
+
+function updateBalance() {
+  var input = document.getElementById('balance-input');
+  if (!input) return;
+  var val = parseFloat(input.value);
+  if (isNaN(val) || val < 0) {
+    toast('Enter a valid dollar amount');
+    return;
+  }
+  try {
+    localStorage.setItem('dk_balance_override', val.toFixed(2));
+  } catch (e) {
+    console.error('[updateBalance] failed to save', e);
+    toast('Failed to save balance');
+    return;
+  }
+  toast('Balance updated to $' + val.toFixed(2));
+  if (DATA) render(DATA);
+}
+
+function clearBalanceOverride() {
+  try { localStorage.removeItem('dk_balance_override'); } catch (e) {}
+  toast('Using scan balance');
+  if (DATA) render(DATA);
+}
+
 function render(d) {
   if (!d) return;
   var b = d.bankroll || {};
+  // Apply localStorage balance override
+  var override = getBalanceOverride();
+  if (override !== null) {
+    b.profit = override - (b.starting || 500);
+    b.available = override;
+  }
   var rec = b.record || { wins: 0, losses: 0, pushes: 0 };
   var picks = d.picks || [];
   var bets = d.bets || [];
@@ -1038,8 +1145,23 @@ function renderBankroll(d, b, rec, amt, profit) {
   });
   var avgWager = wagerCount > 0 ? (totalWagered / wagerCount).toFixed(2) : '0.00';
 
-  var html = '<div class="bankroll-metrics">' +
-    '<div class="bk-card"><div class="bk-label">Available</div><div class="bk-value" style="color:var(--green)">$' + amt.toFixed(2) + '</div></div>' +
+  var hasOverride = getBalanceOverride() !== null;
+  var overrideLabel = hasOverride
+    ? ' <span style="font-size:10px;color:var(--muted);font-weight:400">(manual)</span>'
+    : '';
+
+  var html = '<div class="balance-sync">' +
+    '<div class="balance-sync-label">Sync DK Balance</div>' +
+    '<div class="balance-sync-row">' +
+      '<span class="balance-sync-dollar">$</span>' +
+      '<input type="number" id="balance-input" class="balance-sync-input" placeholder="' + amt.toFixed(2) + '" step="0.01" min="0" inputmode="decimal"' +
+        (hasOverride ? ' value="' + amt.toFixed(2) + '"' : '') + '>' +
+      '<button class="btn-dk btn-dk-primary balance-sync-btn" onclick="updateBalance()">Update</button>' +
+    '</div>' +
+    (hasOverride ? '<div class="balance-sync-hint">Using manual balance. <a href="#" onclick="event.preventDefault();clearBalanceOverride()" style="color:var(--accent)">Reset to scan value</a></div>' : '<div class="balance-sync-hint">Enter your current DraftKings balance</div>') +
+  '</div>' +
+  '<div class="bankroll-metrics">' +
+    '<div class="bk-card"><div class="bk-label">Available' + overrideLabel + '</div><div class="bk-value" style="color:var(--green)">$' + amt.toFixed(2) + '</div></div>' +
     '<div class="bk-card"><div class="bk-label">Starting</div><div class="bk-value">$' + (b.starting || 0).toFixed(2) + '</div></div>' +
     '<div class="bk-card"><div class="bk-label">Lifetime P/L</div><div class="bk-value" style="color:' + (profit >= 0 ? 'var(--green)' : 'var(--red)') + '">' + (profit >= 0 ? '+' : '') + '$' + profit.toFixed(2) + '</div></div>' +
     '<div class="bk-card"><div class="bk-label">Record</div><div class="bk-value">' + rec.wins + 'W - ' + rec.losses + 'L' + (rec.pushes ? ' - ' + rec.pushes + 'P' : '') + '</div></div>' +
