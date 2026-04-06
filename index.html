@@ -738,7 +738,7 @@ body {
         '<div><div class="balance-stat-label">Starting Balance</div><div class="balance-stat-value">' + formatMoney(b.starting || 500) + '</div></div>' +
         '<div><div class="balance-stat-label">Profit / Loss</div><div class="balance-stat-value ' + profitClass + '">' + profitSign + formatMoney(Math.abs(profit)) + '</div></div>' +
         '<div><div class="balance-stat-label">Record</div><div class="balance-stat-value">' + rec.wins + 'W - ' + rec.losses + 'L' + (rec.pushes ? ' - ' + rec.pushes + 'P' : '') + '</div></div>' +
-        '<div><div class="balance-stat-label">Pending</div><div class="balance-stat-value">' + (b.pending_count || 0) + ' bets</div></div>' +
+        '<div><div class="balance-stat-label">Pending</div><div class="balance-stat-value" id="pendingCountStat">' + (b.pending_count || 0) + ' bets</div></div>' +
       '</div>';
   }
 
@@ -892,6 +892,10 @@ body {
 
     if (allPending.length === 0) {
       document.getElementById('tab-pending').innerHTML = '<div class="empty-state">No pending transactions at this time.</div>';
+      var pendingTab0 = document.querySelector('.tab[data-tab="pending"]');
+      if (pendingTab0) pendingTab0.innerHTML = 'Pending';
+      var pendingStat0 = document.getElementById('pendingCountStat');
+      if (pendingStat0) pendingStat0.textContent = '0 bets';
       return;
     }
 
@@ -920,10 +924,18 @@ body {
     html += '</div>';
     document.getElementById('tab-pending').innerHTML = html;
 
-    // Update Pending tab with count
+    // Update Pending tab badge
     var pendingTab = document.querySelector('.tab[data-tab="pending"]');
-    if (pendingTab && allPending.length > 0) {
-      pendingTab.innerHTML = 'Pending <span class="tab-badge" style="background:#996600">' + allPending.length + '</span>';
+    if (pendingTab) {
+      pendingTab.innerHTML = allPending.length > 0
+        ? 'Pending <span class="tab-badge" style="background:#996600">' + allPending.length + '</span>'
+        : 'Pending';
+    }
+
+    // Update summary stat
+    var pendingStat = document.getElementById('pendingCountStat');
+    if (pendingStat) {
+      pendingStat.textContent = allPending.length + ' bet' + (allPending.length !== 1 ? 's' : '');
     }
   }
 
