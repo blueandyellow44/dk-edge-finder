@@ -566,6 +566,32 @@ body {
 }
 .pick-place-all-btn:hover { background: #b8952a; }
 
+/* ── No-edge / other games scanned ── */
+.no-edge-section { margin-top: 8px; border-top: 1px solid #eee; }
+.no-edge-header {
+  display: flex; align-items: center; gap: 8px; padding: 14px 20px;
+  cursor: pointer; color: #888; font-size: 13px; font-weight: 600;
+  transition: background 0.15s;
+}
+.no-edge-header:hover { background: #fafafa; }
+.no-edge-count { margin-left: auto; font-weight: 400; font-size: 12px; color: #aaa; }
+.no-edge-chevron { font-size: 12px; color: #bbb; margin-left: 4px; }
+.no-edge-body { padding: 0 20px 16px; }
+.no-edge-sport-group { margin-bottom: 12px; }
+.no-edge-sport-label {
+  font-size: 11px; font-weight: 700; color: #c9a633; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #f0f0f0;
+}
+.no-edge-row {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 12px;
+  padding: 5px 0; font-size: 13px; color: #777; align-items: center;
+}
+.no-edge-event { color: #555; }
+.no-edge-line { color: #888; font-family: 'SF Mono', monospace; font-size: 12px; }
+.no-edge-reason { font-size: 11px; text-align: right; }
+.no-edge-reason.below { color: #bbb; }
+.no-edge-reason.no-data { color: #cc8800; }
+
 /* ── Responsive ── */
 @media (max-width: 800px) {
   .page { grid-template-columns: 1fr; }
@@ -800,6 +826,49 @@ body {
       '<button class="pick-place-all-btn" id="pickPlaceAll">Place All ' + picks.length + ' Picks — $' + totalWager.toFixed(2) + '</button>' +
     '</div>';
 
+    // No-edge / below-threshold games
+    var noEdge = data.no_edge_games || [];
+    if (noEdge.length > 0) {
+      // Group by sport
+      var bySport = {};
+      noEdge.forEach(function(g) {
+        var sp = g.sport || 'OTHER';
+        if (!bySport[sp]) bySport[sp] = [];
+        bySport[sp].push(g);
+      });
+
+      html += '<div class="no-edge-section">' +
+        '<div class="no-edge-header" id="noEdgeToggle">' +
+          '<span>Other Games Scanned</span>' +
+          '<span class="no-edge-count">' + noEdge.length + ' games — no qualifying edge</span>' +
+          '<span class="no-edge-chevron">▸</span>' +
+        '</div>' +
+        '<div class="no-edge-body" id="noEdgeBody" style="display:none">';
+
+      var sportOrder = ['NBA', 'NHL', 'MLB', 'NFL', 'LA_LIGA', 'SERIE_A', 'BUNDESLIGA', 'EPL', 'LIGUE_1', 'UCL', 'MLS'];
+      var sortedSports = Object.keys(bySport).sort(function(a, b) {
+        var ai = sportOrder.indexOf(a); var bi = sportOrder.indexOf(b);
+        if (ai === -1) ai = 99; if (bi === -1) bi = 99;
+        return ai - bi;
+      });
+
+      sortedSports.forEach(function(sport) {
+        html += '<div class="no-edge-sport-group">' +
+          '<div class="no-edge-sport-label">' + esc(sport.replace('_', ' ')) + '</div>';
+        bySport[sport].forEach(function(g) {
+          var reasonClass = (g.reason || '').indexOf('No model') !== -1 ? 'no-data' : 'below';
+          html += '<div class="no-edge-row">' +
+            '<span class="no-edge-event">' + esc(g.event) + '</span>' +
+            '<span class="no-edge-line">' + esc(g.line || '') + '</span>' +
+            '<span class="no-edge-reason ' + reasonClass + '">' + esc(g.reason || '') + '</span>' +
+          '</div>';
+        });
+        html += '</div>';
+      });
+
+      html += '</div></div>';
+    }
+
     document.getElementById('tab-picks').innerHTML = html;
 
     // Expand/collapse
@@ -808,6 +877,22 @@ body {
         card.classList.toggle('expanded');
       });
     });
+
+    // No-edge toggle
+    var noEdgeToggle = document.getElementById('noEdgeToggle');
+    if (noEdgeToggle) {
+      noEdgeToggle.addEventListener('click', function() {
+        var body = document.getElementById('noEdgeBody');
+        var chevron = noEdgeToggle.querySelector('.no-edge-chevron');
+        if (body.style.display === 'none') {
+          body.style.display = 'block';
+          chevron.textContent = '▾';
+        } else {
+          body.style.display = 'none';
+          chevron.textContent = '▸';
+        }
+      });
+    }
 
     // Placement buttons
     document.querySelectorAll('#tab-picks [data-action]').forEach(function(btn) {
