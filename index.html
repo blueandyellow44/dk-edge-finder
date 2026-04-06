@@ -861,16 +861,43 @@ body {
 
   // ── Pending ──
   function renderPending() {
-    var bets = (data.bets || []).filter(function(b) { return b.outcome === 'pending'; });
-    if (bets.length === 0) {
+    // Bets already tracked by scan as pending
+    var scanPending = (data.bets || []).filter(function(b) { return b.outcome === 'pending'; });
+    // Also include picks the user marked as "placed" via the UI
+    var picks = data.picks || [];
+    var userPlaced = [];
+    picks.forEach(function(p) {
+      var key = p.pick + '|' + p.event;
+      var isPlaced = placements[key] === 'placed' || p.status === 'PLACED';
+      if (!isPlaced) return;
+      // Don't duplicate if already in scan pending
+      var alreadyTracked = scanPending.some(function(b) { return b.pick === p.pick; });
+      if (alreadyTracked) return;
+      var betAmt = parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0;
+      userPlaced.push({
+        date: data.scan_date || '',
+        pick: p.pick,
+        event: p.event,
+        sport: p.sport,
+        wager: betAmt,
+        outcome: 'pending',
+        _fromUI: true
+      });
+    });
+
+    var allPending = scanPending.concat(userPlaced);
+
+    if (allPending.length === 0) {
       document.getElementById('tab-pending').innerHTML = '<div class="empty-state">No pending transactions at this time.</div>';
       return;
     }
 
+    var totalPending = 0;
     var html = '<div class="tx-list">' +
       '<div class="tx-header"><div>Date</div><div>Description</div><div style="text-align:right">Amount</div><div style="text-align:right">Status</div></div>';
 
-    bets.forEach(function(b) {
+    allPending.forEach(function(b) {
+      totalPending += (b.wager || 0);
       html += '<div class="tx-row pending">' +
         '<div class="tx-date">' + formatDate(b.date) + '</div>' +
         '<div class="tx-desc">' + esc(b.pick) + '<span class="tx-sport">' + esc(b.sport) + '</span>' +
@@ -880,8 +907,21 @@ body {
       '</div>';
     });
 
+    html += '<div class="tx-row" style="background:#fafafa;font-weight:700;border-top:2px solid #eee">' +
+      '<div class="tx-date"></div>' +
+      '<div class="tx-desc" style="color:#888">' + allPending.length + ' pending bet' + (allPending.length !== 1 ? 's' : '') + '</div>' +
+      '<div class="tx-amount debit" style="text-align:right">-' + formatMoney(totalPending) + '</div>' +
+      '<div></div>' +
+    '</div>';
+
     html += '</div>';
     document.getElementById('tab-pending').innerHTML = html;
+
+    // Update Pending tab with count
+    var pendingTab = document.querySelector('.tab[data-tab="pending"]');
+    if (pendingTab && allPending.length > 0) {
+      pendingTab.innerHTML = 'Pending <span class="tab-badge" style="background:#996600">' + allPending.length + '</span>';
+    }
   }
 
   // ── Activity ──
