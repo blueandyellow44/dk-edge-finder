@@ -23,13 +23,43 @@ Sources:
 import json
 import math
 import re
+import ssl
 import sys
 import urllib.request
+import http.cookiejar
 from datetime import datetime, timedelta
 
 # ── Shared config ──
 
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+
+# Full browser headers to bypass Cloudflare / anti-bot
+BROWSER_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Cache-Control": "max-age=0",
+    "Sec-CH-UA": '"Chromium";v="125", "Google Chrome";v="125", "Not.A/Brand";v="24"',
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": '"macOS"',
+}
+
+# SSL context that doesn't verify certs (some sports sites have expired certs)
+_ssl_ctx = ssl.create_default_context()
+_ssl_ctx.check_hostname = False
+_ssl_ctx.verify_mode = ssl.CERT_NONE
+
+# Cookie jar for session persistence
+_cookie_jar = http.cookiejar.CookieJar()
+_cookie_handler = urllib.request.HTTPCookieProcessor(_cookie_jar)
+_opener = urllib.request.build_opener(_cookie_handler, urllib.request.HTTPSHandler(context=_ssl_ctx))
 
 # Typical game totals by sport (for converting margin → score predictions)
 TYPICAL_TOTALS = {
@@ -62,11 +92,27 @@ HOME_ADVANTAGE = {
 }
 
 
-def _fetch_html(url: str, timeout: int = 20) -> str:
-    """Fetch HTML with standard browser UA."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read().decode("utf-8", errors="ignore")
+def _fetch_html(url: str, timeout: int = 20, headers: dict = None) -> str:
+    """Fetch HTML with full browser headers and cookie/SSL support."""
+    hdrs = {**BROWSER_HEADERS, **(headers or {})}
+    req = urllib.request.Request(url, headers=hdrs)
+    with _opener.open(req, timeout=timeout) as resp:
+        data = resp.read()
+        # Handle gzip/deflate encoding
+        encoding = resp.headers.get("Content-Encoding", "")
+        if encoding == "gzip":
+            import gzip
+            data = gzip.decompress(data)
+        elif encoding == "deflate":
+            import zlib
+            data = zlib.decompress(data)
+        elif encoding == "br":
+            try:
+                import brotli
+                data = brotli.decompress(data)
+            except ImportError:
+                pass  # brotli not installed, try raw
+        return data.decode("utf-8", errors="ignore")
 
 
 def _margin_to_scores(margin: float, sport: str) -> tuple[float, float]:
@@ -402,6 +448,13 @@ def fetch_oddsshark_predictions(date_str: str, sport: str = "nba") -> dict:
     """
     Fetch computer-generated score predictions from OddsShark.
     OddsShark publishes predicted scores based on last 100 games played.
+
+    HTML structure (confirmed 2026-04-06):
+    - Page splits by "Predicted Score" into per-game sections
+    - Each section has <span class="highlighted-text team-shortname">ABBR</span>
+      and <span class="highlighted-text">SCORE</span> pairs
+    - Matchup URLs in href like /nba/new-york-atlanta-odds-... give away-home order
+    - Games without predictions yet show "-" for scores
     """
     sport_urls = {
         "nba": "https://www.oddsshark.com/nba/computer-picks",
@@ -423,31 +476,67 @@ def fetch_oddsshark_predictions(date_str: str, sport: str = "nba") -> dict:
     try:
         html = _fetch_html(url)
 
-        # OddsShark embeds game data in JSON-LD or data attributes.
-        # Try to find embedded JSON data first.
-        json_matches = re.findall(r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', html, re.DOTALL)
-        for jm in json_matches:
-            try:
-                data = json.loads(jm)
-                predictions = _parse_oddsshark_json(data, sport)
-                if predictions:
-                    break
-            except (json.JSONDecodeError, KeyError):
+        # Split page by "Predicted Score" — each section is one game
+        sections = html.split("Predicted Score")
+
+        for section in sections[1:]:  # Skip preamble before first game
+            # Limit search to first 3000 chars of each section (one game)
+            chunk = section[:3000]
+
+            # Extract team abbreviations (class includes "team-shortname")
+            teams = re.findall(r'team-shortname[^>]*>([^<]+)', chunk)
+
+            # Extract ALL highlighted-text values (includes both team abbrs and scores)
+            all_highlighted = re.findall(r'highlighted-text[^>]*>([^<]+)', chunk)
+
+            # Filter scores: must be numeric AND in valid range for the sport
+            # This excludes spread values (e.g. -2.5, 1.5) that appear for
+            # games where OddsShark hasn't generated score predictions yet
+            scores = []
+            for val in all_highlighted:
+                val = val.strip()
+                try:
+                    num = float(val)
+                    if _is_valid_score(num, sport):
+                        scores.append(num)
+                except ValueError:
+                    continue
+
+            if len(teams) < 2 or len(scores) < 2:
+                continue  # Game doesn't have real predictions yet
+
+            # Determine away/home order from matchup URL
+            matchup_urls = re.findall(r'href="(/[^"]*odds[^"]*)"?', chunk)
+
+            # OddsShark lists teams in page order: first team, second team
+            team1_abbr = _resolve_oddsshark_abbr(teams[0].strip(), sport)
+            team2_abbr = _resolve_oddsshark_abbr(teams[1].strip(), sport)
+
+            if not team1_abbr or not team2_abbr:
                 continue
 
-        # Also try embedded __NEXT_DATA__ (Next.js sites)
-        if not predictions:
-            next_match = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.DOTALL)
-            if next_match:
-                try:
-                    data = json.loads(next_match.group(1))
-                    predictions = _parse_oddsshark_nextdata(data, sport)
-                except (json.JSONDecodeError, KeyError):
-                    pass
+            # Default: assume page order is away, home
+            away_abbr, home_abbr = team1_abbr, team2_abbr
+            away_score, home_score = scores[0], scores[1]
 
-        # Fallback: parse visible HTML table
-        if not predictions:
-            predictions = _parse_oddsshark_html(html, sport)
+            if matchup_urls:
+                url_path = matchup_urls[0].lower()
+                t1_pos = _team_in_url(team1_abbr, url_path, sport)
+                t2_pos = _team_in_url(team2_abbr, url_path, sport)
+                if t1_pos is not None and t2_pos is not None:
+                    if t1_pos < t2_pos:
+                        away_abbr, home_abbr = team1_abbr, team2_abbr
+                        away_score, home_score = scores[0], scores[1]
+                    else:
+                        away_abbr, home_abbr = team2_abbr, team1_abbr
+                        away_score, home_score = scores[1], scores[0]
+
+            key = f"{away_abbr}@{home_abbr}"
+            predictions[key] = {
+                "away_abbr": away_abbr, "home_abbr": home_abbr,
+                "away_score": away_score, "home_score": home_score,
+                "margin": round(home_score - away_score, 1),
+            }
 
         print(f"  OddsShark: found {len(predictions)} game predictions for {sport.upper()}")
 
@@ -457,134 +546,80 @@ def fetch_oddsshark_predictions(date_str: str, sport: str = "nba") -> dict:
     return predictions
 
 
-def _parse_oddsshark_json(data: dict, sport: str) -> dict:
-    """Parse OddsShark JSON data for computer picks."""
-    predictions = {}
-    # Structure varies — look for games/matchups arrays
-    games = data.get("games", data.get("matchups", data.get("events", [])))
-    if isinstance(data, dict):
-        for key in data:
-            if isinstance(data[key], list) and len(data[key]) > 0:
-                first = data[key][0]
-                if isinstance(first, dict) and ("home" in first or "away" in first or "teams" in first):
-                    games = data[key]
-                    break
+# OddsShark abbreviation -> ESPN abbreviation normalization
+_ODDSSHARK_ABBR_NORMALIZE = {
+    "SAN": "SA", "NOP": "NO", "NYK": "NY", "GSW": "GS",
+    "CHR": "CHA", "BRK": "BKN", "PHO": "PHX",
+    "MON": "MTL", "WAS": "WSH", "NAS": "NSH", "CLB": "CBJ",
+    "CAL": "CGY", "WIN": "WPG",
+    "CHW": "CWS",
+}
 
-    for game in games:
-        if not isinstance(game, dict):
-            continue
-        home = game.get("home", {})
-        away = game.get("away", {})
-        if isinstance(home, str):
-            home = {"name": home}
-        if isinstance(away, str):
-            away = {"name": away}
-
-        home_name = home.get("name", home.get("team", ""))
-        away_name = away.get("name", away.get("team", ""))
-        home_score = game.get("home_score", game.get("homeScore", home.get("score")))
-        away_score = game.get("away_score", game.get("awayScore", away.get("score")))
-
-        if home_score is None or away_score is None:
-            continue
-
-        home_abbr = _resolve_team(home_name, sport)
-        away_abbr = _resolve_team(away_name, sport)
-        if not home_abbr or not away_abbr:
-            continue
-
-        key = f"{away_abbr}@{home_abbr}"
-        predictions[key] = {
-            "away_abbr": away_abbr, "home_abbr": home_abbr,
-            "away_score": float(away_score), "home_score": float(home_score),
-            "margin": round(float(home_score) - float(away_score), 1),
-        }
-    return predictions
+# Sport-specific "LA" resolution (Kings in NHL, Dodgers in MLB, etc.)
+_LA_BY_SPORT = {
+    "nhl": "LAK",
+    "mlb": "LAD",
+    "nba": "LAL",  # Default to Lakers; Clippers use "LAC"
+    "nfl": "LAR",  # Rams; Chargers use "LAC"
+}
 
 
-def _parse_oddsshark_nextdata(data: dict, sport: str) -> dict:
-    """Parse OddsShark Next.js embedded data."""
-    predictions = {}
-    try:
-        props = data.get("props", {}).get("pageProps", {})
-        games = props.get("games", props.get("matchups", props.get("computerPicks", [])))
-        for game in games:
-            if not isinstance(game, dict):
-                continue
-            # Try various key structures
-            home_team = game.get("homeTeam", game.get("home_team", {}))
-            away_team = game.get("awayTeam", game.get("away_team", {}))
-            if isinstance(home_team, str):
-                home_team = {"name": home_team}
-            if isinstance(away_team, str):
-                away_team = {"name": away_team}
-
-            home_name = home_team.get("name", home_team.get("displayName", ""))
-            away_name = away_team.get("name", away_team.get("displayName", ""))
-
-            # Computer pick scores may be in prediction sub-object
-            pred = game.get("prediction", game.get("computerPick", game))
-            home_score = pred.get("homeScore", pred.get("home_score"))
-            away_score = pred.get("awayScore", pred.get("away_score"))
-
-            if home_score is None or away_score is None:
-                continue
-
-            home_abbr = _resolve_team(home_name, sport)
-            away_abbr = _resolve_team(away_name, sport)
-            if not home_abbr or not away_abbr:
-                continue
-
-            key = f"{away_abbr}@{home_abbr}"
-            predictions[key] = {
-                "away_abbr": away_abbr, "home_abbr": home_abbr,
-                "away_score": float(away_score), "home_score": float(home_score),
-                "margin": round(float(home_score) - float(away_score), 1),
-            }
-    except (KeyError, TypeError):
-        pass
-    return predictions
+def _resolve_oddsshark_abbr(abbr: str, sport: str) -> str:
+    """Resolve an OddsShark team abbreviation to our ESPN standard."""
+    abbr = abbr.strip().upper()
+    # Handle "LA" specially — depends on sport
+    if abbr == "LA":
+        return _LA_BY_SPORT.get(sport.lower(), "LAK")
+    normalized = _ODDSSHARK_ABBR_NORMALIZE.get(abbr, abbr)
+    # Check if it's already a known abbreviation
+    if normalized in ODDSSHARK_TEAM_MAP.values():
+        return normalized
+    if abbr in ODDSSHARK_TEAM_MAP:
+        return ODDSSHARK_TEAM_MAP[abbr]
+    # Fallback: 2-4 uppercase letters = treat as abbreviation
+    if 2 <= len(abbr) <= 4 and abbr.isalpha():
+        return normalized
+    return ""
 
 
-def _parse_oddsshark_html(html: str, sport: str) -> dict:
-    """Parse OddsShark HTML tables for computer pick scores."""
-    predictions = {}
-    trs = re.findall(r'<tr[^>]*>(.*?)</tr>', html, re.DOTALL)
+# Map ESPN abbreviations to URL-friendly city names for OddsShark URL matching
+_ABBR_TO_CITY = {
+    "ATL": "atlanta", "BOS": "boston", "BKN": "brooklyn", "CHA": "charlotte",
+    "CHI": "chicago", "CLE": "cleveland", "DAL": "dallas", "DEN": "denver",
+    "DET": "detroit", "GS": "golden-state", "HOU": "houston", "IND": "indiana",
+    "LAC": "los-angeles-clippers", "LAL": "los-angeles-lakers", "MEM": "memphis",
+    "MIA": "miami", "MIL": "milwaukee", "MIN": "minnesota", "NO": "new-orleans",
+    "NY": "new-york", "OKC": "oklahoma-city", "ORL": "orlando", "PHI": "philadelphia",
+    "PHX": "phoenix", "POR": "portland", "SAC": "sacramento", "SA": "san-antonio",
+    "TOR": "toronto", "UTA": "utah", "WSH": "washington",
+    "ANA": "anaheim", "ARI": "arizona", "BUF": "buffalo", "CGY": "calgary",
+    "CAR": "carolina", "COL": "colorado", "CBJ": "columbus",
+    "EDM": "edmonton", "FLA": "florida", "LAK": "los-angeles",
+    "MTL": "montreal", "NSH": "nashville", "NJ": "new-jersey",
+    "NYI": "new-york-islanders", "NYR": "new-york-rangers", "OTT": "ottawa",
+    "PIT": "pittsburgh", "SJ": "san-jose", "SEA": "seattle",
+    "STL": "st-louis", "TB": "tampa-bay", "VAN": "vancouver",
+    "VGK": "vegas", "WPG": "winnipeg",
+    "BAL": "baltimore", "CWS": "chicago-white-sox", "CHC": "chicago-cubs",
+    "CIN": "cincinnati", "KC": "kansas-city", "LAA": "los-angeles-angels",
+    "LAD": "los-angeles-dodgers", "NYM": "new-york-mets", "NYY": "new-york-yankees",
+    "OAK": "oakland", "SD": "san-diego", "SF": "san-francisco",
+    "TEX": "texas",
+}
 
-    for tr in trs:
-        cells = [re.sub(r'<[^>]+>', ' ', c).strip()
-                 for c in re.findall(r'<td[^>]*>(.*?)</td>', tr, re.DOTALL)]
-        if len(cells) < 3:
-            continue
 
-        teams = []
-        scores = []
-        for cell in cells:
-            # Check if cell contains a team name
-            for word in cell.split():
-                clean = word.strip()
-                if clean in ODDSSHARK_TEAM_MAP:
-                    teams.append(ODDSSHARK_TEAM_MAP[clean])
-                    break
-            # Check if cell is a score
-            try:
-                val = float(cell.strip())
-                if _is_valid_score(val, sport):
-                    scores.append(val)
-            except ValueError:
-                pass
-
-        if len(teams) >= 2 and len(scores) >= 2:
-            away_abbr = teams[0]
-            home_abbr = teams[1]
-            key = f"{away_abbr}@{home_abbr}"
-            predictions[key] = {
-                "away_abbr": away_abbr, "home_abbr": home_abbr,
-                "away_score": scores[0], "home_score": scores[1],
-                "margin": round(scores[1] - scores[0], 1),
-            }
-
-    return predictions
+def _team_in_url(abbr: str, url_path: str, sport: str):
+    """Find position of a team in an OddsShark matchup URL. Returns index or None."""
+    city = _ABBR_TO_CITY.get(abbr, "").lower()
+    if city:
+        idx = url_path.find(city)
+        if idx >= 0:
+            return idx
+    # Fallback: try abbreviation itself lowercase
+    idx = url_path.find(abbr.lower())
+    if idx >= 0:
+        return idx
+    return None
 
 
 def _resolve_team(name: str, sport: str) -> str:
@@ -592,16 +627,13 @@ def _resolve_team(name: str, sport: str) -> str:
     if not name:
         return ""
     name = name.strip()
-    # Direct lookup
     if name in ODDSSHARK_TEAM_MAP:
         return ODDSSHARK_TEAM_MAP[name]
     if name in MASSEY_TEAM_MAP:
         return MASSEY_TEAM_MAP[name]
-    # Try last word (nickname)
     last = name.split()[-1] if name.split() else name
     if last in ODDSSHARK_TEAM_MAP:
         return ODDSSHARK_TEAM_MAP[last]
-    # Abbreviation-style (3 letters)
     if len(name) <= 4 and name.isupper():
         return name
     return ""
@@ -1216,6 +1248,183 @@ def _parse_accuscore_item(item: dict, sport: str) -> dict:
 
 
 # ══════════════════════════════════════════════════════
+# 8. ACTION NETWORK (Team score O/U → implied scores)
+# ══════════════════════════════════════════════════════
+
+# Action Network team IDs → ESPN abbreviations (populated on first fetch)
+_ACTION_NETWORK_TEAM_CACHE = {}
+
+
+def fetch_actionnetwork_predictions(date_str: str, sport: str = "nba") -> dict:
+    """
+    Fetch implied team scores from Action Network's scoreboard API.
+    Uses team-specific over/under lines (core_bet_type_6_team_score)
+    as implied projected scores. These are market-derived, not model-based,
+    but represent the market's best estimate of each team's score.
+    """
+    sport_slugs = {
+        "nba": "nba", "nhl": "nhl", "mlb": "mlb", "nfl": "nfl",
+    }
+    slug = sport_slugs.get(sport.lower())
+    if not slug:
+        return {}
+
+    predictions = {}
+
+    try:
+        api_url = f"https://api.actionnetwork.com/web/v2/scoreboard/{slug}"
+        hdrs = {
+            **BROWSER_HEADERS,
+            "Accept": "application/json, text/plain, */*",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-site",
+            "Origin": "https://www.actionnetwork.com",
+            "Referer": "https://www.actionnetwork.com/",
+        }
+        req = urllib.request.Request(api_url, headers=hdrs)
+        with _opener.open(req, timeout=20) as resp:
+            raw = resp.read()
+            enc = resp.headers.get("Content-Encoding", "")
+            if enc == "gzip":
+                import gzip
+                raw = gzip.decompress(raw)
+            elif enc == "deflate":
+                import zlib
+                raw = zlib.decompress(raw)
+            elif enc == "br":
+                try:
+                    import brotli
+                    raw = brotli.decompress(raw)
+                except ImportError:
+                    pass
+            data = json.loads(raw.decode("utf-8", errors="ignore"))
+
+        games = data.get("games", [])
+
+        for game in games:
+            if not isinstance(game, dict):
+                continue
+
+            # Skip games that are already final
+            status = game.get("status", "")
+            if status in ("final", "completed", "closed"):
+                continue
+
+            home_id = game.get("home_team_id")
+            away_id = game.get("away_team_id")
+            teams_data = game.get("teams", [])
+
+            # Build team lookup — teams is a list of team objects, not a dict
+            team_lookup = {}
+            if isinstance(teams_data, list):
+                for t in teams_data:
+                    if isinstance(t, dict) and "id" in t:
+                        team_lookup[t["id"]] = t
+            elif isinstance(teams_data, dict):
+                # Fallback if API changes to dict format
+                team_lookup = {int(k) if k.isdigit() else k: v
+                               for k, v in teams_data.items() if isinstance(v, dict)}
+
+            # Resolve team abbreviations
+            home_abbr = ""
+            away_abbr = ""
+            home_team = team_lookup.get(home_id, {})
+            away_team = team_lookup.get(away_id, {})
+            home_abbr = home_team.get("abbr", home_team.get("short_name", ""))
+            away_abbr = away_team.get("abbr", away_team.get("short_name", ""))
+
+            if not home_abbr or not away_abbr:
+                continue
+
+            # Normalize abbreviations
+            home_abbr = _normalize_an_abbr(home_abbr, sport)
+            away_abbr = _normalize_an_abbr(away_abbr, sport)
+
+            # Find team score O/U lines from any sportsbook
+            # These are in markets -> {book_id} -> event -> core_bet_type_6_team_score
+            markets = game.get("markets", {})
+            home_score = None
+            away_score = None
+
+            for book_id, book_data in markets.items():
+                if not isinstance(book_data, dict):
+                    continue
+                event = book_data.get("event", {})
+                if not isinstance(event, dict):
+                    continue
+                team_scores = event.get("core_bet_type_6_team_score", [])
+                if not isinstance(team_scores, list):
+                    continue
+
+                for line in team_scores:
+                    if not isinstance(line, dict):
+                        continue
+                    team_id = line.get("team_id")
+                    value = line.get("value")
+                    side = line.get("side", "")
+                    if value is None or side != "over":
+                        continue
+                    try:
+                        value = float(value)
+                    except (ValueError, TypeError):
+                        continue
+
+                    if team_id == home_id and home_score is None:
+                        home_score = value
+                    elif team_id == away_id and away_score is None:
+                        away_score = value
+
+                if home_score is not None and away_score is not None:
+                    break  # Got both from this book
+
+            if home_score is None or away_score is None:
+                continue
+
+            key = f"{away_abbr}@{home_abbr}"
+            predictions[key] = {
+                "away_abbr": away_abbr, "home_abbr": home_abbr,
+                "away_score": away_score, "home_score": home_score,
+                "margin": round(home_score - away_score, 1),
+            }
+
+        print(f"  ActionNetwork: found {len(predictions)} implied scores for {sport.upper()}")
+
+    except Exception as e:
+        print(f"  ActionNetwork fetch error ({sport}): {e}", file=sys.stderr)
+
+    return predictions
+
+
+# Action Network abbreviation normalization
+_AN_ABBR_MAP = {
+    # NBA
+    "GS": "GS", "GSW": "GS", "SA": "SA", "SAS": "SA", "NO": "NO", "NOP": "NO",
+    "NY": "NY", "NYK": "NY", "PHX": "PHX", "PHO": "PHX", "BKN": "BKN", "BRK": "BKN",
+    "CHA": "CHA", "CHO": "CHA",
+    # NHL
+    "WSH": "WSH", "WAS": "WSH", "MTL": "MTL", "MON": "MTL",
+    "NSH": "NSH", "NAS": "NSH", "CBJ": "CBJ", "CLB": "CBJ",
+    "LAK": "LAK", "LA": "LAK", "CGY": "CGY", "CAL": "CGY",
+    "WPG": "WPG", "WIN": "WPG", "VGK": "VGK",
+    "UTA": "UTA", "ANA": "ANA", "NJ": "NJ", "NJD": "NJ",
+    # MLB
+    "CWS": "CWS", "CHW": "CWS", "KC": "KC", "KCR": "KC",
+    "SD": "SD", "SDP": "SD", "SF": "SF", "SFG": "SF",
+    "TB": "TB", "TBR": "TB",
+}
+
+
+def _normalize_an_abbr(abbr: str, sport: str) -> str:
+    """Normalize an Action Network team abbreviation to ESPN standard."""
+    abbr = abbr.strip().upper()
+    # Handle "LA" specially
+    if abbr == "LA":
+        return _LA_BY_SPORT.get(sport.lower(), "LAK")
+    return _AN_ABBR_MAP.get(abbr, abbr)
+
+
+# ══════════════════════════════════════════════════════
 # MAIN: Fetch all sources for a sport
 # ══════════════════════════════════════════════════════
 
@@ -1291,13 +1500,22 @@ def fetch_all_sources(date_str: str, sport: str, matchups: list = None) -> dict:
         except Exception as e:
             print(f"  FanGraphs error: {e}", file=sys.stderr)
 
-    # 7. Accuscore (all sports)
+    # 7. Accuscore (all sports — may be Cloudflare-blocked)
     try:
         accuscore = fetch_accuscore_predictions(date_str, sport)
         if accuscore:
             sources["accuscore"] = accuscore
     except Exception as e:
         print(f"  Accuscore error: {e}", file=sys.stderr)
+
+    # 8. Action Network (NBA, NHL, MLB, NFL — market-implied team scores)
+    if sport.lower() in ("nba", "nhl", "mlb", "nfl"):
+        try:
+            an = fetch_actionnetwork_predictions(date_str, sport)
+            if an:
+                sources["actionnetwork"] = an
+        except Exception as e:
+            print(f"  ActionNetwork error: {e}", file=sys.stderr)
 
     print(f"  Total additional sources for {sport.upper()}: {len(sources)} "
           f"({', '.join(f'{k}({len(v)})' for k, v in sources.items())})")
