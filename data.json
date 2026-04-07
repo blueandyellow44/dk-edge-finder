@@ -2,13 +2,13 @@
   "scan_date": "2026-04-07",
   "scan_subtitle": "Tuesday, April 07, 2026 \u2014 MLB (15), NBA (10), NHL (11), UCL (2)",
   "bankroll": {
-    "available": 599.96,
+    "available": 674.88,
     "starting": 500.0,
-    "profit": 99.96,
+    "profit": 174.88,
     "record": {
-      "wins": 26,
-      "losses": 15,
-      "pushes": 0
+      "wins": 32,
+      "losses": 17,
+      "pushes": 1
     },
     "pending_count": 0,
     "pending_total": 0,
@@ -386,6 +386,28 @@
     }
   ],
   "bets": [
+    {
+      "date": "2026-04-06",
+      "pick": "Nikola Jokic OVER 10.5 Assists",
+      "event": "Portland Trail Blazers @ Denver Nuggets",
+      "sport": "NBA",
+      "wager": 12.0,
+      "odds": -141,
+      "outcome": "win",
+      "pnl": 8.51,
+      "final_score": "POR 132 - DEN 137 OT"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Joel Embiid OVER 1.5 3-PT Made",
+      "event": "Philadelphia 76ers @ San Antonio Spurs",
+      "sport": "NBA",
+      "wager": 14.0,
+      "odds": -116,
+      "outcome": "win",
+      "pnl": 12.06,
+      "final_score": "PHI 102 - SA 115"
+    },
     {
       "date": "2026-04-05",
       "sport": "MLB",
