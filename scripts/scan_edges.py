@@ -1860,13 +1860,19 @@ def main(games_only: bool = False):
     sports_str = ", ".join([f"{s} ({count})" for s, count in sorted(sport_counts.items())])
     subtitle = f"{date_str} — {sports_str}"
 
-    # Calculate record from ALL bet history
-    all_bets = existing_bets  # today's pending removed, will be re-added if placed
-    win_count = sum(1 for b in all_bets if b.get("outcome") == "win")
-    loss_count = sum(1 for b in all_bets if b.get("outcome") == "loss")
-    push_count = sum(1 for b in all_bets if b.get("outcome") == "push")
-    pend_count = sum(1 for b in all_bets if b.get("outcome") == "pending")
-    pend_total = sum(b.get("wager", 0) for b in all_bets if b.get("outcome") == "pending")
+    # Calculate record — prefer bankroll.json lifetime stats (source of truth),
+    # fall back to counting from data.json bets[] array
+    if bankroll.get("lifetime_wins") is not None:
+        win_count = bankroll.get("lifetime_wins", 0)
+        loss_count = bankroll.get("lifetime_losses", 0)
+        push_count = bankroll.get("lifetime_pushes", 0)
+    else:
+        all_bets = existing_bets
+        win_count = sum(1 for b in all_bets if b.get("outcome") == "win")
+        loss_count = sum(1 for b in all_bets if b.get("outcome") == "loss")
+        push_count = sum(1 for b in all_bets if b.get("outcome") == "push")
+    pend_count = sum(1 for b in existing_bets if b.get("outcome") == "pending")
+    pend_total = sum(b.get("wager", 0) for b in existing_bets if b.get("outcome") == "pending")
     profit = round(available - starting, 2) if override else round(resolved_pnl, 2)
 
     # In games-only mode, preserve existing prop picks from last full scan
