@@ -1361,6 +1361,15 @@ body {
   function loadPlacements() {
     try {
       var raw = localStorage.getItem('dk-edge-placements');
+      var savedDate = localStorage.getItem('dk-edge-placements-date');
+      var currentDate = (data && data.scan_date) || '';
+      // Clear stale placements when scan date changes
+      if (savedDate && currentDate && savedDate !== currentDate) {
+        placements = {};
+        localStorage.removeItem('dk-edge-placements');
+        localStorage.removeItem('dk-edge-placements-date');
+        return;
+      }
       if (raw) placements = JSON.parse(raw);
     } catch (e) {
       console.error('[loadPlacements] corrupt data, resetting', e);
@@ -1371,6 +1380,9 @@ body {
   function savePlacements() {
     try {
       localStorage.setItem('dk-edge-placements', JSON.stringify(placements));
+      if (data && data.scan_date) {
+        localStorage.setItem('dk-edge-placements-date', data.scan_date);
+      }
     } catch (e) {
       console.error('[savePlacements] FAIL', e);
     }
@@ -1378,10 +1390,10 @@ body {
 
   // ── Helpers ──
   function getBalance() {
-    var override = localStorage.getItem('dk_balance_override');
-    if (override) {
-      var num = parseFloat(override);
-      if (!isNaN(num)) return num;
+    // data.json bankroll is the source of truth (set by bankroll.json override in scan pipeline)
+    // localStorage override is deprecated — clear any stale values
+    if (localStorage.getItem('dk_balance_override')) {
+      localStorage.removeItem('dk_balance_override');
     }
     return (data && data.bankroll) ? data.bankroll.available : 0;
   }
