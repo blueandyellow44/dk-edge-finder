@@ -733,6 +733,7 @@ body {
       })
       .then(function(d) {
         data = d;
+        clearStalePlacements();
         render();
       })
       .catch(function(err) {
@@ -1361,19 +1362,22 @@ body {
   function loadPlacements() {
     try {
       var raw = localStorage.getItem('dk-edge-placements');
-      var savedDate = localStorage.getItem('dk-edge-placements-date');
-      var currentDate = (data && data.scan_date) || '';
-      // Clear stale placements when scan date changes
-      if (savedDate && currentDate && savedDate !== currentDate) {
-        placements = {};
-        localStorage.removeItem('dk-edge-placements');
-        localStorage.removeItem('dk-edge-placements-date');
-        return;
-      }
       if (raw) placements = JSON.parse(raw);
     } catch (e) {
       console.error('[loadPlacements] corrupt data, resetting', e);
       placements = {};
+    }
+  }
+
+  // Clear stale placements when scan date changes (called after data loads)
+  function clearStalePlacements() {
+    var savedDate = localStorage.getItem('dk-edge-placements-date');
+    var currentDate = (data && data.scan_date) || '';
+    if (!currentDate) return;
+    if (savedDate && savedDate !== currentDate) {
+      placements = {};
+      localStorage.removeItem('dk-edge-placements');
+      localStorage.removeItem('dk-edge-placements-date');
     }
   }
 
