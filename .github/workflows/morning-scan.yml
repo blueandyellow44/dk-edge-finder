@@ -23,6 +23,10 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Resolve yesterday's bets
+        working-directory: scripts
+        run: python resolve_bets.py
+
       - name: Run full edge scan (games + props)
         working-directory: scripts
         env:

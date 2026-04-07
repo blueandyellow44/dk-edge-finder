@@ -24,6 +24,10 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Resolve pending bets
+        working-directory: scripts
+        run: python resolve_bets.py
+
       - name: Run game-only edge scan (no API credits)
         working-directory: scripts
         env:
