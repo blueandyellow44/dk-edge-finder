@@ -38,3 +38,6 @@ jobs:
           git add data.json bankroll.json pick_history.json
           git commit -m "Auto-resolve: $(date +%Y-%m-%d) bet results"
           git push
+          # Sync to Cloudflare deploy branch
+          git fetch origin cloudflare/workers-autoconfig || true
+          git push origin main:cloudflare/workers-autoconfig || true

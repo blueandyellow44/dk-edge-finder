@@ -47,3 +47,6 @@ jobs:
           git add data.json bankroll.json pick_history.json
           git commit -m "Game scan: $(date +%Y-%m-%d_%H%M) — games only (no props)"
           git push
+          # Sync to Cloudflare deploy branch
+          git fetch origin cloudflare/workers-autoconfig || true
+          git push origin main:cloudflare/workers-autoconfig || true
