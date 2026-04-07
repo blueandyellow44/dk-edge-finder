@@ -6,9 +6,9 @@
     "starting": 500.0,
     "profit": 174.88,
     "record": {
-      "wins": 32,
-      "losses": 17,
-      "pushes": 1
+      "wins": 28,
+      "losses": 15,
+      "pushes": 0
     },
     "pending_count": 0,
     "pending_total": 0,
@@ -16,8 +16,8 @@
   },
   "games_analyzed": 38,
   "best_bet": {
-    "title": "Kansas City Royals +1.5 (173) \u2014 34.7% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers + oddsshark + actionnetwork): KC 3.2, CLE 3.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (34.7%): Model disagrees with market by 1.3 pts. Investiga"
+    "title": "Kansas City Royals +1.5 (169) \u2014 34.2% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers + oddsshark + actionnetwork): KC 3.2, CLE 3.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (34.2%): Model disagrees with market by 1.3 pts. Investiga"
   },
   "picks": [
     {
@@ -27,15 +27,15 @@
       "event_short": "KC @ CLE",
       "market": "Spread",
       "pick": "Kansas City Royals +1.5",
-      "odds": "173",
-      "implied": "36.6%",
+      "odds": "169",
+      "implied": "37.2%",
       "model": "71.4%",
-      "edge": 34.7,
+      "edge": 34.2,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): KC 3.2, CLE 3.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (34.7%): Model disagrees with market by 1.3 pts. Investigate before betting. | CLE on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): KC 3.2, CLE 3.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (34.2%): Model disagrees with market by 1.3 pts. Investigate before betting. | CLE on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33942624?outcomes=0HC84205477N150_3",
@@ -49,15 +49,15 @@
       "event_short": "STL @ WSH",
       "market": "Spread",
       "pick": "St. Louis Cardinals +1.5",
-      "odds": "156",
-      "implied": "39.1%",
+      "odds": "157",
+      "implied": "38.9%",
       "model": "70.7%",
-      "edge": 31.7,
+      "edge": 31.8,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): STL 4.5, WSH 4.4 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (31.7%): Model disagrees with market by 1.4 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): STL 4.5, WSH 4.4 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (31.8%): Model disagrees with market by 1.4 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33942632?outcomes=0HC84205485N150_3",
@@ -76,10 +76,10 @@
       "model": "73.3%",
       "edge": 19.8,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): OKC 117.5, LAL 107.0 (margin: 10.5). 7.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.8 pts (DRatings: -12.7, Dimers: -14.9). Lower confidence. \u26a0 SUSPICIOUS EDGE (19.8%): Model disagrees with market by 7.0 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): OKC 117.5, LAL 107.0 (margin: 10.5). 7.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.8 pts (DRatings: -12.7, Dimers: -15.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (19.8%): Model disagrees with market by 7.0 pts. Investigate before betting. \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
       "confidence": "LOW",
       "dk_link": "https://sportsbook.draftkings.com/event/33937433?outcomes=0HC84191316P1750_1",
@@ -98,7 +98,7 @@
       "model": "68.0%",
       "edge": 18.0,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
       "notes": "Model (clubelo): MUN 1.1, RMA 1.6 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (18.0%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
@@ -120,7 +120,7 @@
       "model": "64.7%",
       "edge": 11.9,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (total: 245.0). Line: 251.5. Cushion: 6.5 pts. \u26a0 CONTESTED: Sources disagree by 8.4 pts. \u26a0 SUSPICIOUS EDGE (11.9%): Model predicts 245.0 vs market 251.5 \u2014 6.5 pt gap.",
@@ -142,7 +142,7 @@
       "model": "61.0%",
       "edge": 9.7,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): HOU 5.8, COL 5.2 (margin: 0.6). 0.9 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
@@ -158,19 +158,19 @@
       "event": "Chicago Bulls @ Washington Wizards",
       "event_short": "CHI @ WSH",
       "market": "Spread",
-      "pick": "Washington Wizards +6.5",
-      "odds": "-118",
-      "implied": "54.1%",
-      "model": "62.9%",
-      "edge": 8.7,
+      "pick": "Washington Wizards +5.5",
+      "odds": "-102",
+      "implied": "50.5%",
+      "model": "59.5%",
+      "edge": 9.0,
       "tier": "High",
-      "bet": "$12.00",
+      "bet": "$13.50",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (margin: 2.8). 3.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 8.4 pts (DRatings: -5.6, Dimers: -6.1). Lower confidence. \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (margin: 2.8). 2.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 8.4 pts (DRatings: -5.6, Dimers: -6.2). Lower confidence. \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33937366?outcomes=0HC84191181P650_1",
+      "dk_link": "https://sportsbook.draftkings.com/event/33937366?outcomes=0HC84191181P550_1",
       "type": "game",
       "start_time": "2026-04-07T23:00Z"
     },
@@ -186,7 +186,7 @@
       "model": "70.5%",
       "edge": 7.4,
       "tier": "High",
-      "bet": "$5.99",
+      "bet": "$6.73",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SEA 3.6, TEX 3.5 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
@@ -212,12 +212,6 @@
     },
     {
       "sport": "NBA",
-      "event": "MIA @ TOR",
-      "line": "TOR -1.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
       "event": "CHA @ BOS",
       "line": "BOS -4.5",
       "reason": "Edge below 3% threshold"
@@ -230,12 +224,6 @@
     },
     {
       "sport": "NBA",
-      "event": "DAL @ LAC",
-      "line": "LAC -11.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
       "event": "HOU @ PHX",
       "line": "PHX -1.5",
       "reason": "Edge below 3% threshold"
@@ -243,7 +231,7 @@
     {
       "sport": "NHL",
       "event": "FLA @ MTL",
-      "line": "MTL -218",
+      "line": "MTL -230",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -255,7 +243,7 @@
     {
       "sport": "NHL",
       "event": "CBJ @ DET",
-      "line": "DET -120",
+      "line": "DET -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -285,7 +273,7 @@
     {
       "sport": "NHL",
       "event": "EDM @ UTA",
-      "line": "UTAH -125",
+      "line": "UTAH -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -297,19 +285,19 @@
     {
       "sport": "NHL",
       "event": "NSH @ ANA",
-      "line": "ANA -148",
+      "line": "ANA -142",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BAL @ CHW",
-      "line": "BAL -143",
+      "line": "BAL -156",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
       "event": "ARI @ NYM",
-      "line": "NYM -163",
+      "line": "NYM -156",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -327,7 +315,7 @@
     {
       "sport": "MLB",
       "event": "SD @ PIT",
-      "line": "PIT -156",
+      "line": "PIT -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -339,7 +327,7 @@
     {
       "sport": "MLB",
       "event": "ATH @ NYY",
-      "line": "NYY -246",
+      "line": "NYY -252",
       "reason": "No model data"
     },
     {
@@ -357,14 +345,14 @@
     {
       "sport": "UCL",
       "event": "ARS @ SCP",
-      "line": "ARS -120",
+      "line": "ARS -110",
       "reason": "No model data"
     },
     {
       "sport": "MLB",
       "event": "DET @ MIN",
-      "line": "Minnesota Twins +1.5 (-126)",
-      "reason": "Edge exists (6.7%) but category exposure limit reached"
+      "line": "Minnesota Twins +1.5 (-131)",
+      "reason": "Edge exists (5.8%) but category exposure limit reached"
     },
     {
       "sport": "MLB",
@@ -375,14 +363,26 @@
     {
       "sport": "NBA",
       "event": "SAC @ GS",
-      "line": "UNDER 235.5 (-112)",
-      "reason": "Edge exists (5.2%) but category exposure limit reached"
+      "line": "UNDER 234.5 (-105)",
+      "reason": "Edge exists (4.6%) but category exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "MIA @ TOR",
+      "line": "UNDER 240.5 (-108)",
+      "reason": "Edge exists (4.1%) but category exposure limit reached"
     },
     {
       "sport": "NHL",
       "event": "CGY @ DAL",
-      "line": "Calgary Flames +1.5 (-125)",
-      "reason": "Edge exists (5.1%) but category exposure limit reached"
+      "line": "Calgary Flames +1.5 (-130)",
+      "reason": "Edge exists (4.1%) but category exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "DAL @ LAC",
+      "line": "UNDER 237.5 (-105)",
+      "reason": "Edge exists (3.2%) but category exposure limit reached"
     }
   ],
   "bets": [
