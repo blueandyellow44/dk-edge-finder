@@ -721,6 +721,10 @@ body {
   var placements = {};
 
   // ── Init ──
+  // Clean up legacy localStorage keys from older versions
+  ['dk_placed', 'dk_balance_override', 'dk_skipped'].forEach(function(k) {
+    localStorage.removeItem(k);
+  });
   loadPlacements();
   fetchData();
 
