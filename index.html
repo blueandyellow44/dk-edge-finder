@@ -1374,7 +1374,7 @@ body {
     var savedDate = localStorage.getItem('dk-edge-placements-date');
     var currentDate = (data && data.scan_date) || '';
     if (!currentDate) return;
-    if (savedDate && savedDate !== currentDate) {
+    if (!savedDate || savedDate !== currentDate) {
       placements = {};
       localStorage.removeItem('dk-edge-placements');
       localStorage.removeItem('dk-edge-placements-date');
