@@ -51,13 +51,13 @@
       "pick": "Philadelphia Flyers +1.5",
       "odds": "-250",
       "implied": "71.4%",
-      "model": "81.0%",
-      "edge": 9.5,
+      "model": "81.9%",
+      "edge": 10.5,
       "tier": "High",
       "bet": "$13.50",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): PHI 3.0, DET 2.6 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 3.1 pts (DRatings: +0.4, Dimers: +0.2). Lower confidence. | DET on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): PHI 3.1, DET 2.6 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 3.0 pts (DRatings: +0.4, Dimers: +0.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (10.5%): Model disagrees with market by 1.0 pts. Investigate before betting. | DET on B2B (+1.5% boost) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
       "dk_link": "https://sportsbook.draftkings.com/event/33955101?outcomes=0HC84245420P150_3",
@@ -71,10 +71,10 @@
       "event_short": "FLA @ OTT",
       "market": "Spread",
       "pick": "Florida Panthers +1.5",
-      "odds": "102",
-      "implied": "49.5%",
+      "odds": "110",
+      "implied": "47.6%",
       "model": "57.1%",
-      "edge": 7.6,
+      "edge": 9.5,
       "tier": "High",
       "bet": "$13.50",
       "status": "",
@@ -132,6 +132,50 @@
     },
     {
       "rank": 6,
+      "sport": "NBA",
+      "event": "Boston Celtics @ New York Knicks",
+      "event_short": "BOS @ NY",
+      "market": "Over/Under",
+      "pick": "OVER 212.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "58.3%",
+      "edge": 5.5,
+      "tier": "High",
+      "bet": "$13.50",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BOS 106.3, NY 109.8 (total: 216.1). Line: 212.5. Cushion: 3.6 pts.",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33949978?outcomes=0OU84224562O21250_1",
+      "type": "game",
+      "start_time": "2026-04-09T23:30Z"
+    },
+    {
+      "rank": 7,
+      "sport": "NBA",
+      "event": "Boston Celtics @ New York Knicks",
+      "event_short": "BOS @ NY",
+      "market": "Spread",
+      "pick": "Boston Celtics +5.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "57.0%",
+      "edge": 5.1,
+      "tier": "High",
+      "bet": "$13.50",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BOS 106.3, NY 109.8 (margin: 3.5). 2.0 pts of cushion beyond the spread.",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33949978?outcomes=0HC84224562P550_3",
+      "type": "game",
+      "start_time": "2026-04-09T23:30Z"
+    },
+    {
+      "rank": 8,
       "sport": "NHL",
       "event": "Vegas Golden Knights @ Seattle Kraken",
       "event_short": "VGK @ SEA",
@@ -142,7 +186,7 @@
       "model": "46.0%",
       "edge": 4.4,
       "tier": "High",
-      "bet": "$10.56",
+      "bet": "$6.73",
       "status": "",
       "result": "",
       "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): VGK 3.7, SEA 2.4 (margin: 1.3). -0.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.6 pts (DRatings: -0.9, Dimers: -0.4). Lower confidence. \u26a0 Confidence: LOW",
@@ -151,28 +195,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/33955121?outcomes=0HC84245412N150_3",
       "type": "game",
       "start_time": "2026-04-10T02:00Z"
-    },
-    {
-      "rank": 7,
-      "sport": "NHL",
-      "event": "Columbus Blue Jackets @ Buffalo Sabres",
-      "event_short": "CBJ @ BUF",
-      "market": "Spread",
-      "pick": "Buffalo Sabres -1.5",
-      "odds": "200",
-      "implied": "33.3%",
-      "model": "37.1%",
-      "edge": 3.8,
-      "tier": "High",
-      "bet": "$6.36",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CBJ 2.9, BUF 3.6 (margin: 0.7). -0.8 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33955095?outcomes=0HC84245428N150_1",
-      "type": "game",
-      "start_time": "2026-04-09T23:00Z"
     }
   ],
   "no_edge_games": [
@@ -185,26 +207,14 @@
     {
       "sport": "NBA",
       "event": "IND @ BKN",
-      "line": "IND -2.5",
+      "line": "IND -3.5",
       "reason": "Tank penalty applied \u2014 17-51, eliminated, traded stars"
     },
     {
       "sport": "NBA",
-      "event": "BOS @ NY",
-      "line": "NY -4.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
       "event": "PHI @ HOU",
-      "line": "HOU -3.5",
+      "line": "HOU -6.5",
       "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "LAL @ GS",
-      "line": "GS -4.5",
-      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
@@ -233,7 +243,7 @@
     {
       "sport": "NHL",
       "event": "CAR @ CHI",
-      "line": "CAR -205",
+      "line": "CAR -218",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -256,20 +266,8 @@
     },
     {
       "sport": "MLB",
-      "event": "ATH @ NYY",
-      "line": "NYY -199",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLB",
-      "event": "DET @ MIN",
-      "line": "DET -136",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "ARI @ NYM",
-      "line": "NYM -168",
+      "line": "NYM -181",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -281,8 +279,20 @@
     {
       "sport": "MLB",
       "event": "COL @ SD",
-      "line": "SD -199",
+      "line": "SD -207",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NHL",
+      "event": "CBJ @ BUF",
+      "line": "Buffalo Sabres -1.5 (200)",
+      "reason": "Edge exists (3.8%) but category exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "LAL @ GS",
+      "line": "OVER 221.5 (-115)",
+      "reason": "Edge exists (3.7%) but category exposure limit reached"
     }
   ],
   "bets": [
