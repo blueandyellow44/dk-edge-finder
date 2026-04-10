@@ -235,6 +235,38 @@ def main():
     bankroll = json.loads(BANKROLL_JSON.read_text()) if BANKROLL_JSON.exists() else None
 
     bets = data.get("bets", [])
+
+    # Sync any resolved bets from bankroll.json that are missing from data.bets.
+    # Manual overrides write directly to bankroll.resolved_bets; without this merge
+    # the site Activity view silently drops those bets. Idempotent — keyed on
+    # (date, pick). See tasks/lessons.md April 10 entry.
+    sync_added = 0
+    if bankroll and bankroll.get("resolved_bets"):
+        sport_map = {"mlb": "MLB", "nba": "NBA", "nhl": "NHL", "ucl": "UCL",
+                     "uel": "UEL", "soccer": "SOCCER"}
+        existing_keys = {(b.get("date", ""), b.get("pick", "")) for b in bets}
+        for r in bankroll["resolved_bets"]:
+            key = (r.get("date", ""), r.get("pick", ""))
+            if not key[0] or not key[1] or key in existing_keys:
+                continue
+            sport_raw = (r.get("sport", "") or "").lower()
+            bets.append({
+                "date": r["date"],
+                "pick": r["pick"],
+                "event": r.get("event", ""),
+                "sport": sport_map.get(sport_raw, sport_raw.upper()),
+                "wager": r.get("bet_size", 0),
+                "odds": r.get("odds", 0),
+                "outcome": r.get("outcome", ""),
+                "pnl": r.get("pnl", 0),
+                "final_score": r.get("final_score", ""),
+            })
+            existing_keys.add(key)
+            sync_added += 1
+        if sync_added:
+            print(f"Synced {sync_added} resolved bet(s) from bankroll.json into data.bets")
+            data["bets"] = bets
+
     pending = [b for b in bets if b.get("outcome") == "pending"]
 
     all_games = {}  # keyed by sport — shared with pick_history resolver
@@ -318,6 +350,10 @@ def main():
 
     if resolved_count == 0:
         print("No placed bets resolved (games may still be in progress or none pending).")
+        # Still write data.json if sync added bankroll-only bets above.
+        if sync_added:
+            DATA_JSON.write_text(json.dumps(data, indent=2) + "\n")
+            print(f"Wrote data.json with {sync_added} synced bet(s).")
         # Still resolve pick_history.json below — do not exit
         resolve_pick_history(all_games)
         return

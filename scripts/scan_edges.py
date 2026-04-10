@@ -1851,6 +1851,36 @@ def main(games_only: bool = False):
     # The scan only adds new picks to the picks[] array, it does NOT touch bets[].
     # Bets only enter the bets[] array when the user clicks "Place" on the site.
 
+    # Sync any resolved bets from bankroll.json that are missing from data.bets.
+    # Manual overrides and resolve_bets.py write to bankroll.resolved_bets; without
+    # this merge, the site Activity view silently drops those bets (see April 7-8
+    # incident). Idempotent: keyed on (date, pick).
+    if bankroll and bankroll.get("resolved_bets"):
+        sport_map = {"mlb": "MLB", "nba": "NBA", "nhl": "NHL", "ucl": "UCL",
+                     "uel": "UEL", "soccer": "SOCCER"}
+        existing_keys = {(b.get("date", ""), b.get("pick", "")) for b in existing_bets}
+        synced = 0
+        for r in bankroll["resolved_bets"]:
+            key = (r.get("date", ""), r.get("pick", ""))
+            if not key[0] or not key[1] or key in existing_keys:
+                continue
+            sport_raw = (r.get("sport", "") or "").lower()
+            existing_bets.append({
+                "date": r["date"],
+                "pick": r["pick"],
+                "event": r.get("event", ""),
+                "sport": sport_map.get(sport_raw, sport_raw.upper()),
+                "wager": r.get("bet_size", 0),
+                "odds": r.get("odds", 0),
+                "outcome": r.get("outcome", ""),
+                "pnl": r.get("pnl", 0),
+                "final_score": r.get("final_score", ""),
+            })
+            existing_keys.add(key)
+            synced += 1
+        if synced:
+            print(f"  Synced {synced} resolved bet(s) from bankroll.json into data.bets")
+
     # Build subtitle with sport breakdown
     date_str = datetime.strptime(today, '%Y%m%d').strftime('%A, %B %d, %Y')
     sport_counts = {}
