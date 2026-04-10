@@ -361,3 +361,18 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 
 ### Rule: Run calibration report monthly
 Schedule a manual calibration review on the 1st of each month. Compare: win rate by sport, by market, by edge bucket. Look for drift. If any sport drops below 55% win rate over 30+ picks, flag for model adjustment.
+
+## 2026-04-10: Launch preview panel is static — not a functional test surface
+**Mistake:** Relied on the Launch preview panel that auto-shows after every index.html edit as verification that UI changes work. Max reported "preview doesnt click or scroll" — the preview renders the HTML file but doesn't run the full dev server flow, so clicks, scrolling, and `fetch('data.json')` don't behave the same as the live site.
+**Rule:** The Launch preview panel is for **visual sanity only** — confirming layout, colors, and structure. It is NOT a substitute for:
+  1. Running `preview_start` on a real dev server and using `preview_click` / `preview_snapshot` to validate interactions
+  2. Pushing to main/cloudflare and hitting the live Worker URL to confirm runtime behavior
+When a change touches click handlers, state updates, localStorage, or async data loading — verify on the live deployed URL, not the preview panel. Never claim "verified in preview" for interactive features.
+
+## 2026-04-10: Balance displayed must subtract pending wagers in real time
+**Mistake:** User placed 5 bets via the UI and the big "Available Balance" number stayed at $679.34 because `renderBalance()` returned `data.bankroll.available` directly. Balance only updates after bets resolve on the server, but the user expects the displayed available to drop immediately when they mark a bet "placed."
+**Rule:** `renderBalance()` must compute `available = settled_balance - sum(pending_wagers)` where pending wagers include: (1) scan-tracked bets in `data.bets` with outcome=pending, (2) user-placed picks from `placements` localStorage, (3) manual bets from `dk-edge-manual-bets` localStorage. Show a sublabel like "$X settled − $Y in pending" so the user understands why the number differs from the DK app balance. This must be called from EVERY handler that mutates placements or manualBets.
+
+## 2026-04-10: Over-threshold picks need a manual placement path
+**Mistake:** Scan sometimes rejects good-looking picks due to per-day category exposure limits (e.g. NBA totals capped at 1/day). When the user skips a suspicious edge and wants to swap it for a less-suspicious one from the "Other Games Scanned" list, there was no UI path to place that bet — it only showed as a greyed-out no-edge row.
+**Rule:** Every scanned game must be reachable as a manual placement, even if it was excluded from top picks. The `no_edge_games` rows now get a "+ Place" button that prompts for wager, parses odds from the line string, and stores in a separate `manualBets` localStorage array. Manual bets flow through the same pending/balance calculation as auto-picks. Parse helpers: `parseOddsFromLine()` handles formats like `OVER 218.5 (-108)`, `CIN -186`, and falls back to `-110` for bare spreads.

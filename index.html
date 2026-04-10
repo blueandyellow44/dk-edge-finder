@@ -590,7 +590,7 @@ body {
   letter-spacing: 0.5px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #f0f0f0;
 }
 .no-edge-row {
-  display: grid; grid-template-columns: 1fr auto auto; gap: 12px;
+  display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px;
   padding: 5px 0; font-size: 13px; color: #777; align-items: center;
 }
 .no-edge-event { color: #555; }
@@ -598,6 +598,16 @@ body {
 .no-edge-reason { font-size: 11px; text-align: right; }
 .no-edge-reason.below { color: #bbb; }
 .no-edge-reason.no-data { color: #cc8800; }
+.no-edge-place-btn {
+  background: transparent; border: 1px solid #c9a633; color: #c9a633;
+  padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s ease;
+}
+.no-edge-place-btn:hover { background: #c9a633; color: #fff; }
+.no-edge-placed-pill {
+  background: #e8f5e9; color: #2e7d32; padding: 3px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
 
 /* ── Responsive ── */
 @media (max-width: 800px) {
@@ -612,6 +622,9 @@ body {
   .pick-right-cluster { grid-column: 1 / -1; margin-top: 8px; justify-content: flex-start; }
   .pick-detail-grid { grid-template-columns: repeat(2, 1fr); }
   .pick-edge-pct { font-size: 16px; }
+  .no-edge-row { grid-template-columns: 1fr auto; grid-auto-flow: row; gap: 4px 12px; }
+  .no-edge-reason { grid-column: 1 / -1; text-align: left; }
+  .no-edge-place-btn, .no-edge-placed-pill { grid-column: 2; }
 }
 </style>
 </head>
@@ -719,6 +732,7 @@ body {
   // ── State ──
   var data = null;
   var placements = {};
+  var manualBets = [];
 
   // ── Init ──
   // Clean up legacy localStorage keys from older versions
@@ -726,6 +740,7 @@ body {
     localStorage.removeItem(k);
   });
   loadPlacements();
+  loadManualBets();
   fetchData();
 
   // ── Data loading ──
@@ -763,8 +778,10 @@ body {
   // ── Balance ──
   function renderBalance() {
     var b = data.bankroll || {};
-    var available = getBalance();
-    var profit = available - (b.starting || 500);
+    var settled = getBalance(); // source-of-truth post-resolution balance
+    var pendingTotal = calcPendingWagers();
+    var available = Math.max(0, settled - pendingTotal);
+    var profit = settled - (b.starting || 500);
     var rec = b.record || { wins: 0, losses: 0, pushes: 0 };
     var profitClass = profit >= 0 ? 'positive' : 'negative';
     var profitSign = profit >= 0 ? '+' : '';
@@ -772,6 +789,7 @@ body {
     document.getElementById('balanceSection').innerHTML =
       '<div class="balance-label">Available Balance</div>' +
       '<div class="balance-amount"><span class="dollar">$</span>' + formatMoney(available).replace('$','') + '</div>' +
+      (pendingTotal > 0 ? '<div class="balance-sublabel" style="font-size:12px;color:#888;margin-top:-4px;margin-bottom:10px">' + formatMoney(settled) + ' settled − ' + formatMoney(pendingTotal) + ' in pending wagers</div>' : '') +
       '<div class="balance-stats">' +
         '<div><div class="balance-stat-label">Starting Balance</div><div class="balance-stat-value">' + formatMoney(b.starting || 500) + '</div></div>' +
         '<div><div class="balance-stat-label">Profit / Loss</div><div class="balance-stat-value ' + profitClass + '">' + profitSign + formatMoney(Math.abs(profit)) + '</div></div>' +
@@ -874,10 +892,16 @@ body {
           '<div class="no-edge-sport-label">' + esc(sport.replace('_', ' ')) + '</div>';
         bySport[sport].forEach(function(g) {
           var reasonClass = (g.reason || '').indexOf('No model') !== -1 ? 'no-data' : 'below';
+          var manualKey = 'manual|' + (g.event || '') + '|' + (g.line || '');
+          var alreadyPlaced = manualBets.some(function(m) { return m.id === manualKey; });
+          var placeBtn = alreadyPlaced
+            ? '<span class="no-edge-placed-pill">✓ Placed</span>'
+            : '<button class="no-edge-place-btn" data-manual-key="' + esc(manualKey) + '" data-sport="' + esc(sport) + '" data-event="' + esc(g.event || '') + '" data-line="' + esc(g.line || '') + '">+ Place</button>';
           html += '<div class="no-edge-row">' +
             '<span class="no-edge-event">' + esc(g.event) + '</span>' +
             '<span class="no-edge-line">' + esc(g.line || '') + '</span>' +
             '<span class="no-edge-reason ' + reasonClass + '">' + esc(g.reason || '') + '</span>' +
+            placeBtn +
           '</div>';
         });
         html += '</div>';
@@ -910,6 +934,48 @@ body {
         }
       });
     }
+
+    // Manual-place buttons on no-edge rows (for over-threshold bets)
+    document.querySelectorAll('.no-edge-place-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var manualKey = btn.getAttribute('data-manual-key');
+        var sport = btn.getAttribute('data-sport');
+        var event = btn.getAttribute('data-event');
+        var line = btn.getAttribute('data-line');
+        var wagerStr = prompt('Wager amount for "' + line + '"?', '13.50');
+        if (wagerStr === null) return;
+        var wager = parseFloat(String(wagerStr).replace(/[^0-9.]/g, ''));
+        if (!wager || wager <= 0) {
+          showToast('Invalid wager amount', '');
+          return;
+        }
+        var pick = parsePickFromLine(line);
+        var odds = parseOddsFromLine(line);
+        // Prefix pick with team abbr context if useful (e.g. "OVER 218.5" alone is ambiguous)
+        var displayPick = pick;
+        if (/^(OVER|UNDER)/i.test(pick)) {
+          displayPick = pick; // totals are self-describing with event context
+        }
+        manualBets.push({
+          id: manualKey,
+          date: (data && data.scan_date) || '',
+          sport: sport,
+          event: event,
+          pick: displayPick,
+          odds: odds,
+          wager: wager,
+          outcome: 'pending',
+          _manual: true
+        });
+        saveManualBets();
+        renderBalance();
+        renderPicks();
+        renderPending();
+        renderPositions();
+        showToast('Manual bet placed: ' + displayPick + ' ($' + wager.toFixed(2) + ')', 'success');
+      });
+    });
 
     // Placement buttons
     document.querySelectorAll('#tab-picks [data-action]').forEach(function(btn) {
@@ -991,7 +1057,7 @@ body {
       });
     });
 
-    var allPending = scanPending.concat(userPlaced);
+    var allPending = scanPending.concat(userPlaced).concat(manualBets.filter(function(m) { return m.outcome === 'pending'; }));
 
     if (allPending.length === 0) {
       document.getElementById('tab-pending').innerHTML = '<div class="empty-state">No pending transactions at this time.</div>';
@@ -1012,11 +1078,13 @@ body {
       var odds = b.odds || b._odds || '';
       var toWin = calcToWin(b.wager || 0, odds);
       totalToWin += toWin;
+      var manualBadge = b._manual ? ' <span style="display:inline-block;font-size:9px;background:#c9a633;color:#fff;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-left:4px">MANUAL</span>' : '';
+      var removeBtn = b._manual ? '<button class="manual-remove-btn" data-manual-id="' + esc(b.id || '') + '" title="Remove this manual bet" style="background:none;border:none;color:#c00;cursor:pointer;font-size:14px;margin-left:8px">×</button>' : '';
       html += '<div class="tx-row pending">' +
         '<div class="tx-date">' + formatDate(b.date) + '</div>' +
-        '<div class="tx-desc">' + esc(b.pick) + '<span class="tx-sport">' + esc(b.sport) + '</span>' +
+        '<div class="tx-desc">' + esc(b.pick) + manualBadge + '<span class="tx-sport">' + esc(b.sport) + '</span>' +
           '<span class="tx-event">' + esc(b.event) + '</span></div>' +
-        '<div class="tx-amount debit" style="text-align:right">-' + formatMoney(b.wager) + '</div>' +
+        '<div class="tx-amount debit" style="text-align:right">-' + formatMoney(b.wager) + removeBtn + '</div>' +
         '<div class="tx-amount" style="text-align:right;color:#4CAF50">' + (toWin > 0 ? '+' + formatMoney(toWin) : '<span class="pending-badge">Pending</span>') + '</div>' +
       '</div>';
     });
@@ -1030,6 +1098,21 @@ body {
 
     html += '</div>';
     document.getElementById('tab-pending').innerHTML = html;
+
+    // Wire up manual-bet remove buttons
+    document.querySelectorAll('#tab-pending .manual-remove-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var id = btn.getAttribute('data-manual-id');
+        manualBets = manualBets.filter(function(m) { return m.id !== id; });
+        saveManualBets();
+        renderBalance();
+        renderPicks();
+        renderPending();
+        renderPositions();
+        showToast('Manual bet removed', 'info');
+      });
+    });
 
     // Update Pending tab badge
     var pendingTab = document.querySelector('.tab[data-tab="pending"]');
@@ -1380,8 +1463,10 @@ body {
     if (!currentDate) return;
     if (!savedDate || savedDate !== currentDate) {
       placements = {};
+      manualBets = [];
       localStorage.removeItem('dk-edge-placements');
       localStorage.removeItem('dk-edge-placements-date');
+      localStorage.removeItem('dk-edge-manual-bets');
     }
   }
 
@@ -1394,6 +1479,65 @@ body {
     } catch (e) {
       console.error('[savePlacements] FAIL', e);
     }
+  }
+
+  // ── Manual bets (placed outside top picks) ──
+  function loadManualBets() {
+    try {
+      var raw = localStorage.getItem('dk-edge-manual-bets');
+      if (raw) manualBets = JSON.parse(raw) || [];
+    } catch (e) {
+      console.error('[loadManualBets] corrupt data, resetting', e);
+      manualBets = [];
+    }
+  }
+
+  function saveManualBets() {
+    try {
+      localStorage.setItem('dk-edge-manual-bets', JSON.stringify(manualBets));
+      if (data && data.scan_date) {
+        localStorage.setItem('dk-edge-placements-date', data.scan_date);
+      }
+    } catch (e) {
+      console.error('[saveManualBets] FAIL', e);
+    }
+  }
+
+  // Parse odds like "-108", "+140", or trailing "(-108)" from a line string
+  function parseOddsFromLine(line) {
+    if (!line) return '-110';
+    var m = String(line).match(/\(([+-]?\d+)\)\s*$/);
+    if (m) return m[1];
+    var m2 = String(line).match(/([+-]\d{3,4})\s*$/);
+    if (m2) return m2[1];
+    return '-110';
+  }
+
+  function parsePickFromLine(line) {
+    if (!line) return '';
+    return String(line).replace(/\s*\([+-]?\d+\)\s*$/, '').trim();
+  }
+
+  // Sum of all pending wagers (scan + user-placed picks + manual bets)
+  function calcPendingWagers() {
+    var total = 0;
+    var scanPending = (data && data.bets || []).filter(function(b) { return b.outcome === 'pending'; });
+    scanPending.forEach(function(b) { total += (b.wager || 0); });
+    // User-placed picks via UI (not double-counted)
+    (data && data.picks || []).forEach(function(p) {
+      var key = p.pick + '|' + p.event;
+      var isPlaced = placements[key] === 'placed' || p.status === 'PLACED';
+      if (!isPlaced) return;
+      var inScan = scanPending.some(function(b) { return b.pick === p.pick; });
+      if (inScan) return;
+      var amt = parseFloat((p.bet || '0').replace(/[^0-9.]/g, '')) || 0;
+      total += amt;
+    });
+    // Manual bets (no_edge rows + any custom)
+    manualBets.forEach(function(m) {
+      if (m.outcome === 'pending') total += (m.wager || 0);
+    });
+    return total;
   }
 
   // ── Helpers ──
