@@ -237,32 +237,32 @@ def main():
     bets = data.get("bets", [])
     pending = [b for b in bets if b.get("outcome") == "pending"]
 
+    all_games = {}  # keyed by sport — shared with pick_history resolver
+
     if not pending:
-        print("No pending bets to resolve.")
-        sys.exit(0)
+        print("No pending placed bets. Will still resolve pick_history.json.")
+    else:
+        print(f"Found {len(pending)} pending bet(s). Fetching scores...")
 
-    print(f"Found {len(pending)} pending bet(s). Fetching scores...")
+        # Get unique (sport, date) pairs from pending bets
+        sport_dates = set()
+        for bet in pending:
+            d = bet.get("date", "")
+            sport = bet.get("sport", "nba").lower()
+            if d:
+                sport_dates.add((sport, d.replace("-", "")))
 
-    # Get unique (sport, date) pairs from pending bets
-    sport_dates = set()
-    for bet in pending:
-        d = bet.get("date", "")
-        sport = bet.get("sport", "nba").lower()
-        if d:
-            sport_dates.add((sport, d.replace("-", "")))
-
-    # Fetch scores for each sport/date combination
-    all_games = {}  # keyed by sport
-    for sport, date_str in sport_dates:
-        fetcher = SPORT_FETCHERS.get(sport)
-        if not fetcher:
-            print(f"  No score fetcher for sport: {sport}")
-            continue
-        games = fetcher(date_str)
-        if sport not in all_games:
-            all_games[sport] = []
-        all_games[sport].extend(games)
-        print(f"  Fetched {len(games)} {sport.upper()} games for {date_str}")
+        # Fetch scores for each sport/date combination
+        for sport, date_str in sport_dates:
+            fetcher = SPORT_FETCHERS.get(sport)
+            if not fetcher:
+                print(f"  No score fetcher for sport: {sport}")
+                continue
+            games = fetcher(date_str)
+            if sport not in all_games:
+                all_games[sport] = []
+            all_games[sport].extend(games)
+            print(f"  Fetched {len(games)} {sport.upper()} games for {date_str}")
 
     # Resolve each pending bet
     resolved_count = 0
@@ -317,8 +317,10 @@ def main():
         print(f"  {bet['event']}: {pick} → {outcome.upper()} ({score_str}) P/L: ${pnl:+.2f}")
 
     if resolved_count == 0:
-        print("No bets resolved (games may still be in progress).")
-        sys.exit(0)
+        print("No placed bets resolved (games may still be in progress or none pending).")
+        # Still resolve pick_history.json below — do not exit
+        resolve_pick_history(all_games)
+        return
 
     # Update bankroll
     current = data["bankroll"].get("available", data["bankroll"].get("current", 500))

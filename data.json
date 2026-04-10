@@ -2,12 +2,12 @@
   "scan_date": "2026-04-10",
   "scan_subtitle": "Friday, April 10, 2026 \u2014 BUNDESLIGA (1), EPL (1), LA_LIGA (1), LIGUE_1 (2), MLB (15), NBA (15), SERIE_A (1)",
   "bankroll": {
-    "available": 674.88,
+    "available": 679.34,
     "starting": 500.0,
-    "profit": 174.88,
+    "profit": 179.34,
     "record": {
-      "wins": 32,
-      "losses": 17,
+      "wins": 37,
+      "losses": 21,
       "pushes": 1
     },
     "pending_count": 0,
