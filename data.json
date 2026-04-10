@@ -369,6 +369,105 @@
   ],
   "bets": [
     {
+      "date": "2026-04-08",
+      "pick": "Chicago Cubs -1.5",
+      "event": "Chicago Cubs @ Tampa Bay Rays",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": 165,
+      "outcome": "win",
+      "pnl": 22.28,
+      "final_score": "Cubs won by 2+"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "New York Rangers ML",
+      "event": "Buffalo Sabres @ New York Rangers",
+      "sport": "NHL",
+      "wager": 13.5,
+      "odds": 105,
+      "outcome": "loss",
+      "pnl": -13.5,
+      "final_score": "Rangers lost outright"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "UNDER 3.5 Goals",
+      "event": "Atl\u00e9tico Madrid @ Barcelona",
+      "sport": "UCL",
+      "wager": 13.5,
+      "odds": -115,
+      "outcome": "win",
+      "pnl": 11.74,
+      "final_score": "Combined 3 or fewer goals"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "Minnesota Timberwolves +7.5",
+      "event": "Minnesota Timberwolves @ Orlando Magic",
+      "sport": "NBA",
+      "wager": 13.5,
+      "odds": -115,
+      "outcome": "loss",
+      "pnl": -13.5,
+      "final_score": "Wolves lost by 8+"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "Cleveland Guardians +1.5",
+      "event": "Kansas City Royals @ Cleveland Guardians",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": -168,
+      "outcome": "win",
+      "pnl": 8.04,
+      "final_score": "Guardians within 1 or won"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "Pittsburgh Pirates +1.5",
+      "event": "San Diego Padres @ Pittsburgh Pirates",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": -181,
+      "outcome": "loss",
+      "pnl": -13.5,
+      "final_score": "Pirates lost by 2+"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "Minnesota Twins +1.5",
+      "event": "Detroit Tigers @ Minnesota Twins",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": -136,
+      "outcome": "win",
+      "pnl": 9.93,
+      "final_score": "Twins within 1 or won"
+    },
+    {
+      "date": "2026-04-08",
+      "pick": "San Francisco Giants +1.5",
+      "event": "Philadelphia Phillies @ San Francisco Giants",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": -149,
+      "outcome": "win",
+      "pnl": 9.06,
+      "final_score": "Giants within 1 or won"
+    },
+    {
+      "date": "2026-04-07",
+      "pick": "St. Louis Cardinals -1.5",
+      "event": "St. Louis Cardinals @ Washington Nationals",
+      "sport": "MLB",
+      "wager": 13.5,
+      "odds": -140,
+      "outcome": "loss",
+      "pnl": -13.5,
+      "final_score": "Manual bet \u2014 DK had different line than site"
+    },
+    {
       "date": "2026-04-06",
       "pick": "Nikola Jokic OVER 10.5 Assists",
       "event": "Portland Trail Blazers @ Denver Nuggets",
@@ -389,6 +488,83 @@
       "outcome": "win",
       "pnl": 12.06,
       "final_score": "PHI 102 - SA 115"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Victor Wembanyama OVER 27.5 Points",
+      "event": "Philadelphia 76ers @ San Antonio Spurs",
+      "sport": "NBA",
+      "wager": 12.0,
+      "odds": -122,
+      "outcome": "push",
+      "pnl": 0,
+      "final_score": "Early Exit Protected \u2014 wager returned"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "OVER 231.5",
+      "event": "Cleveland Cavaliers @ Memphis Grizzlies",
+      "sport": "NBA",
+      "wager": 6.0,
+      "odds": -110,
+      "outcome": "win",
+      "pnl": 5.45,
+      "final_score": "CLE/MEM combined 232+"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "OVER 222.5",
+      "event": "Detroit Pistons @ Orlando Magic",
+      "sport": "NBA",
+      "wager": 15.0,
+      "odds": -105,
+      "outcome": "win",
+      "pnl": 14.28,
+      "final_score": "DET/ORL combined 223+"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Deni Avdija OVER 6.5 Rebounds",
+      "event": "Detroit Pistons @ Orlando Magic",
+      "sport": "NBA",
+      "wager": 12.0,
+      "odds": -144,
+      "outcome": "loss",
+      "pnl": -12.0,
+      "final_score": "Avdija: 6 or fewer reb"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Victor Wembanyama UNDER 2.5 3-PT Made",
+      "event": "Philadelphia 76ers @ San Antonio Spurs",
+      "sport": "NBA",
+      "wager": 12.0,
+      "odds": -142,
+      "outcome": "win",
+      "pnl": 8.45,
+      "final_score": "Wemby: 2 3PT (PHI 102, SA 115)"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Boston Red Sox +1.5",
+      "event": "Milwaukee Brewers @ Boston Red Sox",
+      "sport": "MLB",
+      "wager": 12.0,
+      "odds": -171,
+      "outcome": "loss",
+      "pnl": -12.0,
+      "final_score": "MIL 8, BOS 6"
+    },
+    {
+      "date": "2026-04-06",
+      "pick": "Colorado Rockies +1.5",
+      "event": "Houston Astros @ Colorado Rockies",
+      "sport": "MLB",
+      "wager": 12.0,
+      "odds": 102,
+      "outcome": "win",
+      "pnl": 12.24,
+      "final_score": "HOU 7, COL 9"
     },
     {
       "date": "2026-04-05",
@@ -670,6 +846,39 @@
       "final_score": "MEM 101, CHA 124"
     },
     {
+      "date": "2026-03-21",
+      "pick": "OVER 2.5",
+      "event": "Torino @ AC Milan",
+      "sport": "SERIE_A",
+      "wager": 11.41,
+      "odds": -125,
+      "outcome": "win",
+      "pnl": 9.13,
+      "final_score": "AC Milan 3, Torino 2"
+    },
+    {
+      "date": "2026-03-21",
+      "pick": "OVER 1.5",
+      "event": "Getafe @ Espanyol",
+      "sport": "LA_LIGA",
+      "wager": 11.41,
+      "odds": -150,
+      "outcome": "win",
+      "pnl": 7.61,
+      "final_score": "Getafe 2, Espanyol 1"
+    },
+    {
+      "date": "2026-03-21",
+      "pick": "Philadelphia Flyers +1.5",
+      "event": "Philadelphia Flyers @ San Jose Sharks",
+      "sport": "NHL",
+      "wager": 11.41,
+      "odds": -265,
+      "outcome": "win",
+      "pnl": 4.3,
+      "final_score": "Flyers 4, Sharks 1"
+    },
+    {
       "date": "2026-03-20",
       "sport": "EPL",
       "event": "Manchester United @ AFC Bournemouth",
@@ -813,6 +1022,45 @@
       "final_score": "ATL 135, DAL 120"
     },
     {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Nuggets @ Grizzlies",
+      "pick": "UNDER 246.5",
+      "odds": "-108",
+      "decimal_odds": 1.926,
+      "edge": "5.7%",
+      "wager": 22.44,
+      "outcome": "win",
+      "pnl": 20.77,
+      "final_score": "DEN 118, MEM 125 (243)"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Clippers @ Pelicans",
+      "pick": "UNDER 237.5",
+      "odds": "-105",
+      "decimal_odds": 1.952,
+      "edge": "5.7%",
+      "wager": 24.98,
+      "outcome": "win",
+      "pnl": 23.79,
+      "final_score": "LAC 109, NO 124 (233)"
+    },
+    {
+      "date": "2026-03-18",
+      "sport": "NBA",
+      "event": "Raptors @ Bulls",
+      "pick": "UNDER 237.5",
+      "odds": "-110",
+      "decimal_odds": 1.909,
+      "edge": "26.3%",
+      "wager": 24.98,
+      "outcome": "loss",
+      "pnl": -24.98,
+      "final_score": "TOR 139, CHI 109 (248)"
+    },
+    {
       "date": "2026-03-17",
       "sport": "NBA",
       "event": "Pistons @ Wizards",
@@ -876,45 +1124,6 @@
       "outcome": "win",
       "pnl": 67.5,
       "final_score": ""
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Nuggets @ Grizzlies",
-      "pick": "UNDER 246.5",
-      "odds": "-108",
-      "decimal_odds": 1.926,
-      "edge": "5.7%",
-      "wager": 22.44,
-      "outcome": "win",
-      "pnl": 20.77,
-      "final_score": "DEN 118, MEM 125 (243)"
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Clippers @ Pelicans",
-      "pick": "UNDER 237.5",
-      "odds": "-105",
-      "decimal_odds": 1.952,
-      "edge": "5.7%",
-      "wager": 24.98,
-      "outcome": "win",
-      "pnl": 23.79,
-      "final_score": "LAC 109, NO 124 (233)"
-    },
-    {
-      "date": "2026-03-18",
-      "sport": "NBA",
-      "event": "Raptors @ Bulls",
-      "pick": "UNDER 237.5",
-      "odds": "-110",
-      "decimal_odds": 1.909,
-      "edge": "26.3%",
-      "wager": 24.98,
-      "outcome": "loss",
-      "pnl": -24.98,
-      "final_score": "TOR 139, CHI 109 (248)"
     }
   ]
 }

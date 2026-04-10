@@ -1291,14 +1291,6 @@ body {
     var todayBets = (data.bets || []).filter(function(bet) { return bet.date === data.scan_date; });
     var todayPnl = todayBets.reduce(function(sum, bet) { return sum + getPnl(bet); }, 0);
 
-    // Count picks still open (not placed, not skipped). Manual bets also count as "placed."
-    var openPickCount = (data.picks || []).filter(function(p) {
-      var key = p.pick + '|' + p.event;
-      var placement = placements[key];
-      if (placement === 'placed' || placement === 'skipped') return false;
-      if (p.status === 'PLACED') return false;
-      return true;
-    }).length;
     var livePendingTotal = calcPendingWagers();
 
     document.getElementById('accountSummary').innerHTML =
@@ -1312,7 +1304,6 @@ body {
       '</div>' +
       '<div class="summary-row"><div class="summary-label">ROI</div><div class="summary-value" style="color:' + (parseFloat(roi) >= 0 ? '#00a651' : '#cc0000') + '">' + (parseFloat(roi) >= 0 ? '+' : '') + roi + '%</div></div>' +
       '<div class="summary-row"><div class="summary-label">Today P/L</div><div class="summary-value" style="color:' + (todayPnl >= 0 ? '#00a651' : '#cc0000') + '">' + (todayPnl >= 0 ? '+' : '') + formatMoney(Math.abs(todayPnl)) + '</div></div>' +
-      '<div class="summary-row"><div class="summary-label">Open Picks</div><div class="summary-value">' + openPickCount + '</div></div>' +
       '<div class="summary-row"><div class="summary-label">Pending Wagers</div><div class="summary-value">' + formatMoney(livePendingTotal) + '</div></div>';
   }
 
