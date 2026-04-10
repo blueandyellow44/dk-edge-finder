@@ -46,6 +46,14 @@ jobs:
           git add data.json bankroll.json pick_history.json
           git commit -m "Full scan: $(date +%Y-%m-%d_%H%M) — games + props"
           git push
-          # Sync to Cloudflare deploy branch
+          # Sync to Cloudflare deploy branch. The Cloudflare bot occasionally
+          # pushes "Add Cloudflare Workers configuration" commits to this branch
+          # (sometimes with content, sometimes empty). Fetch + merge them into
+          # main before re-syncing, so we never lose bot content and never leave
+          # cloudflare/workers-autoconfig behind main.
           git fetch origin cloudflare/workers-autoconfig || true
+          if git show-ref --verify --quiet refs/remotes/origin/cloudflare/workers-autoconfig; then
+            git merge --no-edit origin/cloudflare/workers-autoconfig || true
+            git push origin main || true
+          fi
           git push origin main:cloudflare/workers-autoconfig || true

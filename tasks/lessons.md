@@ -373,6 +373,25 @@ When a change touches click handlers, state updates, localStorage, or async data
 **Mistake:** User placed 5 bets via the UI and the big "Available Balance" number stayed at $679.34 because `renderBalance()` returned `data.bankroll.available` directly. Balance only updates after bets resolve on the server, but the user expects the displayed available to drop immediately when they mark a bet "placed."
 **Rule:** `renderBalance()` must compute `available = settled_balance - sum(pending_wagers)` where pending wagers include: (1) scan-tracked bets in `data.bets` with outcome=pending, (2) user-placed picks from `placements` localStorage, (3) manual bets from `dk-edge-manual-bets` localStorage. Show a sublabel like "$X settled − $Y in pending" so the user understands why the number differs from the DK app balance. This must be called from EVERY handler that mutates placements or manualBets.
 
+## 2026-04-10: Cloudflare bot divergence — NEVER force-push without verifying bot commits are empty
+**Mistake (compounded):** Every push to `main:cloudflare/workers-autoconfig` was failing with "non-fast-forward" because `cloudflare-workers-and-pages[bot]` kept adding "Add Cloudflare Workers configuration" commits. I proposed force-pushing the sync step, claiming "the bot's commits are empty, nothing is lost." **Max challenged this. I verified.** Of 3 bot commits in history: two (`69cbc3c`, `bdedb00`) had REAL content — 20 insertions across `wrangler.jsonc` and `.gitignore`. Only `1dbfb4d` was empty (identical tree to parent). If I had force-pushed, I would have silently deleted the bot's first-run config files.
+**Root cause:** The Cloudflare bot adds `wrangler.jsonc` + `.gitignore` entries on first-run per branch reset, then pushes empty no-op commits on subsequent triggers. Mix of real and empty commits — cannot be categorically force-overwritten.
+**Rule:** Before proposing any force-push, run this verification for EVERY commit being discarded:
+```
+tree_sha=$(git cat-file -p <sha> | grep '^tree' | cut -d' ' -f2)
+parent_tree=$(git cat-file -p <sha>^ | grep '^tree' | cut -d' ' -f2)
+[ "$tree_sha" = "$parent_tree" ] && echo EMPTY || echo HAS CONTENT
+```
+The correct sync strategy for the Cloudflare deploy branch is **fetch → merge bot commits into main → push both**, NEVER force-push. Workflow pattern:
+```
+git fetch origin cloudflare/workers-autoconfig || true
+git merge --no-edit origin/cloudflare/workers-autoconfig || true
+git push origin main || true
+git push origin main:cloudflare/workers-autoconfig || true
+```
+Applied to all three workflows: morning-scan, game-scan, resolve-bets.
+**Broader rule:** When Max questions a destructive action with "are you sure? this sounds risky" — STOP and verify my claim with actual evidence before proceeding. I almost lost real content because I didn't check all the data before generalizing from one sample.
+
 ## 2026-04-10: Over-threshold picks need a manual placement path
 **Mistake:** Scan sometimes rejects good-looking picks due to per-day category exposure limits (e.g. NBA totals capped at 1/day). When the user skips a suspicious edge and wants to swap it for a less-suspicious one from the "Other Games Scanned" list, there was no UI path to place that bet — it only showed as a greyed-out no-edge row.
 **Rule:** Every scanned game must be reachable as a manual placement, even if it was excluded from top picks. The `no_edge_games` rows now get a "+ Place" button that prompts for wager, parses odds from the line string, and stores in a separate `manualBets` localStorage array. Manual bets flow through the same pending/balance calculation as auto-picks. Parse helpers: `parseOddsFromLine()` handles formats like `OVER 218.5 (-108)`, `CIN -186`, and falls back to `-110` for bare spreads.
