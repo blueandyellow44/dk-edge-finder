@@ -49,15 +49,15 @@
       "event_short": "RBNY @ MIA",
       "market": "Over/Under",
       "pick": "UNDER 3.5",
-      "odds": "105",
-      "implied": "48.8%",
+      "odds": "110",
+      "implied": "47.6%",
       "model": "65.2%",
-      "edge": 16.5,
+      "edge": 17.6,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): RBNY 0.8, MIA 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.5%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
+      "notes": "Model (DRatings only): RBNY 0.8, MIA 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.6%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
       "sources": "DRatings only, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/33941117?outcomes=0OU84201295U350_3",
@@ -66,25 +66,25 @@
     },
     {
       "rank": 3,
-      "sport": "SERIE_A",
-      "event": "Udinese @ AC Milan",
-      "event_short": "UDI @ MIL",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "-125",
-      "implied": "55.6%",
-      "model": "70.1%",
-      "edge": 14.5,
+      "sport": "NHL",
+      "event": "Washington Capitals @ Pittsburgh Penguins",
+      "event_short": "WSH @ PIT",
+      "market": "Spread",
+      "pick": "Pittsburgh Penguins +1.5",
+      "odds": "-230",
+      "implied": "69.7%",
+      "model": "82.1%",
+      "edge": 12.4,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + clubelo): UDI 1.1, MIL 2.3 (total: 3.4). Line: 2.5. Cushion: 0.9 pts. \u26a0 SUSPICIOUS EDGE (14.5%): Model predicts 3.4 vs market 2.5 \u2014 0.9 pt gap.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33879143?outcomes=0OU84032691O250_1",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): WSH 2.8, PIT 3.4 (margin: 0.6). 0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: +0.4, Dimers: +0.3). Lower confidence. \u26a0 SUSPICIOUS EDGE (12.4%): Model disagrees with market by 0.9 pts. Investigate before betting. | WSH on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33960042?outcomes=0HC84257309P150_1",
       "type": "game",
-      "start_time": "2026-04-11T16:00Z"
+      "start_time": "2026-04-11T19:00Z"
     },
     {
       "rank": 4,
@@ -101,7 +101,7 @@
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): NYR 2.8, DAL 2.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 3.0 pts (DRatings: +1.1, Dimers: +0.6). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.8%): Model disagrees with market by 1.4 pts. Investigate before betting. | DAL on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): NYR 2.8, DAL 2.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 3.0 pts (DRatings: +1.1, Dimers: +0.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.8%): Model disagrees with market by 1.4 pts. Investigate before betting. | DAL on B2B (+1.5% boost) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
       "confidence": "LOW",
       "dk_link": "https://sportsbook.draftkings.com/event/33960045?outcomes=0HC84257305P150_3",
@@ -201,13 +201,7 @@
     {
       "sport": "NHL",
       "event": "TB @ BOS",
-      "line": "TB -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "WSH @ PIT",
-      "line": "PIT -125",
+      "line": "TB -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -249,13 +243,13 @@
     {
       "sport": "MLB",
       "event": "ARI @ PHI",
-      "line": "PHI -136",
+      "line": "PHI -131",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIA @ DET",
-      "line": "DET -141",
+      "line": "DET -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -279,7 +273,7 @@
     {
       "sport": "MLB",
       "event": "CHW @ KC",
-      "line": "KC -199",
+      "line": "KC -194",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -327,7 +321,7 @@
     {
       "sport": "MLS",
       "event": "CIN @ TOR",
-      "line": "TOR +135",
+      "line": "TOR +140",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -387,13 +381,13 @@
     {
       "sport": "EPL",
       "event": "FUL @ LIV",
-      "line": "LIV -145",
+      "line": "N/A",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "ESP @ BAR",
-      "line": "BAR -300",
+      "line": "BAR -310",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -405,13 +399,13 @@
     {
       "sport": "BUNDESLIGA",
       "event": "MUN @ STP",
-      "line": "MUN -255",
+      "line": "MUN -340",
       "reason": "No model data"
     },
     {
       "sport": "SERIE_A",
       "event": "JUV @ ATA",
-      "line": "JUV +120",
+      "line": "JUV +125",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -427,16 +421,16 @@
       "reason": "Edge below 3% threshold"
     },
     {
+      "sport": "NHL",
+      "event": "CBJ @ MTL",
+      "line": "Montreal Canadiens -1.5 (180)",
+      "reason": "Edge exists (7.3%) but category exposure limit reached"
+    },
+    {
       "sport": "MLB",
       "event": "MIN @ TOR",
       "line": "Toronto Blue Jays +1.5 (-197)",
       "reason": "Edge exists (6.2%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "CBJ @ MTL",
-      "line": "Montreal Canadiens -1.5 (170)",
-      "reason": "Edge exists (6.0%) but category exposure limit reached"
     },
     {
       "sport": "NHL",
