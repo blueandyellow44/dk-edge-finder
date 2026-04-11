@@ -1612,8 +1612,12 @@ body {
         return true;
       }
       console.error('[dispatch] FAIL', result);
-      var msg = (result.body && result.body.error) || ('HTTP ' + result.status);
-      showToast('Sync failed: ' + msg + ' — click Retry in Settings', 'error');
+      if (result.body && result.body.detail) {
+        console.error('[dispatch] GitHub detail:', result.body.detail);
+      }
+      var errTxt = (result.body && result.body.error) || ('HTTP ' + result.status);
+      var detailTxt = (result.body && result.body.detail) ? ' — ' + String(result.body.detail).slice(0, 120) : '';
+      showToast('Sync failed: ' + errTxt + detailTxt, 'error');
       queueFailedSync(picksArg);
       return false;
     }).catch(function(err) {
