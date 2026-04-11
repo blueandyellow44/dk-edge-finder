@@ -244,35 +244,16 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
         home = teams.get("home", {})
         away = teams.get("away", {})
 
-        # Determine which team is favored and assign spread
+        # Extract ACTUAL DK spread/total/ML odds from ESPN's detailed odds object
+        # ESPN provides: pointSpread.home/away.close.{line, odds}, total.over/under.close.odds
+        # pointSpread.home/away.close.line is the AUTHORITATIVE source for which side each
+        # team is on (it's the signed line like "+1.5" or "-1.5"). The top-level 'details'
+        # field contains the MONEYLINE favorite for MLB/NHL (e.g. "ATL -120"), which can
+        # DIFFER from the run line favorite when ML favorites are small — e.g., an MLB team
+        # at -120 ML can still be the team GETTING +1.5 runs. So we must use pointSpread.line
+        # directly, not infer from details.
         home_spread = None
         away_spread = None
-        if spread and spread != 0:
-            # ESPN returns 'spread' as the absolute value of the point spread
-            # 'details' tells us who is favored: "OKC -19.5" or "COL -142"
-            # CRITICAL: For NHL/MLB, details contains MONEYLINE (e.g. "COL -142"),
-            # not the actual spread. Use the 'spread' API field for the value,
-            # and 'details' only to determine favorite direction.
-            spread_val = abs(float(spread))
-            if details:
-                parts = details.split(" ")
-                fav_abbr = parts[0] if parts else ""
-                # For NBA/NFL, details value matches the spread. For NHL/MLB it's moneyline.
-                # Always trust the 'spread' API field for the actual spread value.
-                if fav_abbr == home.get("abbr"):
-                    home_spread = -spread_val  # Home is favored (negative spread)
-                    away_spread = spread_val
-                else:
-                    away_spread = -spread_val
-                    home_spread = spread_val
-            else:
-                # No details — use spread sign directly
-                # ESPN spread field: negative means home favored
-                home_spread = float(spread)
-                away_spread = -float(spread)
-
-        # Extract ACTUAL DK spread/total/ML odds from ESPN's detailed odds object
-        # ESPN provides: pointSpread.home/away.close.odds, total.over/under.close.odds, moneyline
         home_spread_odds = None  # Actual DK juice on the spread (e.g., -285)
         away_spread_odds = None
         over_odds = None
@@ -282,12 +263,45 @@ def fetch_schedule_and_odds(date_str: str, sport: str = "nba") -> list[dict]:
             try:
                 home_ps = ps_data.get("home", {}).get("close", {})
                 away_ps = ps_data.get("away", {}).get("close", {})
+                # Authoritative side/line from pointSpread.{home,away}.close.line
+                home_line_raw = home_ps.get("line")
+                away_line_raw = away_ps.get("line")
+                if home_line_raw is not None:
+                    try:
+                        home_spread = float(str(home_line_raw).replace("+", ""))
+                    except (ValueError, TypeError):
+                        pass
+                if away_line_raw is not None:
+                    try:
+                        away_spread = float(str(away_line_raw).replace("+", ""))
+                    except (ValueError, TypeError):
+                        pass
                 if home_ps.get("odds"):
                     home_spread_odds = int(home_ps["odds"])
                 if away_ps.get("odds"):
                     away_spread_odds = int(away_ps["odds"])
             except (ValueError, TypeError):
                 pass
+
+        # Fallback: derive spread from top-level 'spread' + 'details' fields.
+        # Only used when pointSpread.home/away.close.line is missing.
+        if (home_spread is None or away_spread is None) and spread and spread != 0:
+            spread_val = abs(float(spread))
+            if details:
+                parts = details.split(" ")
+                fav_abbr = parts[0] if parts else ""
+                # For NBA/NFL, details value matches the spread. For NHL/MLB it's moneyline.
+                # This fallback assumes ML favorite == run line favorite, which is NOT always
+                # true in MLB but is our best guess when pointSpread.line isn't available.
+                if fav_abbr == home.get("abbr"):
+                    home_spread = -spread_val
+                    away_spread = spread_val
+                else:
+                    away_spread = -spread_val
+                    home_spread = spread_val
+            else:
+                home_spread = float(spread)
+                away_spread = -float(spread)
         total_data = odds_data.get("total", {})
         if total_data:
             try:
@@ -436,6 +450,16 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
             team_names = []
             records = []
 
+            # Pre-compute soccer team map for direct lookup (the regex approach fails on
+            # names like "FC Cincinnati", "Toronto FC", "LA Galaxy", "D.C. United" because
+            # of embedded uppercase tokens and short words).
+            is_soccer = sport.lower() in ("mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl")
+            if is_soccer:
+                if sport.lower() == "mls":
+                    soccer_map = MLS_TEAM_NAME_TO_ABBR
+                else:
+                    soccer_map = {}  # Other leagues fall through to loose regex below
+
             for cell in cells:
                 # Match predicted score (sport-specific format and range)
                 m = score_re.match(cell)
@@ -444,19 +468,22 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
                     if score_min <= val <= score_max:
                         scores.append(val)
 
-                # Match team name — capitalized word(s)
-                # Multi-word: "Manchester United", "St. Louis Blues"
-                # Single-word (soccer): "Bournemouth", "Liverpool", "Wolverhampton"
-                is_soccer = sport.lower() in ("mls", "epl", "la_liga", "bundesliga", "serie_a", "ligue_1", "ucl")
+                # Match team name
                 if is_soccer:
-                    # Allow single-word names (min 4 chars to avoid matching "Win", "Draw", etc.)
-                    if re.match(r'^[A-Z][a-z]{3,}(?: [A-Z][a-z]+)*$', cell):
-                        if cell not in non_team_strings and cell not in ("Time", "Teams", "Draw", "Best", "Goals", "Total", "Value", "Loss", "Final", "More", "Details", "Sportsbook", "DRatings"):
+                    # Direct map lookup for known leagues. Falls back to a loosened regex
+                    # that accepts mixed-case tokens like "FC", "SC", "CF", "City".
+                    if soccer_map and cell in soccer_map:
+                        team_names.append(cell)
+                    elif re.match(r'^(?:[A-Z][a-zA-Z\.]*|FC|SC|CF)(?: [A-Za-z][a-zA-Z\.]*)*$', cell) and len(cell) >= 4:
+                        if cell not in non_team_strings and cell not in ("Time", "Teams", "Draw", "Best", "Goals", "Total", "Value", "Loss", "Final", "More", "Details", "Sportsbook", "DRatings", "Win", "Bet", "Bet Value"):
                             team_names.append(cell)
                 else:
                     if re.match(r'^[A-Z][a-z]+\.?(?: [A-Z][a-z]+)+$', cell):
                         if cell not in non_team_strings:
                             team_names.append(cell)
+                    # MLB: allow single-word "Athletics" (now on its own after Oakland move)
+                    elif sport.lower() == "mlb" and cell == "Athletics":
+                        team_names.append(cell)
 
                 # Match record: (W-L), (W-L-OTL), or (W-L-T)
                 rm = re.match(r'^\((\d+-\d+(?:-\d+)?)\)$', cell)
@@ -475,6 +502,8 @@ def fetch_dratings_predictions(date_str: str, sport: str = "nba") -> dict:
                     team_map = NHL_TEAM_NAME_TO_ABBR
                 elif sport.lower() == "mlb":
                     team_map = MLB_TEAM_NAME_TO_ABBR
+                elif sport.lower() == "mls":
+                    team_map = MLS_TEAM_NAME_TO_ABBR
                 elif sport.lower() == "ncaam":
                     team_map = NCAAM_TEAM_NAME_TO_ABBR
                 else:
@@ -947,27 +976,66 @@ NHL_TEAM_NAME_TO_ABBR = {
     "Buffalo Sabres": "BUF", "Calgary Flames": "CGY", "Carolina Hurricanes": "CAR",
     "Chicago Blackhawks": "CHI", "Colorado Avalanche": "COL", "Columbus Blue Jackets": "CBJ",
     "Dallas Stars": "DAL", "Detroit Red Wings": "DET", "Edmonton Oilers": "EDM",
-    "Florida Panthers": "FLA", "Los Angeles Kings": "LAK", "Minnesota Wild": "MIN",
+    "Florida Panthers": "FLA", "Los Angeles Kings": "LA", "Minnesota Wild": "MIN",
     "Montreal Canadiens": "MTL", "Nashville Predators": "NSH", "New Jersey Devils": "NJ",
     "New York Islanders": "NYI", "New York Rangers": "NYR", "Ottawa Senators": "OTT",
     "Philadelphia Flyers": "PHI", "Pittsburgh Penguins": "PIT", "San Jose Sharks": "SJ",
     "Seattle Kraken": "SEA", "St. Louis Blues": "STL", "Tampa Bay Lightning": "TB",
-    "Toronto Maple Leafs": "TOR", "Vancouver Canucks": "VAN", "Vegas Golden Knights": "VGK",
+    "Toronto Maple Leafs": "TOR", "Utah Mammoth": "UTA", "Utah Hockey Club": "UTA",
+    "Vancouver Canucks": "VAN", "Vegas Golden Knights": "VGK",
     "Washington Capitals": "WSH", "Winnipeg Jets": "WPG",
+    # DRatings aliases
+    "LA Kings": "LA", "NJ Devils": "NJ",
 }
 
 # MLB team name to abbreviation mapping
 MLB_TEAM_NAME_TO_ABBR = {
     "Arizona Diamondbacks": "ARI", "Atlanta Braves": "ATL", "Baltimore Orioles": "BAL",
-    "Boston Red Sox": "BOS", "Chicago Cubs": "CHC", "Chicago White Sox": "CWS",
+    "Boston Red Sox": "BOS", "Chicago Cubs": "CHC", "Chicago White Sox": "CHW",
     "Cincinnati Reds": "CIN", "Cleveland Guardians": "CLE", "Colorado Rockies": "COL",
     "Detroit Tigers": "DET", "Houston Astros": "HOU", "Kansas City Royals": "KC",
     "Los Angeles Angels": "LAA", "Los Angeles Dodgers": "LAD", "Miami Marlins": "MIA",
     "Milwaukee Brewers": "MIL", "Minnesota Twins": "MIN", "New York Mets": "NYM",
-    "New York Yankees": "NYY", "Oakland Athletics": "OAK", "Philadelphia Phillies": "PHI",
+    "New York Yankees": "NYY", "Athletics": "ATH", "Oakland Athletics": "ATH",
+    "Sacramento Athletics": "ATH", "Las Vegas Athletics": "ATH",
+    "Philadelphia Phillies": "PHI",
     "Pittsburgh Pirates": "PIT", "San Diego Padres": "SD", "San Francisco Giants": "SF",
     "Seattle Mariners": "SEA", "St. Louis Cardinals": "STL", "Tampa Bay Rays": "TB",
     "Texas Rangers": "TEX", "Toronto Blue Jays": "TOR", "Washington Nationals": "WSH",
+}
+
+# MLS team name to abbreviation mapping (DRatings names → ESPN abbreviations)
+MLS_TEAM_NAME_TO_ABBR = {
+    "Atlanta United": "ATL", "Atlanta United FC": "ATL",
+    "Austin FC": "ATX", "Austin": "ATX",
+    "Charlotte FC": "CLT", "Charlotte": "CLT",
+    "Chicago Fire": "CHI", "Chicago Fire FC": "CHI",
+    "Colorado Rapids": "COL",
+    "Columbus Crew": "CLB",
+    "D.C. United": "DC", "DC United": "DC",
+    "FC Cincinnati": "CIN",
+    "FC Dallas": "DAL",
+    "Houston Dynamo": "HOU", "Houston Dynamo FC": "HOU",
+    "Inter Miami": "MIA", "Inter Miami CF": "MIA",
+    "LA Galaxy": "LA", "Los Angeles Galaxy": "LA",
+    "LAFC": "LAFC", "Los Angeles FC": "LAFC",
+    "Minnesota United": "MIN", "Minnesota United FC": "MIN",
+    "Montreal Impact": "MTL", "CF Montreal": "MTL", "CF Montréal": "MTL",
+    "Nashville SC": "NSH", "Nashville": "NSH",
+    "New England Revolution": "NE",
+    "New York City FC": "NYC", "NYCFC": "NYC",
+    "New York Red Bulls": "RBNY", "Red Bull New York": "RBNY",
+    "Orlando City": "ORL", "Orlando City SC": "ORL",
+    "Philadelphia Union": "PHI",
+    "Portland Timbers": "POR",
+    "Real Salt Lake": "RSL",
+    "San Diego FC": "SD",
+    "San Jose Earthquakes": "SJ",
+    "Seattle Sounders": "SEA", "Seattle Sounders FC": "SEA",
+    "Sporting Kansas City": "SKC", "Sporting KC": "SKC",
+    "St. Louis City": "STL", "St. Louis City SC": "STL",
+    "Toronto FC": "TOR",
+    "Vancouver Whitecaps": "VAN", "Vancouver Whitecaps FC": "VAN",
 }
 
 # NCAAM team name to abbreviation mapping (major schools)
