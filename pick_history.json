@@ -3253,9 +3253,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MTL 3.1, NYR 3.2 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MTL 3, NYR 2",
+    "pnl_if_bet": 4.88
   },
   {
     "scan_date": "2026-04-02",
@@ -3289,9 +3289,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 3.2, FLA 2.9 (margin: 0.3). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | BOS on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 1, FLA 2",
+    "pnl_if_bet": 5.41
   },
   {
     "scan_date": "2026-04-02",
@@ -3307,9 +3307,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): VAN 2.2, MIN 3.9 (margin: 1.7). -0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VAN 2, MIN 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3325,9 +3325,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 230.5. Cushion: 2.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAL 96, OKC 139",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3379,9 +3379,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 231.5. Cushion: 3.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAL 96, OKC 139",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3397,9 +3397,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 3.2, FLA 2.9 (margin: 0.2). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | BOS on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 1, FLA 2",
+    "pnl_if_bet": 5.41
   },
   {
     "scan_date": "2026-04-02",
@@ -3433,9 +3433,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MTL 3.1, NYR 3.2 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MTL 3, NYR 2",
+    "pnl_if_bet": 4.59
   },
   {
     "scan_date": "2026-04-02",
@@ -3451,9 +3451,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): VAN 2.2, MIN 3.9 (margin: 1.7). -0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VAN 2, MIN 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3505,9 +3505,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): LAL 109.7, OKC 117.9 (total: 227.6). Line: 232.5. Cushion: 4.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAL 96, OKC 139",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3523,9 +3523,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 3.2, FLA 2.9 (margin: 0.2). 1.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. | BOS on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 1, FLA 2",
+    "pnl_if_bet": 5.41
   },
   {
     "scan_date": "2026-04-02",
@@ -3559,9 +3559,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MTL 3.1, NYR 3.2 (margin: 0.1). 1.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MTL 3, NYR 2",
+    "pnl_if_bet": 4.59
   },
   {
     "scan_date": "2026-04-02",
@@ -3577,9 +3577,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): VAN 2.2, MIN 3.9 (margin: 1.7). -0.2 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VAN 2, MIN 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3595,9 +3595,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): TOR 3.4, SJ 3.0 (margin: 0.4). 1.1 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. TANK WATCH: 36-32, playoff push (-1.5% adj) TOR on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 1, SJ 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3613,9 +3613,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers): PHX 108.5, CHA 114.0 (total: 222.5). Line: 225.5. Cushion: 3.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHX 107, CHA 127",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-02",
@@ -3667,9 +3667,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 114.6, MIL 101.9 (margin: 12.7). 4.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (13.0%): Model disagrees with market by 4.8 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 133, MIL 101",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3703,9 +3703,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): TOR 121.6, MEM 110.9 (margin: 10.7). 2.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 128, MEM 96",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3739,9 +3739,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): CHI 111.5, NY 124.4 (margin: 12.9). 2.6 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 96, NY 136",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3793,9 +3793,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 114.9, MIL 102.2 (margin: 12.7). 4.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (14.6%): Model disagrees with market by 4.8 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 133, MIL 101",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3829,9 +3829,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): TOR 121.6, MEM 110.9 (margin: 10.7). 2.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 128, MEM 96",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3919,9 +3919,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): CHI 111.8, NY 123.8 (margin: 12.0). 2.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 96, NY 136",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3937,9 +3937,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): BOS 114.9, MIL 102.2 (margin: 12.7). 4.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 SUSPICIOUS EDGE (14.6%): Model disagrees with market by 4.8 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 133, MIL 101",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -3955,9 +3955,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): TOR 121.6, MEM 110.9 (margin: 10.7). 2.8 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 128, MEM 96",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -4027,9 +4027,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): CHI 111.8, NY 123.8 (margin: 12.0). 2.5 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 96, NY 136",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-03",
@@ -5287,9 +5287,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers): STL 2.4, COL 3.8 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 0.7 pts (DRatings: +1.4, Dimers: +0.7). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 3, COL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -7555,9 +7555,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SF 3.9, BAL 4.7 (margin: 0.8). 0.7 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (20.3%): Model disagrees with market by 0.7 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SF 6, BAL 3",
+    "pnl_if_bet": 15.3
   },
   {
     "scan_date": "2026-04-10",
@@ -7645,9 +7645,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): MIN 4.3, TOR 4.4 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: +0.9, Dimers: +0.7). Lower confidence. | TOR on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 4, TOR 10",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7663,9 +7663,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): NYY 4.0, TB 3.6 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYY 3, TB 5",
+    "pnl_if_bet": 6.99
   },
   {
     "scan_date": "2026-04-10",
@@ -7681,9 +7681,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): BOS 4.4, STL 3.9 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.2 pts (DRatings: -1.2, Dimers: -0.7). Lower confidence. | BOS on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 2, STL 3",
+    "pnl_if_bet": 6.99
   },
   {
     "scan_date": "2026-04-10",
@@ -7699,9 +7699,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SF 3.9, BAL 4.7 (margin: 0.8). 0.7 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (20.5%): Model disagrees with market by 0.7 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SF 6, BAL 3",
+    "pnl_if_bet": 15.4
   },
   {
     "scan_date": "2026-04-10",
@@ -7789,9 +7789,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): MIN 4.3, TOR 4.4 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: +0.9, Dimers: +0.7). Lower confidence. | TOR on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 4, TOR 10",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7807,9 +7807,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): BOS 4.5, STL 4.0 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.2 pts (DRatings: -1.2, Dimers: -0.7). Lower confidence. | BOS on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 2, STL 3",
+    "pnl_if_bet": 6.99
   },
   {
     "scan_date": "2026-04-10",
@@ -7825,9 +7825,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): NYY 4.0, TB 3.6 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYY 3, TB 5",
+    "pnl_if_bet": 6.41
   },
   {
     "scan_date": "2026-04-10",
@@ -7843,9 +7843,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SF 3.9, BAL 4.7 (margin: 0.8). 0.7 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (20.9%): Model disagrees with market by 0.7 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SF 6, BAL 3",
+    "pnl_if_bet": 15.7
   },
   {
     "scan_date": "2026-04-10",
@@ -7933,9 +7933,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): MIN 4.3, TOR 4.4 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: +0.9, Dimers: +0.7). Lower confidence. | TOR on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 4, TOR 10",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7951,9 +7951,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): BOS 4.5, STL 4.0 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.2 pts (DRatings: -1.2, Dimers: -0.7). Lower confidence. | BOS on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 2, STL 3",
+    "pnl_if_bet": 6.71
   },
   {
     "scan_date": "2026-04-10",
