@@ -21,8 +21,9 @@ const DISPATCH_EVENT_TYPE = "place-bets";
 
 // CORS is same-origin by default — only the deployed site can call this Worker
 // unless you add explicit allowed origins. Keep this list tight.
+// NOTE: workers.dev subdomain is `max-sheahan`, not the GitHub handle.
 const ALLOWED_ORIGINS = [
-  "https://dk-edge-finder.blueandyellow44.workers.dev",
+  "https://dk-edge-finder.max-sheahan.workers.dev",
   // Add custom domain here if one is configured, e.g.:
   // "https://dk.example.com",
 ];
