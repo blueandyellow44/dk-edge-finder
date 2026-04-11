@@ -1,5 +1,42 @@
 # DK Edge Finder — Current TODO
 
+## Active Plan — 2026-04-11: Persistent placement path (Option B)
+
+**Goal:** Site's "Place" button persists placements server-side so `data.bets` is the source of truth and Activity never silently drops bets again.
+
+**Flow:** Place button → fetch Worker `/api/place-bets` → Worker calls GitHub `repository_dispatch` (event_type: `place-bets`) → `place-bets.yml` reads `client_payload.picks` → `place_bets.py` writes `data.bets` + `bankroll.pending_bets` → next scan's bankroll-sync already covers it.
+
+**Files affected:**
+- NEW `worker/index.js` — Cloudflare Worker with fetch handler. Routes `/api/place-bets` POST to workflow dispatch; all other requests fall through to static assets.
+- MOD `wrangler.jsonc` — add `main`, bind `ASSETS`, update compat date.
+- MOD `.github/workflows/place-bets.yml` — add `repository_dispatch` trigger, read picks from `client_payload.picks`, keep `workflow_dispatch` fallback.
+- MOD `index.html` — wire `handlePlacement('placed')` to fire background fetch to Worker, add "Syncing…" / "Placed ✓" / "Sync failed — retry" states.
+- NEW `tasks/lessons.md` entry on the fix.
+
+**Dependencies (Max does these once):**
+1. Create fine-grained GitHub PAT at https://github.com/settings/personal-access-tokens/new
+   - Repo: `blueandyellow44/dk-edge-finder` only
+   - Permissions: Contents: Read-only, Actions: Read and write, Metadata: Read-only
+   - Expiration: 90 days
+2. `wrangler secret put GITHUB_TOKEN` — paste the PAT
+3. Deploy: `wrangler deploy`
+
+**Failure modes + handling:**
+- Worker fetch fails → UI shows "Sync failed — retry" button, retries on click. localStorage keeps the placement visible.
+- GitHub rate limit → exponential backoff, max 3 retries, user-visible error.
+- Workflow fails in Actions → visible in GitHub Actions tab, retriable with one click, next scan's bankroll-sync catches anything that slipped through.
+- Race with scan_edges.py → `place-bets.yml` and scan workflows share `concurrency.group: dk-data-write` so they queue serially.
+- Missing GITHUB_TOKEN secret → Worker returns 500 with clear message.
+
+**Verification:**
+1. `wrangler dev` — test locally, POST to /api/place-bets with curl, confirm 200 + workflow dispatch
+2. Deploy to production, click Place on real site, watch Actions tab for run
+3. Verify data.bets has the new row with correct wager, odds, outcome: pending
+4. Click Place a second time — should be idempotent (place_bets.py already has `already_in_bets` check)
+5. Run a scan in parallel — verify concurrency group prevents race
+
+---
+
 ## Status as of March 21, 2026 (Session 2)
 
 **Bankroll:** $570.57 (11W-8L, +$70.57 profit)

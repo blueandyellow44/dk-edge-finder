@@ -692,6 +692,12 @@ body {
             <button class="btn btn-outline btn-sm" id="clearPlacements">Clear All Placements</button>
             <div class="settings-hint" style="margin-top:4px;">Remove all Place/Skip decisions from local storage.</div>
           </div>
+          <div class="settings-group">
+            <div class="settings-label">Sync Queue</div>
+            <div id="syncQueueStatus" class="settings-info">All placements synced.</div>
+            <button class="btn btn-outline btn-sm" id="retrySyncQueue" style="display:none;margin-top:8px;">Retry Failed Syncs</button>
+            <div class="settings-hint" style="margin-top:4px;">Placements that couldn't reach the server are stored here so you can retry them.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -993,7 +999,20 @@ body {
         renderPicks();
         renderPending();
         renderPositions();
-        showToast(action === 'placed' ? 'Bet marked as placed' : 'Bet skipped', 'success');
+
+        // Fire-and-forget server sync for 'placed' only. Skip is local-only —
+        // nothing to record server-side for a skipped pick.
+        if (action === 'placed') {
+          var idx = pickIndexFromKey(key);
+          if (idx >= 0) {
+            dispatchPlacementToWorker(String(idx));
+          } else {
+            console.error('[place] could not resolve pick index for key', key);
+            showToast('Bet marked locally (index lookup failed — sync skipped)', 'error');
+          }
+        } else {
+          showToast('Bet skipped', 'success');
+        }
       });
     });
 
@@ -1002,16 +1021,28 @@ body {
     if (placeAllBtn) {
       placeAllBtn.addEventListener('click', function() {
         var count = 0;
-        picks.forEach(function(p) {
+        var newIndices = [];
+        picks.forEach(function(p, i) {
           if (p.status === 'PLACED') return;
           var key = p.pick + '|' + p.event;
-          if (placements[key] !== 'placed') { placements[key] = 'placed'; count++; }
+          if (placements[key] !== 'placed') {
+            placements[key] = 'placed';
+            newIndices.push(i);
+            count++;
+          }
         });
         savePlacements();
         renderPicks();
         renderPending();
         renderPositions();
+
+        if (count === 0) {
+          showToast('Nothing new to place', 'info');
+          return;
+        }
         showToast(count + ' pick(s) marked as placed', 'success');
+        // Dispatch just the newly-placed indices so we don't re-place prior ones
+        dispatchPlacementToWorker(newIndices.join(','));
       });
     }
   }
@@ -1265,7 +1296,18 @@ body {
     placements[key] = action;
     savePlacements();
     renderPositions();
-    showToast(action === 'placed' ? 'Bet marked as placed' : 'Bet skipped', 'success');
+
+    if (action === 'placed') {
+      var idx = pickIndexFromKey(key);
+      if (idx >= 0) {
+        dispatchPlacementToWorker(String(idx));
+      } else {
+        console.error('[handlePlacement] could not resolve pick index for key', key);
+        showToast('Bet marked locally (index lookup failed — sync skipped)', 'error');
+      }
+    } else {
+      showToast('Bet skipped', 'success');
+    }
   }
 
   // ── Settings ──
@@ -1278,6 +1320,26 @@ body {
       '<strong>Games Analyzed:</strong> ' + (data.games_analyzed || 0) + '<br>' +
       '<strong>Picks Generated:</strong> ' + (data.picks || []).length + '<br>' +
       '<strong>No-Edge Games:</strong> ' + (data.no_edge_games || []).length;
+
+    renderSyncQueue();
+  }
+
+  function renderSyncQueue() {
+    var queueEl = document.getElementById('syncQueueStatus');
+    var retryBtn = document.getElementById('retrySyncQueue');
+    if (!queueEl || !retryBtn) return;
+    var queue = getFailedSyncQueue();
+    if (queue.length === 0) {
+      queueEl.innerHTML = 'All placements synced.';
+      retryBtn.style.display = 'none';
+      return;
+    }
+    var lines = queue.map(function(q, i) {
+      var time = q.ts ? new Date(q.ts).toLocaleTimeString() : '';
+      return (i + 1) + '. picks=' + esc(String(q.picks)) + ' <span style="color:#999">(' + time + ')</span>';
+    }).join('<br>');
+    queueEl.innerHTML = '<strong style="color:#cc0000">' + queue.length + ' placement(s) failed to sync:</strong><br>' + lines;
+    retryBtn.style.display = 'inline-block';
   }
 
   // ── Sidebar ──
@@ -1413,6 +1475,35 @@ body {
     showToast('All placement data cleared', 'info');
   });
 
+  // ── Retry failed syncs ──
+  // Clears the queue up-front so in-flight re-dispatches don't see stale entries,
+  // then fires each one. Any failures will re-queue themselves via
+  // dispatchPlacementToWorker's existing error path.
+  document.getElementById('retrySyncQueue').addEventListener('click', function() {
+    var queue = getFailedSyncQueue();
+    if (queue.length === 0) {
+      showToast('Nothing to retry', 'info');
+      return;
+    }
+    console.log('[retrySyncQueue] START', { count: queue.length });
+    clearFailedSyncQueue();
+    showToast('Retrying ' + queue.length + ' placement(s)…', 'info');
+
+    var results = queue.map(function(entry) {
+      return dispatchPlacementToWorker(entry.picks, { silent: true });
+    });
+    Promise.all(results).then(function(outcomes) {
+      var ok = outcomes.filter(Boolean).length;
+      var fail = outcomes.length - ok;
+      if (fail === 0) {
+        showToast(ok + ' placement(s) synced', 'success');
+      } else {
+        showToast(ok + ' synced, ' + fail + ' still failing', 'error');
+      }
+      renderSyncQueue();
+    });
+  });
+
   // ── Place all ──
   document.getElementById('placeAllBtn').addEventListener('click', function() {
     var picks = data.picks || [];
@@ -1480,6 +1571,102 @@ body {
     } catch (e) {
       console.error('[savePlacements] FAIL', e);
     }
+  }
+
+  // ── Server-side placement persistence ──
+  //
+  // Background sync from the Place button to the GitHub workflow via
+  // Cloudflare Worker. localStorage is still the immediate-feedback layer;
+  // this just ensures the bet also lands in data.bets/bankroll.json so the
+  // Activity view and scheduled scripts see it. See tasks/lessons.md
+  // 2026-04-11 entry for why this pipeline exists.
+  //
+  // Worker endpoint: same-origin when the site is served by the Worker.
+  // Override via window.DK_WORKER_URL if the Worker lives on a different host.
+  var WORKER_PLACE_URL = (function() {
+    if (typeof window !== 'undefined' && window.DK_WORKER_URL) {
+      return window.DK_WORKER_URL.replace(/\/$/, '') + '/api/place-bets';
+    }
+    return '/api/place-bets';
+  })();
+
+  function dispatchPlacementToWorker(picksArg, opts) {
+    opts = opts || {};
+    console.log('[dispatch] START', { picks: picksArg });
+    showToast('Syncing to server…', 'info');
+
+    return fetch(WORKER_PLACE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ picks: picksArg }),
+    }).then(function(res) {
+      return res.json().catch(function() { return {}; }).then(function(body) {
+        return { ok: res.ok, status: res.status, body: body };
+      });
+    }).then(function(result) {
+      if (result.ok) {
+        console.log('[dispatch] SUCCESS', result);
+        if (!opts.silent) {
+          showToast('Bet synced — will appear in Activity shortly', 'success');
+        }
+        return true;
+      }
+      console.error('[dispatch] FAIL', result);
+      var msg = (result.body && result.body.error) || ('HTTP ' + result.status);
+      showToast('Sync failed: ' + msg + ' — click Retry in Settings', 'error');
+      queueFailedSync(picksArg);
+      return false;
+    }).catch(function(err) {
+      console.error('[dispatch] NETWORK FAIL', err);
+      showToast('Sync failed (network) — retry from Settings', 'error');
+      queueFailedSync(picksArg);
+      return false;
+    });
+  }
+
+  // Store failed dispatch requests so the user can retry from Settings without
+  // re-clicking each Place button. Keyed by scan_date so stale queues from
+  // prior days get swept out on the next scan.
+  function queueFailedSync(picksArg) {
+    try {
+      var raw = localStorage.getItem('dk-edge-sync-queue');
+      var queue = raw ? JSON.parse(raw) : [];
+      queue.push({
+        picks: picksArg,
+        ts: new Date().toISOString(),
+        scan_date: (data && data.scan_date) || '',
+      });
+      localStorage.setItem('dk-edge-sync-queue', JSON.stringify(queue));
+    } catch (e) {
+      console.error('[queueFailedSync] FAIL', e);
+    }
+  }
+
+  function getFailedSyncQueue() {
+    try {
+      var raw = localStorage.getItem('dk-edge-sync-queue');
+      if (!raw) return [];
+      var queue = JSON.parse(raw) || [];
+      var currentDate = (data && data.scan_date) || '';
+      // Drop entries from older scans
+      return queue.filter(function(q) { return !q.scan_date || q.scan_date === currentDate; });
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function clearFailedSyncQueue() {
+    localStorage.removeItem('dk-edge-sync-queue');
+  }
+
+  // Map a pick's display key ("pick|event") back to its index in data.picks[].
+  // Needed because scripts/place_bets.py takes indices, not keys.
+  function pickIndexFromKey(key) {
+    var picks = (data && data.picks) || [];
+    for (var i = 0; i < picks.length; i++) {
+      if ((picks[i].pick + '|' + picks[i].event) === key) return i;
+    }
+    return -1;
   }
 
   // ── Manual bets (placed outside top picks) ──

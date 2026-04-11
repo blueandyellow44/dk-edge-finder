@@ -9,6 +9,11 @@ on:
 permissions:
   contents: write
 
+# Serialize with place-bets and scan workflows so data.json writes don't race.
+concurrency:
+  group: dk-data-write
+  cancel-in-progress: false
+
 jobs:
   resolve:
     runs-on: ubuntu-latest

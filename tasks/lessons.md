@@ -165,6 +165,12 @@ Never say "done" based on writing the edit. Verify the edit survived and works.
 ## 2026-03-22: Variable scope — all_predictions not predictions
 **Mistake:** Step 5b (game margins for blowout discount) used `predictions` which doesn't exist in `main()` scope. The actual variable is `all_predictions` (dict keyed by sport). Caused NameError crash on every full scan.
 **Rule:** After any refactor that changes variable names, grep for ALL usages of the old name. `predictions` was the old name from before the ensemble refactor; `all_predictions` is the current one. The game margins builder needs `all_predictions.get("nba", {})` to get the NBA-specific predictions dict.
+
+## 2026-04-11: Site needs a write path back to the repo or Place button is a lie
+**Mistake:** For a dozen sessions, clicking "Place" on the site only wrote to `localStorage`. Activity view reads `data.json.bets` from the repo, so placed bets NEVER showed up until a scan/resolve happened to rewrite the file — and even then, the manual placements were lost. Fixed symptoms (sidebar stats, missing rows) over and over without fixing the root cause: there was no mechanism for the browser to mutate server state.
+**Rule:** A static site with no backend CANNOT have a Place button that affects state the site itself displays. If you need bidirectional state, you need a write path. The fix: Cloudflare Worker `/api/place-bets` → GitHub `repository_dispatch` → `place-bets.yml` workflow → `place_bets.py` → commit to `data.json`. Any "place/mark/delete/confirm" button on a static site must either (a) have a server endpoint behind it, or (b) be honest that it's local-only and flagged as such in the UI. Never wire a button that looks authoritative but only mutates `localStorage`.
+**Prevention:** When Max asks for "a button that marks X as done," the FIRST question is "where does 'done' live, and how does this button write to that location?" If there's no answer, stop and design the write path before touching the UI.
+
 # DK Edge Finder — Lessons Learned
 
 ## 2026-03-22: Always git pull --rebase before pushing when automated scans are running
