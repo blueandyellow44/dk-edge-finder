@@ -16,8 +16,8 @@
   },
   "games_analyzed": 55,
   "best_bet": {
-    "title": "Boston Celtics +13.5 (-112) \u2014 34.0% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 12.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, D"
+    "title": "Boston Celtics +12.5 (-108) \u2014 32.9% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 11.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, D"
   },
   "picks": [
     {
@@ -26,19 +26,19 @@
       "event": "Orlando Magic @ Boston Celtics",
       "event_short": "ORL @ BOS",
       "market": "Spread",
-      "pick": "Boston Celtics +13.5",
-      "odds": "-112",
-      "implied": "52.8%",
-      "model": "86.8%",
-      "edge": 34.0,
+      "pick": "Boston Celtics +12.5",
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "84.9%",
+      "edge": 32.9,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 12.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, Dimers: -12.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (34.0%): Model disagrees with market by 12.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 11.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, Dimers: -12.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (32.9%): Model disagrees with market by 11.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33959951?outcomes=0HC84252631P1350_1",
+      "dk_link": "https://sportsbook.draftkings.com/event/33959951?outcomes=0HC84252631P1250_1",
       "type": "game",
       "start_time": "2026-04-12T22:00Z"
     },
@@ -49,15 +49,15 @@
       "event_short": "CHA @ NY",
       "market": "Spread",
       "pick": "New York Knicks +13.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "77.5%",
-      "edge": 25.1,
+      "odds": "-105",
+      "implied": "51.2%",
+      "model": "77.7%",
+      "edge": 26.5,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHA 111.5, NY 106.5 (margin: 5.0). 8.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 20.0 pts (DRatings: -10.8, Dimers: -12.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (25.1%): Model disagrees with market by 8.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHA 111.6, NY 106.7 (margin: 4.9). 8.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 20.0 pts (DRatings: -10.9, Dimers: -13.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (26.5%): Model disagrees with market by 8.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
       "dk_link": "https://sportsbook.draftkings.com/event/33959956?outcomes=0HC84252637P1350_1",
@@ -66,25 +66,25 @@
     },
     {
       "rank": 3,
-      "sport": "SERIE_A",
-      "event": "Lecce @ Bologna",
-      "event_short": "LEC @ BOL",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "120",
-      "implied": "45.5%",
-      "model": "68.0%",
-      "edge": 22.6,
+      "sport": "NBA",
+      "event": "Denver Nuggets @ San Antonio Spurs",
+      "event_short": "DEN @ SA",
+      "market": "Spread",
+      "pick": "Denver Nuggets +10.5",
+      "odds": "-102",
+      "implied": "50.5%",
+      "model": "65.5%",
+      "edge": 15.0,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + clubelo): LEC 1.2, BOL 2.1 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (22.6%): Model predicts 3.3 vs market 2.5 \u2014 0.8 pt gap.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33871685?outcomes=0OU84013167O250_1",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DEN 114.9, SA 120.9 (margin: 6.0). 4.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 14.0 pts (DRatings: +7.3, Dimers: +9.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (15.0%): Model disagrees with market by 4.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33960037?outcomes=0HC84252733P1050_3",
       "type": "game",
-      "start_time": "2026-04-12T16:00Z"
+      "start_time": "2026-04-13T00:30Z"
     },
     {
       "rank": 4,
@@ -111,68 +111,68 @@
     {
       "rank": 5,
       "sport": "NBA",
-      "event": "Denver Nuggets @ San Antonio Spurs",
-      "event_short": "DEN @ SA",
-      "market": "Spread",
-      "pick": "Denver Nuggets +10.5",
+      "event": "Chicago Bulls @ Dallas Mavericks",
+      "event_short": "CHI @ DAL",
+      "market": "Over/Under",
+      "pick": "UNDER 248.5",
       "odds": "-105",
       "implied": "51.2%",
-      "model": "65.5%",
-      "edge": 14.3,
+      "model": "63.2%",
+      "edge": 12.0,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DEN 114.9, SA 120.9 (margin: 6.0). 4.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 14.0 pts (DRatings: +7.3, Dimers: +10.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (14.3%): Model disagrees with market by 4.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 118.8, DAL 123.9 (total: 242.7). Line: 248.5. Cushion: 5.8 pts. \u26a0 SUSPICIOUS EDGE (12.0%): Model predicts 242.7 vs market 248.5 \u2014 5.8 pt gap.",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33960037?outcomes=0HC84252733P1050_3",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/33960028?outcomes=0OU84252718U24850_3",
       "type": "game",
       "start_time": "2026-04-13T00:30Z"
     },
     {
       "rank": 6,
       "sport": "NBA",
-      "event": "Chicago Bulls @ Dallas Mavericks",
-      "event_short": "CHI @ DAL",
+      "event": "Atlanta Hawks @ Miami Heat",
+      "event_short": "ATL @ MIA",
+      "market": "Spread",
+      "pick": "Atlanta Hawks +5.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "63.9%",
+      "edge": 11.0,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ATL 122.5, MIA 121.0 (margin: 1.5). 4.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 11.5 pts (DRatings: -1.1, Dimers: +5.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by 4.0 pts. Investigate before betting. \u26a0 Confidence: LOW",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33959955?outcomes=0HC84252636P550_3",
+      "type": "game",
+      "start_time": "2026-04-12T22:00Z"
+    },
+    {
+      "rank": 7,
+      "sport": "NBA",
+      "event": "Sacramento Kings @ Portland Trail Blazers",
+      "event_short": "SAC @ POR",
       "market": "Over/Under",
-      "pick": "UNDER 247.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "61.0%",
+      "pick": "OVER 226.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "61.4%",
       "edge": 8.6,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 118.8, DAL 123.9 (total: 242.7). Line: 247.5. Cushion: 4.8 pts.",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SAC 109.2, POR 122.3 (total: 231.5). Line: 226.5. Cushion: 5.0 pts.",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33960028?outcomes=0OU84252718U24750_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/33960036?outcomes=0OU84252732O22650_1",
       "type": "game",
       "start_time": "2026-04-13T00:30Z"
-    },
-    {
-      "rank": 7,
-      "sport": "NBA",
-      "event": "Atlanta Hawks @ Miami Heat",
-      "event_short": "ATL @ MIA",
-      "market": "Spread",
-      "pick": "Atlanta Hawks +4.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "60.5%",
-      "edge": 8.1,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ATL 122.5, MIA 121.0 (margin: 1.5). 3.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 11.5 pts (DRatings: -1.1, Dimers: +4.9). Lower confidence. \u26a0 Confidence: LOW",
-      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33959955?outcomes=0HC84252636P450_3",
-      "type": "game",
-      "start_time": "2026-04-12T22:00Z"
     },
     {
       "rank": 8,
@@ -224,20 +224,26 @@
     },
     {
       "sport": "NBA",
+      "event": "MEM @ HOU",
+      "line": "HOU -13.5",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NBA",
       "event": "PHX @ OKC",
-      "line": "OKC -5.5",
+      "line": "OKC -6.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NBA",
       "event": "UTAH @ LAL",
-      "line": "LAL -14.5",
+      "line": "LAL -13.5",
       "reason": "No model data"
     },
     {
       "sport": "NHL",
       "event": "OTT @ NJ",
-      "line": "OTT -125",
+      "line": "OTT -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -249,13 +255,19 @@
     {
       "sport": "MLB",
       "event": "ARI @ PHI",
-      "line": "PHI -143",
+      "line": "PHI -156",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ BAL",
       "line": "BAL -126",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIN @ TOR",
+      "line": "TOR -143",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -267,31 +279,31 @@
     {
       "sport": "MLB",
       "event": "MIA @ DET",
-      "line": "DET -199",
+      "line": "DET -181",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ TB",
-      "line": "NYY -156",
+      "line": "NYY -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHW @ KC",
-      "line": "KC -186",
+      "line": "KC -181",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "WSH @ MIL",
-      "line": "MIL -219",
+      "line": "MIL -240",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ STL",
-      "line": "BOS -131",
+      "line": "BOS -126",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -303,7 +315,7 @@
     {
       "sport": "MLB",
       "event": "COL @ SD",
-      "line": "SD -232",
+      "line": "SD -240",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -319,21 +331,9 @@
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "EPL",
-      "event": "MNC @ CHE",
-      "line": "MNC -105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "RAY @ MLL",
-      "line": "MLL +145",
-      "reason": "No model data"
-    },
-    {
       "sport": "LA_LIGA",
       "event": "OVI @ CEL",
-      "line": "CEL -140",
+      "line": "N/A",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -344,14 +344,8 @@
     },
     {
       "sport": "BUNDESLIGA",
-      "event": "HSV @ VFB",
-      "line": "VFB -340",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "BUNDESLIGA",
       "event": "SCF @ M05",
-      "line": "M05 +120",
+      "line": "M05 +115",
       "reason": "No model data"
     },
     {
@@ -362,27 +356,15 @@
     },
     {
       "sport": "LIGUE_1",
-      "event": "HAC @ NICE",
-      "line": "NICE -105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "LILL @ TOU",
-      "line": "LILL +125",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
       "event": "LOR @ LYON",
-      "line": "LYON -175",
+      "line": "LYON -170",
       "reason": "No model data"
     },
     {
-      "sport": "NHL",
-      "event": "MTL @ NYI",
-      "line": "Montreal Canadiens +1.5 (-270)",
-      "reason": "Edge exists (7.6%) but category exposure limit reached"
+      "sport": "MLB",
+      "event": "LAA @ CIN",
+      "line": "Cincinnati Reds +1.5 (-175)",
+      "reason": "Edge exists (6.9%) but category exposure limit reached"
     },
     {
       "sport": "MLB",
@@ -397,9 +379,9 @@
       "reason": "Edge exists (6.6%) but category exposure limit reached"
     },
     {
-      "sport": "MLB",
-      "event": "LAA @ CIN",
-      "line": "Cincinnati Reds +1.5 (-181)",
+      "sport": "NHL",
+      "event": "MTL @ NYI",
+      "line": "Montreal Canadiens +1.5 (-258)",
       "reason": "Edge exists (6.2%) but category exposure limit reached"
     },
     {
@@ -409,15 +391,15 @@
       "reason": "Edge exists (6.0%) but category exposure limit reached"
     },
     {
+      "sport": "NHL",
+      "event": "PIT @ WSH",
+      "line": "Pittsburgh Penguins +1.5 (-192)",
+      "reason": "Edge exists (5.6%) but category exposure limit reached"
+    },
+    {
       "sport": "NBA",
       "event": "GS @ LAC",
       "line": "Golden State Warriors +6.5 (-105)",
-      "reason": "Edge exists (5.5%) but category exposure limit reached"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ TOR",
-      "line": "Toronto Blue Jays +1.5 (-198)",
       "reason": "Edge exists (5.5%) but category exposure limit reached"
     },
     {
@@ -427,18 +409,6 @@
       "reason": "Edge exists (5.2%) but category exposure limit reached"
     },
     {
-      "sport": "NHL",
-      "event": "PIT @ WSH",
-      "line": "Pittsburgh Penguins +1.5 (-185)",
-      "reason": "Edge exists (5.2%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "SAC @ POR",
-      "line": "OVER 228.5 (-110)",
-      "reason": "Edge exists (4.5%) but category exposure limit reached"
-    },
-    {
       "sport": "NBA",
       "event": "NO @ MIN",
       "line": "UNDER 236.5 (-112)",
@@ -446,8 +416,8 @@
     },
     {
       "sport": "NBA",
-      "event": "MEM @ HOU",
-      "line": "OVER 224.5 (-115)",
+      "event": "ATL @ MIA",
+      "line": "OVER 241.5 (-105)",
       "reason": "Edge exists (3.4%) but category exposure limit reached"
     }
   ],
