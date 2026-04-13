@@ -8689,9 +8689,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): VAN 2.8, ANA 3.9 (margin: 1.1). 0.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.1 pts (DRatings: +1.4, Dimers: +0.8). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 4, ANA 3",
+    "pnl_if_bet": 10.5
   },
   {
     "scan_date": "2026-04-12",
@@ -8833,9 +8833,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): VAN 2.8, ANA 3.9 (margin: 1.1). 0.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.1 pts (DRatings: +1.4, Dimers: +0.8). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 4, ANA 3",
+    "pnl_if_bet": 10.5
   },
   {
     "scan_date": "2026-04-12",
@@ -8977,8 +8977,8 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): VAN 2.8, ANA 3.9 (margin: 1.1). 0.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.1 pts (DRatings: +1.4, Dimers: +0.8). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 4, ANA 3",
+    "pnl_if_bet": 10.5
   }
 ]
