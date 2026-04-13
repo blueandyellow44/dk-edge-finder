@@ -16,34 +16,56 @@
   },
   "games_analyzed": 23,
   "best_bet": {
-    "title": "Dallas Stars -1.5 (145) \u2014 5.9% Edge (High Tier)",
-    "desc": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DAL 3.7, TOR 2.2 (margin: 1.5). 0.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.9 pts (DRatings: -0.9, Dimers:"
+    "title": "Carolina Hurricanes +1.5 (-205) \u2014 6.6% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CAR 2.9, PHI 3.0 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.9 pts (DRatings: -0.9, Dimers:"
   },
   "picks": [
     {
       "rank": 1,
       "sport": "NHL",
-      "event": "Dallas Stars @ Toronto Maple Leafs",
-      "event_short": "DAL @ TOR",
+      "event": "Carolina Hurricanes @ Philadelphia Flyers",
+      "event_short": "CAR @ PHI",
       "market": "Spread",
-      "pick": "Dallas Stars -1.5",
-      "odds": "145",
-      "implied": "40.8%",
-      "model": "46.7%",
-      "edge": 5.9,
+      "pick": "Carolina Hurricanes +1.5",
+      "odds": "-205",
+      "implied": "67.2%",
+      "model": "73.9%",
+      "edge": 6.6,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DAL 3.7, TOR 2.2 (margin: 1.5). 0.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.9 pts (DRatings: -0.9, Dimers: -0.6). Lower confidence. TANK WATCH: 26-42, mathematically alive (-1.5% adj) DAL on road B2B (-2.5% adj) | TOR on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CAR 2.9, PHI 3.0 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.9 pts (DRatings: -0.9, Dimers: -0.3). Lower confidence. | PHI on B2B (+1.5% boost) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33978825?outcomes=0HC84310104N150_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/33978823?outcomes=0HC84310102P150_3",
       "type": "game",
-      "start_time": "2026-04-13T23:30Z"
+      "start_time": "2026-04-13T23:00Z"
     },
     {
       "rank": 2,
+      "sport": "NHL",
+      "event": "Minnesota Wild @ St. Louis Blues",
+      "event_short": "MIN @ STL",
+      "market": "Spread",
+      "pick": "Minnesota Wild +1.5",
+      "odds": "-185",
+      "implied": "64.9%",
+      "model": "71.4%",
+      "edge": 6.5,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIN 2.9, STL 2.9 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.8 pts (DRatings: +0.1, Dimers: -0.0). Lower confidence. MIN on road B2B (-2.5% adj) \u26a0 Confidence: LOW",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33978829?outcomes=0HC84310097P150_3",
+      "type": "game",
+      "start_time": "2026-04-14T00:00Z"
+    },
+    {
+      "rank": 3,
       "sport": "NHL",
       "event": "San Jose Sharks @ Nashville Predators",
       "event_short": "SJ @ NSH",
@@ -65,7 +87,29 @@
       "start_time": "2026-04-14T00:00Z"
     },
     {
-      "rank": 3,
+      "rank": 4,
+      "sport": "NHL",
+      "event": "Buffalo Sabres @ Chicago Blackhawks",
+      "event_short": "BUF @ CHI",
+      "market": "Spread",
+      "pick": "Buffalo Sabres -1.5",
+      "odds": "124",
+      "implied": "44.6%",
+      "model": "49.2%",
+      "edge": 4.5,
+      "tier": "High",
+      "bet": "$12.44",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BUF 3.8, CHI 2.4 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: -1.1, Dimers: -0.9). Lower confidence. | CHI on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/33978830?outcomes=0HC84310099N150_3",
+      "type": "game",
+      "start_time": "2026-04-14T00:30Z"
+    },
+    {
+      "rank": 5,
       "sport": "NHL",
       "event": "Colorado Avalanche @ Edmonton Oilers",
       "event_short": "COL @ EDM",
@@ -87,29 +131,29 @@
       "start_time": "2026-04-14T01:30Z"
     },
     {
-      "rank": 4,
+      "rank": 6,
       "sport": "NHL",
-      "event": "Buffalo Sabres @ Chicago Blackhawks",
-      "event_short": "BUF @ CHI",
+      "event": "Dallas Stars @ Toronto Maple Leafs",
+      "event_short": "DAL @ TOR",
       "market": "Spread",
-      "pick": "Buffalo Sabres -1.5",
-      "odds": "120",
-      "implied": "45.5%",
-      "model": "49.2%",
-      "edge": 3.7,
+      "pick": "Dallas Stars -1.5",
+      "odds": "130",
+      "implied": "43.5%",
+      "model": "46.7%",
+      "edge": 3.2,
       "tier": "High",
-      "bet": "$10.56",
+      "bet": "$8.48",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BUF 3.8, CHI 2.4 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: -1.1, Dimers: -0.9). Lower confidence. | CHI on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DAL 3.7, TOR 2.2 (margin: 1.5). 0.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.9 pts (DRatings: -0.9, Dimers: -0.6). Lower confidence. TANK WATCH: 26-42, mathematically alive (-1.5% adj) DAL on road B2B (-2.5% adj) | TOR on B2B (+1.5% boost) \u26a0 Confidence: LOW",
       "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "LOW",
-      "dk_link": "https://sportsbook.draftkings.com/event/33978830?outcomes=0HC84310099N150_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/33978825?outcomes=0HC84310104N150_3",
       "type": "game",
-      "start_time": "2026-04-14T00:30Z"
+      "start_time": "2026-04-13T23:30Z"
     },
     {
-      "rank": 5,
+      "rank": 7,
       "sport": "NHL",
       "event": "Los Angeles Kings @ Seattle Kraken",
       "event_short": "LA @ SEA",
@@ -131,7 +175,7 @@
       "start_time": "2026-04-14T01:30Z"
     },
     {
-      "rank": 6,
+      "rank": 8,
       "sport": "LA_LIGA",
       "event": "Getafe @ Levante",
       "event_short": "GET @ LEV",
@@ -157,25 +201,13 @@
     {
       "sport": "NHL",
       "event": "DET @ TB",
-      "line": "TB -205",
+      "line": "TB -198",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "NYR @ FLA",
       "line": "NYR -148",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "CAR @ PHI",
-      "line": "CAR -108",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "MIN @ STL",
-      "line": "STL -125",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -187,7 +219,7 @@
     {
       "sport": "MLB",
       "event": "HOU @ SEA",
-      "line": "SEA -171",
+      "line": "SEA -168",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -199,7 +231,7 @@
     {
       "sport": "MLB",
       "event": "CHC @ PHI",
-      "line": "PHI -194",
+      "line": "PHI -181",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -223,7 +255,7 @@
     {
       "sport": "MLB",
       "event": "BOS @ MIN",
-      "line": "BOS -171",
+      "line": "BOS -168",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -235,25 +267,25 @@
     {
       "sport": "MLB",
       "event": "TEX @ ATH",
-      "line": "TEX -126",
+      "line": "TEX -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYM @ LAD",
-      "line": "LAD -171",
+      "line": "LAD -168",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "EPL",
       "event": "LEE @ MAN",
-      "line": "MAN -180",
+      "line": "MAN -170",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "SERIE_A",
       "event": "LAZ @ FIO",
-      "line": "FIO +125",
+      "line": "FIO +135",
       "reason": "Edge below 3% threshold"
     }
   ],
