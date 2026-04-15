@@ -16,53 +16,53 @@
   },
   "games_analyzed": 25,
   "best_bet": {
-    "title": "UNDER 4.5 (-140) \u2014 28.3% Edge (High Tier)",
-    "desc": "Model (clubelo): RMA 1.3, MUN 1.3 (total: 2.6). Line: 4.5. Cushion: 1.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (28.3%): Model predicts 2.6 vs market 4.5 \u2014 1.9 pt gap."
+    "title": "Milwaukee Brewers +1.5 (-156) \u2014 12.3% Edge (High Tier)",
+    "desc": "Model (DRatings + Dimers + oddsshark + actionnetwork): TOR 3.8, MIL 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (12.3%): Model disagrees with market by 1.3 pts. Investig"
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "UCL",
-      "event": "Real Madrid @ Bayern Munich",
-      "event_short": "RMA @ MUN",
-      "market": "Over/Under",
-      "pick": "UNDER 4.5",
-      "odds": "-140",
-      "implied": "58.3%",
-      "model": "86.7%",
-      "edge": 28.3,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (clubelo): RMA 1.3, MUN 1.3 (total: 2.6). Line: 4.5. Cushion: 1.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (28.3%): Model predicts 2.6 vs market 4.5 \u2014 1.9 pt gap.",
-      "sources": "clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33953822?outcomes=0OU84234750U450_3",
-      "type": "game",
-      "start_time": "2026-04-15T19:00Z"
-    },
-    {
-      "rank": 2,
       "sport": "MLB",
       "event": "Toronto Blue Jays @ Milwaukee Brewers",
       "event_short": "TOR @ MIL",
       "market": "Spread",
       "pick": "Milwaukee Brewers +1.5",
-      "odds": "-163",
-      "implied": "62.0%",
+      "odds": "-156",
+      "implied": "60.9%",
       "model": "73.2%",
-      "edge": 11.3,
+      "edge": 12.3,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): TOR 3.8, MIL 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.3%): Model disagrees with market by 1.3 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): TOR 3.8, MIL 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (12.3%): Model disagrees with market by 1.3 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/33990619?outcomes=0HC84336063P150_1",
       "type": "game",
       "start_time": "2026-04-15T23:40Z"
+    },
+    {
+      "rank": 2,
+      "sport": "MLB",
+      "event": "Seattle Mariners @ San Diego Padres",
+      "event_short": "SEA @ SD",
+      "market": "Spread",
+      "pick": "San Diego Padres +1.5",
+      "odds": "-182",
+      "implied": "64.5%",
+      "model": "73.2%",
+      "edge": 8.7,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SEA 3.8, SD 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/33990622?outcomes=0HC84336066P150_1",
+      "type": "game",
+      "start_time": "2026-04-16T01:40Z"
     },
     {
       "rank": 3,
@@ -71,10 +71,10 @@
       "event_short": "TOR @ OTT",
       "market": "Spread",
       "pick": "Ottawa Senators -1.5",
-      "odds": "124",
-      "implied": "44.6%",
+      "odds": "120",
+      "implied": "45.5%",
       "model": "54.1%",
-      "edge": 9.4,
+      "edge": 8.6,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -88,28 +88,6 @@
     },
     {
       "rank": 4,
-      "sport": "MLB",
-      "event": "Seattle Mariners @ San Diego Padres",
-      "event_short": "SEA @ SD",
-      "market": "Spread",
-      "pick": "San Diego Padres +1.5",
-      "odds": "-181",
-      "implied": "64.4%",
-      "model": "73.2%",
-      "edge": 8.8,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): SEA 3.8, SD 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33990622?outcomes=0HC84336066P150_1",
-      "type": "game",
-      "start_time": "2026-04-16T01:40Z"
-    },
-    {
-      "rank": 5,
       "sport": "MLB",
       "event": "San Francisco Giants @ Cincinnati Reds",
       "event_short": "SF @ CIN",
@@ -131,7 +109,7 @@
       "start_time": "2026-04-15T22:40Z"
     },
     {
-      "rank": 6,
+      "rank": 5,
       "sport": "NHL",
       "event": "Dallas Stars @ Buffalo Sabres",
       "event_short": "DAL @ BUF",
@@ -151,50 +129,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/33990384?outcomes=0HC84340429P150_1",
       "type": "game",
       "start_time": "2026-04-15T23:00Z"
-    },
-    {
-      "rank": 7,
-      "sport": "NBA",
-      "event": "Golden State Warriors @ LA Clippers",
-      "event_short": "GS @ LAC",
-      "market": "Over/Under",
-      "pick": "UNDER 221.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "56.7%",
-      "edge": 4.3,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): GS 107.4, LAC 111.2 (total: 218.6). Line: 221.5. Cushion: 2.9 pts.",
-      "sources": "DRatings + Dimers + oddsshark + actionnetwork, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/33972083?outcomes=0OU84286191U22150_3",
-      "type": "game",
-      "start_time": "2026-04-16T02:00Z"
-    },
-    {
-      "rank": 8,
-      "sport": "NHL",
-      "event": "Seattle Kraken @ Vegas Golden Knights",
-      "event_short": "SEA @ VGK",
-      "market": "Spread",
-      "pick": "Seattle Kraken +1.5",
-      "odds": "-108",
-      "implied": "51.9%",
-      "model": "55.5%",
-      "edge": 3.6,
-      "tier": "High",
-      "bet": "$6.77",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SEA 2.5, VGK 3.7 (margin: 1.2). 0.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings + Dimers + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/33990389?outcomes=0HC84340428P150_3",
-      "type": "game",
-      "start_time": "2026-04-16T02:00Z"
     }
   ],
   "no_edge_games": [
@@ -203,6 +137,12 @@
       "event": "ORL @ PHI",
       "line": "PHI -1.5",
       "reason": "No model data"
+    },
+    {
+      "sport": "NBA",
+      "event": "GS @ LAC",
+      "line": "LAC -5.5",
+      "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
@@ -223,45 +163,45 @@
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLB",
-      "event": "BOS @ MIN",
-      "line": "BOS -126",
+      "sport": "NHL",
+      "event": "SEA @ VGK",
+      "line": "VGK -298",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ PHI",
-      "line": "PHI -143",
+      "line": "PHI -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ DET",
-      "line": "DET -131",
+      "line": "DET -137",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "WSH @ PIT",
-      "line": "PIT -186",
+      "line": "PIT -181",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "LAA @ NYY",
-      "line": "NYY -186",
+      "line": "NYY -192",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIA @ ATL",
-      "line": "ATL -171",
+      "line": "ATL -175",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ CHW",
-      "line": "TB -115",
+      "line": "CHW -112",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -279,14 +219,8 @@
     {
       "sport": "MLB",
       "event": "NYM @ LAD",
-      "line": "LAD -199",
+      "line": "LAD -207",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "UCL",
-      "event": "SCP @ ARS",
-      "line": "ARS -185",
-      "reason": "No model data"
     }
   ],
   "bets": [
