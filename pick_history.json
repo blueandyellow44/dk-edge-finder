@@ -10255,9 +10255,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SEA 2.5, COL 3.9 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: +2.1, Dimers: +1.0). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SEA 0, COL 2",
+    "pnl_if_bet": 14.2
   },
   {
     "scan_date": "2026-04-16",
@@ -10381,9 +10381,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SEA 2.5, COL 3.9 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: +2.1, Dimers: +1.0). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SEA 0, COL 2",
+    "pnl_if_bet": 13.6
   },
   {
     "scan_date": "2026-04-16",
@@ -10471,8 +10471,8 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SEA 2.5, COL 3.9 (margin: 1.4). -0.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SEA 0, COL 2",
+    "pnl_if_bet": 13.0
   }
 ]
