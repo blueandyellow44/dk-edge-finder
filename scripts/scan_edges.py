@@ -1821,9 +1821,25 @@ def main(games_only: bool = False):
             print(f"  Prop scanning error: {e}", file=sys.stderr)
 
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
-    # Split picks into game edges and prop edges, sort each by edge descending
-    game_picks = sorted([p for p in picks if p.get("market") != "Player Prop"], key=lambda x: x["edge"], reverse=True)
-    all_prop_picks = sorted([p for p in picks if p.get("market") == "Player Prop"], key=lambda x: x["edge"], reverse=True)
+    # Split picks into game edges and prop edges, sort each by EV per dollar
+    # risked (not raw edge%). Edge% alone ranks heavy-juice favorites ahead of
+    # plus-money / lower-juice spots even when the expected dollar value is
+    # much worse — at -205 an 8% edge yields far less $EV than a -130 pick
+    # with the same 8% edge because the payout is smaller. Sorting by EV
+    # surfaces the bets that actually make the most money per dollar risked.
+    def _ev_per_dollar(pick):
+        try:
+            p = float(pick.get("model_prob", 0))
+            d = float(pick.get("decimal_odds", 1))
+            # profit on $1 stake = decimal_odds - 1; loss on $1 stake = 1
+            return p * (d - 1.0) - (1.0 - p) * 1.0
+        except (TypeError, ValueError):
+            # Fallback to raw edge % if the float fields are ever missing
+            return float(pick.get("edge", 0)) / 100.0
+    for _p in picks:
+        _p["ev_per_dollar"] = round(_ev_per_dollar(_p), 4)
+    game_picks = sorted([p for p in picks if p.get("market") != "Player Prop"], key=lambda x: x["ev_per_dollar"], reverse=True)
+    all_prop_picks = sorted([p for p in picks if p.get("market") == "Player Prop"], key=lambda x: x["ev_per_dollar"], reverse=True)
 
     # Cap at 2 props per game — prevents clustering 3+ picks from one matchup
     MAX_PROPS_PER_GAME = 2
@@ -1902,6 +1918,7 @@ def main(games_only: bool = False):
             "implied": f"{pick['implied_prob']*100:.1f}%",
             "model": f"{pick['model_prob']*100:.1f}%",
             "edge": pick["edge"],
+            "ev_per_dollar": pick.get("ev_per_dollar", 0),
             "tier": pick.get("tier", "High"),
             "bet": f"${bet_amount:.2f}",
             "status": "",
