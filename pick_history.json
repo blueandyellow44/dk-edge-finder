@@ -10525,9 +10525,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 3.7, MIA 3.8 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIL 7, MIA 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-17",
@@ -10633,9 +10633,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 3.7, MIA 3.8 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIL 7, MIA 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-17",
@@ -10651,9 +10651,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): TB 3.8, PIT 4.1 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: +0.3, Dimers: +0.3). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 1, PIT 5",
+    "pnl_if_bet": 5.08
   },
   {
     "scan_date": "2026-04-17",
@@ -10759,9 +10759,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): TB 3.8, PIT 4.1 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: +0.3, Dimers: +0.3). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 1, PIT 5",
+    "pnl_if_bet": 5.15
   },
   {
     "scan_date": "2026-04-17",
@@ -10777,9 +10777,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 3.7, MIA 3.8 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIL 7, MIA 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-17",
