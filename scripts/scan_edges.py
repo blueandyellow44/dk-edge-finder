@@ -1377,7 +1377,23 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     ]
     # Ensemble disagreement warning
     if pred.get("contested"):
-        notes_parts.append(f"⚠ CONTESTED: Sources disagree by {pred['disagreement']:.1f} pts (DRatings: {pred.get('dr_margin', '?'):+.1f}, Dimers: {pred.get('dm_margin', '?'):+.1f}). Lower confidence.")
+        # dr_margin / dm_margin may be missing for some predictions (e.g. when
+        # only one of the two sources produced a margin). The previous version
+        # used pred.get(key, '?') inside a :+.1f f-string spec, which raises
+        # ValueError on the '?' string fallback — crashing the entire scan.
+        # Build the values defensively instead.
+        def _fmt_margin(v):
+            if isinstance(v, (int, float)):
+                try:
+                    return f"{v:+.1f}"
+                except (TypeError, ValueError):
+                    return "?"
+            return "?"
+        dr_s = _fmt_margin(pred.get("dr_margin"))
+        dm_s = _fmt_margin(pred.get("dm_margin"))
+        dis_v = pred.get("disagreement")
+        dis_s = f"{dis_v:.1f}" if isinstance(dis_v, (int, float)) else "?"
+        notes_parts.append(f"⚠ CONTESTED: Sources disagree by {dis_s} pts (DRatings: {dr_s}, Dimers: {dm_s}). Lower confidence.")
     elif is_single_source:
         notes_parts.append(f"Single source — {source_label}. Lower confidence without cross-validation. Kelly reduced 25%.")
     if suspicious:
