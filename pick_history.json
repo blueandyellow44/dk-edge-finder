@@ -10903,9 +10903,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): SD 4.8, LAA 4.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 4, LAA 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -11047,9 +11047,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): SD 4.8, LAA 4.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 4, LAA 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
