@@ -11137,9 +11137,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 6.5, COL 5.0 (margin: 1.5). 0.0 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.7%): Model disagrees with market by 0.0 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAD 6, COL 9",
+    "pnl_if_bet": 15.9
   },
   {
     "scan_date": "2026-04-19",
@@ -11155,9 +11155,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 3.9, PIT 4.3 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.3%): Model disagrees with market by 1.1 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 3, PIT 6",
+    "pnl_if_bet": 5.46
   },
   {
     "scan_date": "2026-04-19",
@@ -11173,9 +11173,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LA 2.4, COL 3.4 (margin: 1.0). 0.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LA 1, COL 2",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-19",
@@ -11191,9 +11191,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.8, ARI 3.8 (margin: 0.0). 1.5 pts of cushion beyond the spread. | TOR on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 10, ARI 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-19",
@@ -11209,9 +11209,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 3.9, MIA 3.8 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIL 3, MIA 5",
+    "pnl_if_bet": 5.95
   },
   {
     "scan_date": "2026-04-19",
@@ -11227,9 +11227,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): BAL 3.2, CLE 3.3 (margin: 0.1). 1.4 pts of cushion beyond the spread. CLE on B2B (-1.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BAL 4, CLE 8",
+    "pnl_if_bet": 4.85
   },
   {
     "scan_date": "2026-04-19",
@@ -11281,9 +11281,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 3.9, PIT 4.3 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 3, PIT 6",
+    "pnl_if_bet": 5.38
   },
   {
     "scan_date": "2026-04-19",
@@ -11299,9 +11299,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LA 2.4, COL 3.4 (margin: 1.0). 0.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LA 1, COL 2",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-19",
@@ -11317,9 +11317,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 6.5, COL 4.9 (margin: 1.6). -0.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAD 6, COL 9",
+    "pnl_if_bet": 12.9
   },
   {
     "scan_date": "2026-04-19",
@@ -11335,9 +11335,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.8, ARI 3.8 (margin: 0.0). 1.5 pts of cushion beyond the spread. | TOR on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 10, ARI 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-19",
@@ -11407,8 +11407,8 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.9, ARI 3.9 (margin: 0.0). 1.5 pts of cushion beyond the spread. | TOR on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 10, ARI 4",
+    "pnl_if_bet": -10.0
   }
 ]
