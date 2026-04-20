@@ -16,7 +16,7 @@
   },
   "games_analyzed": 19,
   "best_bet": {
-    "title": "Colorado Rockies +1.5 (139) \u2014 8.5% Edge (High Tier)",
+    "title": "Colorado Rockies +1.5 (129) \u2014 6.7% Edge (High Tier)",
     "desc": "Model (DRatings only + oddsshark + actionnetwork): LAD 5.8, COL 4.3 (margin: 1.5). 0.0 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM"
   },
   "picks": [
@@ -27,11 +27,11 @@
       "event_short": "LAD @ COL",
       "market": "Spread",
       "pick": "Colorado Rockies +1.5",
-      "odds": "139",
-      "implied": "41.8%",
+      "odds": "129",
+      "implied": "43.7%",
       "model": "50.3%",
-      "edge": 8.5,
-      "ev_per_dollar": 0.2029,
+      "edge": 6.7,
+      "ev_per_dollar": 0.1526,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -92,29 +92,6 @@
     {
       "rank": 4,
       "sport": "NBA",
-      "event": "Atlanta Hawks @ New York Knicks",
-      "event_short": "ATL @ NY",
-      "market": "Over/Under",
-      "pick": "UNDER 218.5",
-      "odds": "-115",
-      "implied": "53.5%",
-      "model": "59.4%",
-      "edge": 5.9,
-      "ev_per_dollar": 0.1113,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ATL 104.9, NY 109.5 (total: 214.4). Line: 218.5. Cushion: 4.1 pts.",
-      "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34012074?outcomes=0OU84395996U21850_3",
-      "type": "game",
-      "start_time": "2026-04-21T00:00Z"
-    },
-    {
-      "rank": 5,
-      "sport": "NBA",
       "event": "Minnesota Timberwolves @ Denver Nuggets",
       "event_short": "MIN @ DEN",
       "market": "Over/Under",
@@ -136,30 +113,30 @@
       "start_time": "2026-04-21T02:30Z"
     },
     {
-      "rank": 6,
-      "sport": "MLB",
-      "event": "Baltimore Orioles @ Kansas City Royals",
-      "event_short": "BAL @ KC",
-      "market": "Spread",
-      "pick": "Kansas City Royals +1.5",
-      "odds": "-163",
-      "implied": "62.0%",
-      "model": "67.5%",
-      "edge": 5.5,
-      "ev_per_dollar": 0.0884,
+      "rank": 5,
+      "sport": "NBA",
+      "event": "Atlanta Hawks @ New York Knicks",
+      "event_short": "ATL @ NY",
+      "market": "Over/Under",
+      "pick": "UNDER 217.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "57.2%",
+      "edge": 4.8,
+      "ev_per_dollar": 0.0911,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): BAL 4.4, KC 4.2 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/34016139?outcomes=0HC84406774P150_1",
+      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ATL 105.0, NY 109.4 (total: 214.4). Line: 217.5. Cushion: 3.1 pts.",
+      "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34012074?outcomes=0OU84395996U21750_3",
       "type": "game",
-      "start_time": "2026-04-20T23:40Z"
+      "start_time": "2026-04-21T00:00Z"
     },
     {
-      "rank": 7,
+      "rank": 6,
       "sport": "NBA",
       "event": "Toronto Raptors @ Cleveland Cavaliers",
       "event_short": "TOR @ CLE",
@@ -174,7 +151,7 @@
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): TOR 104.2, CLE 115.6 (total: 219.8). Line: 222.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 18.9 pts.",
+      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): TOR 104.1, CLE 115.7 (total: 219.8). Line: 222.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 18.9 pts.",
       "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/34012072?outcomes=0OU84395994U22250_3",
@@ -186,7 +163,7 @@
     {
       "sport": "NHL",
       "event": "OTT @ CAR",
-      "line": "CAR -155",
+      "line": "CAR -148",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -198,13 +175,7 @@
     {
       "sport": "NHL",
       "event": "ANA @ EDM",
-      "line": "EDM -175",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "DET @ BOS",
-      "line": "BOS -143",
+      "line": "EDM -180",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -216,7 +187,7 @@
     {
       "sport": "MLB",
       "event": "CIN @ TB",
-      "line": "TB -126",
+      "line": "TB -122",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -228,7 +199,13 @@
     {
       "sport": "MLB",
       "event": "ATL @ WSH",
-      "line": "ATL -156",
+      "line": "ATL -163",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "BAL @ KC",
+      "line": "BAL -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -252,7 +229,7 @@
     {
       "sport": "SERIE_A",
       "event": "FIO @ LEC",
-      "line": "FIO +110",
+      "line": "FIO +115",
       "reason": "Edge below 3% threshold"
     }
   ],
