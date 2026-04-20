@@ -45,16 +45,39 @@
     },
     {
       "rank": 2,
+      "sport": "NBA",
+      "event": "Minnesota Timberwolves @ Denver Nuggets",
+      "event_short": "MIN @ DEN",
+      "market": "Over/Under",
+      "pick": "UNDER 231.5",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "60.3%",
+      "edge": 7.9,
+      "ev_per_dollar": 0.1516,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): MIN 108.5, DEN 118.5 (total: 227.0). Line: 231.5. Cushion: 4.5 pts. \u26a0 CONTESTED: Sources disagree by 11.8 pts.",
+      "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34012075?outcomes=0OU84395997U23150_3",
+      "type": "game",
+      "start_time": "2026-04-21T02:30Z"
+    },
+    {
+      "rank": 3,
       "sport": "MLB",
       "event": "Philadelphia Phillies @ Chicago Cubs",
       "event_short": "PHI @ CHC",
       "market": "Spread",
       "pick": "Chicago Cubs +1.5",
-      "odds": "-183",
-      "implied": "64.7%",
+      "odds": "-181",
+      "implied": "64.4%",
       "model": "73.4%",
-      "edge": 8.8,
-      "ev_per_dollar": 0.1351,
+      "edge": 9.0,
+      "ev_per_dollar": 0.1395,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -67,7 +90,7 @@
       "start_time": "2026-04-20T23:40Z"
     },
     {
-      "rank": 3,
+      "rank": 4,
       "sport": "NHL",
       "event": "Philadelphia Flyers @ Pittsburgh Penguins",
       "event_short": "PHI @ PIT",
@@ -88,29 +111,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/34013914?outcomes=0HC84400951P150_3",
       "type": "game",
       "start_time": "2026-04-20T23:00Z"
-    },
-    {
-      "rank": 4,
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ Denver Nuggets",
-      "event_short": "MIN @ DEN",
-      "market": "Over/Under",
-      "pick": "UNDER 230.5",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "58.1%",
-      "edge": 5.7,
-      "ev_per_dollar": 0.1085,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): MIN 108.5, DEN 118.5 (total: 227.0). Line: 230.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 11.4 pts.",
-      "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34012075?outcomes=0OU84395997U23050_3",
-      "type": "game",
-      "start_time": "2026-04-21T02:30Z"
     },
     {
       "rank": 5,
@@ -193,7 +193,7 @@
     {
       "sport": "MLB",
       "event": "STL @ MIA",
-      "line": "MIA -136",
+      "line": "MIA -137",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -217,19 +217,7 @@
     {
       "sport": "MLB",
       "event": "ATH @ SEA",
-      "line": "SEA -149",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "WHU @ CRY",
-      "line": "CRY +160",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "FIO @ LEC",
-      "line": "FIO +115",
+      "line": "SEA -143",
       "reason": "Edge below 3% threshold"
     }
   ],
