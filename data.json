@@ -73,16 +73,16 @@
       "event_short": "SD @ HOU",
       "market": "Over/Under",
       "pick": "UNDER 3.5",
-      "odds": "-165",
-      "implied": "62.3%",
+      "odds": "-160",
+      "implied": "61.5%",
       "model": "76.6%",
-      "edge": 14.3,
-      "ev_per_dollar": 0.2299,
+      "edge": 15.0,
+      "ev_per_dollar": 0.2445,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): SD 1.0, HOU 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.3%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
+      "notes": "Model (DRatings only): SD 1.0, HOU 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.0%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
       "sources": "DRatings only, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/34020944?outcomes=0OU84420652U350_3",
@@ -215,7 +215,7 @@
     {
       "sport": "NHL",
       "event": "DAL @ MIN",
-      "line": "MIN -125",
+      "line": "MIN -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -226,32 +226,14 @@
     },
     {
       "sport": "MLB",
-      "event": "CIN @ TB",
-      "line": "TB -143",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "HOU @ CLE",
-      "line": "CLE -168",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "BAL @ KC",
-      "line": "KC -136",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TOR @ LAA",
-      "line": "LAA -156",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "ATH @ SEA",
-      "line": "SEA -186",
+      "line": "SEA -192",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIL @ DET",
+      "line": "DET -136",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -269,13 +251,13 @@
     {
       "sport": "MLB",
       "event": "PHI @ CHC",
-      "line": "CHC -175",
+      "line": "CHC -186",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SD @ COL",
-      "line": "SD -156",
+      "line": "SD -163",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -293,7 +275,7 @@
     {
       "sport": "MLS",
       "event": "CIN @ NYC",
-      "line": "NYC -120",
+      "line": "NYC -115",
       "reason": "No model data"
     },
     {
@@ -317,7 +299,7 @@
     {
       "sport": "MLS",
       "event": "NE @ ATL",
-      "line": "ATL +125",
+      "line": "ATL +130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -327,52 +309,10 @@
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "EPL",
-      "event": "LEE @ BOU",
-      "line": "BOU -105",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "MNC @ BUR",
-      "line": "MNC -750",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "ATM @ ELC",
-      "line": "ELC +140",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "GET @ RSO",
-      "line": "RSO +120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "CEL @ BAR",
-      "line": "BAR -400",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "NAN @ PSG",
-      "line": "PSG -650",
-      "reason": "No model data"
-    },
-    {
       "sport": "MLB",
       "event": "NYY @ BOS",
       "line": "Boston Red Sox +1.5 (-149)",
       "reason": "Edge exists (5.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIL @ DET",
-      "line": "Milwaukee Brewers +1.5 (-194)",
-      "reason": "Edge exists (5.4%) but category exposure limit reached"
     },
     {
       "sport": "MLS",
