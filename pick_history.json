@@ -12631,9 +12631,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 3.6, LA 2.4 (margin: 1.2). -0.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 4, LA 2",
+    "pnl_if_bet": 16.0
   },
   {
     "scan_date": "2026-04-23",
@@ -12739,9 +12739,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 3.6, LA 2.4 (margin: 1.2). -0.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 4, LA 2",
+    "pnl_if_bet": 16.0
   },
   {
     "scan_date": "2026-04-23",
@@ -12847,9 +12847,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 3.6, LA 2.4 (margin: 1.2). -0.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 4, LA 2",
+    "pnl_if_bet": 16.0
   },
   {
     "scan_date": "2026-04-23",
