@@ -12991,9 +12991,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): EDM 3.4, ANA 3.7 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "EDM 4, ANA 7",
+    "pnl_if_bet": 4.88
   },
   {
     "scan_date": "2026-04-24",
@@ -13063,9 +13063,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): EDM 3.4, ANA 3.7 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "EDM 4, ANA 7",
+    "pnl_if_bet": 4.88
   },
   {
     "scan_date": "2026-04-24",
@@ -13171,9 +13171,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): EDM 3.4, ANA 3.7 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "EDM 4, ANA 7",
+    "pnl_if_bet": 4.88
   },
   {
     "scan_date": "2026-04-24",
