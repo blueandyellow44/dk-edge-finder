@@ -16,7 +16,7 @@
   },
   "games_analyzed": 17,
   "best_bet": {
-    "title": "Texas Rangers +1.5 (-118) \u2014 7.7% Edge (High Tier)",
+    "title": "Texas Rangers +1.5 (-120) \u2014 7.3% Edge (High Tier)",
     "desc": "Model (DRatings only + oddsshark + actionnetwork): NYY 4.2, TEX 3.5 (margin: 0.7). 0.8 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.3 pts (DRatings: ?, Dimers: ?). Lower confid"
   },
   "picks": [
@@ -27,11 +27,11 @@
       "event_short": "NYY @ TEX",
       "market": "Spread",
       "pick": "Texas Rangers +1.5",
-      "odds": "-118",
-      "implied": "54.1%",
+      "odds": "-120",
+      "implied": "54.5%",
       "model": "61.8%",
-      "edge": 7.7,
-      "ev_per_dollar": 0.1414,
+      "edge": 7.3,
+      "ev_per_dollar": 0.1328,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -46,15 +46,38 @@
     {
       "rank": 2,
       "sport": "MLB",
+      "event": "St. Louis Cardinals @ Pittsburgh Pirates",
+      "event_short": "STL @ PIT",
+      "market": "Spread",
+      "pick": "Pittsburgh Pirates +1.5",
+      "odds": "-194",
+      "implied": "66.0%",
+      "model": "74.5%",
+      "edge": 8.5,
+      "ev_per_dollar": 0.1284,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.1, PIT 4.5 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34055510?outcomes=0HC84518001P150_1",
+      "type": "game",
+      "start_time": "2026-04-27T22:40Z"
+    },
+    {
+      "rank": 3,
+      "sport": "MLB",
       "event": "Los Angeles Angels @ Chicago White Sox",
       "event_short": "LAA @ CHW",
       "market": "Spread",
       "pick": "Chicago White Sox +1.5",
-      "odds": "-163",
-      "implied": "62.0%",
+      "odds": "-175",
+      "implied": "63.6%",
       "model": "69.9%",
-      "edge": 7.9,
-      "ev_per_dollar": 0.1278,
+      "edge": 6.3,
+      "ev_per_dollar": 0.0984,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -65,29 +88,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/34055512?outcomes=0HC84518004P150_1",
       "type": "game",
       "start_time": "2026-04-27T23:40Z"
-    },
-    {
-      "rank": 3,
-      "sport": "MLB",
-      "event": "Chicago Cubs @ San Diego Padres",
-      "event_short": "CHC @ SD",
-      "market": "Spread",
-      "pick": "San Diego Padres +1.5",
-      "odds": "-184",
-      "implied": "64.8%",
-      "model": "70.6%",
-      "edge": 5.8,
-      "ev_per_dollar": 0.0891,
-      "tier": "High",
-      "bet": "$13.59",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): CHC 4.0, SD 4.0 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/34055516?outcomes=0HC84518009P150_1",
-      "type": "game",
-      "start_time": "2026-04-28T01:40Z"
     },
     {
       "rank": 4,
@@ -158,7 +158,7 @@
     {
       "sport": "NHL",
       "event": "VGK @ UTA",
-      "line": "VGK -115",
+      "line": "VGK -125",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -169,38 +169,20 @@
     },
     {
       "sport": "MLB",
-      "event": "STL @ PIT",
-      "line": "PIT -136",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "SEA @ MIN",
       "line": "SEA -131",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
+      "event": "CHC @ SD",
+      "line": "SD -120",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
       "event": "MIA @ LAD",
       "line": "LAD -314",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "BRE @ MAN",
-      "line": "MAN +100",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "LEV @ ESP",
-      "line": "ESP +115",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "UDI @ LAZ",
-      "line": "LAZ +105",
       "reason": "Edge below 3% threshold"
     }
   ],
