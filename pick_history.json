@@ -13801,9 +13801,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): EDM 3.4, ANA 3.7 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "EDM 3, ANA 4",
+    "pnl_if_bet": 4.88
   },
   {
     "scan_date": "2026-04-26",
@@ -14053,9 +14053,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): EDM 3.4, ANA 3.7 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "EDM 3, ANA 4",
+    "pnl_if_bet": 4.59
   },
   {
     "scan_date": "2026-04-26",
