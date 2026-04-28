@@ -14107,9 +14107,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAA 4.8, CHW 4.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAA 7, CHW 8",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-04-27",
@@ -14143,9 +14143,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): CHC 4.0, SD 4.0 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHC 7, SD 9",
+    "pnl_if_bet": 5.49
   },
   {
     "scan_date": "2026-04-27",
@@ -14197,9 +14197,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAA 4.8, CHW 4.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAA 7, CHW 8",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-04-27",
@@ -14215,9 +14215,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): CHC 4.0, SD 4.0 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHC 7, SD 9",
+    "pnl_if_bet": 5.43
   },
   {
     "scan_date": "2026-04-27",
@@ -14305,9 +14305,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAA 4.8, CHW 4.9 (margin: 0.1). 1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAA 7, CHW 8",
+    "pnl_if_bet": 5.71
   },
   {
     "scan_date": "2026-04-27",
