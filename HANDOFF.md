@@ -42,15 +42,30 @@ Rebuild the frontend of [dk-edge-finder.max-sheahan.workers.dev](https://dk-edge
    - Stale-stash awareness rule [MANUAL]
 5. **Three running docs created at repo root:** `lessons.md`, `HANDOFF.md` (this file), `CHANGELOG.md`.
 
-### Next step (Phase 0.4 in progress)
-**file-architect** skill is mid-interview. Q1 answered: new frontend folder is `frontend/`. Remaining ambiguous folder questions:
-- Where does the old `index.html` go during cohabitation? `legacy/index.html` or stay at root and route around it?
-- Where do shared TypeScript types live? `shared/`, `types/`, etc.
-- Worker layout: keep `worker/` and rewrite, or rename, or split into `worker/index.ts` + `worker/routes/*.ts`?
-- Where do design mockups live? Existing `mockups/` from 2026-04-10 stays or new `frontend/mockups/`?
-- Where do ADRs live? `docs/adr/`?
+### Phase 0.4 done (file-architect output)
+All 6 folder-architect questions answered, folder tree scaffolded, committed as `220170f chore(scaffold): pre-scaffold worker/, shared/, docs/adr/ folder tree`.
 
-Then file-architect pre-scaffolds the directory tree with placeholder files BEFORE we run `npm create vite`.
+Recorded answers:
+1. Frontend folder: `frontend/` (Vite scaffolds it in Phase 1, NOT pre-created here)
+2. Old `index.html`: stays at root during cohabitation, Worker routes around it
+3. Shared types: `shared/` at repo root
+4. Worker layout: keep folder name `worker/`, split into `worker/index.ts` + `worker/routes/` + `worker/middleware/` + `worker/lib/` (rewrite from .js to .ts in Phase 1)
+5. Mockups: existing `mockups/` keeps being the home, prefix new files with `v2-`
+6. ADRs: `docs/adr/0001-stack.md`, `0002-auth.md`, `0003-state-schema.md`
+
+Folders created with `.gitkeep`: `worker/routes/`, `worker/middleware/`, `worker/lib/`, `shared/`, `docs/adr/`. Existing `worker/index.js` untouched. Live site continues serving.
+
+### Next step (Phase 0.5)
+Invoke the **frontend-to-backend-requirements** skill. ~15-30 min of prompted questions (one at a time per Max's universal rule) to lock the API contract:
+- Which endpoints does the React app need? (`/api/me`, `/api/picks`, `/api/state`, `/api/place-bet`, `/api/balance-override`, etc.)
+- Request body shapes and Zod validators
+- Response shapes
+- Error codes and semantics
+- Cloudflare Access JWT header expectations
+
+Output is a spec the Hono worker is implemented against. Lands at `shared/schemas.ts` and `shared/types.ts`.
+
+Then Phase 0.6 (database-schema-designer for KV keys) and Phase 0.7 (write the 3 ADRs).
 
 ### Open backlog (from this session)
 - **Resolver `main()` cache-key bug.** I fixed both `main()` and `resolve_pick_history()`, but the placed-bet path in `main()` had a smaller related issue (extending instead of keying). Fixed. No further action.
