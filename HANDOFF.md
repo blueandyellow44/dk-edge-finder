@@ -12,16 +12,22 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30 PM, session 2)
+## What you are inheriting (2026-04-30 PM, end of session 2: Phase 0 closed)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. Previous sessions shipped two model fixes (resolver cache-key bug + NBA playoff discount), finished Phase 0.4 (folder-tree scaffold), Phase 0.5 (API contract locked in `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`), and Phase 0.6 (KV state schema in `docs/adr/0003-state-schema.md`). The rebuild branch `rebuild/v2-frontend` carries running docs + folder-tree + locked contract + state-schema ADR but zero implementation code. Live site unaffected.
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is fully closed.** All four sub-phases shipped:
+- Phase 0.4: folder-tree scaffold
+- Phase 0.5: API contract at `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`
+- Phase 0.6: KV state schema ADR at `docs/adr/0003-state-schema.md`
+- Phase 0.7: stack + auth ADRs at `docs/adr/0001-stack.md` and `docs/adr/0002-auth.md`
+
+Branch `rebuild/v2-frontend` is up to date with origin and ready for Phase 1 (implementation). Zero implementation code has shipped yet. Live site unaffected.
 
 ---
 
-## 2026-04-30 session 2 (PAUSED, mid-afternoon, resuming at Phase 0.7)
+## 2026-04-30 session 2 (PAUSED, end-of-session, ready for Phase 1)
 
 ### Goal
-Continue the v2 frontend rebuild. Phases 0.5 and 0.6 done. Next is Phase 0.7 (write ADRs 0001-stack and 0002-auth).
+Close Phase 0 of the v2 frontend rebuild. Done. Phase 1 (Vite scaffold + Hono routes + KV namespace + Cloudflare Access policy) starts in the next session.
 
 ### What shipped this session
 
@@ -61,20 +67,29 @@ Wrangler dev dev-server config exists in `.claude/launch.json` (alongside `site`
 ### Resolved this session
 Nothing model-side. Pure planning + ADR work.
 
-### Phase 0.6 done. Next is Phase 0.7
-Write the remaining two ADRs:
-- `docs/adr/0001-stack.md` (Vite + React + Hono on Cloudflare Workers; rationale, alternatives, consequences). Most of the content is in the plan file; mechanical to lift.
-- `docs/adr/0002-auth.md` (Cloudflare Access with Google IdP; how `cf-access-authenticated-user-email` flows; sign-out via `/cdn-cgi/access/logout`). Also mostly already decided; mechanical.
+### Phase 0.7 done. Phase 0 is closed.
+Wrote the remaining two ADRs directly (no skill needed; both decisions were already in the plan):
+- `docs/adr/0001-stack.md` (Vite + React + TypeScript; Hono on Cloudflare Workers; @cloudflare/vite-plugin for the dev loop; TanStack Query for server state; Zod for shared schemas; hand-rolled CSS). Alternatives rejected: Next.js, Remix, SvelteKit, plain HTML/JS, MUI, Tailwind.
+- `docs/adr/0002-auth.md` (Cloudflare Access with Google IdP; worker reads `cf-access-authenticated-user-email` from request header, lowercases in middleware before keying KV; sign-out via `/cdn-cgi/access/logout`). Alternatives rejected: Firebase Auth (tried in March, abandoned), Auth0/Clerk, custom OAuth, Sign in with Apple, anonymous.
 
-After Phase 0.7, Phase 0 is fully closed and Phase 1 (implementation) begins:
-- `npm create vite@latest frontend -- --template react-ts`
-- Add `@cloudflare/vite-plugin` and Hono
-- Configure `wrangler.jsonc` for cohabitation (new app under `/v2/*`, old `index.html` everywhere else)
-- Create the KV namespace (`wrangler kv:namespace create EDGE_STATE`) and bind it
-- Implement the route handlers per the locked contract
+Commit: `79287b3 chore(phase-0.7): add ADRs 0001 (stack) and 0002 (auth)`.
+
+### Next is Phase 1 (implementation)
+Phase 1 has no skill ceremony; it is real code. Sequence:
+1. From repo root: `npm create vite@latest frontend -- --template react-ts`. Vite scaffolds `frontend/`.
+2. `cd frontend && npm install` then `npm install -D @cloudflare/vite-plugin`. Configure `vite.config.ts` to use the plugin.
+3. Rewrite `worker/index.js` as `worker/index.ts` mounting Hono. Install `hono` + `zod`. Move route handlers into `worker/routes/*.ts` per the folder shape Phase 0.4 scaffolded.
+4. Create the KV namespace: `npx wrangler kv:namespace create EDGE_STATE`. Paste the namespace id into `wrangler.jsonc` under `kv_namespaces`. Also create `EDGE_STATE_PREVIEW` for `wrangler dev`.
+5. Add `worker/middleware/auth.ts` per ADR 0002. Mount via `app.use('/api/*', requireAuth)`.
+6. Implement the route handlers per the locked contract. Start with read paths (`/api/me`, `/api/picks`, `/api/bankroll`, `/api/state`), then write paths (`/api/state/*`, `/api/balance-override`, `/api/place-bet`).
+7. Configure the Cloudflare Access policy in the dashboard: app at `dk-edge-finder.max-sheahan.workers.dev/*`, IdP = Google, allow `max.sheahan@icloud.com`. Verify in a private browser window.
+8. Wire `wrangler.jsonc` for cohabitation: serve the new build under `/v2/*` and the old `index.html` everywhere else until cutover.
+9. Address the wrangler-dev `EMFILE` issue from this session: add `.assetsignore` to skip `dk-edge-finder-app/`, `pick_history.json`, dashboard HTML files, etc., OR pin `assets.directory` to a `frontend/dist/` subdir.
+
+Phase 2 (quality gate) and Phase 3 (cutover) follow per the plan file.
 
 ### If you just have one minute, do this
-Open `docs/adr/0003-state-schema.md` and confirm the KV decisions read correctly. If yes, invoke whatever you prefer (engineering:architecture skill or writing directly) to produce `0001-stack.md` and `0002-auth.md`.
+Open the three ADRs in `docs/adr/` to confirm they read correctly. Then run step 1 above (`npm create vite@latest frontend -- --template react-ts`) when you are ready to start Phase 1. The ADRs are the input; Phase 1 is the build.
 
 ---
 
