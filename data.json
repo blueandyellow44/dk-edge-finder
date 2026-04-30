@@ -39,19 +39,13 @@
     {
       "sport": "NHL",
       "event": "DAL @ MIN",
-      "line": "MIN -122",
+      "line": "MIN -130",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "EDM @ ANA",
       "line": "EDM -130",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "HOU @ BAL",
-      "line": "BAL -132",
       "reason": "Edge below 3% threshold"
     },
     {
