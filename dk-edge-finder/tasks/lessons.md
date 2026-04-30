@@ -1,5 +1,25 @@
 # DK Edge Finder — Lessons Learned
 
+## 2026-04-30: Resolver scoreboard cache must key on (sport, date), not sport alone [AUTOMATE - DONE]
+**Mistake:** scripts/resolve_bets.py cached fetched ESPN scoreboards under all_games[sport]. The first pending pick of each sport triggered a fetch for that pick's scan_date. Every subsequent pending pick of the same sport silently reused the same scoreboard regardless of its own date. find_game_score then could not locate games on other dates and the picks stayed pending forever.
+**Impact:** 110 NBA paper picks across April 5-29 were stuck pending for weeks. After fix, all resolved. Record went from 363W-257L to 415W-315L.
+**Rule:** Whenever caching API results in a loop that processes items spanning multiple parameter axes (sport, date, league), the cache key must include every axis the API call depends on. A cache key that loses information is a silent bug. Always test by running the resolver against a multi-date dataset.
+**Code fix:** scripts/resolve_bets.py both main() and resolve_pick_history() now key all_games by (sport, date_str). Lookup paths updated to compute date from each pending entry. Commits 8fd86b7 (code) + a3efced (data).
+**Pattern reinforcement of 2026-03-21 META:** Lessons must become code. This bug existed because the original cache key was a manual choice; a guard clause or unit test on the cache lookup would have caught it.
+
+## 2026-04-30 backlog: NBA model is unprofitable, needs a separate calibration pass [BACKLOG]
+**Observation:** With the resolver fix in place, NBA paper trading sits at 80W-98L (44.9%) with paper P/L -$252.63 over 178 picks. The buggy resolver was masking nearly 100 NBA losses. MLB and NHL are profitable (61.2% and 59.5% respectively). The NBA model is genuinely worse than the others, not just under-resolved.
+**Rule:** Until a targeted NBA calibration ships, treat NBA picks as paper-only. Do not increase NBA Kelly fraction. Consider raising NBA min-edge threshold from current 5% to 8%+ until per-bin hit rates clear break-even.
+**Added to:** lessons.md as [BACKLOG] for follow-up calibration work.
+
+## 2026-04-30 backlog: 5-8% edge bucket is below break-even [BACKLOG]
+**Observation:** With the resolver fix in place, the 5-8% edge bucket sits at 52.8% hit rate over 271 picks, paper P/L -$156.32. Implied break-even at -110 odds is 52.4%. The model has effectively zero edge in this bucket once vig is included.
+**Rule:** Consider raising base min-edge threshold from 5% to 8% globally. Or apply a graduated discount that pushes 5-8% edges below the bet-flagging threshold.
+
+## 2026-04-30: Stale stash from prior local sessions can pollute the working tree [MANUAL]
+**Mistake:** Today's `git stash && git pull --rebase && git stash pop` ritual popped a stash from a prior session even though the user had no local changes today. The stash contained 43 stale duplicate April 6 picks that landed in pick_history.json's working tree. Initially looked like real in-progress work but turned out to be debris.
+**Rule:** Before applying lesson 2026-03-22's `git stash pop`, run `git stash list` first. If there is already a stash entry, decide whether to drop it before adding a new one. The pop will replay an OLD stash, not necessarily today's work. Saved the stale data to /tmp/dk-edge-stashed-april-6-props.json for reference.
+
 ## 2026-03-22: Always git pull --rebase before pushing when automated scans are running
 **Mistake:** Every push from local fails with "non-fast-forward" because GitHub Actions game-scan and morning-scan workflows commit to main between local work sessions. This has now happened 3+ times.
 **Rule:** ALWAYS run `git stash && git pull --rebase && git stash pop` before pushing. Automated scans commit data.json changes to remote main every few hours. Local will always be behind. If data.json conflicts during rebase, take `--theirs` (remote) since the next scan regenerates it anyway. Tell Max this upfront every time, not after the push fails.
