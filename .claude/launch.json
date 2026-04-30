@@ -2,21 +2,21 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "DK Edge Finder (Vite Dev)",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "dk-edge-finder-app"],
-      "port": 5173
+      "name": "wrangler-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/maxsheahan/Betting Skill' && exec npx wrangler dev --port 8787"],
+      "port": 8787
     },
     {
       "name": "site",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080"],
+      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "/Users/maxsheahan/Betting Skill"],
       "port": 8080
     },
     {
       "name": "mockups",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8090"],
+      "runtimeArgs": ["-m", "http.server", "8090", "--directory", "/Users/maxsheahan/Betting Skill/mockups"],
       "port": 8090
     }
   ]
