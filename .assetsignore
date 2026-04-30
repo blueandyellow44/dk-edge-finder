@@ -1,0 +1,29 @@
+# Default-deny posture: exclude everything in the assets directory.
+# Re-include below ONLY files the worker actually serves.
+#
+# Why default-deny:
+#   1. wrangler.jsonc has assets.directory = "." for cohabitation. Without
+#      this file, wrangler watches the entire repo (node_modules + .git +
+#      .claude/worktrees/* + scripts/ + Python __pycache__) and crashes
+#      with EMFILE: too many open files (lessons.md 2026-04-30).
+#   2. pick_history.json is 535 KB of model calibration data and was
+#      previously served on the public URL with no purpose. Stops now.
+#   3. Defense-in-depth against future repo additions accidentally
+#      becoming public.
+#
+# .gitignore-style syntax. wrangler skips dotfiles (.env, .git/) by
+# default, so they are not enumerated here.
+*
+
+# Files the v2 worker serves:
+#   - index.html: legacy single-file SPA (kept until Phase 3 cutover)
+#   - data.json:  read by /api/picks via the ASSETS binding (lib/picks.ts)
+#   - bankroll.json: read by /api/bankroll via the ASSETS binding (lib/bankroll.ts)
+!index.html
+!data.json
+!bankroll.json
+
+# When the v2 SPA cuts over (Phase 3), the cleanest path is to switch
+# wrangler.jsonc `assets.directory` to `frontend/dist` and rewrite this
+# file. gitignore-style re-includes across deeply nested paths are
+# fragile because excluded parent directories cannot be re-entered.
