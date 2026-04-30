@@ -12,15 +12,71 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30 PM, end of session 2: Phase 0 closed)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 steps 1-2)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is fully closed.** All four sub-phases shipped:
-- Phase 0.4: folder-tree scaffold
-- Phase 0.5: API contract at `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`
-- Phase 0.6: KV state schema ADR at `docs/adr/0003-state-schema.md`
-- Phase 0.7: stack + auth ADRs at `docs/adr/0001-stack.md` and `docs/adr/0002-auth.md`
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
 
-Branch `rebuild/v2-frontend` is up to date with origin and ready for Phase 1 (implementation). Zero implementation code has shipped yet. Live site unaffected.
+Phase 1 step status (sequence per the bottom of session 2 below):
+- [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
+- [x] **Step 2**: `@cloudflare/vite-plugin` v1.35.0 installed; `frontend/vite.config.ts` wired with `cloudflare({ configPath: '../wrangler.jsonc' })`.
+- [ ] Step 3: rewrite `worker/index.js` as `worker/index.ts` mounting Hono.
+- [ ] Step 4: create EDGE_STATE + EDGE_STATE_PREVIEW KV namespaces.
+- [ ] Step 5: auth middleware.
+- [ ] Step 6: read routes.
+- [ ] Step 7: write routes.
+- [ ] Step 8: Cloudflare Access policy in dashboard.
+- [ ] Step 9: cohabitation routing + `.assetsignore` to fix EMFILE.
+
+Branch `rebuild/v2-frontend` is up to date with origin. Live site unaffected.
+
+---
+
+## 2026-04-30 session 3 (IN PROGRESS, Phase 1 implementation)
+
+### Goal
+Land Phase 1: scaffold the Vite app, wire Hono in TypeScript, create the KV namespace, ship the auth middleware and route handlers, configure Cloudflare Access. Live site stays untouched throughout.
+
+### What shipped this session so far
+
+**Phase 1 step 1 (scaffold).** Ran `npx -y create-vite@latest frontend --template react-ts` from repo root. Output: `frontend/` with React 19.2.5, Vite 8.0.10, TypeScript 6.0.2, ESLint 10. `frontend/.gitignore` covers `node_modules/` and `dist/`. The repo's root `.gitignore` also covers them; double-coverage is fine.
+
+**Phase 1 step 2 (Cloudflare plugin + vite.config).** `npm install` then `npm install -D @cloudflare/vite-plugin` in `frontend/` (190 packages total, 0 vulns). Installed version `@cloudflare/vite-plugin@1.35.0`. The plugin exports a named `cloudflare(pluginConfig?: PluginConfig): vite.Plugin[]`; `PluginConfig` extends `EntryWorkerConfig` which includes `configPath?: string`.
+
+`frontend/vite.config.ts` final shape:
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { cloudflare } from '@cloudflare/vite-plugin'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    cloudflare({ configPath: '../wrangler.jsonc' }),
+  ],
+})
+```
+
+`tsc --noEmit` clean against both `tsconfig.app.json` and `tsconfig.node.json`. Did NOT yet attempt `npm run dev` because step 9 (`.assetsignore` + `assets.directory` fix) still needs to land before `wrangler dev` can start without EMFILE.
+
+**Decisions locked in this session (carried forward into HANDOFF):**
+
+1. **Single `package.json`, located at `frontend/`.** All deps (frontend AND worker) live in `frontend/package.json`. Per ADR 0001's repo-layout block. The cloudflare-vite-plugin will bundle the worker via Vite using the same node_modules tree, so `hono` and `zod` (added in step 3) get installed there too. No root `package.json`, no workspaces.
+2. **wrangler.jsonc stays at the repo root.** Vite plugin reads it from `../wrangler.jsonc`. The worker entry path inside it (`main: "worker/index.js"` today, will become `worker/index.ts` in step 3) resolves relative to wrangler.jsonc's own directory (root), so existing path stays correct.
+
+### Open questions surfaced this session (to address before step 7)
+
+- **Legacy `/api/place-bets` (plural) vs new `/api/place-bet` (singular).** The existing Worker at `worker/index.js` exposes `/api/place-bets`. The locked contract calls for `/api/place-bet` with idempotency. Plan: keep both working through cohabitation. Old `index.html` keeps hitting `/api/place-bets`; new v2 frontend hits `/api/place-bet`. After cutover, deprecate the plural. Worth confirming with Max before writing the singular endpoint in step 7.
+
+### What's next (continue here on resume)
+
+Step 3: rewrite `worker/index.js` as `worker/index.ts` mounting Hono.
+1. From `frontend/`: `npm install hono zod`.
+2. Update `wrangler.jsonc` `main` to `worker/index.ts`.
+3. Write `worker/index.ts` as a Hono app that mirrors current behavior (handles `/api/place-bets` plural and `/api/health`, falls through to `env.ASSETS.fetch(request)` for everything else).
+4. Move the existing place-bets handler to `worker/routes/place-bets-legacy.ts` (or similar). Keep behavior identical.
+5. `tsc --noEmit` from frontend/ should still pass with the worker source under `../worker/` reachable.
+
+Then Step 4 (KV namespace creation), Step 5 (auth middleware), Steps 6-7 (routes), Step 8 (Access dashboard config), Step 9 (cohabitation + .assetsignore).
 
 ---
 
