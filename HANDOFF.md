@@ -12,13 +12,61 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30 PM)
+## What you are inheriting (2026-04-30 PM, session 2)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. The previous session shipped two model fixes (resolver cache-key bug + NBA playoff discount) and finished Phase 0.4 of an approved frontend rebuild plan. The rebuild branch `rebuild/v2-frontend` carries running docs and a folder-tree scaffold but zero implementation code. Live site is unaffected by the rebuild work. Today's `data.json` shows 0 picks because the patched scan correctly hard-skipped the playoff-bait NBA OVER and MLB lines moved.
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. Previous sessions shipped two model fixes (resolver cache-key bug + NBA playoff discount), finished Phase 0.4 (folder-tree scaffold), and now Phase 0.5 (API contract locked in `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`). The rebuild branch `rebuild/v2-frontend` carries running docs + folder-tree + locked contract but zero implementation code. Live site unaffected.
 
 ---
 
-## 2026-04-30 session 1 (PAUSED, ~13:00 PT, resuming at Phase 0.5)
+## 2026-04-30 session 2 (PAUSED, mid-afternoon, resuming at Phase 0.6)
+
+### Goal
+Continue the v2 frontend rebuild. Phase 0.5 (API contract) is locked. Next is Phase 0.6 (database-schema-designer skill for KV key shapes).
+
+### What shipped this session
+**Phase 0.5: API contract locked.** Ran the `frontend-to-backend-requirements` skill in a 7-question prompted interview. Output at `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`.
+
+Decisions (all 7 confirmed via AskUserQuestion):
+1. **v2 UX scope**: like-for-like rebuild + auth + cross-device sync. Same 5 tabs, same actions per tab.
+2. **Scan-date navigation**: latest scan only, no date picker. /api/picks does not need a scan_date param.
+3. **5th tab**: renamed Settings → **Account**. Scope: identity, balance override, sign-out, lifetime stats. No model config.
+4. **Sync conflict**: append-merge. Frontend POSTs single events; worker merges into KV. No whole-state PUTs.
+5. **Place-bet failure UX**: "queued for retry" badge per row, KV-backed sync_queue, cross-device synced. Retry Now button.
+6. **/api/picks shape**: reshape into clean v2 types. Worker normalizes numerics, drops redundant fields, strips em-dashes.
+7. **Manual bets**: same narrow scope as today (Place button on rejected no-edge rows + wager prompt). No freeform off-platform logging.
+
+Suggested endpoint surface (subject to backend confirmation in Phase 1):
+- `GET /api/me`, `GET /api/picks`, `GET /api/bankroll`, `GET /api/state`
+- `POST /api/state/placements`, `DELETE /api/state/placements/:key`
+- `POST /api/state/manual-bets`, `DELETE /api/state/manual-bets/:id`
+- `POST /api/state/sync-queue/retry`
+- `POST /api/balance-override`
+- `POST /api/place-bet` (existing GitHub dispatch + idempotency token)
+
+### Pre-flight ran
+`git stash list` empty before pull. `git fetch && git pull --rebase` clean (already up to date). Branch is 5 ahead of origin/main, 0 behind, so no rebase needed yet. Stash list confirmed empty afterward.
+
+### Resolved this session
+Nothing model-side. Pure planning work.
+
+### Phase 0.5 done. Next is Phase 0.6
+Invoke the **database-schema-designer** skill to design the KV key shape for `EDGE_STATE`. Likely keys (per HANDOFF + the locked contract):
+- `state:{email}:{scan_date}` → `{ placements[], sync_queue[], manual_bets[], updated_at }`
+- `balance_override:{email}` → `{ amount, note, updated_at }`
+
+Result lands in `docs/adr/0003-state-schema.md` (file path already scaffolded in Phase 0.4).
+
+Then Phase 0.7: write the three ADRs via the `engineering:architecture` skill (or write directly):
+- `0001-stack.md` (Vite + React + Hono)
+- `0002-auth.md` (Cloudflare Access)
+- `0003-state-schema.md` (KV, populated from Phase 0.6 output)
+
+### If you just have one minute, do this
+Open `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`. Confirm the 7 locked decisions match what's in your head. If yes, invoke `database-schema-designer` skill with the contract as input.
+
+---
+
+## 2026-04-30 session 1 (paused earlier, ~13:00 PT, picked up by session 2)
 
 ### Goal
 Rebuild the frontend of [dk-edge-finder.max-sheahan.workers.dev](https://dk-edge-finder.max-sheahan.workers.dev/) with real Google auth and cross-device state. Python model + GitHub Actions cron stay untouched.
@@ -83,20 +131,14 @@ Recorded answers:
 
 Folders created with `.gitkeep`: `worker/routes/`, `worker/middleware/`, `worker/lib/`, `shared/`, `docs/adr/`. Existing `worker/index.js` untouched. Live site continues serving from it.
 
-### If you just have one minute, do this
-Run Phase 0.5: invoke the **frontend-to-backend-requirements** skill to lock the API contract. The skill prompts ~6 to 10 questions one at a time. Output is the spec the Hono worker is implemented against, landing as code in `shared/schemas.ts` and `shared/types.ts` during Phase 1. Before invoking the skill, confirm you are on `rebuild/v2-frontend` and run `git stash list && git pull --rebase` to bring the branch up to date with any cron commits.
-
-### Next step (Phase 0.5)
-Endpoints expected (subject to skill confirmation):
-- `GET /api/me` returns `{ email, picture_url }` from the Cloudflare Access JWT header
-- `GET /api/picks?scan_date=...` proxies the static `data.json`
-- `GET /api/bankroll` returns `bankroll.json`
-- `GET /api/state?scan_date=...` returns the user's KV record
-- `POST /api/state` upserts placements + sync_queue + manual_bets
-- `POST /api/balance-override` writes the user's balance override into KV
-- `POST /api/place-bet` keeps the existing GitHub-dispatch behavior
-
-Then Phase 0.6 (database-schema-designer for KV keys) and Phase 0.7 (write the 3 ADRs via engineering:architecture skill).
+### Phase 0.5 (closed in session 2)
+Was: invoke the `frontend-to-backend-requirements` skill, lock the API contract. Done. Locked decisions and the 11 suggested endpoints (more than the original 7-endpoint sketch below) live in `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`. The original endpoint sketch from this session-1 record is superseded:
+- `GET /api/me`, `GET /api/picks`, `GET /api/bankroll`, `GET /api/state` (no scan_date param needed by default, Q2)
+- `POST /api/state/placements`, `DELETE /api/state/placements/:key` (append-merge, Q4)
+- `POST /api/state/manual-bets`, `DELETE /api/state/manual-bets/:id`
+- `POST /api/state/sync-queue/retry` (cross-device retry, Q5)
+- `POST /api/balance-override`
+- `POST /api/place-bet` (idempotency token added; addresses HIGH backlog)
 
 ### Open backlog (priorities are proposals, correct as needed)
 
