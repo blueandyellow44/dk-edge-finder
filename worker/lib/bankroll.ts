@@ -1,9 +1,7 @@
 import type { Env } from '../env'
-import {
-  BankrollResponseSchema,
-  BalanceOverrideRecordSchema,
-} from '../../shared/schemas'
+import { BankrollResponseSchema } from '../../shared/schemas'
 import type { BankrollResponse } from '../../shared/types'
+import { getBalanceOverride } from './state'
 
 type BankrollFileShape = {
   starting_bankroll?: unknown
@@ -28,22 +26,8 @@ async function loadBankrollFile(env: Env): Promise<BankrollFileShape> {
   return (await res.json()) as BankrollFileShape
 }
 
-function balanceOverrideKey(email: string): string {
-  return `balance_override:${email}`
-}
-
-async function readUserOverride(env: Env, email: string) {
-  const raw = await env.EDGE_STATE.get(balanceOverrideKey(email))
-  if (!raw) return null
-  try {
-    return BalanceOverrideRecordSchema.parse(JSON.parse(raw))
-  } catch {
-    return null
-  }
-}
-
 export async function getBankrollResponse(env: Env, email: string): Promise<BankrollResponse> {
-  const [file, userOverride] = await Promise.all([loadBankrollFile(env), readUserOverride(env, email)])
+  const [file, userOverride] = await Promise.all([loadBankrollFile(env), getBalanceOverride(env, email)])
 
   const starting = num(file.starting_bankroll, 0)
   const lifetimeProfit = num(file.lifetime_profit, 0)

@@ -13,6 +13,12 @@ import type {
   StateRecordSchema,
   BalanceOverrideRecordSchema,
   StateResponseSchema,
+  PlacementCreateRequestSchema,
+  ManualBetCreateRequestSchema,
+  SyncQueueRetryRequestSchema,
+  BalanceOverrideRequestSchema,
+  PlaceBetRequestSchema,
+  PlaceBetResponseSchema,
 } from './schemas'
 
 export type Pick = z.infer<typeof PickSchema>
@@ -31,3 +37,10 @@ export type ManualBet = z.infer<typeof ManualBetSchema>
 export type StateRecord = z.infer<typeof StateRecordSchema>
 export type BalanceOverrideRecord = z.infer<typeof BalanceOverrideRecordSchema>
 export type StateResponse = z.infer<typeof StateResponseSchema>
+
+export type PlacementCreateRequest = z.infer<typeof PlacementCreateRequestSchema>
+export type ManualBetCreateRequest = z.infer<typeof ManualBetCreateRequestSchema>
+export type SyncQueueRetryRequest = z.infer<typeof SyncQueueRetryRequestSchema>
+export type BalanceOverrideRequest = z.infer<typeof BalanceOverrideRequestSchema>
+export type PlaceBetRequest = z.infer<typeof PlaceBetRequestSchema>
+export type PlaceBetResponse = z.infer<typeof PlaceBetResponseSchema>
