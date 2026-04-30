@@ -12,7 +12,7 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 5)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 6)
 
 A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
 
@@ -21,13 +21,13 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 2**: `@cloudflare/vite-plugin` v1.35.0 installed and wired.
 - [x] **Step 3**: `worker/index.js` rewritten as `worker/index.ts` mounting Hono 4.12.16. Layout restructured: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` moved from `frontend/` up to the repo root. Vite uses `root: 'frontend'`. ADR 0001 amended to match.
 - [x] **Step 4**: `EDGE_STATE` KV namespace created (id `7dca36afc97d4d86bebed2e2948d6e83`), bound in `wrangler.jsonc`, types regenerated. Skipped a separate preview namespace; the Cloudflare Vite plugin uses miniflare for local dev.
-- [x] **Step 5**: `worker/middleware/auth.ts` shipped (per ADR 0002). Defined but **not yet mounted** in `worker/index.ts`. Mount lands in step 6 alongside the first v2 read route, so the legacy `/api/place-bets` path stays public until Cloudflare Access goes live in step 8.
-- [ ] Step 6: read routes.
+- [x] **Step 5**: `worker/middleware/auth.ts` shipped (per ADR 0002). Defined but not yet mounted in `worker/index.ts` at the time. Mount landed in step 6.
+- [x] **Step 6**: Zod schemas in `shared/schemas.ts`, type re-exports in `shared/types.ts`, helper libs in `worker/lib/{picks,bankroll,state}.ts`, four read routes in `worker/routes/{me,picks,bankroll,state}.ts`. `requireAuth` mounted on each v2 route (`app.use('*', requireAuth)`). Legacy `/api/health` and `/api/place-bets` mount FIRST in `worker/index.ts` so they stay public until Access goes live in step 8. `npx tsc -b` clean. Live smoke deferred to step 9 (EMFILE blocks `wrangler dev`).
 - [ ] Step 7: write routes.
 - [ ] Step 8: Cloudflare Access policy in dashboard.
 - [ ] Step 9: cohabitation routing + `.assetsignore` to fix EMFILE.
 
-Branch `rebuild/v2-frontend` is **5 commits ahead of origin**, not yet pushed. Live site unaffected.
+Branch `rebuild/v2-frontend` is ahead of origin (8 commits after step 6 commits), not yet pushed. Live site unaffected.
 
 ---
 
@@ -157,21 +157,53 @@ new Hono<{ Bindings: Env; Variables: Variables }>()
 
 **Not yet mounted in `worker/index.ts`.** Mounting on `/api/*` would 401 the legacy `/api/place-bets` path that the live `index.html` still calls (the live site does not yet route through Cloudflare Access, so it has no `cf-access-authenticated-user-email` header). Step 6 will mount `requireAuth` on each new v2 read route as it lands. Once Cloudflare Access is configured in step 8, the same header will populate for legacy traffic too, but until then the cohabitation worker has to keep legacy paths public.
 
+### Phase 1 step 6 (read routes + shared schemas): what shipped
+
+**`shared/schemas.ts`** — Zod 4 schemas for the locked contract. One block per concern:
+- `PickSchema` (v2 normalized output), `NoEdgeGameSchema`, `BestBetSchema`, `PicksResponseSchema`.
+- `LifetimeStatsSchema`, `BankrollResponseSchema`.
+- `MeResponseSchema`.
+- `PlacementSchema`, `SyncQueueEntrySchema`, `ManualBetSchema`, `StateRecordSchema`, `BalanceOverrideRecordSchema`, `StateResponseSchema`.
+
+Schema choices grounded in the actual emit shape from `scripts/scan_edges.py:1968-1990`:
+- Q6 normalization is opinionated. The Python model emits `implied: "35.7%"` (string with %) and `bet: "$11.41"` (formatted dollars). The schema requires `implied: number` and `wager: number`; the normalizer in `worker/lib/picks.ts` does the coercion. `event_short` and the empty `status`/`result` fields are dropped at the boundary.
+- Em-dash strip is universal across every string the worker returns (per the contract's "Display contracts" section, which is a hard rule, not a suggestion).
+- Used Zod 4's top-level `z.iso.date()` and `z.iso.datetime({ offset: true })` for ISO date/timestamp validation; `z.string().email()` is deprecated in v4.
+
+**`shared/types.ts`** — `import type { z } from 'zod'` plus `import type { ... } from './schemas'`, then `type Pick = z.infer<typeof PickSchema>` etc. for every schema. Worker and (future) frontend share these types from one source.
+
+**`worker/lib/picks.ts`** — `loadDataJson(env)`, `getLatestScanDate(env)`, `getPicksResponse(env)`. Reads `/data.json` via `c.env.ASSETS.fetch(new Request('https://assets.local/data.json'))`. `scan_age_seconds` is derived from the response's `Last-Modified` header (null if absent). Coercion helpers: `coerceNumberPercent` (strips `%`), `coerceNumberDollars` (strips `$`), `coerceOddsString` (number → American format string with `+`/`-` prefix), `stripEmDash` (replaces `—` with `-` everywhere). Final `PicksResponseSchema.parse()` validates the normalized shape before returning, so a model regression that breaks the contract surfaces as a 500 with a Zod error rather than malformed JSON.
+
+**`worker/lib/bankroll.ts`** — `getBankrollResponse(env, email)`. Reads `/bankroll.json` via ASSETS in parallel with the per-user `balance_override:<email>` KV record. If the user has a KV override, that wins for both `available` and the `balance_override` envelope; otherwise `available` falls back to `current_bankroll` from the file and `balance_override` is `null`. Lifetime stats always come from the file.
+
+**`worker/lib/state.ts`** — `readState(env, email, scan_date)`, `writeState(env, record)`, `appendPlacement(env, email, scan_date, p)`, `appendManualBet(env, email, scan_date, b)`, `upsertSyncQueueEntry(env, email, scan_date, entry)`. Append-merge semantics with idempotency-key dedupe per ADR 0003. The append helpers will land in active use during step 7 (write routes); they are written now so the lib layer stays cohesive.
+
+**`worker/routes/me.ts`** — JWT decode of `cf-access-jwt-assertion` (no signature verification; Access already guards the path per ADR 0002 Section "What we accept"). Extracts `picture` claim if present, falls back to `null`. Returns `{ email, picture_url }`.
+
+**`worker/routes/picks.ts`** — thin: calls `getPicksResponse(c.env)`, returns it.
+
+**`worker/routes/bankroll.ts`** — thin: calls `getBankrollResponse(c.env, c.get('email'))`, returns it.
+
+**`worker/routes/state.ts`** — reads latest `scan_date` from `data.json`, then `readState(env, email, scan_date)`. If null, returns empty arrays + `updated_at: null` (per the open-question default in `backend-requirements.md`). Includes `scan_date` in the response so the frontend can display which scan the state belongs to.
+
+**Mount order in `worker/index.ts`** — legacy `/api/health` and `/api/place-bets` mount FIRST so the live `index.html` keeps working without a Cloudflare Access header. v2 read routes mount after; each route's own `app.use('*', requireAuth)` provides the 401 gate. Once Access goes live in step 8, the same header will populate for legacy traffic too and we can either tighten the legacy routes or leave them as the cohabitation fallback.
+
+`npx tsc -b` clean. Manual `wrangler dev` smoke deferred to after step 9 (EMFILE).
+
+### Decisions locked at the step 6 / step 7 handoff
+
+- **Singular `/api/place-bet` vs plural `/api/place-bets`** — Max confirmed (2026-04-30, end of step 6): **both coexist during cohabitation.** Legacy plural stays wired for the live `index.html`. The new singular endpoint adds idempotency via a client-generated UUID in the request body. Plural deprecates after cutover (step 9 / Phase 3 territory).
+
 ### What's next (continue here on resume)
 
-Step 6: implement the four read routes per the locked contract at [`backend-requirements.md`](.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md).
+Step 7: implement the write routes per the locked contract.
 
-1. **Decide before writing the singular `/api/place-bet`**: confirm with Max that the legacy plural `/api/place-bets` should keep its current shape (no idempotency, JS port preserved) and the new singular endpoint adds idempotency via a client-generated UUID. Open question is in the section above.
-2. Author Zod schemas in `shared/schemas.ts` for the contract (`Pick`, `NoEdgeGame`, `Placement`, `SyncQueueEntry`, `ManualBet`, `BalanceOverride`, response envelopes for `/api/me`, `/api/picks`, `/api/bankroll`, `/api/state`).
-3. Author `shared/types.ts` re-exporting Zod-inferred TS types so frontend and worker stay in sync.
-4. Add `worker/lib/state.ts` with `readState(email, scan_date)`, `writeState(...)`, `appendPlacement(...)`, `appendManualBet(...)` per ADR 0003. Centralizes the read-modify-write logic so routes stay thin.
-5. Add `worker/lib/picks.ts` to read `data.json` from the ASSETS binding, normalize it per Q6 of the contract (numeric coercions, drop redundant fields, strip em-dashes), and return the v2 shape.
-6. Add `worker/lib/bankroll.ts` to read `bankroll.json` and merge with the per-user `balance_override:<email>` KV record.
-7. Add `worker/routes/me.ts`, `worker/routes/picks.ts`, `worker/routes/bankroll.ts`, `worker/routes/state.ts`. Each starts with `app.use('*', requireAuth)`.
-8. Mount in `worker/index.ts` AFTER the legacy routes so the legacy /api/health and /api/place-bets paths keep first-match precedence.
-9. `npx tsc -b` clean. Manual smoke: hit each route locally with the dev mock from ADR 0002 ("Local dev" section) injecting a fake `cf-access-authenticated-user-email`. Step 9's EMFILE fix needs to land first if `wrangler dev` is required for that smoke.
+1. Author `worker/routes/state-placements.ts`, `state-manual-bets.ts`, `state-sync-queue.ts`, `balance-override.ts`, `place-bet.ts` (singular). All mount `app.use('*', requireAuth)` and use the lib helpers from step 6.
+2. Idempotency convention: client-generated UUID v7 in the request body's `idempotency_key`. Worker dedupes on append. Same convention for every POST.
+3. Mount each new route in `worker/index.ts` AFTER the read routes from step 6, before the catch-all ASSETS handler.
+4. `npx tsc -b` clean. Smoke deferred to post-step-9 unless the EMFILE fix lands first.
 
-Then Step 7 (write routes including the singular `/api/place-bet` with idempotency), Step 8 (Cloudflare Access dashboard config), Step 9 (cohabitation + .assetsignore).
+Then Step 8 (Cloudflare Access dashboard config), Step 9 (cohabitation + `.assetsignore` for EMFILE).
 
 ---
 
