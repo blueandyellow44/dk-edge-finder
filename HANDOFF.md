@@ -14,22 +14,23 @@ Before any project-specific work, the next thread must load these:
 
 ## What you are inheriting (2026-04-30 PM, session 2)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. Previous sessions shipped two model fixes (resolver cache-key bug + NBA playoff discount), finished Phase 0.4 (folder-tree scaffold), and now Phase 0.5 (API contract locked in `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`). The rebuild branch `rebuild/v2-frontend` carries running docs + folder-tree + locked contract but zero implementation code. Live site unaffected.
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. Previous sessions shipped two model fixes (resolver cache-key bug + NBA playoff discount), finished Phase 0.4 (folder-tree scaffold), Phase 0.5 (API contract locked in `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`), and Phase 0.6 (KV state schema in `docs/adr/0003-state-schema.md`). The rebuild branch `rebuild/v2-frontend` carries running docs + folder-tree + locked contract + state-schema ADR but zero implementation code. Live site unaffected.
 
 ---
 
-## 2026-04-30 session 2 (PAUSED, mid-afternoon, resuming at Phase 0.6)
+## 2026-04-30 session 2 (PAUSED, mid-afternoon, resuming at Phase 0.7)
 
 ### Goal
-Continue the v2 frontend rebuild. Phase 0.5 (API contract) is locked. Next is Phase 0.6 (database-schema-designer skill for KV key shapes).
+Continue the v2 frontend rebuild. Phases 0.5 and 0.6 done. Next is Phase 0.7 (write ADRs 0001-stack and 0002-auth).
 
 ### What shipped this session
-**Phase 0.5: API contract locked.** Ran the `frontend-to-backend-requirements` skill in a 7-question prompted interview. Output at `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`.
+
+**Phase 0.5: API contract locked.** Ran the `frontend-to-backend-requirements` skill in a 7-question prompted interview. Output at `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`. Two commits: `728d93c` (doc + launch.json), `467d23b` (HANDOFF update).
 
 Decisions (all 7 confirmed via AskUserQuestion):
 1. **v2 UX scope**: like-for-like rebuild + auth + cross-device sync. Same 5 tabs, same actions per tab.
 2. **Scan-date navigation**: latest scan only, no date picker. /api/picks does not need a scan_date param.
-3. **5th tab**: renamed Settings → **Account**. Scope: identity, balance override, sign-out, lifetime stats. No model config.
+3. **5th tab**: renamed Settings to **Account**. Scope: identity, balance override, sign-out, lifetime stats. No model config.
 4. **Sync conflict**: append-merge. Frontend POSTs single events; worker merges into KV. No whole-state PUTs.
 5. **Place-bet failure UX**: "queued for retry" badge per row, KV-backed sync_queue, cross-device synced. Retry Now button.
 6. **/api/picks shape**: reshape into clean v2 types. Worker normalizes numerics, drops redundant fields, strips em-dashes.
@@ -43,26 +44,37 @@ Suggested endpoint surface (subject to backend confirmation in Phase 1):
 - `POST /api/balance-override`
 - `POST /api/place-bet` (existing GitHub dispatch + idempotency token)
 
+**Phase 0.6: KV state schema.** Wrote `docs/adr/0003-state-schema.md` directly (the database-schema-designer skill is SQL-focused; relevant context fit in the ADR). Decisions:
+- KV namespace `EDGE_STATE`, two key prefixes: `state:<email>:<scan_date>` and `balance_override:<email>`.
+- Email is lowercased in keys (Cloudflare Access returns whatever case Google sent).
+- `scan_date` is ISO `YYYY-MM-DD`. Lex sort equals chrono sort, list-by-prefix comes for free.
+- Value blobs carry `schema_version: 1`. Future shape changes upgrade in-place on read.
+- No TTL (records are tiny, late-resolving bets need to stick around).
+- Append-merge with client-generated idempotency keys for dedupe.
+- Alternatives considered (rejected): D1, per-event keys, Durable Objects, storing state in data.json (the cron would clobber it; the bets[] sanctity rule from lessons.md 2026-03-18 explicitly protects against that pattern).
+
+Wrangler dev dev-server config exists in `.claude/launch.json` (alongside `site` on 8080 and `mockups` on 8090) but currently fails with `EMFILE: too many open files, watch` because `assets.directory: "."` makes wrangler watch the entire repo (node_modules + 535 kB pick_history.json). Documented in commit `728d93c`. Fix is a Phase-1 concern (add `.assetsignore` or pin assets to a `public/` subdir). Skipped for this session per Max's call.
+
 ### Pre-flight ran
-`git stash list` empty before pull. `git fetch && git pull --rebase` clean (already up to date). Branch is 5 ahead of origin/main, 0 behind, so no rebase needed yet. Stash list confirmed empty afterward.
+`git stash list` empty before pull. `git fetch && git pull --rebase` clean (already up to date). Branch was 5 ahead of origin/main, 0 behind. Stash list confirmed empty afterward.
 
 ### Resolved this session
-Nothing model-side. Pure planning work.
+Nothing model-side. Pure planning + ADR work.
 
-### Phase 0.5 done. Next is Phase 0.6
-Invoke the **database-schema-designer** skill to design the KV key shape for `EDGE_STATE`. Likely keys (per HANDOFF + the locked contract):
-- `state:{email}:{scan_date}` → `{ placements[], sync_queue[], manual_bets[], updated_at }`
-- `balance_override:{email}` → `{ amount, note, updated_at }`
+### Phase 0.6 done. Next is Phase 0.7
+Write the remaining two ADRs:
+- `docs/adr/0001-stack.md` (Vite + React + Hono on Cloudflare Workers; rationale, alternatives, consequences). Most of the content is in the plan file; mechanical to lift.
+- `docs/adr/0002-auth.md` (Cloudflare Access with Google IdP; how `cf-access-authenticated-user-email` flows; sign-out via `/cdn-cgi/access/logout`). Also mostly already decided; mechanical.
 
-Result lands in `docs/adr/0003-state-schema.md` (file path already scaffolded in Phase 0.4).
-
-Then Phase 0.7: write the three ADRs via the `engineering:architecture` skill (or write directly):
-- `0001-stack.md` (Vite + React + Hono)
-- `0002-auth.md` (Cloudflare Access)
-- `0003-state-schema.md` (KV, populated from Phase 0.6 output)
+After Phase 0.7, Phase 0 is fully closed and Phase 1 (implementation) begins:
+- `npm create vite@latest frontend -- --template react-ts`
+- Add `@cloudflare/vite-plugin` and Hono
+- Configure `wrangler.jsonc` for cohabitation (new app under `/v2/*`, old `index.html` everywhere else)
+- Create the KV namespace (`wrangler kv:namespace create EDGE_STATE`) and bind it
+- Implement the route handlers per the locked contract
 
 ### If you just have one minute, do this
-Open `.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md`. Confirm the 7 locked decisions match what's in your head. If yes, invoke `database-schema-designer` skill with the contract as input.
+Open `docs/adr/0003-state-schema.md` and confirm the KV decisions read correctly. If yes, invoke whatever you prefer (engineering:architecture skill or writing directly) to produce `0001-stack.md` and `0002-auth.md`.
 
 ---
 
