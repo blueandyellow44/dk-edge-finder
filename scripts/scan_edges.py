@@ -45,6 +45,20 @@ NBA_SPREAD_MIN_EDGE = 0.05           # 5% base for NBA spreads
 NBA_LARGE_SPREAD_MIN_EDGE = 0.08     # 8% for spreads >12 pts
 NBA_LARGE_SPREAD_THRESHOLD = 12.0
 
+# NBA playoff discount (April 2026): regular-season-trained models overestimate
+# playoff signal. Defense ratchets up, pace tightens, totals trend lower. Apply
+# a graduated penalty during the window until proper playoff calibration ships.
+# See lessons.md root entry 2026-04-30.
+NBA_PLAYOFF_WINDOW_START = "04-15"     # MM-DD inclusive
+NBA_PLAYOFF_WINDOW_END = "06-30"       # MM-DD inclusive
+NBA_PLAYOFF_EDGE_DISCOUNT = 0.40       # reduce raw edge by 40%
+NBA_PLAYOFF_OVER_EXTRA_PENALTY = 0.10  # additional 10% on OVER totals
+NBA_PLAYOFF_MIN_EDGE = 0.08            # raise NBA min-edge to 8% during playoffs
+# Hard skip: if post-discount edge is still above this, the model is hallucinating
+# playoff signal. Drop the pick entirely. Tunes against today's OVER 212.5 case
+# (29.3% raw -> 14.7% post discount, still > 10% suspicious -> dropped).
+NBA_PLAYOFF_HARD_SKIP_AT = 0.10
+
 # Graduated edge discount for bet sizing.
 # 10%+ edges hit only 58.8% vs 75% for 5-8% edges.
 EDGE_DISCOUNT_TIERS = [
@@ -1127,6 +1141,23 @@ def calc_kelly(edge: float, decimal_odds: float, fraction: float) -> float:
     return kelly * fraction
 
 
+def is_nba_playoff_window(date_str: str = "") -> bool:
+    """Return True if the given date (or today) falls within the NBA playoff window.
+    Window is defined by NBA_PLAYOFF_WINDOW_START and NBA_PLAYOFF_WINDOW_END.
+    Used to apply a graduated penalty to NBA picks during playoffs because the
+    regular-season-trained model overestimates playoff signal."""
+    from datetime import datetime
+    if date_str:
+        try:
+            d = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except (ValueError, TypeError):
+            d = datetime.now().date()
+    else:
+        d = datetime.now().date()
+    mmdd = d.strftime("%m-%d")
+    return NBA_PLAYOFF_WINDOW_START <= mmdd <= NBA_PLAYOFF_WINDOW_END
+
+
 def discount_edge_for_sizing(raw_edge: float) -> float:
     """Reduce large edges to realistic levels for Kelly calculation.
     Raw edge is used for filtering; discounted edge is used for sizing.
@@ -1336,6 +1367,15 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         spread_pts = cand.get("spread", 0)
         min_edge = get_effective_min_edge(sport, "spread", spread_pts, min_edge)
 
+        # NBA playoff discount (April 2026): RS-trained model overestimates
+        # playoff signal. Reduce edge, raise min-edge, and hard-skip anything
+        # still too-good-to-be-true after the discount.
+        if sport.lower() == "nba" and is_nba_playoff_window():
+            edge = edge * (1.0 - NBA_PLAYOFF_EDGE_DISCOUNT)
+            min_edge = max(min_edge, NBA_PLAYOFF_MIN_EDGE)
+            if edge > NBA_PLAYOFF_HARD_SKIP_AT:
+                continue  # model is hallucinating, drop this candidate
+
         if edge >= min_edge and edge > best_edge:
             best_edge = edge
             best = {
@@ -1398,6 +1438,8 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         notes_parts.append(f"Single source — {source_label}. Lower confidence without cross-validation. Kelly reduced 25%.")
     if suspicious:
         notes_parts.append(f"⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model disagrees with market by {spread_cushion:.1f} pts. Investigate before betting.")
+    if sport.lower() == "nba" and is_nba_playoff_window():
+        notes_parts.append(f"NBA PLAYOFF DISCOUNT applied (-{int(NBA_PLAYOFF_EDGE_DISCOUNT*100)}% edge, min {int(NBA_PLAYOFF_MIN_EDGE*100)}%). Model is RS-trained, treat with caution.")
     if tank_note:
         notes_parts.append(tank_note)
     if b2b_note:
@@ -1524,8 +1566,21 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     # Calculate edge
     edge = model_prob - implied_prob
 
-    if edge < MIN_EDGE_HIGH:
-        return None  # Below 3% threshold
+    # NBA playoff discount (April 2026): RS-trained totals model overestimates
+    # playoff scoring. Defense ratchets up, OVER picks suffer most. Apply edge
+    # reduction + extra OVER penalty + raised min-edge + hard skip on residuals.
+    min_edge_total = MIN_EDGE_HIGH
+    if sport.lower() == "nba" and is_nba_playoff_window():
+        multiplier = 1.0 - NBA_PLAYOFF_EDGE_DISCOUNT
+        if pick_side == "over":
+            multiplier -= NBA_PLAYOFF_OVER_EXTRA_PENALTY
+        edge = edge * multiplier
+        min_edge_total = max(min_edge_total, NBA_PLAYOFF_MIN_EDGE)
+        if edge > NBA_PLAYOFF_HARD_SKIP_AT:
+            return None  # model is hallucinating playoff signal, drop the pick
+
+    if edge < min_edge_total:
+        return None  # Below threshold
 
     # Flag suspicious edges — don't cap, but warn
     suspicious = edge > SUSPICIOUS_EDGE
@@ -1548,6 +1603,9 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         notes += f" Single source — {source_label}. Kelly reduced 25%."
     if suspicious:
         notes += f" ⚠ SUSPICIOUS EDGE ({round(edge*100,1)}%): Model predicts {model_total:.1f} vs market {espn_total} — {cushion:.1f} pt gap."
+    if sport.lower() == "nba" and is_nba_playoff_window():
+        over_extra = f" plus {int(NBA_PLAYOFF_OVER_EXTRA_PENALTY*100)}% extra on OVER" if pick_side == "over" else ""
+        notes += f" NBA PLAYOFF DISCOUNT applied (-{int(NBA_PLAYOFF_EDGE_DISCOUNT*100)}% edge{over_extra}, min {int(NBA_PLAYOFF_MIN_EDGE*100)}%). RS-trained model, treat with caution."
 
     return {
         "sport": sport.upper(),
