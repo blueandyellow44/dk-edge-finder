@@ -12,7 +12,7 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 6)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 7)
 
 A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
 
@@ -22,12 +22,12 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 3**: `worker/index.js` rewritten as `worker/index.ts` mounting Hono 4.12.16. Layout restructured: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` moved from `frontend/` up to the repo root. Vite uses `root: 'frontend'`. ADR 0001 amended to match.
 - [x] **Step 4**: `EDGE_STATE` KV namespace created (id `7dca36afc97d4d86bebed2e2948d6e83`), bound in `wrangler.jsonc`, types regenerated. Skipped a separate preview namespace; the Cloudflare Vite plugin uses miniflare for local dev.
 - [x] **Step 5**: `worker/middleware/auth.ts` shipped (per ADR 0002). Defined but not yet mounted in `worker/index.ts` at the time. Mount landed in step 6.
-- [x] **Step 6**: Zod schemas in `shared/schemas.ts`, type re-exports in `shared/types.ts`, helper libs in `worker/lib/{picks,bankroll,state}.ts`, four read routes in `worker/routes/{me,picks,bankroll,state}.ts`. `requireAuth` mounted on each v2 route (`app.use('*', requireAuth)`). Legacy `/api/health` and `/api/place-bets` mount FIRST in `worker/index.ts` so they stay public until Access goes live in step 8. `npx tsc -b` clean. Live smoke deferred to step 9 (EMFILE blocks `wrangler dev`).
-- [ ] Step 7: write routes.
+- [x] **Step 6**: Zod schemas in `shared/schemas.ts`, type re-exports in `shared/types.ts`, helper libs in `worker/lib/{picks,bankroll,state}.ts`, four read routes in `worker/routes/{me,picks,bankroll,state}.ts`. `requireAuth` mounted on each v2 route (`app.use('*', requireAuth)`). Legacy `/api/health` and `/api/place-bets` mount FIRST in `worker/index.ts` so they stay public until Access goes live in step 8. `npx tsc -b` clean.
+- [x] **Step 7**: Write routes shipped. Request schemas added to `shared/schemas.ts` (`PlacementCreateRequestSchema`, `ManualBetCreateRequestSchema`, `SyncQueueRetryRequestSchema`, `BalanceOverrideRequestSchema`, `PlaceBetRequestSchema`, `PlaceBetResponseSchema`). State helpers extended (`removePlacement`, `removeManualBet`, `getBalanceOverride`, `upsertBalanceOverride`, `findSyncQueueEntry`); `upsertSyncQueueEntry` re-keyed from `idempotency_key` to `key` so retry attempts update one row instead of creating new ones. `worker/lib/dispatch.ts` added (GitHub `repository_dispatch` plus 24h-TTL idempotency cache via `dispatch:<email>:<idempotency_key>` KV keys). Five new routes: `state-placements` (POST + DELETE :key), `state-manual-bets` (POST + DELETE :id), `state-sync-queue` (POST /retry), `balance-override` (POST), `place-bet` (POST, singular, idempotent). Legacy `place-bets` (plural, no idempotency) untouched. `npx tsc -b` clean. A small Hono mount-order smoke (one-shot, deleted) confirmed `/api/state/placements` routes to the write subapp without firing stateApp middleware.
 - [ ] Step 8: Cloudflare Access policy in dashboard.
 - [ ] Step 9: cohabitation routing + `.assetsignore` to fix EMFILE.
 
-Branch `rebuild/v2-frontend` is ahead of origin (8 commits after step 6 commits), not yet pushed. Live site unaffected.
+Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 7 commits), not yet pushed. Live site unaffected.
 
 ---
 
@@ -194,16 +194,53 @@ Schema choices grounded in the actual emit shape from `scripts/scan_edges.py:196
 
 - **Singular `/api/place-bet` vs plural `/api/place-bets`** — Max confirmed (2026-04-30, end of step 6): **both coexist during cohabitation.** Legacy plural stays wired for the live `index.html`. The new singular endpoint adds idempotency via a client-generated UUID in the request body. Plural deprecates after cutover (step 9 / Phase 3 territory).
 
+### Phase 1 step 7 (write routes): what shipped
+
+**Schemas (`shared/schemas.ts`).** Six new request/response shapes, all with `idempotency_key: z.string().min(1)` where applicable:
+
+- `PlacementCreateRequestSchema { key, action, dispatch_status, idempotency_key }` — `dispatch_status` defaults to `'ok'` so the frontend can record skipped placements without specifying it. The frontend reports the dispatch outcome alongside the placement so the worker stays stateless about the place-bet flow.
+- `ManualBetCreateRequestSchema { sport, event, pick, odds, wager, idempotency_key }` — server assigns `id = idempotency_key` so retries dedupe cleanly.
+- `SyncQueueRetryRequestSchema { key, idempotency_key }` — `idempotency_key` is for THIS retry attempt's dispatch dedupe, not the original placement.
+- `BalanceOverrideRequestSchema { amount, note }`.
+- `PlaceBetRequestSchema { pick_indices: number[].min(1), idempotency_key }`.
+- `PlaceBetResponseSchema { status: 'ok'|'failed', dispatch_id?, error? }` — `dispatch_id` echoes the idempotency_key so the client can correlate.
+
+Re-exported as TS types in `shared/types.ts`.
+
+**State lib (`worker/lib/state.ts`).** Extended:
+- `removePlacement(env, email, scan_date, key)` and `removeManualBet(env, email, scan_date, id)` filter the array, write back, return `{ removed, record }`.
+- `getBalanceOverride(env, email)` and `upsertBalanceOverride(env, email, amount, note)` operate on the `balance_override:<email>` KV key. `lib/bankroll.ts` was deduped to call `getBalanceOverride` instead of carrying its own copy of the read logic.
+- `upsertSyncQueueEntry` was re-keyed: dedupe is now by `entry.key` (Placement.key), not `idempotency_key`. Each retry rotates the entry's `idempotency_key` field; per-key dedupe means one row per failed placement, updated in place. Added `findSyncQueueEntry(record, key)` helper.
+
+**Dispatch lib (`worker/lib/dispatch.ts`).** New file. Three exports:
+- `dispatchPlaceBet(env, pickIndices, source)` — POSTs `repository_dispatch` to GitHub. Returns `{ status: 'ok' }` on 2xx, `{ status: 'failed', error }` otherwise. Source string lets us distinguish `'v2-frontend'` from `'v2-sync-retry'` in the GitHub payload.
+- `getCachedDispatchResult(env, email, idempotency_key)` and `cacheDispatchResult(...)` use `dispatch:<email>:<idempotency_key>` KV keys with a 24h `expirationTtl`. Same idempotency_key on a retry returns the cached result; a fresh idempotency_key is treated as a new attempt. ADR 0003's "no TTL" rule is for state records; the dispatch cache is a separate concern with a bounded retry window.
+
+**Routes.** Five new files, each mounting `app.use('*', requireAuth)` and using `safeParse` so a bad body returns 400 with Zod issues instead of throwing.
+
+- `worker/routes/state-placements.ts` — `POST /` validates the body, builds the full Placement (server-stamped `placed_at`), calls `appendPlacement`, returns the merged entry as 201. `DELETE /:key` URL-decodes the key and calls `removePlacement`, returning 204 on success or 404 if no record / no match.
+- `worker/routes/state-manual-bets.ts` — same shape. Server-assigned `id = idempotency_key`. `outcome` defaults to `'pending'`.
+- `worker/routes/state-sync-queue.ts` — `POST /retry`: idempotency cache check first, then look up the pick in `data.json.picks[]` by `pick + "|" + event === key`. If not found, write a 'Pick no longer in current scan' error to the queue entry and return 404. Otherwise fire `dispatchPlaceBet`, cache the result, write the queue entry with `attempt_count: prior + 1` and `last_error: result.error || null`. Returns 202 on success, 502 on dispatch failure.
+- `worker/routes/balance-override.ts` — thin wrapper over `upsertBalanceOverride`. Returns the persisted record.
+- `worker/routes/place-bet.ts` — POST /: idempotency cache check, then `dispatchPlaceBet(pick_indices, 'v2-frontend')`, cache, return 202 on success / 502 on failure.
+
+**Mount order (`worker/index.ts`).** Legacy first (`/api/health`, `/api/place-bets`), then v2 read routes, then v2 write routes. More-specific `/api/state/*` paths are mounted BEFORE `/api/state` itself for defensive readability, though a one-shot Hono smoke test confirmed the order does not actually matter (Hono scopes wildcard middleware to its own subapp, not the broader prefix). The smoke test was deleted after confirming.
+
+**Verification.** `npx tsc -b` clean. Live `wrangler dev` smoke still blocked by EMFILE from session 2; deferred to step 9.
+
 ### What's next (continue here on resume)
 
-Step 7: implement the write routes per the locked contract.
+Step 8: configure the Cloudflare Access policy in the dashboard.
 
-1. Author `worker/routes/state-placements.ts`, `state-manual-bets.ts`, `state-sync-queue.ts`, `balance-override.ts`, `place-bet.ts` (singular). All mount `app.use('*', requireAuth)` and use the lib helpers from step 6.
-2. Idempotency convention: client-generated UUID v7 in the request body's `idempotency_key`. Worker dedupes on append. Same convention for every POST.
-3. Mount each new route in `worker/index.ts` AFTER the read routes from step 6, before the catch-all ASSETS handler.
-4. `npx tsc -b` clean. Smoke deferred to post-step-9 unless the EMFILE fix lands first.
+1. Cloudflare dashboard → Zero Trust → Access → Applications → Add an application → Self-hosted.
+2. Application domain: `dk-edge-finder.max-sheahan.workers.dev`. Path: leave blank (root) or set to `/api/*` if you want the legacy `index.html` to stay public a bit longer. Recommendation: protect `/api/*` only initially, then expand to `/*` after step 9 cutover.
+3. Identity provider: Google (already set up in this Cloudflare account if you used Access for any other property; otherwise add Google IdP via OAuth client).
+4. Policy: include emails `max.sheahan@icloud.com`. Action: Allow.
+5. Save. Verify in a private window: visit `/api/me` → Google OAuth → land on a 200 with `{ email, picture_url }`.
 
-Then Step 8 (Cloudflare Access dashboard config), Step 9 (cohabitation + `.assetsignore` for EMFILE).
+Step 9: cohabitation + EMFILE fix. `wrangler.jsonc` `assets.directory` currently is `"."` which makes wrangler watch the whole repo (node_modules + 535 kB pick_history.json) and crash with EMFILE. Two options: (a) add `.assetsignore` to skip `node_modules/`, `dk-edge-finder-app/`, `pick_history.json`, scripts/, `__pycache__/`, etc., OR (b) move serve-able assets under `frontend/dist/` or a `public/` dir and pin `assets.directory` there. Option (b) is cleaner long-term because it forces a build step that produces only the files that should be served.
+
+After step 9, Phase 2 is the quality gate (route tests with `unstable_dev`, basic Vitest harness for `lib/picks.ts` normalizer, smoke against the live URL post-Access). Phase 3 is cutover (move `index.html` to `legacy/index.html`, point root at the v2 SPA, leave `/legacy` for one week as a fallback, then remove).
 
 ---
 
