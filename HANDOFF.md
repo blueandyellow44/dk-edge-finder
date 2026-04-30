@@ -12,9 +12,9 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 7)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 9)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.** Step 8 (the Access dashboard config) is the only Phase 1 task left and is Max's hands-on click-through; the runbook for it is at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
 
 Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
@@ -24,10 +24,10 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 5**: `worker/middleware/auth.ts` shipped (per ADR 0002). Defined but not yet mounted in `worker/index.ts` at the time. Mount landed in step 6.
 - [x] **Step 6**: Zod schemas in `shared/schemas.ts`, type re-exports in `shared/types.ts`, helper libs in `worker/lib/{picks,bankroll,state}.ts`, four read routes in `worker/routes/{me,picks,bankroll,state}.ts`. `requireAuth` mounted on each v2 route (`app.use('*', requireAuth)`). Legacy `/api/health` and `/api/place-bets` mount FIRST in `worker/index.ts` so they stay public until Access goes live in step 8. `npx tsc -b` clean.
 - [x] **Step 7**: Write routes shipped. Request schemas added to `shared/schemas.ts` (`PlacementCreateRequestSchema`, `ManualBetCreateRequestSchema`, `SyncQueueRetryRequestSchema`, `BalanceOverrideRequestSchema`, `PlaceBetRequestSchema`, `PlaceBetResponseSchema`). State helpers extended (`removePlacement`, `removeManualBet`, `getBalanceOverride`, `upsertBalanceOverride`, `findSyncQueueEntry`); `upsertSyncQueueEntry` re-keyed from `idempotency_key` to `key` so retry attempts update one row instead of creating new ones. `worker/lib/dispatch.ts` added (GitHub `repository_dispatch` plus 24h-TTL idempotency cache via `dispatch:<email>:<idempotency_key>` KV keys). Five new routes: `state-placements` (POST + DELETE :key), `state-manual-bets` (POST + DELETE :id), `state-sync-queue` (POST /retry), `balance-override` (POST), `place-bet` (POST, singular, idempotent). Legacy `place-bets` (plural, no idempotency) untouched. `npx tsc -b` clean. A small Hono mount-order smoke (one-shot, deleted) confirmed `/api/state/placements` routes to the write subapp without firing stateApp middleware.
-- [ ] Step 8: Cloudflare Access policy in dashboard.
-- [ ] Step 9: cohabitation routing + `.assetsignore` to fix EMFILE.
+- [ ] **Step 8**: Cloudflare Access policy in dashboard. **Runbook drafted** at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md). Awaiting Max's manual dashboard click-through. Recommended scope: `/api/*` initially, expand to `/*` after step 9 cutover. Worker code does NOT need any further changes for step 8.
+- [x] **Step 9**: EMFILE fix landed. Root cause was NOT the asset upload size (`.assetsignore` does not affect the dev watcher); it was the dev watcher walking the entire repo because `wrangler.jsonc` had `assets.directory: "."`. Fixed by narrowing `assets.directory` to `public/` and creating three symlinks inside it pointing one level up at the actual served files (`index.html`, `data.json`, `bankroll.json`). The Python cron still writes to repo root unchanged; symlinks expose the writes transparently. macOS launchd's default per-process file-descriptor cap is 256 (visible via `launchctl limit maxfiles`), which is why the wide watch tree exhausted descriptors despite `ulimit -n` reporting 1M+. `.assetsignore` was added too as defense-in-depth (default-deny, allowlists only the three served files), which has the side benefit of stopping the public site from serving `pick_history.json` (535 KB of model calibration data, no purpose on the public URL). Live `wrangler dev` smoke now passes for all 9 v2 routes (read + write); see commit message for the round-trip details.
 
-Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 7 commits), not yet pushed. Live site unaffected.
+Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
 ---
 
@@ -228,19 +228,50 @@ Re-exported as TS types in `shared/types.ts`.
 
 **Verification.** `npx tsc -b` clean. Live `wrangler dev` smoke still blocked by EMFILE from session 2; deferred to step 9.
 
+### Phase 1 step 8 (Cloudflare Access dashboard): runbook drafted
+
+[`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md) is the click-by-click. Recommended path scope is `/api/*` for cohabitation (legacy `index.html` keeps loading at the root path; new v2 API routes are auth-gated). Expand to `/*` after step 9 cutover. The runbook includes verification steps, IdP setup if Google is not yet configured on the account, and rollback. Worker code does not change; this step is pure dashboard config.
+
+### Phase 1 step 9 (EMFILE fix): what shipped
+
+**Root cause.** Two layers had to be teased apart:
+
+1. `wrangler.jsonc` had `assets.directory: "."`, which made the wrangler dev file watcher walk the whole repo (worker source, node_modules, `.git`, `.claude/worktrees/*`, scripts, mockups, every Python module). On macOS, launchd's default per-process file-descriptor soft limit is **256** even when `ulimit -n` reports 1M+ for the shell (`launchctl limit maxfiles` confirms). The wide watch tree exhausted descriptors and crashed with EMFILE within seconds of `wrangler dev` start.
+2. `.assetsignore` controls which files wrangler **uploads** at deploy and **serves** from the assets binding. It does NOT affect the dev watcher. Adding `.assetsignore` alone did not resolve EMFILE; verified empirically before settling on the right fix.
+
+**Fix.**
+- Created `public/` with three **symlinks** pointing one level up: `public/index.html → ../index.html`, `public/data.json → ../data.json`, `public/bankroll.json → ../bankroll.json`. Symlinks (not hardlinks) so future code that writes via temp+rename still resolves correctly via the symlink at access time.
+- Updated `wrangler.jsonc` `assets.directory: "."` → `"public"`. Watcher now walks 3 entries instead of thousands.
+- The Python cron writes to repo-root `data.json` and `bankroll.json` unchanged; symlinks make the writes visible to the worker without touching the model code.
+- `.assetsignore` added as defense-in-depth: default-deny posture, allowlists only `index.html`, `data.json`, `bankroll.json`. Side benefit: stops the public site from serving `pick_history.json` (535 KB of model calibration data) which had no reason to be on the public URL.
+
+**Verification.** `wrangler dev` now starts in ~1 second (READY at iteration 1, no EMFILE). Smoked all 9 v2 routes against the local server with a mocked `cf-access-authenticated-user-email` header:
+
+- `GET /api/health` → 200 `{"ok":true,"time":"..."}` (legacy, no auth needed)
+- `GET /api/me` without header → 401. With header → 200 `{"email":"...","picture_url":null}`.
+- `GET /api/picks` → 200 with normalized payload. **`scan_subtitle` is "Thursday, April 30, 2026 - MLB (11), NBA (3), NHL (2)"** (em-dash stripped to hyphen, confirmed against the source `—` in the symlinked data.json).
+- `GET /api/bankroll` → 200 `{"available":679.34,"starting":500,"profit":179.34,"lifetime":{...},"balance_override":null}`. After POST `/api/balance-override {"amount":700,"note":"smoke test"}` → `available:700` and `balance_override:{...}` populated. KV merge confirmed.
+- `GET /api/state` → 200 empty arrays + `updated_at:null` initially. After POST `/api/state/placements` (same idempotency_key sent twice) → only ONE placement in the merged record. Idempotency dedupe confirmed.
+- `POST /api/state/manual-bets` → 201 with server-assigned `id = idempotency_key`, `outcome:"pending"`.
+- `DELETE /api/state/placements/<URL-encoded-key>` → 204 No Content. URL decoding of `%20`, `%2B`, `%7C`, `%40` works.
+- Bad body to any POST → 400 with detailed Zod issues array.
+
+The local KV writes during the smoke live in `.wrangler/` (miniflare, not real Cloudflare KV). `.gitignore` covers `.wrangler/`.
+
 ### What's next (continue here on resume)
 
-Step 8: configure the Cloudflare Access policy in the dashboard.
+**Phase 1 wraps when Max completes step 8 in the dashboard.** No more code work needed for Phase 1 itself; the runbook at `docs/cloudflare-access-setup.md` is the input.
 
-1. Cloudflare dashboard → Zero Trust → Access → Applications → Add an application → Self-hosted.
-2. Application domain: `dk-edge-finder.max-sheahan.workers.dev`. Path: leave blank (root) or set to `/api/*` if you want the legacy `index.html` to stay public a bit longer. Recommendation: protect `/api/*` only initially, then expand to `/*` after step 9 cutover.
-3. Identity provider: Google (already set up in this Cloudflare account if you used Access for any other property; otherwise add Google IdP via OAuth client).
-4. Policy: include emails `max.sheahan@icloud.com`. Action: Allow.
-5. Save. Verify in a private window: visit `/api/me` → Google OAuth → land on a 200 with `{ email, picture_url }`.
+**Phase 2 (quality gate)** is the next code work block:
+1. Vitest harness for `lib/picks.ts` normalizer (covers em-dash strip, percent-string coercion, dollars-string coercion, missing-field defaults, scan_age_seconds calculation). The empty-picks case is also worth a test since today's data.json is exactly that.
+2. Route tests with `wrangler unstable_dev` (or just direct `app.fetch(new Request(...))` calls like the one-shot Hono smoke from step 7) for at least the read routes. Write routes are harder to test in isolation because of the GitHub dispatch side effect; mock or skip for now.
+3. Smoke against the live URL post-Access via the Cloudflare access JWT (or by curling with the dev mock locally and trusting parity). Live smoke should hit `/api/me`, `/api/picks`, `/api/bankroll`, `/api/state` and confirm 200 + correct shape.
 
-Step 9: cohabitation + EMFILE fix. `wrangler.jsonc` `assets.directory` currently is `"."` which makes wrangler watch the whole repo (node_modules + 535 kB pick_history.json) and crash with EMFILE. Two options: (a) add `.assetsignore` to skip `node_modules/`, `dk-edge-finder-app/`, `pick_history.json`, scripts/, `__pycache__/`, etc., OR (b) move serve-able assets under `frontend/dist/` or a `public/` dir and pin `assets.directory` there. Option (b) is cleaner long-term because it forces a build step that produces only the files that should be served.
-
-After step 9, Phase 2 is the quality gate (route tests with `unstable_dev`, basic Vitest harness for `lib/picks.ts` normalizer, smoke against the live URL post-Access). Phase 3 is cutover (move `index.html` to `legacy/index.html`, point root at the v2 SPA, leave `/legacy` for one week as a fallback, then remove).
+**Phase 3 (cutover)** is later:
+1. Build the v2 frontend (`npm run build`) and place output at `public/` (replaces or coexists with the legacy `index.html` symlink).
+2. Move legacy `index.html` to `legacy/index.html` for one-week fallback at `/legacy`.
+3. Remove the legacy `/api/place-bets` (plural) route after one week of v2 SPA stability.
+4. Tighten Cloudflare Access policy from `/api/*` to `/*` once root is the v2 SPA.
 
 ---
 
