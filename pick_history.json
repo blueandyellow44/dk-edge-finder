@@ -14737,9 +14737,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PIT 2.5, PHI 3.5 (margin: 1.0). -0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.4 pts (DRatings: ?, Dimers: ?). Lower confidence. PHI on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PIT 0, PHI 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-29",
@@ -14755,9 +14755,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): NYY 3.8, TEX 3.8 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.0 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYY 0, TEX 3",
+    "pnl_if_bet": 5.95
   },
   {
     "scan_date": "2026-04-29",
@@ -14773,9 +14773,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 3.2, CLE 3.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 1, CLE 3",
+    "pnl_if_bet": 4.9
   },
   {
     "scan_date": "2026-04-29",
@@ -14791,9 +14791,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 4.0, ATL 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. ATL on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 3, ATL 4",
+    "pnl_if_bet": 7.35
   },
   {
     "scan_date": "2026-04-29",
@@ -14809,9 +14809,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PIT 2.5, PHI 3.5 (margin: 1.0). -0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.4 pts (DRatings: ?, Dimers: ?). Lower confidence. PHI on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PIT 0, PHI 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-29",
@@ -14827,9 +14827,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): BOS 3.8, TOR 4.3 (margin: 0.5). 1.0 pts of cushion beyond the spread. TANK WATCH: 36-32, playoff push (-1.5% adj) | BOS on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 1, TOR 8",
+    "pnl_if_bet": 5.08
   },
   {
     "scan_date": "2026-04-29",
@@ -14845,9 +14845,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): NYY 3.8, TEX 3.8 (margin: 0.0). 1.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.0 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NYY 0, TEX 3",
+    "pnl_if_bet": 5.78
   },
   {
     "scan_date": "2026-04-29",
@@ -14881,9 +14881,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 4.0, ATL 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. ATL on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 3, ATL 4",
+    "pnl_if_bet": 7.35
   },
   {
     "scan_date": "2026-04-29",
@@ -14917,9 +14917,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PIT 2.5, PHI 3.5 (margin: 1.0). -0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 2.4 pts (DRatings: ?, Dimers: ?). Lower confidence. PHI on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PIT 0, PHI 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-29",
@@ -14953,8 +14953,8 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 4.0, ATL 3.5 (margin: 0.5). 1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. ATL on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 3, ATL 4",
+    "pnl_if_bet": 7.35
   }
 ]
