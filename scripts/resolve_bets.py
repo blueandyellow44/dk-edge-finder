@@ -284,16 +284,16 @@ def main():
             if d:
                 sport_dates.add((sport, d.replace("-", "")))
 
-        # Fetch scores for each sport/date combination
+        # Fetch scores for each sport/date combination.
+        # Cache key is (sport, date_str), not just sport, so two different dates
+        # of the same sport do not collide.
         for sport, date_str in sport_dates:
             fetcher = SPORT_FETCHERS.get(sport)
             if not fetcher:
                 print(f"  No score fetcher for sport: {sport}")
                 continue
             games = fetcher(date_str)
-            if sport not in all_games:
-                all_games[sport] = []
-            all_games[sport].extend(games)
+            all_games[(sport, date_str)] = games
             print(f"  Fetched {len(games)} {sport.upper()} games for {date_str}")
 
     # Resolve each pending bet
@@ -303,7 +303,8 @@ def main():
             continue
 
         sport = bet.get("sport", "nba").lower()
-        sport_games = all_games.get(sport, [])
+        bet_date = bet.get("date", "").replace("-", "")
+        sport_games = all_games.get((sport, bet_date), [])
         game = find_game_score(sport_games, bet["event"])
         if not game:
             print(f"  Could not find game: {bet['event']}")
@@ -464,16 +465,18 @@ def resolve_pick_history(all_games: dict):
     if not pending:
         return
 
-    # Fetch scores for any sport/date combos not already fetched
+    # Fetch scores for any sport/date combos not already fetched.
+    # Cache key is (sport, date) so a second pending pick on a different date
+    # of the same sport does not silently reuse the wrong scoreboard.
     for h in pending:
         d = h.get("scan_date", "").replace("-", "")
         sport = h.get("sport", "nba").lower() if h.get("sport") else "nba"
         if not d:
             continue
         fetcher = SPORT_FETCHERS.get(sport)
-        if fetcher and sport not in all_games:
+        if fetcher and (sport, d) not in all_games:
             games = fetcher(d)
-            all_games[sport] = games
+            all_games[(sport, d)] = games
 
     resolved_count = 0
     for h in history:
@@ -481,7 +484,8 @@ def resolve_pick_history(all_games: dict):
             continue
 
         sport = h.get("sport", "nba").lower() if h.get("sport") else "nba"
-        sport_games = all_games.get(sport, [])
+        d = h.get("scan_date", "").replace("-", "")
+        sport_games = all_games.get((sport, d), [])
         game = find_game_score(sport_games, h.get("event", ""))
         if not game or not game["is_final"]:
             continue
