@@ -12,7 +12,7 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 3)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 5)
 
 A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
 
@@ -20,14 +20,14 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
 - [x] **Step 2**: `@cloudflare/vite-plugin` v1.35.0 installed and wired.
 - [x] **Step 3**: `worker/index.js` rewritten as `worker/index.ts` mounting Hono 4.12.16. Layout restructured: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` moved from `frontend/` up to the repo root. Vite uses `root: 'frontend'`. ADR 0001 amended to match.
-- [ ] Step 4: create EDGE_STATE + EDGE_STATE_PREVIEW KV namespaces.
-- [ ] Step 5: auth middleware.
+- [x] **Step 4**: `EDGE_STATE` KV namespace created (id `7dca36afc97d4d86bebed2e2948d6e83`), bound in `wrangler.jsonc`, types regenerated. Skipped a separate preview namespace; the Cloudflare Vite plugin uses miniflare for local dev.
+- [x] **Step 5**: `worker/middleware/auth.ts` shipped (per ADR 0002). Defined but **not yet mounted** in `worker/index.ts`. Mount lands in step 6 alongside the first v2 read route, so the legacy `/api/place-bets` path stays public until Cloudflare Access goes live in step 8.
 - [ ] Step 6: read routes.
 - [ ] Step 7: write routes.
 - [ ] Step 8: Cloudflare Access policy in dashboard.
 - [ ] Step 9: cohabitation routing + `.assetsignore` to fix EMFILE.
 
-Branch `rebuild/v2-frontend` is up to date with origin. Live site unaffected.
+Branch `rebuild/v2-frontend` is **5 commits ahead of origin**, not yet pushed. Live site unaffected.
 
 ---
 
@@ -114,15 +114,64 @@ export default defineConfig({
 - `worker-configuration.d.ts` is committed at ~500 KB. Common practice is to either commit it (as the canonical CF template does) or gitignore + regenerate via `predev`/`prebuild`. Currently committed. Revisit if it gets noisy.
 - ESLint, Vitest, and full deploy scripts are not wired into `package.json` yet beyond the Vite scaffold defaults. Step 9 (cohabitation + EMFILE) is a natural place to add `deploy`, `types`, and worker-aware scripts.
 
+### Phase 1 step 4 (KV namespace): what shipped
+
+Ran `npx wrangler kv namespace create EDGE_STATE` from the repo root. Cloudflare returned namespace id `7dca36afc97d4d86bebed2e2948d6e83`. Wrangler offered to auto-edit `wrangler.jsonc` but in non-interactive mode defaulted to "no", so the binding was added by hand:
+
+```jsonc
+"kv_namespaces": [
+  { "binding": "EDGE_STATE", "id": "7dca36afc97d4d86bebed2e2948d6e83" }
+]
+```
+
+`npx wrangler types --env-interface CloudflareBindings` regenerated `worker-configuration.d.ts`. `Cloudflare.Env` now contains `EDGE_STATE: KVNamespace`, which `worker/env.ts`'s `Env extends CloudflareBindings` picks up automatically.
+
+Skipped the separate `_PREVIEW` namespace. The Cloudflare Vite plugin runs miniflare for local dev and simulates KV in memory; a remote preview namespace is only needed if `wrangler dev --remote` against real Cloudflare KV becomes the workflow. Add later if so.
+
+`npx tsc -b` clean.
+
+### Phase 1 step 5 (auth middleware): what shipped
+
+`worker/middleware/auth.ts`:
+```ts
+import { createMiddleware } from 'hono/factory'
+import type { Env, Variables } from '../env'
+
+export const requireAuth = createMiddleware<{
+  Bindings: Env
+  Variables: Variables
+}>(async (c, next) => {
+  const email = c.req.header('cf-access-authenticated-user-email')?.toLowerCase()
+  if (!email) return c.text('Unauthorized', 401)
+  c.set('email', email)
+  await next()
+})
+```
+
+`worker/env.ts` gains a `Variables` type export so consumers of `requireAuth` can construct a typed Hono app:
+```ts
+new Hono<{ Bindings: Env; Variables: Variables }>()
+```
+
+`worker/middleware/.gitkeep` removed.
+
+**Not yet mounted in `worker/index.ts`.** Mounting on `/api/*` would 401 the legacy `/api/place-bets` path that the live `index.html` still calls (the live site does not yet route through Cloudflare Access, so it has no `cf-access-authenticated-user-email` header). Step 6 will mount `requireAuth` on each new v2 read route as it lands. Once Cloudflare Access is configured in step 8, the same header will populate for legacy traffic too, but until then the cohabitation worker has to keep legacy paths public.
+
 ### What's next (continue here on resume)
 
-Step 4: create the `EDGE_STATE` KV namespace and bind in `wrangler.jsonc`.
-1. From repo root: `npx wrangler kv namespace create EDGE_STATE` (note: in current wrangler the subcommand is `kv namespace create`, no colon).
-2. Take the printed `id` and add a `kv_namespaces` block to `wrangler.jsonc`. Then create a preview namespace too (`--preview`) for `wrangler dev` if the plugin's local KV simulation is not used.
-3. Re-run `npx wrangler types --env-interface CloudflareBindings` to regenerate `worker-configuration.d.ts` so `Env` now includes `EDGE_STATE: KVNamespace`.
-4. Write a thin `worker/lib/state.ts` per ADR 0003 with `readState`, `writeState`, `appendPlacement`, `appendManualBet`, etc. Stub for now; real logic when route handlers land in step 6/7.
+Step 6: implement the four read routes per the locked contract at [`backend-requirements.md`](.claude/docs/ai/dk-edge-v2-frontend/backend-requirements.md).
 
-Then Step 5 (auth middleware), Steps 6-7 (routes), Step 8 (Access dashboard config), Step 9 (cohabitation + .assetsignore).
+1. **Decide before writing the singular `/api/place-bet`**: confirm with Max that the legacy plural `/api/place-bets` should keep its current shape (no idempotency, JS port preserved) and the new singular endpoint adds idempotency via a client-generated UUID. Open question is in the section above.
+2. Author Zod schemas in `shared/schemas.ts` for the contract (`Pick`, `NoEdgeGame`, `Placement`, `SyncQueueEntry`, `ManualBet`, `BalanceOverride`, response envelopes for `/api/me`, `/api/picks`, `/api/bankroll`, `/api/state`).
+3. Author `shared/types.ts` re-exporting Zod-inferred TS types so frontend and worker stay in sync.
+4. Add `worker/lib/state.ts` with `readState(email, scan_date)`, `writeState(...)`, `appendPlacement(...)`, `appendManualBet(...)` per ADR 0003. Centralizes the read-modify-write logic so routes stay thin.
+5. Add `worker/lib/picks.ts` to read `data.json` from the ASSETS binding, normalize it per Q6 of the contract (numeric coercions, drop redundant fields, strip em-dashes), and return the v2 shape.
+6. Add `worker/lib/bankroll.ts` to read `bankroll.json` and merge with the per-user `balance_override:<email>` KV record.
+7. Add `worker/routes/me.ts`, `worker/routes/picks.ts`, `worker/routes/bankroll.ts`, `worker/routes/state.ts`. Each starts with `app.use('*', requireAuth)`.
+8. Mount in `worker/index.ts` AFTER the legacy routes so the legacy /api/health and /api/place-bets paths keep first-match precedence.
+9. `npx tsc -b` clean. Manual smoke: hit each route locally with the dev mock from ADR 0002 ("Local dev" section) injecting a fake `cf-access-authenticated-user-email`. Step 9's EMFILE fix needs to land first if `wrangler dev` is required for that smoke.
+
+Then Step 7 (write routes including the singular `/api/place-bet` with idempotency), Step 8 (Cloudflare Access dashboard config), Step 9 (cohabitation + .assetsignore).
 
 ---
 
