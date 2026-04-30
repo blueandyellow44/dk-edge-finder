@@ -5143,9 +5143,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): PHX 123.9, CHI 114.0 (total: 237.9). Line: 243.5. Cushion: 5.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 120, CHI 110",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-05",
@@ -5233,9 +5233,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only): MEM 111.5, MIL 116.6 (margin: 5.1). 2.4 pts of cushion beyond the spread. Single source \u2014 DRatings only. Lower confidence without cross-validation. Kelly reduced 25%. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MEM 115, MIL 131",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -5683,9 +5683,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (margin: 11.1). 4.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 6.1 pts (DRatings: -14.2, Dimers: -13.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.7%): Model disagrees with market by 4.4 pts. Investigate before betting. MEM on B2B (-1.5% adj) | CLE on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -5737,9 +5737,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): DET 115.3, ORL 110.3 (total: 225.6). Line: 221.5. Cushion: 4.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 107, ORL 123",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-06",
@@ -5755,9 +5755,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (total: 237.3). Line: 233.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 6.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -5881,9 +5881,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (margin: 11.1). 4.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 6.1 pts (DRatings: -14.2, Dimers: -13.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.7%): Model disagrees with market by 4.4 pts. Investigate before betting. MEM on B2B (-1.5% adj) | CLE on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -5935,9 +5935,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): DET 115.3, ORL 110.3 (total: 225.6). Line: 221.5. Cushion: 4.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 107, ORL 123",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-06",
@@ -5953,9 +5953,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (total: 237.3). Line: 233.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 6.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -6079,9 +6079,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (margin: 11.1). 4.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 6.1 pts (DRatings: -14.2, Dimers: -13.3). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.7%): Model disagrees with market by 4.4 pts. Investigate before betting. MEM on B2B (-1.5% adj) | CLE on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -6133,9 +6133,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): DET 115.5, ORL 110.5 (total: 226.0). Line: 221.5. Cushion: 4.5 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 107, ORL 123",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -6169,9 +6169,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (total: 237.3). Line: 233.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 6.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -6277,9 +6277,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (margin: 11.1). 4.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 6.1 pts (DRatings: -14.2, Dimers: -13.3). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.7%): Model disagrees with market by 4.4 pts. Investigate before betting. MEM on B2B (-1.5% adj) | CLE on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -6331,9 +6331,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): DET 115.5, ORL 110.5 (total: 226.0). Line: 221.5. Cushion: 4.5 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 107, ORL 123",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -6367,9 +6367,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + sagarin): CLE 124.2, MEM 113.1 (total: 237.3). Line: 233.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 6.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 142, MEM 126",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-06",
@@ -6475,9 +6475,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): OKC 117.5, LAL 107.0 (margin: 10.5). 7.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.8 pts (DRatings: -12.7, Dimers: -15.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (19.8%): Model disagrees with market by 7.0 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 123, LAL 87",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-07",
@@ -6511,9 +6511,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (total: 245.0). Line: 251.5. Cushion: 6.5 pts. \u26a0 CONTESTED: Sources disagree by 8.4 pts. \u26a0 SUSPICIOUS EDGE (11.9%): Model predicts 245.0 vs market 251.5 \u2014 6.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 129, WSH 98",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-07",
@@ -6547,9 +6547,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (margin: 2.8). 2.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 8.4 pts (DRatings: -5.6, Dimers: -6.2). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 129, WSH 98",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-07",
@@ -6619,9 +6619,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): OKC 117.9, LAL 106.6 (margin: 11.3). 7.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 17.8 pts (DRatings: -13.7, Dimers: -16.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (21.0%): Model disagrees with market by 7.2 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 123, LAL 87",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-07",
@@ -6637,9 +6637,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (total: 245.0). Line: 250.5. Cushion: 5.5 pts. \u26a0 CONTESTED: Sources disagree by 8.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 129, WSH 98",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-07",
@@ -6673,9 +6673,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 123.9, WSH 121.1 (margin: 2.8). 2.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 8.4 pts (DRatings: -5.8, Dimers: -5.8). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 129, WSH 98",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-07",
@@ -6781,9 +6781,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIN 114.2, ORL 115.8 (margin: 1.6). 5.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 13.0 pts (DRatings: +4.5, Dimers: +6.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (14.0%): Model disagrees with market by 5.9 pts. Investigate before betting. MIN on road B2B (-2.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 120, ORL 132",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-08",
@@ -6889,9 +6889,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIN 114.0, ORL 116.1 (margin: 2.1). 7.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.0 pts (DRatings: +4.1, Dimers: +6.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (19.6%): Model disagrees with market by 7.4 pts. Investigate before betting. MIN on road B2B (-2.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 120, ORL 132",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-08",
@@ -7033,9 +7033,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIN 113.2, ORL 116.8 (margin: 3.6). 6.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 17.0 pts (DRatings: +8.0, Dimers: +8.9). Lower confidence. \u26a0 SUSPICIOUS EDGE (17.0%): Model disagrees with market by 6.9 pts. Investigate before betting. MIN on road B2B (-2.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 120, ORL 132",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-08",
@@ -7069,9 +7069,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MEM 109.3, DEN 132.0 (total: 241.3). Line: 246.5. Cushion: 5.2 pts. \u26a0 CONTESTED: Sources disagree by 18.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MEM 119, DEN 136",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-08",
@@ -7105,9 +7105,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIL 100.4, DET 119.2 (total: 219.6). Line: 222.5. Cushion: 2.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIL 111, DET 137",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-08",
@@ -7141,9 +7141,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): OKC 115.7, LAC 109.3 (total: 225.0). Line: 227.5. Cushion: 2.5 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 128, LAC 110",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-09",
@@ -7267,9 +7267,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 124.6, WSH 120.4 (total: 245.0). Line: 247.5. Cushion: 2.5 pts. \u26a0 CONTESTED: Sources disagree by 6.6 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 119, WSH 108",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-09",
@@ -7339,9 +7339,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 124.6, WSH 120.4 (total: 245.0). Line: 248.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 6.6 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 119, WSH 108",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-09",
@@ -7465,9 +7465,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 124.6, WSH 120.4 (total: 245.0). Line: 248.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 6.6 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHI 119, WSH 108",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-09",
@@ -7501,9 +7501,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BOS 106.3, NY 109.8 (total: 216.1). Line: 212.5. Cushion: 3.6 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 106, NY 112",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-09",
@@ -7519,9 +7519,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): BOS 106.3, NY 109.8 (margin: 3.5). 2.0 pts of cushion beyond the spread.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 106, NY 112",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-09",
@@ -7573,9 +7573,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): OKC 112.0, DEN 118.0 (margin: 6.0). 6.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.6 pts (DRatings: +9.0, Dimers: +10.2). Lower confidence. \u26a0 SUSPICIOUS EDGE (17.7%): Model disagrees with market by 6.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 107, DEN 127",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7591,9 +7591,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIA 129.2, WSH 115.8 (margin: 13.4). 4.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 10.1 pts (DRatings: -14.4, Dimers: -15.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (13.0%): Model disagrees with market by 4.1 pts. Investigate before betting. WSH on B2B (-1.5% adj) | MIA on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 140, WSH 117",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7627,9 +7627,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CLE 115.7, ATL 119.3 (margin: 3.6). 3.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 10.6 pts (DRatings: +6.4, Dimers: +6.5). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.2%): Model disagrees with market by 3.9 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 102, ATL 124",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7717,9 +7717,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): OKC 112.4, DEN 118.2 (margin: 5.8). 5.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.6 pts (DRatings: +8.4, Dimers: +10.2). Lower confidence. \u26a0 SUSPICIOUS EDGE (18.1%): Model disagrees with market by 5.7 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 107, DEN 127",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7753,9 +7753,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CLE 115.8, ATL 119.2 (margin: 3.4). 4.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 10.6 pts (DRatings: +6.4, Dimers: +6.6). Lower confidence. \u26a0 SUSPICIOUS EDGE (13.0%): Model disagrees with market by 4.1 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 102, ATL 124",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7771,9 +7771,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIA 129.2, WSH 115.8 (margin: 13.4). 4.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 10.2 pts (DRatings: -14.4, Dimers: -15.5). Lower confidence. \u26a0 SUSPICIOUS EDGE (12.3%): Model disagrees with market by 4.1 pts. Investigate before betting. WSH on B2B (-1.5% adj) | MIA on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 140, WSH 117",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7861,9 +7861,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): OKC 112.4, DEN 118.2 (margin: 5.8). 5.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 16.6 pts (DRatings: +8.4, Dimers: +10.6). Lower confidence. \u26a0 SUSPICIOUS EDGE (17.0%): Model disagrees with market by 5.7 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 107, DEN 127",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7879,9 +7879,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CLE 115.8, ATL 119.2 (margin: 3.4). 4.1 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 10.6 pts (DRatings: +6.4, Dimers: +7.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (13.0%): Model disagrees with market by 4.1 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 102, ATL 124",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7897,9 +7897,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIA 128.7, WSH 115.9 (margin: 12.8). 3.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 9.2 pts (DRatings: -12.8, Dimers: -14.8). Lower confidence. WSH on B2B (-1.5% adj) | MIA on B2B (+1.5% boost) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 140, WSH 117",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-10",
@@ -7915,9 +7915,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 126.7, CHI 114.1 (total: 240.8). Line: 244.5. Cushion: 3.7 pts. \u26a0 CONTESTED: Sources disagree by 14.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 127, CHI 103",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-10",
@@ -7969,9 +7969,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): PHX 113.4, LAL 107.5 (total: 220.9). Line: 218.5. Cushion: 2.4 pts. \u26a0 CONTESTED: Sources disagree by 14.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHX 73, LAL 101",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8563,9 +8563,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 12.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, Dimers: -12.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (34.0%): Model disagrees with market by 12.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 108, BOS 113",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-12",
@@ -8581,9 +8581,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHA 111.5, NY 106.5 (margin: 5.0). 8.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 20.0 pts (DRatings: -10.8, Dimers: -12.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (25.1%): Model disagrees with market by 8.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHA 110, NY 96",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8635,9 +8635,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DEN 114.9, SA 120.9 (margin: 6.0). 4.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 14.0 pts (DRatings: +7.3, Dimers: +10.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (14.3%): Model disagrees with market by 4.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 128, SA 118",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-04-12",
@@ -8653,9 +8653,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 118.8, DAL 123.9 (total: 242.7). Line: 247.5. Cushion: 4.8 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 128, DAL 149",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8671,9 +8671,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ATL 122.5, MIA 121.0 (margin: 1.5). 3.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 11.5 pts (DRatings: -1.1, Dimers: +4.9). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 117, MIA 143",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8707,9 +8707,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 11.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, Dimers: -12.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (32.9%): Model disagrees with market by 11.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 108, BOS 113",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-12",
@@ -8725,9 +8725,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHA 111.6, NY 106.7 (margin: 4.9). 8.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 20.0 pts (DRatings: -10.9, Dimers: -13.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (26.5%): Model disagrees with market by 8.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHA 110, NY 96",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8743,9 +8743,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DEN 114.9, SA 120.9 (margin: 6.0). 4.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 14.0 pts (DRatings: +7.3, Dimers: +9.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (15.0%): Model disagrees with market by 4.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 128, SA 118",
+    "pnl_if_bet": 9.8
   },
   {
     "scan_date": "2026-04-12",
@@ -8779,9 +8779,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 118.8, DAL 123.9 (total: 242.7). Line: 248.5. Cushion: 5.8 pts. \u26a0 SUSPICIOUS EDGE (12.0%): Model predicts 242.7 vs market 248.5 \u2014 5.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 128, DAL 149",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8797,9 +8797,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ATL 122.5, MIA 121.0 (margin: 1.5). 4.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 11.5 pts (DRatings: -1.1, Dimers: +5.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by 4.0 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 117, MIA 143",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8815,9 +8815,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SAC 109.2, POR 122.3 (total: 231.5). Line: 226.5. Cushion: 5.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SAC 110, POR 122",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-12",
@@ -8851,9 +8851,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ORL 109.0, BOS 108.1 (margin: 0.9). 11.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 24.5 pts (DRatings: -8.9, Dimers: -12.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (32.9%): Model disagrees with market by 11.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 108, BOS 113",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-12",
@@ -8869,9 +8869,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHA 111.6, NY 106.7 (margin: 4.9). 9.6 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 20.0 pts (DRatings: -10.9, Dimers: -13.0). Lower confidence. \u26a0 SUSPICIOUS EDGE (27.5%): Model disagrees with market by 9.6 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHA 110, NY 96",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-12",
@@ -8887,9 +8887,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): ATL 122.2, MIA 121.6 (margin: 0.6). 7.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 11.5 pts (DRatings: +2.6, Dimers: +7.7). Lower confidence. \u26a0 SUSPICIOUS EDGE (24.6%): Model disagrees with market by 7.9 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 117, MIA 143",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8923,9 +8923,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): DEN 114.9, SA 120.9 (margin: 6.0). 5.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 14.0 pts (DRatings: +7.3, Dimers: +10.1). Lower confidence. \u26a0 SUSPICIOUS EDGE (15.9%): Model disagrees with market by 5.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 128, SA 118",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-12",
@@ -8941,9 +8941,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): CHI 118.8, DAL 123.9 (total: 242.7). Line: 248.5. Cushion: 5.8 pts. \u26a0 SUSPICIOUS EDGE (10.8%): Model predicts 242.7 vs market 248.5 \u2014 5.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHI 128, DAL 149",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8959,9 +8959,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): SAC 109.2, POR 122.3 (total: 231.5). Line: 226.5. Cushion: 5.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SAC 110, POR 122",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-12",
@@ -9787,9 +9787,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): MIA 108.8, CHA 117.2 (total: 226.0). Line: 230.5. Cushion: 4.5 pts. \u26a0 CONTESTED: Sources disagree by 10.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 126, CHA 127",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-15",
@@ -9913,9 +9913,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): GS 107.4, LAC 111.2 (total: 218.6). Line: 221.5. Cushion: 2.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "GS 126, LAC 121",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-15",
@@ -10057,9 +10057,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + actionnetwork): GS 107.4, LAC 111.2 (total: 218.6). Line: 221.5. Cushion: 2.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "GS 126, LAC 121",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-15",
@@ -10489,9 +10489,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): GS 102.8, PHX 106.2 (total: 209.0). Line: 219.5. Cushion: 10.5 pts. \u26a0 SUSPICIOUS EDGE (21.0%): Model predicts 209.0 vs market 219.5 \u2014 10.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "GS 96, PHX 111",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-17",
@@ -10579,9 +10579,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): GS 102.8, PHX 106.2 (total: 209.0). Line: 219.5. Cushion: 10.5 pts. \u26a0 SUSPICIOUS EDGE (21.0%): Model predicts 209.0 vs market 219.5 \u2014 10.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "GS 96, PHX 111",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-17",
@@ -10723,9 +10723,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings + Dimers + oddsshark + sagarin + actionnetwork): GS 103.0, PHX 106.0 (total: 209.0). Line: 220.5. Cushion: 11.5 pts. \u26a0 SUSPICIOUS EDGE (22.0%): Model predicts 209.0 vs market 220.5 \u2014 11.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "GS 96, PHX 111",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-17",
@@ -11101,9 +11101,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 111.0, BOS 121.1 (total: 232.1). Line: 213.5. Cushion: 18.6 pts. \u26a0 SUSPICIOUS EDGE (33.7%): Model predicts 232.1 vs market 213.5 \u2014 18.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 91, BOS 123",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-19",
@@ -11119,9 +11119,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 95.3, OKC 107.8 (total: 203.1). Line: 215.5. Cushion: 12.4 pts. \u26a0 SUSPICIOUS EDGE (24.1%): Model predicts 203.1 vs market 215.5 \u2014 12.4 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 84, OKC 119",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-19",
@@ -11245,9 +11245,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 111.0, BOS 121.1 (total: 232.1). Line: 215.5. Cushion: 16.6 pts. \u26a0 SUSPICIOUS EDGE (31.4%): Model predicts 232.1 vs market 215.5 \u2014 16.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 91, BOS 123",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-19",
@@ -11263,9 +11263,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 95.3, OKC 107.8 (total: 203.1). Line: 215.5. Cushion: 12.4 pts. \u26a0 SUSPICIOUS EDGE (24.1%): Model predicts 203.1 vs market 215.5 \u2014 12.4 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 84, OKC 119",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-19",
@@ -11353,9 +11353,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ORL 104.0, DET 112.0 (total: 216.0). Line: 219.5. Cushion: 3.5 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 112, DET 101",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-19",
@@ -11371,9 +11371,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 95.0, OKC 108.0 (total: 203.0). Line: 216.5. Cushion: 13.5 pts. \u26a0 CONTESTED: Sources disagree by 7.1 pts. \u26a0 SUSPICIOUS EDGE (24.9%): Model predicts 203.0 vs market 216.5 \u2014 13.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 84, OKC 119",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-19",
@@ -11389,9 +11389,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ORL 104.0, DET 112.0 (total: 216.0). Line: 221.5. Cushion: 5.5 pts. \u26a0 SUSPICIOUS EDGE (10.2%): Model predicts 216.0 vs market 221.5 \u2014 5.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 112, DET 101",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-19",
@@ -11479,9 +11479,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ATL 104.9, NY 109.5 (total: 214.4). Line: 218.5. Cushion: 4.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 107, NY 106",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-20",
@@ -11497,9 +11497,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): MIN 108.5, DEN 118.5 (total: 227.0). Line: 230.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 11.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 119, DEN 114",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-20",
@@ -11533,9 +11533,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): TOR 104.2, CLE 115.6 (total: 219.8). Line: 222.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 18.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOR 105, CLE 115",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-20",
@@ -11605,9 +11605,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): MIN 108.5, DEN 118.5 (total: 227.0). Line: 230.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 11.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 119, DEN 114",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-20",
@@ -11623,9 +11623,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ATL 105.0, NY 109.4 (total: 214.4). Line: 217.5. Cushion: 3.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 107, NY 106",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-20",
@@ -11641,9 +11641,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): TOR 104.1, CLE 115.7 (total: 219.8). Line: 222.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 18.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOR 105, CLE 115",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-20",
@@ -11677,9 +11677,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): MIN 108.5, DEN 118.5 (total: 227.0). Line: 231.5. Cushion: 4.5 pts. \u26a0 CONTESTED: Sources disagree by 11.8 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 119, DEN 114",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-20",
@@ -11731,9 +11731,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): ATL 105.0, NY 109.4 (total: 214.4). Line: 217.5. Cushion: 3.1 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATL 107, NY 106",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-20",
@@ -11749,9 +11749,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): TOR 104.1, CLE 115.7 (total: 219.8). Line: 222.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 18.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOR 105, CLE 115",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-21",
@@ -11767,9 +11767,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 107.3, BOS 123.2 (total: 230.5). Line: 216.5. Cushion: 14.0 pts. \u26a0 SUSPICIOUS EDGE (26.8%): Model predicts 230.5 vs market 216.5 \u2014 14.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 111, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-21",
@@ -11911,9 +11911,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 107.3, BOS 123.3 (total: 230.6). Line: 217.5. Cushion: 13.1 pts. \u26a0 SUSPICIOUS EDGE (25.3%): Model predicts 230.6 vs market 217.5 \u2014 13.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 111, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-21",
@@ -12055,9 +12055,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 107.5, BOS 123.1 (total: 230.6). Line: 217.5. Cushion: 13.1 pts. \u26a0 SUSPICIOUS EDGE (25.3%): Model predicts 230.6 vs market 217.5 \u2014 13.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 111, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-21",
@@ -12253,9 +12253,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 99.4, OKC 113.2 (margin: 13.8). 3.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 6.3 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 SUSPICIOUS EDGE (10.5%): Model disagrees with market by 3.7 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 107, OKC 120",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-22",
@@ -12397,9 +12397,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 99.3, OKC 113.4 (margin: 14.1). 3.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 7.3 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 107, OKC 120",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-22",
@@ -12433,9 +12433,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 99.3, OKC 113.4 (total: 212.7). Line: 216.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 7.3 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHX 107, OKC 120",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-22",
@@ -12541,9 +12541,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 99.3, OKC 113.4 (margin: 14.1). 3.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 7.3 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 107, OKC 120",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-22",
@@ -12577,9 +12577,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): PHX 99.3, OKC 113.4 (total: 212.7). Line: 216.5. Cushion: 3.8 pts. \u26a0 CONTESTED: Sources disagree by 7.3 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHX 107, OKC 120",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-22",
@@ -12685,9 +12685,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): DEN 117.3, MIN 112.7 (total: 230.0). Line: 233.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 14.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 96, MIN 113",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-23",
@@ -12721,9 +12721,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): CLE 112.2, TOR 106.6 (total: 218.8). Line: 221.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 17.7 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, TOR 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-23",
@@ -12757,9 +12757,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): DEN 117.3, MIN 112.7 (total: 230.0). Line: 233.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 14.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 96, MIN 113",
+    "pnl_if_bet": 9.26
   },
   {
     "scan_date": "2026-04-23",
@@ -12829,9 +12829,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): CLE 112.2, TOR 106.6 (total: 218.8). Line: 221.5. Cushion: 2.7 pts. \u26a0 CONTESTED: Sources disagree by 17.7 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, TOR 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-23",
@@ -12865,9 +12865,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): DEN 117.3, MIN 112.7 (total: 230.0). Line: 233.5. Cushion: 3.5 pts. \u26a0 CONTESTED: Sources disagree by 14.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DEN 96, MIN 113",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-23",
@@ -12883,9 +12883,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): CLE 112.2, TOR 106.6 (total: 218.8). Line: 222.5. Cushion: 3.7 pts. \u26a0 CONTESTED: Sources disagree by 17.7 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, TOR 126",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-23",
@@ -12919,9 +12919,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.0, PHI 109.5 (total: 229.5). Line: 215.5. Cushion: 14.0 pts. \u26a0 SUSPICIOUS EDGE (26.8%): Model predicts 229.5 vs market 215.5 \u2014 14.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 108, PHI 100",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-24",
@@ -13027,9 +13027,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.2, PHI 109.3 (total: 229.5). Line: 214.5. Cushion: 15.0 pts. \u26a0 SUSPICIOUS EDGE (27.4%): Model predicts 229.5 vs market 214.5 \u2014 15.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 108, PHI 100",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-24",
@@ -13135,9 +13135,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.4, PHI 109.1 (total: 229.5). Line: 214.5. Cushion: 15.0 pts. \u26a0 SUSPICIOUS EDGE (28.5%): Model predicts 229.5 vs market 214.5 \u2014 15.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 108, PHI 100",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-24",
@@ -13675,9 +13675,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.0, PHI 109.0 (total: 229.0). Line: 213.5. Cushion: 15.5 pts. \u26a0 SUSPICIOUS EDGE (29.3%): Model predicts 229.0 vs market 213.5 \u2014 15.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 128, PHI 96",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-26",
@@ -13819,9 +13819,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.0, PHI 109.0 (total: 229.0). Line: 213.5. Cushion: 15.5 pts. \u26a0 SUSPICIOUS EDGE (29.3%): Model predicts 229.0 vs market 213.5 \u2014 15.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 128, PHI 96",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-26",
@@ -13963,9 +13963,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): BOS 120.2, PHI 108.8 (total: 229.0). Line: 213.5. Cushion: 15.5 pts. \u26a0 SUSPICIOUS EDGE (29.3%): Model predicts 229.0 vs market 213.5 \u2014 15.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BOS 128, PHI 96",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-26",
@@ -14071,9 +14071,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAL 100.2, HOU 108.2 (total: 208.4). Line: 205.5. Cushion: 2.9 pts. \u26a0 CONTESTED: Sources disagree by 14.4 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAL 96, HOU 115",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-27",
@@ -14161,9 +14161,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): OKC 112.0, PHX 99.5 (total: 211.5). Line: 214.5. Cushion: 3.0 pts. \u26a0 CONTESTED: Sources disagree by 16.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 131, PHX 122",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-27",
@@ -14251,9 +14251,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): OKC 112.0, PHX 99.5 (total: 211.5). Line: 214.5. Cushion: 3.0 pts. \u26a0 CONTESTED: Sources disagree by 16.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 131, PHX 122",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-27",
@@ -14341,9 +14341,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): OKC 112.0, PHX 99.5 (total: 211.5). Line: 214.5. Cushion: 3.0 pts. \u26a0 CONTESTED: Sources disagree by 16.0 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 131, PHX 122",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-28",
@@ -14359,9 +14359,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 106.0, BOS 122.4 (total: 228.4). Line: 213.5. Cushion: 14.9 pts. \u26a0 SUSPICIOUS EDGE (27.9%): Model predicts 228.4 vs market 213.5 \u2014 14.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 113, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-28",
@@ -14467,9 +14467,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark + sagarin + actionnetwork): PHI 106.0, BOS 122.4 (total: 228.4). Line: 213.5. Cushion: 14.9 pts. \u26a0 SUSPICIOUS EDGE (27.9%): Model predicts 228.4 vs market 213.5 \u2014 14.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 113, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-28",
@@ -14611,9 +14611,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (sagarin + actionnetwork): PHI 106.3, BOS 117.7 (total: 224.0). Line: 214.5. Cushion: 9.5 pts. \u26a0 SUSPICIOUS EDGE (18.6%): Model predicts 224.0 vs market 214.5 \u2014 9.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 113, BOS 97",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-28",
@@ -14863,9 +14863,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): HOU 105.6, LAL 103.5 (margin: 2.1). 2.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 17.6 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 99, LAL 93",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-29",
@@ -14935,9 +14935,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): HOU 105.6, LAL 103.5 (margin: 2.1). 2.4 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 17.6 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 99, LAL 93",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-04-29",
