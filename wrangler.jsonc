@@ -11,5 +11,11 @@
     "directory": ".",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "EDGE_STATE",
+      "id": "7dca36afc97d4d86bebed2e2948d6e83"
+    }
+  ]
 }
