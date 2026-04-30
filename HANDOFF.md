@@ -12,14 +12,14 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 steps 1-2)
+## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 3)
 
 A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.**
 
 Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
-- [x] **Step 2**: `@cloudflare/vite-plugin` v1.35.0 installed; `frontend/vite.config.ts` wired with `cloudflare({ configPath: '../wrangler.jsonc' })`.
-- [ ] Step 3: rewrite `worker/index.js` as `worker/index.ts` mounting Hono.
+- [x] **Step 2**: `@cloudflare/vite-plugin` v1.35.0 installed and wired.
+- [x] **Step 3**: `worker/index.js` rewritten as `worker/index.ts` mounting Hono 4.12.16. Layout restructured: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js` moved from `frontend/` up to the repo root. Vite uses `root: 'frontend'`. ADR 0001 amended to match.
 - [ ] Step 4: create EDGE_STATE + EDGE_STATE_PREVIEW KV namespaces.
 - [ ] Step 5: auth middleware.
 - [ ] Step 6: read routes.
@@ -67,16 +67,62 @@ export default defineConfig({
 
 - **Legacy `/api/place-bets` (plural) vs new `/api/place-bet` (singular).** The existing Worker at `worker/index.js` exposes `/api/place-bets`. The locked contract calls for `/api/place-bet` with idempotency. Plan: keep both working through cohabitation. Old `index.html` keeps hitting `/api/place-bets`; new v2 frontend hits `/api/place-bet`. After cutover, deprecate the plural. Worth confirming with Max before writing the singular endpoint in step 7.
 
+### Phase 1 step 3 (worker rewrite + layout shift): what shipped
+
+**Layout shift (deviation from ADR 0001 as originally written).** ADR 0001's repo-layout block placed `package.json` inside `frontend/`. When I tried to typecheck `worker/*.ts` with imports of `hono` and `zod`, TypeScript could not resolve them: `worker/` is a sibling of `frontend/`, and the standard module resolution (even in `bundler` mode) walks up from each file looking for `node_modules`. From `worker/index.ts`, walking up never reaches `frontend/node_modules`. Two fix options were considered (paths mapping in `tsconfig.worker.json` with deprecated TS 6 `baseUrl`, vs moving `package.json` to the repo root). Asked Max via `AskUserQuestion`; chose the canonical CF Workers + Vite layout: package.json at the repo root.
+
+**Files moved from `frontend/` to repo root:**
+- `package.json`
+- `package-lock.json`
+- `vite.config.ts`
+- `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`, `tsconfig.worker.json`
+- `eslint.config.js`
+
+**Files left in `frontend/`:** `src/`, `public/`, `index.html` (Vite's HTML entry), `README.md`. `frontend/node_modules` deleted; `node_modules` reinstalled at the repo root via `npm install`.
+
+**Config updates that paired with the move:**
+- `vite.config.ts`: `root: 'frontend'` so Vite finds `frontend/index.html`. `cloudflare()` plugin no longer needs `configPath` since `wrangler.jsonc` is at the same level.
+- `tsconfig.app.json`: `include` changed from `["src"]` to `["frontend/src"]`.
+- `tsconfig.worker.json`: paths in `include` no longer prefixed with `../`. Dropped the `baseUrl` + `paths` workaround that I had attempted before the layout shift (deprecated in TS 6).
+- `eslint.config.js`: `globalIgnores` extended to `['dist', 'frontend/dist', 'node_modules', '.wrangler']`.
+
+**Worker rewrite (TS + Hono).** Under `worker/`:
+- `worker/env.ts`: `Env extends CloudflareBindings` with `GITHUB_TOKEN: string` (the secret is not in wrangler.jsonc, so `wrangler types` does not generate it).
+- `worker/index.ts`: `Hono<{ Bindings: Env }>` app that mounts `app.route('/api/health', healthApp)`, `app.route('/api/place-bets', placeBetsLegacyApp)`, and falls through with `app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw))`.
+- `worker/routes/health.ts`: tiny health endpoint, identical behavior to the JS original.
+- `worker/routes/place-bets-legacy.ts`: 1:1 port of the existing JS handler. CORS allowlist, origin check, body parse, `normalizePicks`, GitHub `repository_dispatch`. Live behavior preserved.
+- `wrangler.jsonc`: `main` updated from `worker/index.js` to `worker/index.ts`.
+- `worker/index.js` and `worker/routes/.gitkeep` deleted.
+- `worker-configuration.d.ts` regenerated via `npx wrangler types --env-interface CloudflareBindings`. Lives at the repo root, ~500 KB; committed for editor type support. Re-run after any wrangler.jsonc binding change (the wrangler CLI prints a reminder).
+
+`npx tsc -b` from the repo root passes clean across all three project references (app, node, worker).
+
+### Decisions locked this session
+
+1. **Single `package.json`, located at the repo root** (revises ADR 0001's layout). Matches the canonical CF Workers + Vite template.
+2. **wrangler.jsonc stays at the repo root.** Now sibling to `vite.config.ts`, so the Cloudflare Vite plugin auto-detects it.
+3. **Worker has its own tsconfig (`tsconfig.worker.json`).** Wires `worker/**/*.ts`, `shared/**/*.ts`, and the generated `worker-configuration.d.ts`. ESM module resolution mode `bundler`, no DOM lib, strict.
+4. **Legacy `/api/place-bets` (plural) preserved verbatim** as a 1:1 TS port. The new `/api/place-bet` (singular, with idempotency) lands in step 7.
+
+### Open questions surfaced this session (unchanged, still open for step 7)
+
+- **Legacy `/api/place-bets` (plural) vs new `/api/place-bet` (singular).** Plan: keep both during cohabitation. Old `index.html` keeps hitting the plural path; new v2 frontend hits the singular path. After cutover, deprecate the plural. Worth confirming with Max before writing the singular endpoint in step 7.
+
+### TODOs surfaced (non-blocking, address in later steps or polish pass)
+
+- `eslint.config.js` applies `globals.browser` to `**/*.{ts,tsx}` including `worker/`. Worker code does not run in a browser. Split the rules into a frontend block (browser globals + react) and a worker block (no DOM). Polish item; not blocking.
+- `worker-configuration.d.ts` is committed at ~500 KB. Common practice is to either commit it (as the canonical CF template does) or gitignore + regenerate via `predev`/`prebuild`. Currently committed. Revisit if it gets noisy.
+- ESLint, Vitest, and full deploy scripts are not wired into `package.json` yet beyond the Vite scaffold defaults. Step 9 (cohabitation + EMFILE) is a natural place to add `deploy`, `types`, and worker-aware scripts.
+
 ### What's next (continue here on resume)
 
-Step 3: rewrite `worker/index.js` as `worker/index.ts` mounting Hono.
-1. From `frontend/`: `npm install hono zod`.
-2. Update `wrangler.jsonc` `main` to `worker/index.ts`.
-3. Write `worker/index.ts` as a Hono app that mirrors current behavior (handles `/api/place-bets` plural and `/api/health`, falls through to `env.ASSETS.fetch(request)` for everything else).
-4. Move the existing place-bets handler to `worker/routes/place-bets-legacy.ts` (or similar). Keep behavior identical.
-5. `tsc --noEmit` from frontend/ should still pass with the worker source under `../worker/` reachable.
+Step 4: create the `EDGE_STATE` KV namespace and bind in `wrangler.jsonc`.
+1. From repo root: `npx wrangler kv namespace create EDGE_STATE` (note: in current wrangler the subcommand is `kv namespace create`, no colon).
+2. Take the printed `id` and add a `kv_namespaces` block to `wrangler.jsonc`. Then create a preview namespace too (`--preview`) for `wrangler dev` if the plugin's local KV simulation is not used.
+3. Re-run `npx wrangler types --env-interface CloudflareBindings` to regenerate `worker-configuration.d.ts` so `Env` now includes `EDGE_STATE: KVNamespace`.
+4. Write a thin `worker/lib/state.ts` per ADR 0003 with `readState`, `writeState`, `appendPlacement`, `appendManualBet`, etc. Stub for now; real logic when route handlers land in step 6/7.
 
-Then Step 4 (KV namespace creation), Step 5 (auth middleware), Steps 6-7 (routes), Step 8 (Access dashboard config), Step 9 (cohabitation + .assetsignore).
+Then Step 5 (auth middleware), Steps 6-7 (routes), Step 8 (Access dashboard config), Step 9 (cohabitation + .assetsignore).
 
 ---
 
