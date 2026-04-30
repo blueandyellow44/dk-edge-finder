@@ -24,27 +24,29 @@ Rebuild the frontend of [dk-edge-finder.max-sheahan.workers.dev](https://dk-edge
 6. **Python output target:** No change. Model continues to write `data.json`, `bankroll.json`, `pick_history.json` to git.
 
 ### What shipped this session
-1. **Bug fix on the gambling model resolver:**
-   - Commit `8fd86b7 fix(resolver): key scoreboard cache by (sport, date), not just sport`
-   - Commit `a3efced data: resolve 110 backlogged NBA paper picks (Apr 5-29)`
-   - 110 NBA picks across April 5-29 had been stuck pending for weeks because the cache key was wrong. Fix lives at `scripts/resolve_bets.py` in `main()` and `resolve_pick_history()`.
-   - Fix branch `fix/resolver-cache-key` is on origin and merged to main.
-2. **Calibration captured before/after at:**
-   - `/tmp/dk-edge-calibration-BASELINE.txt` (pre-fix, masked NBA losses)
-   - `/tmp/dk-edge-calibration-AFTER-FIX.txt` (post-fix, true picture)
-3. **Detour findings filed to [dk-edge-finder/tasks/lessons.md](dk-edge-finder/tasks/lessons.md):**
+1. **Resolver cache-key bug fix.**
+   - `8fd86b7 fix(resolver): key scoreboard cache by (sport, date), not just sport`
+   - `a3efced data: resolve 110 backlogged NBA paper picks (Apr 5-29)`
+   - 110 NBA picks across April 5-29 had been stuck pending for weeks because the cache key was wrong. Fix at `scripts/resolve_bets.py` in `main()` and `resolve_pick_history()`. Branch `fix/resolver-cache-key` merged to main.
+2. **NBA playoff discount patch.**
+   - `fe63294 fix(model): NBA playoff discount + hard skip on too-good-to-be-true edges`
+   - `c08a0e3 data: re-scan today with playoff discount applied (0 edges)`
+   - Adds `is_nba_playoff_window()` plus 5 calibration constants. During Apr 15 to Jun 30, NBA edges get a 40% discount, NBA OVER totals an extra 10% penalty, NBA min-edge raised to 8%, and a hard skip on anything still above 10% post-discount. Today's `OVER 212.5 BOS @ PHI` (29.3% raw) was correctly hard-skipped. Branch `fix/nba-playoff-discount` merged to main.
+3. **Calibration snapshots captured at:**
+   - `/tmp/dk-edge-calibration-BASELINE.txt` (pre-resolver-fix, masked NBA losses)
+   - `/tmp/dk-edge-calibration-AFTER-FIX.txt` (post-resolver-fix, true picture)
+4. **Detour findings filed in [dk-edge-finder/tasks/lessons.md](dk-edge-finder/tasks/lessons.md) on this branch (not on main):**
    - Resolver cache-key fix [AUTOMATE - DONE]
    - NBA model unprofitable: 44.9% over 178, -$252.63 [BACKLOG]
    - 5-8% edge bucket below break-even at 52.8% over 271 [BACKLOG]
    - Stale-stash awareness rule [MANUAL]
-4. **Three running docs created at repo root:** `lessons.md`, `HANDOFF.md` (this file), `CHANGELOG.md`.
+5. **Three running docs created at repo root:** `lessons.md`, `HANDOFF.md` (this file), `CHANGELOG.md`.
 
-### Next step (Phase 0.4)
-Invoke the **file-architect** skill. It will read the plan file and interview Max on:
-- Where does the new frontend tree live? `frontend/`, `app/`, or `web/`?
+### Next step (Phase 0.4 in progress)
+**file-architect** skill is mid-interview. Q1 answered: new frontend folder is `frontend/`. Remaining ambiguous folder questions:
 - Where does the old `index.html` go during cohabitation? `legacy/index.html` or stay at root and route around it?
-- Where do shared TypeScript types live?
-- Worker layout: `worker/index.ts` + `worker/routes/*.ts` for Hono, or flat?
+- Where do shared TypeScript types live? `shared/`, `types/`, etc.
+- Worker layout: keep `worker/` and rewrite, or rename, or split into `worker/index.ts` + `worker/routes/*.ts`?
 - Where do design mockups live? Existing `mockups/` from 2026-04-10 stays or new `frontend/mockups/`?
 - Where do ADRs live? `docs/adr/`?
 

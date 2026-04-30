@@ -6,6 +6,7 @@ All notable changes to the DK Edge Finder rebuild are recorded here. Format foll
 
 ### Fixed
 - **scripts/resolve_bets.py:** Scoreboard cache now keyed by `(sport, date)` instead of `sport` alone. Previously the first pending pick of each sport triggered a fetch for that pick's date, and every later pending pick of the same sport silently reused the same scoreboard regardless of its own date. 110 NBA paper picks across April 5-29 had been stuck pending for weeks; all resolved after the fix. Commits `8fd86b7` (code) + `a3efced` (data).
+- **scripts/scan_edges.py:** Added NBA playoff discount window (Apr 15 to Jun 30). During the window NBA edges are reduced 40%, NBA OVER totals get an additional 10% penalty, NBA min-edge is raised to 8%, and any pick whose post-discount edge is still above 10% is hard-skipped (treated as model hallucination). Tactical patch until a real NBA playoff calibration ships. Commits `fe63294` (code) + `c08a0e3` (today's re-scan).
 
 ### Added
 - `lessons.md`, `HANDOFF.md`, `CHANGELOG.md` at repo root for the v2 frontend rebuild. Model-side lessons remain at `dk-edge-finder/tasks/lessons.md`.
