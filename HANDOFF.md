@@ -12,9 +12,11 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-04-30, mid-Phase-1, after session 3 step 9)
+## What you are inheriting (2026-05-01, Phase 1 closed code-side, Phase 2 in progress)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 of the v2 rebuild is closed. Phase 1 is in progress.** Step 8 (the Access dashboard config) is the only Phase 1 task left and is Max's hands-on click-through; the runbook for it is at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 is closed. Phase 1 is closed code-side; step 8 (Access dashboard config) is still pending and is Max's hands-on click-through.** Phase 2 (quality gate) is in progress: vitest harness shipped, picks normalizer + route tests both green.
+
+Step 8 detection at the start of session 4 (2026-05-01) via `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returned `HTTP/2 200` with `content-type: text/html` and no `cf-access-*` headers, meaning Access is not yet intercepting requests on the live URL. Max chose to start Phase 2 now using the dev-mock header path; the live-smoke step (Phase 2.3) is deferred until step 8 lands.
 
 Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
@@ -31,7 +33,77 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 
 ---
 
-## 2026-04-30 session 3 (IN PROGRESS, Phase 1 implementation)
+## 2026-05-01 session 4 (IN PROGRESS, Phase 2 quality gate)
+
+### Goal
+Land Phase 2 (vitest harness for the worker; route tests via direct `app.fetch(new Request(...))`; live smoke against the deployed URL once Access is configured). Step 8 (Access dashboard) is still pending; Max chose to start Phase 2 now using the dev-mock header path and defer the live smoke until step 8 lands.
+
+### Pre-flight
+- `git stash list` empty before any work. Skipped `git pull --rebase` because origin is behind (branch is 14 commits ahead, nothing to pull).
+- Step 8 detection via `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returned `HTTP/2 200` with `content-type: text/html` and no `cf-access-*` headers. Two signals folded into one response: (a) Access is not yet intercepting requests on the live URL (no 302 to `*.cloudflareaccess.com`), and (b) the new worker code is still unpushed (the deployed legacy worker has no `/api/me` route, so the request fell through to the assets binding and served `index.html`).
+
+### Phase 2 step 1 (vitest harness): what shipped
+
+**Tooling.**
+- `npm install -D vitest` brought in `vitest@4.1.5` (Node 24 friendly).
+- Added `"test": "vitest run"` and `"test:watch": "vitest"` scripts to `package.json`.
+- Wrote standalone `vitest.config.ts` at the repo root with `environment: 'node'` and `include: ['worker/**/*.test.ts', 'shared/**/*.test.ts']`. Standalone (rather than inheriting `vite.config.ts`) so vitest does NOT load the Cloudflare Vite plugin, which is meant for `wrangler dev` and would noisily try to read `wrangler.jsonc` during test discovery.
+
+**Picks normalizer tests (`worker/lib/picks.test.ts`).** 31 tests across nine `describe` blocks. The unit under test is `getPicksResponse(env)` (and `loadDataJson` / `getLatestScanDate` as supporting exports). Each test builds a fake `Env` with a hand-rolled `ASSETS.fetch` shim that returns a `Response` with a configurable `data.json` body and an optional `Last-Modified` header. Coverage:
+
+- **Em-dash strip**: `scan_subtitle`, all `Pick` string fields (event/notes/sources), `no_edge_games[]` strings, `best_bet.title|desc`. Asserts both the stripped output AND that `JSON.stringify(...)` of the result contains no `—`.
+- **Percent-string coercion**: `"35.7%"` → `35.7` for `implied`/`model`/`edge`. Numeric pass-through. Fallback to `0` for `null`/`undefined`/non-numeric strings. The `implied_prob` and `model_prob` fallback keys (legacy emit shape) are also covered.
+- **Dollars-string coercion**: `"$11.41"` → `11.41` for `wager`. The `bet` fallback key (legacy shape) is covered. Numeric pass-through. Embedded-comma strings (`"$1,234.56"`) parse correctly. Missing wager defaults to `0`.
+- **Odds string coercion**: passthrough of pre-formatted American strings (`"-110"`); numeric `165` → `"+165"`; numeric `-110` → `"-110"`.
+- **Missing-field defaults**: a fully-empty pick object (`{}`) normalizes into a Pick that satisfies the schema with safe defaults across every field. Fallback `rank` from array index is verified. `type` falls back to `'game'` for unknown values; preserves `'prop'` when set. Top-level optional fields (subtitle/games_analyzed/best_bet/picks/no_edge_games) fall back when the model omits them.
+- **scan_age_seconds derivation**: with `Last-Modified` 10 minutes ago → ~600 (asserted in a 599-601 window for clock skew). With absent header → `null`. With unparseable header → `null`. With future `Last-Modified` → clamped to `0`.
+- **Empty-picks case**: today's actual zero-edges shape (`picks: []`, `no_edge_games: [...]`) round-trips correctly with em-dash stripped from `scan_subtitle`.
+- **Schema validation**: a malformed `scan_date` (e.g. `"not-a-date"`) causes `PicksResponseSchema.parse(...)` to throw, which the test asserts via `rejects.toThrow()`.
+- **`loadDataJson` / `getLatestScanDate`**: success path returns parsed data + `Last-Modified` Date; non-OK ASSETS response throws `data.json fetch failed: 404`; missing or non-string scan_date returns `''` from `getLatestScanDate`.
+
+One test failed on first run (`top-level missing scan fields fall back to safe defaults`) because passing `{}` as data.json defaults `scan_date` to `''`, which fails Zod's ISO-date validator. The Python model always emits `scan_date`; a missing one is a real failure mode (not a graceful default), so the test was retitled and now provides a minimal valid `scan_date`. The schema-validation block keeps a separate negative case for the malformed-date scenario.
+
+### Phase 2 step 2 (route tests via app.fetch): what shipped
+
+**`worker/index.test.ts`** — 17 tests that drive the assembled root `app` (from `worker/index.ts`) via `app.fetch(new Request(...), env)`. Same pattern as the one-shot mount-order smoke from Phase 1 step 7, codified.
+
+Mock env helpers in the file:
+- `makeAssets(cfg)` returns an `ASSETS` shim that responds to `/data.json` and `/bankroll.json` with caller-provided fixtures and an optional `Last-Modified`. Anything else → 404.
+- `makeKv()` returns a `Map<string, string>`-backed `EDGE_STATE` shim with `get`/`put`/`delete`/`list`. Pre-seeded via direct `env.EDGE_STATE.put(...)` calls in tests that need existing state.
+- `makeEnv({ dataJson?, bankrollJson?, dataLastModified? })` composes both bindings + a placeholder `GITHUB_TOKEN`.
+
+Coverage:
+- **Auth gating** (5 tests): every v2 read route returns 401 without `cf-access-authenticated-user-email`. The middleware lowercases the email; verified by passing `Max.Sheahan@iCloud.com` and asserting `/api/me` returns `email: "max.sheahan@icloud.com"`.
+- **`GET /api/health`** (1 test): public, returns `{ ok: true, time: "2026-..." }` without auth.
+- **`GET /api/me`** (4 tests): happy path returns the lowercased email. JWT picture extraction works for both top-level `picture` and `custom.picture` claim shapes (test builds a fake JWT with hand-rolled base64url helper using `btoa` to keep `@types/node` out of the worker tsconfig). Malformed JWT yields `picture_url: null` rather than throwing.
+- **`GET /api/picks`** (2 tests): normalized payload returned, em-dash stripped from `scan_subtitle`, schema-validated. Asset 404 on `data.json` propagates as a 500 (Hono's default error handler).
+- **`GET /api/bankroll`** (2 tests): file values flow through when no KV override exists. Per-user override pre-seeded via `EDGE_STATE.put('balance_override:<email>', ...)` overrides `available` AND populates the `balance_override` envelope.
+- **`GET /api/state`** (2 tests): empty KV returns empty arrays + `null updated_at` + the current `scan_date`. Pre-seeded record at `state:<email>:<scan_date>` round-trips through the merged response.
+- **Mount-order regression** (1 test): `POST /api/state/placements` with an empty body returns 400 (Zod validation error from the placements subapp), NOT 404 (which would mean the broader `/api/state` router swallowed the path). This codifies the smoke from step 7.
+
+**Initial run.** All 48 tests passed first try. `npx tsc -b` flagged one issue: my JWT helper used `Buffer.from(...).toString('base64')`, but the worker tsconfig doesn't include `@types/node` (correct; the worker shouldn't reach for Node APIs). Switched to `btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')` which works in both the Workers runtime and Node. `tsc -b` and `npm test` both clean afterward.
+
+### Where this leaves us at end of session
+- 48 tests passing across 2 files (`worker/lib/picks.test.ts`, `worker/index.test.ts`).
+- `npx tsc -b` clean.
+- Phase 2 step 3 (live smoke) blocked on step 8 (Access dashboard).
+- No commits yet this session. Two-commit pattern when committed: (a) Phase 2 code (`vitest.config.ts`, `package.json`, `package-lock.json`, `worker/lib/picks.test.ts`, `worker/index.test.ts`); (b) HANDOFF update.
+
+### What's next (continue here on resume)
+
+1. Decide whether to commit the Phase 2 work as-is (two commits per the established pattern: code + HANDOFF), or ship more tests first.
+2. Optional Phase 2 extensions if more coverage is wanted before commit:
+   - Write-route tests (`POST /api/state/placements`, `POST /api/state/manual-bets`, `DELETE /api/state/placements/:key`, etc.). The HANDOFF at end of step 7 noted these are "harder to test in isolation because of the GitHub dispatch side effect" — for the dispatch-touching paths (`/api/state/sync-queue/retry`, `/api/place-bet`) the existing `worker/lib/dispatch.ts` would need a mockable seam (e.g. injecting `fetch` or splitting the GitHub-side from the cache-side). Not blocking; can ship.
+   - Bankroll/state lib unit tests directly (rather than via routes). Lower priority; routes already exercise the lib code.
+3. Step 8 (Access dashboard click-through) when Max is ready. Runbook at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
+4. Phase 2.3 live smoke once step 8 is live.
+
+### If you just have one minute, do this
+Run `cd ~/Betting\ Skill && npm test` to confirm 48/48 pass. Then `npx tsc -b` to confirm types are clean. If both pass, the next decision is about commits or more Phase 2 coverage.
+
+---
+
+## 2026-04-30 session 3 (PAUSED, Phase 1 implementation)
 
 ### Goal
 Land Phase 1: scaffold the Vite app, wire Hono in TypeScript, create the KV namespace, ship the auth middleware and route handlers, configure Cloudflare Access. Live site stays untouched throughout.
