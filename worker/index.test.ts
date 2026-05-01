@@ -382,3 +382,449 @@ describe('mount order: /api/state/* sub-paths route to their own subapps', () =>
     expect([400, 422]).toContain(res.status)
   })
 })
+
+// ────────────────────────────────────────────────────────────────────────
+// Write routes (non-dispatch). These touch only KV and the data.json
+// scan-date lookup, so they slot into the existing mock harness directly.
+// The dispatch-touching write routes (POST /api/state/sync-queue/retry,
+// POST /api/place-bet) need a fetch-injection seam in worker/lib/dispatch.ts
+// before they can be unit-tested without a real GitHub call. Tracked as a
+// separate piece of work; tests for those land in a follow-up commit.
+// ────────────────────────────────────────────────────────────────────────
+
+const SCAN_KEY = 'state:max.sheahan@icloud.com:2026-04-30'
+
+describe('POST /api/state/placements', () => {
+  test('creates a placement, server-stamps placed_at, returns 201', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const before = new Date().toISOString()
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-create-1',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(201)
+    const body = (await res.json()) as {
+      key: string
+      action: 'placed' | 'skipped'
+      dispatch_status: 'ok' | 'queued' | 'failed'
+      placed_at: string
+      idempotency_key: string
+    }
+    expect(body.key).toBe('NYY ML|NYY @ BOS')
+    expect(body.action).toBe('placed')
+    expect(body.dispatch_status).toBe('ok')
+    expect(body.idempotency_key).toBe('idem-create-1')
+    // placed_at is server-stamped: it should be an ISO timestamp at or
+    // after the request started.
+    expect(body.placed_at >= before).toBe(true)
+
+    // KV side-effect: the placement is in the merged record.
+    const stored = await env.EDGE_STATE.get(SCAN_KEY)
+    expect(stored).not.toBeNull()
+    const record = JSON.parse(stored as string) as { placements: { idempotency_key: string }[] }
+    expect(record.placements).toHaveLength(1)
+    expect(record.placements[0].idempotency_key).toBe('idem-create-1')
+  })
+
+  test('idempotency_key dedupes: same key sent twice = one placement', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const body = {
+      key: 'NYY ML|NYY @ BOS',
+      action: 'placed' as const,
+      dispatch_status: 'ok' as const,
+      idempotency_key: 'idem-dupe',
+    }
+    const headers = { ...AUTHED, 'content-type': 'application/json' }
+    const r1 = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      }),
+      env,
+    )
+    const r2 = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      }),
+      env,
+    )
+    expect(r1.status).toBe(201)
+    expect(r2.status).toBe(201)
+    const stored = JSON.parse((await env.EDGE_STATE.get(SCAN_KEY)) as string) as {
+      placements: { idempotency_key: string }[]
+    }
+    expect(stored.placements).toHaveLength(1)
+  })
+
+  test('dispatch_status defaults to "ok" when omitted from the body', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'NYY ML|NYY @ BOS',
+          action: 'skipped',
+          idempotency_key: 'idem-default',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(201)
+    const body = (await res.json()) as { dispatch_status: string }
+    expect(body.dispatch_status).toBe('ok')
+  })
+
+  test('rejects bad body with 400 and Zod issues', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({ key: 'x' }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(400)
+    const body = (await res.json()) as { error: string; issues: unknown[] }
+    expect(body.error).toMatch(/Invalid placement body/i)
+    expect(Array.isArray(body.issues)).toBe(true)
+  })
+
+  test('rejects without auth header', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'x',
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-noauth',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(401)
+  })
+})
+
+describe('DELETE /api/state/placements/:key', () => {
+  test('removes the placement and returns 204', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    // Seed a placement so DELETE has something to remove.
+    await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-to-delete',
+        }),
+      }),
+      env,
+    )
+
+    const encoded = encodeURIComponent('NYY ML|NYY @ BOS')
+    const res = await app.fetch(
+      new Request(`https://worker.test/api/state/placements/${encoded}`, {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(204)
+    const text = await res.text()
+    expect(text).toBe('')
+
+    const stored = JSON.parse((await env.EDGE_STATE.get(SCAN_KEY)) as string) as {
+      placements: unknown[]
+    }
+    expect(stored.placements).toHaveLength(0)
+  })
+
+  test('returns 404 when no state record exists at all', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request(`https://worker.test/api/state/placements/${encodeURIComponent('nope|nope')}`, {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(404)
+  })
+
+  test('returns 404 when the key is not in the placements array', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    // Seed a different key.
+    await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'A|A',
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-A',
+        }),
+      }),
+      env,
+    )
+    const res = await app.fetch(
+      new Request(`https://worker.test/api/state/placements/${encodeURIComponent('B|B')}`, {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(404)
+  })
+
+  test('URL-decodes special characters in the key parameter', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    // Key contains '|' (pick|event separator), space, '@', '+'.
+    const rawKey = 'NYY +1.5|NYY @ BOS'
+    await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: rawKey,
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-encoded',
+        }),
+      }),
+      env,
+    )
+    const encoded = encodeURIComponent(rawKey)
+    expect(encoded).toContain('%20')
+    expect(encoded).toContain('%40')
+    expect(encoded).toContain('%7C')
+
+    const res = await app.fetch(
+      new Request(`https://worker.test/api/state/placements/${encoded}`, {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(204)
+  })
+})
+
+describe('POST /api/state/manual-bets', () => {
+  test('creates a manual bet with server-assigned id = idempotency_key', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          sport: 'NBA',
+          event: 'BOS @ PHI',
+          pick: 'BOS -6.5',
+          odds: '-110',
+          wager: 12.5,
+          idempotency_key: 'idem-mb-1',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(201)
+    const body = (await res.json()) as {
+      id: string
+      idempotency_key: string
+      outcome: 'pending' | 'win' | 'loss' | 'push'
+      placed_at: string
+      sport: string
+    }
+    expect(body.id).toBe('idem-mb-1')
+    expect(body.idempotency_key).toBe('idem-mb-1')
+    expect(body.outcome).toBe('pending')
+    expect(body.sport).toBe('NBA')
+    expect(body.placed_at).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+  })
+
+  test('idempotency_key dedupes manual bets', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const body = {
+      sport: 'NBA',
+      event: 'BOS @ PHI',
+      pick: 'BOS -6.5',
+      odds: '-110',
+      wager: 12.5,
+      idempotency_key: 'idem-mb-dupe',
+    }
+    const headers = { ...AUTHED, 'content-type': 'application/json' }
+    await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      }),
+      env,
+    )
+    await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      }),
+      env,
+    )
+    const stored = JSON.parse((await env.EDGE_STATE.get(SCAN_KEY)) as string) as {
+      manual_bets: { idempotency_key: string }[]
+    }
+    expect(stored.manual_bets).toHaveLength(1)
+  })
+
+  test('rejects bad body with 400', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({ sport: 'NBA' }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(400)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/Invalid manual bet body/i)
+  })
+})
+
+describe('DELETE /api/state/manual-bets/:id', () => {
+  test('removes the manual bet and returns 204', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          sport: 'NBA',
+          event: 'BOS @ PHI',
+          pick: 'BOS -6.5',
+          odds: '-110',
+          wager: 12.5,
+          idempotency_key: 'idem-mb-rm',
+        }),
+      }),
+      env,
+    )
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets/idem-mb-rm', {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(204)
+    const stored = JSON.parse((await env.EDGE_STATE.get(SCAN_KEY)) as string) as {
+      manual_bets: unknown[]
+    }
+    expect(stored.manual_bets).toHaveLength(0)
+  })
+
+  test('returns 404 for a missing manual bet id', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/manual-bets/nope', {
+        method: 'DELETE',
+        headers: AUTHED,
+      }),
+      env,
+    )
+    expect(res.status).toBe(404)
+  })
+})
+
+describe('POST /api/balance-override', () => {
+  test('upserts the per-user balance override, returns 200 with the persisted record', async () => {
+    const env = makeEnv({ bankrollJson: baseBankrollJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/balance-override', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({ amount: 750.0, note: 'Bumped after Saturday wins' }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as {
+      schema_version: number
+      email: string
+      amount: number
+      note: string
+      updated_at: string
+    }
+    expect(body.schema_version).toBe(1)
+    expect(body.email).toBe('max.sheahan@icloud.com')
+    expect(body.amount).toBe(750.0)
+    expect(body.note).toBe('Bumped after Saturday wins')
+    expect(body.updated_at).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+
+    // /api/bankroll subsequently reflects the new override.
+    const bk = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    const bkBody = (await bk.json()) as { available: number; balance_override: { amount: number } | null }
+    expect(bkBody.available).toBe(750.0)
+    expect(bkBody.balance_override?.amount).toBe(750.0)
+  })
+
+  test('subsequent POST overwrites the previous override', async () => {
+    const env = makeEnv({ bankrollJson: baseBankrollJson })
+    const headers = { ...AUTHED, 'content-type': 'application/json' }
+    await app.fetch(
+      new Request('https://worker.test/api/balance-override', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ amount: 750.0, note: 'first' }),
+      }),
+      env,
+    )
+    const second = await app.fetch(
+      new Request('https://worker.test/api/balance-override', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ amount: 800.0, note: 'second' }),
+      }),
+      env,
+    )
+    expect(second.status).toBe(200)
+    const body = (await second.json()) as { amount: number; note: string }
+    expect(body.amount).toBe(800.0)
+    expect(body.note).toBe('second')
+  })
+
+  test('rejects bad body with 400', async () => {
+    const env = makeEnv({ bankrollJson: baseBankrollJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/balance-override', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({ amount: 'not-a-number' }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(400)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/Invalid balance override body/i)
+  })
+})
