@@ -14,7 +14,7 @@ Before any project-specific work, the next thread must load these:
 
 ## What you are inheriting (2026-05-01, Phase 1 closed code-side, Phase 2 in progress)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 is closed. Phase 1 is closed code-side; step 8 (Access dashboard config) is still pending and is Max's hands-on click-through.** Phase 2 (quality gate) is in progress: vitest harness shipped, picks normalizer + route tests both green.
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 is closed. Phase 1 is closed code-side; step 8 (Access dashboard config) is still pending and is Max's hands-on click-through.** Phase 2 (quality gate) is in progress: vitest harness shipped, picks normalizer + read-route tests + non-dispatch write-route tests all green (65 tests total). Dispatch-touching routes (`/api/state/sync-queue/retry`, `/api/place-bet`) need a fetch-injection seam in `worker/lib/dispatch.ts` before they can be unit-tested without a real GitHub call; that's the only remaining Phase 2 code work.
 
 Step 8 detection at the start of session 4 (2026-05-01) via `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returned `HTTP/2 200` with `content-type: text/html` and no `cf-access-*` headers, meaning Access is not yet intercepting requests on the live URL. Max chose to start Phase 2 now using the dev-mock header path; the live-smoke step (Phase 2.3) is deferred until step 8 lands.
 
@@ -83,23 +83,35 @@ Coverage:
 
 **Initial run.** All 48 tests passed first try. `npx tsc -b` flagged one issue: my JWT helper used `Buffer.from(...).toString('base64')`, but the worker tsconfig doesn't include `@types/node` (correct; the worker shouldn't reach for Node APIs). Switched to `btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')` which works in both the Workers runtime and Node. `tsc -b` and `npm test` both clean afterward.
 
+### Phase 2 step 2 extension (write-route tests, non-dispatch): what shipped
+
+After the first commit pair landed, extended `worker/index.test.ts` with 17 more tests (65 total) covering the write routes that only touch KV. The dispatch-touching routes (`POST /api/state/sync-queue/retry`, `POST /api/place-bet`) are deliberately deferred: they need a fetch-injection seam in `worker/lib/dispatch.ts` before they can be unit-tested without a real GitHub `repository_dispatch` call. A comment in the test file flags the deferral so a future thread doesn't think coverage is just missing.
+
+Coverage by route:
+
+- **POST /api/state/placements** (5 tests): happy-path 201 with server-stamped `placed_at`, idempotency dedupe (same `idempotency_key` twice = one entry in the merged record), `dispatch_status` defaulting to `'ok'` when omitted from the body, 400 with Zod issues on bad body, 401 without auth header.
+- **DELETE /api/state/placements/:key** (4 tests): 204 No Content on success with empty body, 404 when no state record exists at all, 404 when the key is not present in `placements[]`, URL-decoding of special chars (`|`, `%20`, `%40`) confirmed via a key like `NYY +1.5|NYY @ BOS`.
+- **POST /api/state/manual-bets** (3 tests): 201 with server-assigned `id = idempotency_key` and `outcome: 'pending'`, idempotency dedupe, 400 on bad body.
+- **DELETE /api/state/manual-bets/:id** (2 tests): 204 on success, 404 on missing id.
+- **POST /api/balance-override** (3 tests): 200 with persisted record, subsequent POST overwrites the previous override (upsert semantics), `/api/bankroll` reflects the override after the POST (cross-route side-effect verified), 400 on bad body.
+
+All 65 tests passed first run. `npx tsc -b` clean.
+
 ### Where this leaves us at end of session
-- 48 tests passing across 2 files (`worker/lib/picks.test.ts`, `worker/index.test.ts`).
+- 65 tests passing across 2 files (`worker/lib/picks.test.ts` 31, `worker/index.test.ts` 34).
 - `npx tsc -b` clean.
 - Phase 2 step 3 (live smoke) blocked on step 8 (Access dashboard).
-- No commits yet this session. Two-commit pattern when committed: (a) Phase 2 code (`vitest.config.ts`, `package.json`, `package-lock.json`, `worker/lib/picks.test.ts`, `worker/index.test.ts`); (b) HANDOFF update.
+- Phase 2 internal coverage gap: dispatch-touching write routes (`POST /api/state/sync-queue/retry`, `POST /api/place-bet`) deferred until a fetch-injection seam lands in `worker/lib/dispatch.ts`.
+- Three commits this session: `4175694` (vitest + picks + read routes), `dffc87b` (HANDOFF update), then the next pair lands when the write-route tests + this HANDOFF update commit.
 
 ### What's next (continue here on resume)
 
-1. Decide whether to commit the Phase 2 work as-is (two commits per the established pattern: code + HANDOFF), or ship more tests first.
-2. Optional Phase 2 extensions if more coverage is wanted before commit:
-   - Write-route tests (`POST /api/state/placements`, `POST /api/state/manual-bets`, `DELETE /api/state/placements/:key`, etc.). The HANDOFF at end of step 7 noted these are "harder to test in isolation because of the GitHub dispatch side effect" — for the dispatch-touching paths (`/api/state/sync-queue/retry`, `/api/place-bet`) the existing `worker/lib/dispatch.ts` would need a mockable seam (e.g. injecting `fetch` or splitting the GitHub-side from the cache-side). Not blocking; can ship.
-   - Bankroll/state lib unit tests directly (rather than via routes). Lower priority; routes already exercise the lib code.
-3. Step 8 (Access dashboard click-through) when Max is ready. Runbook at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
-4. Phase 2.3 live smoke once step 8 is live.
+1. Step 8 (Access dashboard click-through) when Max is ready. Runbook at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
+2. Phase 2.3 live smoke once step 8 is live.
+3. Optional follow-up to close the Phase 2 internal gap: refactor `worker/lib/dispatch.ts` to accept an injectable `fetch` (or swap to `vi.stubGlobal('fetch', ...)`), then add tests for `POST /api/state/sync-queue/retry` and `POST /api/place-bet` covering: idempotency cache hits return the cached result without re-dispatching, dispatch failure returns 502, dispatch success returns 202, sync-queue retry updates `attempt_count` and `last_error`. Not blocking Phase 3 cutover, but worth doing before retry logic lands in the v2 frontend.
 
 ### If you just have one minute, do this
-Run `cd ~/Betting\ Skill && npm test` to confirm 48/48 pass. Then `npx tsc -b` to confirm types are clean. If both pass, the next decision is about commits or more Phase 2 coverage.
+Run `cd ~/Betting\ Skill && npm test` to confirm 65/65 pass. Then `npx tsc -b` to confirm types are clean. If both pass, the next decision is step 8 (Max's dashboard click-through) or the dispatch-injection refactor.
 
 ---
 
