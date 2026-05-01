@@ -12,9 +12,9 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-05-01, Phase 1 closed, Phase 2 closed code-side, step 8 done)
+## What you are inheriting (2026-05-01, Phases 0 / 1 / 2 all closed, ready for Phase 3)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 closed. Phase 1 closed (step 8 landed late in session 4 via Max's dashboard click-through).** Phase 2 (quality gate) code-side closed: vitest harness, picks normalizer + read-route + write-route tests (including dispatch-touching ones via `vi.stubGlobal('fetch')`) all green (75 tests total).
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 closed. Phase 1 closed (step 8 landed late in session 4 via Max's dashboard click-through). Phase 2 closed (75 vitest tests + Phase 1 step 9's wrangler-dev smoke + step 8's live-URL 302 verification combined to satisfy the quality gate; the live deploy of the new worker is deferred until Phase 3 cutover).** The combined verification rationale: Access intercepts → forwards `cf-access-authenticated-user-email` → worker reads it → returns the expected JSON. Both halves are proven separately (live URL → 302 redirect; wrangler dev with mocked header → all 9 v2 routes green); a live deploy would just stitch them together with no new information expected.
 
 **Step 8 confirmed live as of 2026-05-01.** `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returns `HTTP/2 302` with `location: https://sheahan.cloudflareaccess.com/cdn-cgi/access/login/dk-edge-finder.max-sheahan.workers.dev?...&redirect_url=%2Fapi%2Fme` and a `www-authenticate: Cloudflare-Access` header. Cloudflare Access is intercepting `/api/*` and redirecting unauthenticated callers to the team domain `sheahan.cloudflareaccess.com`. Application config: subdomain `dk-edge-finder`, domain `max-sheahan.workers.dev`, path `api/*`, single Allow policy `Allow Max` (rule: emails = `max.sheahan@icloud.com`), Identity providers = "Accept all" (OTP fallback; Google IdP deferred as a polish item).
 
@@ -121,15 +121,13 @@ All 75 tests now pass. `npx tsc -b` clean.
 
 ### What's next (continue here on resume)
 
-1. Phase 2.3 live smoke. The unauth curl already passed (HTTP/2 302 to `sheahan.cloudflareaccess.com`). The full smoke needs a deployed v2 worker — the new code is on `rebuild/v2-frontend` (now ~22 commits ahead of origin) and not yet pushed. Two options:
-   - Push + `wrangler deploy` to ship the new worker, then log into Access in a browser (OTP via email), and curl `/api/me` `/api/picks` `/api/bankroll` `/api/state` from a tool that can carry the `CF_AppSession` cookie. Expected: 200 with the JSON shapes the tests cover. This effectively kicks off Phase 3 cutover.
-   - Defer the deploy, treat Phase 2.3 as locally-verified-via-wrangler-dev (which already passed in step 9 for all 9 v2 routes). The unauth-side smoke (step 8 → 302) is the only piece that strictly needed live Access.
-2. Phase 3 cutover (build the v2 React frontend, route the live URL to it, retire `index.html`). Plan in [`/Users/maxsheahan/.claude/plans/i-am-trying-to-prancy-teapot.md`](/Users/maxsheahan/.claude/plans/i-am-trying-to-prancy-teapot.md).
-3. Polish: rewrite [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md) for the new Cloudflare Zero Trust UI. The current runbook describes the legacy single-domain form; the dashboard now uses Subdomain + Domain + Path triplets per destination. Maybe drop in a few of session 4's screenshots so the next reader has visual anchors.
-4. Polish: Google IdP. Currently OTP-only. ADR 0002's intended setup is Google as the primary IdP. Set up at console.cloud.google.com → OAuth 2.0 Web application credentials → wire in Zero Trust → Settings → Authentication → Add new → Google.
+1. **Phase 3 cutover** (build the v2 React frontend, route the live URL to it, retire `index.html`). Plan in [`/Users/maxsheahan/.claude/plans/i-am-trying-to-prancy-teapot.md`](/Users/maxsheahan/.claude/plans/i-am-trying-to-prancy-teapot.md). When that lands, `wrangler deploy` ships the new worker too, which simultaneously closes the deferred Phase 2.3 live smoke. No need to do them separately.
+2. Polish (small, low risk): rewrite [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md) for the new Cloudflare Zero Trust UI. The current runbook describes the legacy single-domain form; the dashboard now uses Subdomain + Domain + Path triplets per destination. Worth dropping in a few of session 4's screenshots so future-you has visual anchors. Should take 15 min.
+3. Polish (medium): Google IdP. Currently OTP-only. ADR 0002's intended setup is Google as the primary IdP. Set up at console.cloud.google.com → OAuth 2.0 Web application credentials → wire in Zero Trust → Settings → Authentication → Add new → Google.
+4. Side-effect to manage today: the legacy site's Place button (POST `/api/place-bets`) is now Access-gated. To use it, load the site in a browser, complete the Cloudflare OTP flow once, and the resulting `CF_AppSession` cookie keeps it working until Phase 3 retires the legacy frontend.
 
 ### If you just have one minute, do this
-Run `cd ~/Betting\ Skill && npm test` to confirm 75/75 pass and `npx tsc -b` to confirm types are clean. Then `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` to confirm Access is still intercepting (302 to `sheahan.cloudflareaccess.com`). If all three pass, you're ready to make the Phase 2.3 deploy / defer call.
+Run `cd ~/Betting\ Skill && npm test` to confirm 75/75 pass and `npx tsc -b` to confirm types are clean. Then `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` to confirm Access is still intercepting (302 to `sheahan.cloudflareaccess.com`). If all three pass, you're ready for Phase 3 cutover.
 
 ### Session 4 closing addendum (step 8 landed)
 
