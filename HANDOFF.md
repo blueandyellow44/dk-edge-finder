@@ -14,7 +14,7 @@ Before any project-specific work, the next thread must load these:
 
 ## What you are inheriting (2026-05-01, Phase 1 closed code-side, Phase 2 in progress)
 
-A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 is closed. Phase 1 is closed code-side; step 8 (Access dashboard config) is still pending and is Max's hands-on click-through.** Phase 2 (quality gate) is in progress: vitest harness shipped, picks normalizer + read-route tests + non-dispatch write-route tests all green (65 tests total). Dispatch-touching routes (`/api/state/sync-queue/retry`, `/api/place-bet`) need a fetch-injection seam in `worker/lib/dispatch.ts` before they can be unit-tested without a real GitHub call; that's the only remaining Phase 2 code work.
+A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 is closed. Phase 1 is closed code-side; step 8 (Access dashboard config) is still pending and is Max's hands-on click-through.** Phase 2 (quality gate) code-side is closed: vitest harness shipped, picks normalizer + read-route tests + write-route tests (including dispatch-touching ones) all green (75 tests total). The dispatch routes were testable without a `dispatch.ts` refactor by stubbing `globalThis.fetch` via `vi.stubGlobal`. Only Phase 2.3 (live smoke against deployed URL) remains, and that is blocked on step 8.
 
 Step 8 detection at the start of session 4 (2026-05-01) via `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returned `HTTP/2 200` with `content-type: text/html` and no `cf-access-*` headers, meaning Access is not yet intercepting requests on the live URL. Max chose to start Phase 2 now using the dev-mock header path; the live-smoke step (Phase 2.3) is deferred until step 8 lands.
 
@@ -97,21 +97,34 @@ Coverage by route:
 
 All 65 tests passed first run. `npx tsc -b` clean.
 
+### Phase 2 step 2 final (dispatch-touching write routes): what shipped
+
+The deferred dispatch-touching routes (`POST /api/state/sync-queue/retry`, `POST /api/place-bet`) turned out to be testable without modifying `worker/lib/dispatch.ts` at all: vitest's `vi.stubGlobal('fetch', ...)` patches `globalThis.fetch` directly, so the existing `dispatchPlaceBet` function (which calls the global `fetch` to POST to GitHub) runs unchanged but the network call is intercepted. The original "needs an injection seam" plan from the prior session was a real option, but it would have changed production code; stubbing the global is cleaner.
+
+A `stubFetch(responses)` helper at the top of the dispatch-test blocks queues `Response`s in order and records every fetch call. Tests assert on the recorded call list (URL, method, body) so a missing dispatch fails loudly. The helper handles the Fetch-spec rule that 204/205/304 responses must not have a body — passing an empty string body to a 204 makes undici's `Response` constructor throw `Invalid response status code 204`. This bit me on the first run for the cache-hit and successful-retry tests; the helper now passes `null` for those statuses.
+
+Coverage by route:
+
+- **POST /api/place-bet** (5 tests): successful dispatch (mock GitHub returns 204) returns 202 with `dispatch_id` echoing the idempotency key, with the correct `event_type: 'place-bets'`, `client_payload.picks: '0,1'`, and `client_payload.source: 'v2-frontend'`; result is cached at `dispatch:<email>:<idempotency_key>`. Failed dispatch (GitHub 500) returns 502 with `error: 'GitHub dispatch 500: ...'`, still cached. Cache-hit second call returns 200 with no second fetch (helper would throw if a second call landed). 400 on bad body (empty `pick_indices`). Missing `GITHUB_TOKEN` returns the `Server misconfigured: GITHUB_TOKEN secret not set` error without firing fetch.
+- **POST /api/state/sync-queue/retry** (5 tests): successful retry returns 202, increments `attempt_count` from 1 → 2 (verified by pre-seeding a prior sync_queue entry), clears `last_error`, rotates `idempotency_key` to the new attempt's, and uses `client_payload.source: 'v2-sync-retry'`. Failed retry returns 502 and writes the dispatch error string to `last_error`. Pick missing from current scan returns 404 without firing fetch and writes a sync_queue entry with `last_error: 'Pick no longer in current scan'`. Cache-hit second call returns 200 without re-dispatching AND without mutating the sync_queue (verified by reading the record before/after). 400 on bad body.
+
+All 75 tests now pass. `npx tsc -b` clean.
+
 ### Where this leaves us at end of session
-- 65 tests passing across 2 files (`worker/lib/picks.test.ts` 31, `worker/index.test.ts` 34).
+- 75 tests passing across 2 files (`worker/lib/picks.test.ts` 31, `worker/index.test.ts` 44).
 - `npx tsc -b` clean.
-- Phase 2 step 3 (live smoke) blocked on step 8 (Access dashboard).
-- Phase 2 internal coverage gap: dispatch-touching write routes (`POST /api/state/sync-queue/retry`, `POST /api/place-bet`) deferred until a fetch-injection seam lands in `worker/lib/dispatch.ts`.
-- Three commits this session: `4175694` (vitest + picks + read routes), `dffc87b` (HANDOFF update), then the next pair lands when the write-route tests + this HANDOFF update commit.
+- Phase 2 code-side is closed. Only Phase 2.3 (live smoke against deployed URL) remains, blocked on step 8.
+- No outstanding Phase 2 internal gap. The `dispatch.ts` fetch-injection refactor is no longer needed since `vi.stubGlobal` is sufficient for tests.
+- Five commits this session: `4175694` (vitest + picks + read routes), `dffc87b` (HANDOFF update), `634ba8f` (non-dispatch write routes), `581e34b` (HANDOFF update), then the next pair lands when the dispatch tests + this HANDOFF update commit.
 
 ### What's next (continue here on resume)
 
 1. Step 8 (Access dashboard click-through) when Max is ready. Runbook at [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md).
-2. Phase 2.3 live smoke once step 8 is live.
-3. Optional follow-up to close the Phase 2 internal gap: refactor `worker/lib/dispatch.ts` to accept an injectable `fetch` (or swap to `vi.stubGlobal('fetch', ...)`), then add tests for `POST /api/state/sync-queue/retry` and `POST /api/place-bet` covering: idempotency cache hits return the cached result without re-dispatching, dispatch failure returns 502, dispatch success returns 202, sync-queue retry updates `attempt_count` and `last_error`. Not blocking Phase 3 cutover, but worth doing before retry logic lands in the v2 frontend.
+2. Phase 2.3 live smoke once step 8 is live. `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` should return a 302 to `*.cloudflareaccess.com` after the Access policy is configured. With a valid Cloudflare Access cookie in a browser, the same path should return 200 with the JSON `{ email, picture_url }` shape.
+3. Phase 3 cutover (the v2 frontend) is the next work block after Phase 2.3.
 
 ### If you just have one minute, do this
-Run `cd ~/Betting\ Skill && npm test` to confirm 65/65 pass. Then `npx tsc -b` to confirm types are clean. If both pass, the next decision is step 8 (Max's dashboard click-through) or the dispatch-injection refactor.
+Run `cd ~/Betting\ Skill && npm test` to confirm 75/75 pass. Then `npx tsc -b` to confirm types are clean. If both pass, the next decision is step 8 (Max's dashboard click-through).
 
 ---
 
