@@ -18,7 +18,7 @@ A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev
 
 **Step 8 confirmed live as of 2026-05-01.** `curl -sI https://dk-edge-finder.max-sheahan.workers.dev/api/me` returns `HTTP/2 302` with `location: https://sheahan.cloudflareaccess.com/cdn-cgi/access/login/dk-edge-finder.max-sheahan.workers.dev?...&redirect_url=%2Fapi%2Fme` and a `www-authenticate: Cloudflare-Access` header. Cloudflare Access is intercepting `/api/*` and redirecting unauthenticated callers to the team domain `sheahan.cloudflareaccess.com`. Application config: subdomain `dk-edge-finder`, domain `max-sheahan.workers.dev`, path `api/*`, single Allow policy `Allow Max` (rule: emails = `max.sheahan@icloud.com`), Identity providers = "Accept all" (OTP fallback; Google IdP deferred as a polish item).
 
-**Side-effect to be aware of:** with Access on `/api/*`, the legacy single-file `index.html`'s Place button (which POSTs to `/api/place-bets`) will now fail closed — Access blocks the request before the worker sees it. This is the documented tradeoff in [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md) and is acceptable while Phase 3 cutover is pending. To use the legacy site again, log into Cloudflare Access in the browser first (`https://dk-edge-finder.max-sheahan.workers.dev/` → Access → OTP); the resulting `CF_AppSession` cookie unblocks the Place button until Phase 3 retires the legacy site.
+**Side-effect to be aware of:** with Access on `/api/*`, the legacy single-file `index.html`'s Place button (which POSTs to `/api/place-bets`) will now fail closed. Access blocks the request before the worker sees it. This is the documented tradeoff in [`docs/cloudflare-access-setup.md`](docs/cloudflare-access-setup.md) and is acceptable while Phase 3 cutover is pending. To use the legacy site again, log into Cloudflare Access in the browser first (`https://dk-edge-finder.max-sheahan.workers.dev/` → Access → OTP); the resulting `CF_AppSession` cookie unblocks the Place button until Phase 3 retires the legacy site.
 
 Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 1**: Vite + React + TS scaffolded into `frontend/` (Vite 8, React 19, TS 6).
@@ -67,7 +67,7 @@ One test failed on first run (`top-level missing scan fields fall back to safe d
 
 ### Phase 2 step 2 (route tests via app.fetch): what shipped
 
-**`worker/index.test.ts`** — 17 tests that drive the assembled root `app` (from `worker/index.ts`) via `app.fetch(new Request(...), env)`. Same pattern as the one-shot mount-order smoke from Phase 1 step 7, codified.
+**`worker/index.test.ts`**: 17 tests that drive the assembled root `app` (from `worker/index.ts`) via `app.fetch(new Request(...), env)`. Same pattern as the one-shot mount-order smoke from Phase 1 step 7, codified.
 
 Mock env helpers in the file:
 - `makeAssets(cfg)` returns an `ASSETS` shim that responds to `/data.json` and `/bankroll.json` with caller-provided fixtures and an optional `Last-Modified`. Anything else → 404.
@@ -103,7 +103,7 @@ All 65 tests passed first run. `npx tsc -b` clean.
 
 The deferred dispatch-touching routes (`POST /api/state/sync-queue/retry`, `POST /api/place-bet`) turned out to be testable without modifying `worker/lib/dispatch.ts` at all: vitest's `vi.stubGlobal('fetch', ...)` patches `globalThis.fetch` directly, so the existing `dispatchPlaceBet` function (which calls the global `fetch` to POST to GitHub) runs unchanged but the network call is intercepted. The original "needs an injection seam" plan from the prior session was a real option, but it would have changed production code; stubbing the global is cleaner.
 
-A `stubFetch(responses)` helper at the top of the dispatch-test blocks queues `Response`s in order and records every fetch call. Tests assert on the recorded call list (URL, method, body) so a missing dispatch fails loudly. The helper handles the Fetch-spec rule that 204/205/304 responses must not have a body — passing an empty string body to a 204 makes undici's `Response` constructor throw `Invalid response status code 204`. This bit me on the first run for the cache-hit and successful-retry tests; the helper now passes `null` for those statuses.
+A `stubFetch(responses)` helper at the top of the dispatch-test blocks queues `Response`s in order and records every fetch call. Tests assert on the recorded call list (URL, method, body) so a missing dispatch fails loudly. The helper handles the Fetch-spec rule that 204/205/304 responses must not have a body. Passing an empty string body to a 204 makes undici's `Response` constructor throw `Invalid response status code 204`. This bit me on the first run for the cache-hit and successful-retry tests; the helper now passes `null` for those statuses.
 
 Coverage by route:
 
@@ -133,7 +133,7 @@ Run `cd ~/Betting\ Skill && npm test` to confirm 75/75 pass and `npx tsc -b` to 
 
 After the Phase 2 commit pairs landed and the dispatch-test commit pair landed, Max picked option 1 ("Step 8 dashboard click-through") over the dispatch-injection refactor / Phase 3 prep / runbook update alternatives. We walked through the new Cloudflare Zero Trust UI together (the runbook was stale; the new UI uses Subdomain + Domain dropdown + Path triplets per destination, with up to five destinations per application, and a separate Authentication section that defaults to "Accept all available identity providers"). One real bug fix mid-walkthrough: my first instruction said `dk-edge-finder.max-sheahan` for the Subdomain field, which would have produced a doubled `max-sheahan` in the URL because `max-sheahan.workers.dev` is the namespace in the Domain dropdown, not generic `workers.dev`. Caught and corrected from a screenshot. Final live URL is `dk-edge-finder.max-sheahan.workers.dev/api/*`. Curl confirmed Access intercepts.
 
-Branch is at 20 commits ahead of origin after all Phase 2 work; this step-8 HANDOFF update lands as one more commit, taking it to 21 ahead. Still unpushed.
+Branch is at 22 commits ahead of origin after step 8 + Phase 2 closing HANDOFF updates (the +2 over the 20-ahead Phase 2 endpoint are commits cbcd107 step-8 and 028a91d Phase-2-closed). The audit-fix HANDOFF commit will take it to 23. Still unpushed.
 
 ---
 
