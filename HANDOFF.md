@@ -33,9 +33,55 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**Phase 3 polish update (2026-05-02 session 6 below):** vitest coverage shipped for `worker/lib/activity.ts`. 17 new tests covering em-dash strip, odds coercion (string passthrough + numeric → `+165` / `-110` + null fallback), outcome filter and coercion (`pending` excluded, unknown coerced to pending then excluded, `win`/`loss`/`push` preserved), date-desc sort, wager/pnl coercion, sparse-bet defaults, and Zod schema validation (malformed/missing date throws via `z.iso.date()`). Test count is now 92 / 92 across 3 files. `npx tsc -b` still clean. Branch state unchanged: `main` is at `4bf4da1`, no commits made (Max gates commit timing). Note for resume: `/data.json` returns 302 to Access now (Access scope is `/*`, not `/api/*`); resume-prompt scripts that curl `/data.json` for JSON will need a `CF_AppSession` cookie or read the local file.
+
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
 
 **Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-02 session 6 (Phase 3 polish: vitest for activity)
+
+### Goal
+Pick up Phase 3 polish backlog item 1: vitest coverage for `worker/lib/activity.ts`, mirroring `picks.test.ts`.
+
+### Pre-flight
+- `git stash list`: empty. `npx tsc -b`: clean. `npm test`: 75 / 75.
+- Live URL still v2: `curl -sI .../api/me` → 302 to `sheahan.cloudflareaccess.com`. `/data.json` also returns 302 (Access scope is `/*`, as set late in session 5); resume-prompt curl for JSON body would need a session cookie. Local `data.json`: scan_date `2026-05-01`, 7 picks, 62 bets.
+
+### What shipped
+**`worker/lib/activity.test.ts` (NEW, 17 tests).** Mirrors `picks.test.ts` structure (same `makeEnv` helper; `minimalBet` fixture). Coverage:
+- Em-dash strip in `sport`, `event`, `pick`, `final_score`.
+- Odds string coercion: American string passthrough, `+165` from positive number, `-110` from negative number, `''` from null.
+- Outcome handling: `win` / `loss` / `push` preserved, `pending` filtered out, unknown values coerced to `pending` (then filtered).
+- Date-desc sort across mixed dates.
+- Wager / pnl: numeric passthrough, non-numeric (`'$12.50'`, `'not-a-number'`) falls back to `0` (the activity normalizer is stricter than picks; it does NOT parse currency strings — picks does).
+- Missing-field defaults: sparse bet with valid `date` + `outcome` fills string defaults; missing or non-array `bets` returns empty; all-pending returns empty.
+- Schema validation: malformed date (`'not-a-date'`) and missing date (`undefined` → empty string) both throw via `ActivityResponseSchema.parse` (because `ResolvedBetSchema.date = z.iso.date()` rejects empty/invalid).
+
+Test count: 75 → 92. Test files: 2 → 3 (added `worker/lib/activity.test.ts`). `npx tsc -b` clean.
+
+### Decisions made
+- **Did not extract `worker/lib/normalize.ts` yet.** Handoff polish item #3 says hoist once a third consumer wants `stripEmDash` / `coerceOddsString`. Current consumer count is 2 (picks + activity). Holding the extract until item #3 surfaces.
+- **Did not commit.** Max gates commit timing; no auto-commit. Two-commit shape (code + HANDOFF) ready when Max signals.
+- **Note on activity vs picks coercion difference:** `worker/lib/picks.ts` parses `'$11.41'` → `11.41` via `coerceNumberDollars`. `worker/lib/activity.ts` does NOT — it requires a number for `wager` and `pnl`, falling back to `0` otherwise. This is intentional: the cron writes `bets[]` with numeric P/L, and the looser pick coercion exists only because the legacy emit shape used `$`-prefixed strings. Captured this asymmetry in the wager/pnl test block; the next normalize.ts extract should preserve the divergence.
+
+### Files modified
+- `worker/lib/activity.test.ts` (new, untracked).
+- `HANDOFF.md` (this entry + the polish-update line in the inheriting section above).
+
+### What's next
+1. **Commit (Max signals):** `git add worker/lib/activity.test.ts && git commit -m "test(worker): add 17 vitest cases for activity normalizer"` then update HANDOFF + commit. Push `main`. No branch needed; `rebuild/v2-frontend` is merged and queued for deletion.
+2. **Next polish item (Max picks):**
+   - Rewrite `docs/cloudflare-access-setup.md` for the Zero Trust UI (Subdomain + Domain + Path triplets).
+   - Set up Google IdP in Zero Trust (currently OTP-only).
+   - Balance-over-time graph in Account tab (needs `/api/history` route or `/api/bankroll` extension + chart lib).
+   - Cleanup: delete `rebuild/v2-frontend` branch (local + origin).
+   - Defer `worker/lib/normalize.ts` extract until a third consumer.
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && npx tsc -b && npm test` → expect clean tsc + 92 / 92. `curl -sI .../api/me` → 302 to Access. v2 SPA still live, no behavioral changes shipped this session (test-only).
 
 ---
 
