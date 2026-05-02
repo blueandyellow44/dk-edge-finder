@@ -33,6 +33,8 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**Dispatch cleanup shipped (2026-05-02 session 7):** Auto-dispatch chain fully retired. Frontend: `usePlacePickBet` + `useRetrySyncQueue` deleted from `mutations.ts`; `PositionsTab` + `PicksTab` both use `useMarkPickAsPlaced` now (manual placement, no GitHub `repository_dispatch`); `PendingTab` rewritten without queued-retries section. Worker routes deleted: `place-bet.ts` (singular), `state-sync-queue.ts`, `place-bets-legacy.ts` (legacy plural). Worker libs deleted: `dispatch.ts`. State helpers `upsertSyncQueueEntry` + `findSyncQueueEntry` dropped from `state.ts`. Schemas dropped: `PlaceBetRequestSchema`, `PlaceBetResponseSchema`, `SyncQueueRetryRequestSchema`. Workflow `.github/workflows/place-bets.yml` deleted (the `repository_dispatch` receiver and only consumer of `dispatch.ts`). Test file lost the dispatch-touching describes (10 tests) and the `vi.stubGlobal('fetch')` helper. The `sync_queue` field stays on `StateRecordSchema` for KV back-compat (existing records may carry entries; read-only via GET /api/state). One-line update note added to ADR 0002. `npx tsc -b` clean, `npm test` 92 / 92 → 82 / 82 across 3 files. Em-dash audit clean. NOT yet committed.
+
 **Picks click-to-expand shipped (2026-05-02 session 6, slice 2):** Picks tab rows now expand on click to reveal three actions: `Mark as placed` (manual placement, no GitHub repository_dispatch — new `useMarkPickAsPlaced` mutation, drops the auto-dispatch chain Max wanted off), `Ignore` (rebadged Skip), `Place on DraftKings ↗` (opens `pick.dk_link` in a new tab; first time `dk_link` has been surfaced in the v2 SPA). Single-row expansion (clicking another row collapses the previous; lifted state into `PicksTab`). Expanded panel shows Market / Model / Implied / EV per $ / Start (formatted via new `formatStartTime` in `lib/format.ts`) plus the pick's `notes` block in a gold-bordered card. Acted-on rows render the existing badge and are NOT click-expandable. Smoke-tested end-to-end against wrangler-dev + miniflare KV: click expand → click `Mark as placed` → POST `/api/state/placements` 201 → query invalidation → row collapses with `Placed` badge. `npx tsc -b` clean, `npm test` 92/92. Frontend-only diff (5 files); the dispatch backend (`/api/place-bet` route, `worker/lib/dispatch.ts`, `place-bet.yml` GH Action) is still wired but now uncalled from the Picks UI; cleanup of those + the Pending tab's "queued retries" section is the natural follow-up. NOT yet committed.
 
 **Phase 3 polish update (2026-05-02 session 6 below):** vitest coverage shipped for `worker/lib/activity.ts`. 17 new tests covering em-dash strip, odds coercion (string passthrough + numeric → `+165` / `-110` + null fallback), outcome filter and coercion (`pending` excluded, unknown coerced to pending then excluded, `win`/`loss`/`push` preserved), date-desc sort, wager/pnl coercion, sparse-bet defaults, and Zod schema validation (malformed/missing date throws via `z.iso.date()`). Test count is now 92 / 92 across 3 files. `npx tsc -b` still clean. Branch state unchanged: `main` is at `4bf4da1`, no commits made (Max gates commit timing). Note for resume: `/data.json` returns 302 to Access now (Access scope is `/*`, not `/api/*`); resume-prompt scripts that curl `/data.json` for JSON will need a `CF_AppSession` cookie or read the local file.
@@ -40,6 +42,85 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
 
 **Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-02 session 7 (Dispatch cleanup)
+
+### Goal
+Drop the auto-dispatch backend chain that became uncalled from the UI after session 6 slice 2 swapped Picks tab from `usePlacePickBet` to `useMarkPickAsPlaced`.
+
+### Pre-flight
+- `git stash list`: empty. `npx tsc -b`: clean. `npm test`: 92 / 92.
+- Live URL still v2: `curl -sI .../api/me` returns 302 to `sheahan.cloudflareaccess.com`.
+- `origin/cloudflare/workers-autoconfig` was 5 commits behind `origin/main` at session start (slice-2 had not mirrored yet; cron tick at 01 UTC will catch it up).
+- Local `data.json`: `2026-05-02`, 8 picks, 62 bets.
+
+### Scope changes (asked Max via AskUserQuestion)
+- **Q1: Cleanup depth.** Original instruction said delete `worker/lib/dispatch.ts`, but `worker/routes/state-sync-queue.ts` imports from it and `useRetrySyncQueue` is its only caller. Max chose: also drop `state-sync-queue/retry` route + tests + state.ts helpers; keep the `sync_queue` field in the state-record schema for KV back-compat.
+- **Q2: Legacy plural.** `worker/routes/place-bets-legacy.ts` has its OWN inline `repository_dispatch` (separate from `dispatch.ts`) firing the same `place-bets.yml` workflow. Max chose: full retirement. Drop the legacy plural route + its mount + the workflow.
+
+### Decisions made
+- **Kept `sync_queue` field on `StateRecordSchema`.** Existing KV records may carry entries from the retired chain. Field stays read-only via `GET /api/state`; no API surface mutates it. Avoids a schema-version bump and the migration a structural drop would imply.
+- **Kept `useDeletePlacement` in mutations.ts.** PendingTab no longer imports it (was only used in the queued-retries section), but the export is harmless. A future tab may want it. Per "don't refactor beyond task" rule.
+- **Updated `dispatch_status` comment in `PlacementCreateRequestSchema`** to call out that `'queued'` / `'failed'` are vestigial enum values now (back-compat with old KV records). The enum stays so old records still parse.
+- **Trimmed two stale comments** during verification: the `Write routes (non-dispatch)` block in `worker/index.test.ts` (which referenced the now-deleted dispatch tests) and the `useMarkPickAsPlaced` doc comment in `mutations.ts` (which contrasted with the now-deleted `usePlacePickBet`).
+- **Did NOT commit.** Max gates commit timing.
+- **Did NOT touch `scripts/place_bets.py`.** The Python script is now orphaned (its only invoker was the deleted `place-bets.yml` workflow), but deleting it is a separate scope. Listed under "What's next" as optional follow-up.
+
+### Files modified
+- `frontend/src/api/mutations.ts` (rewrite: drop `usePlacePickBet`, `useRetrySyncQueue`, `ApiError` + `PlaceBetResponse` imports; trim stale comment on `useMarkPickAsPlaced`).
+- `frontend/src/tabs/PendingTab.tsx` (rewrite: drop queued-retries section, `usePicks`, `useDeletePlacement`, `useRetrySyncQueue`, `Pick` import; simpler component with only the manual-bets section).
+- `frontend/src/tabs/PositionsTab.tsx` (`usePlacePickBet` → `useMarkPickAsPlaced`; `onPlace` callback drops `pickIndex` arg).
+- `worker/index.ts` (drop 3 route imports + 3 mounts: `place-bet`, `state-sync-queue`, `place-bets-legacy`; reflow comments).
+- `worker/lib/state.ts` (drop `upsertSyncQueueEntry`, `findSyncQueueEntry`, plus `SyncQueueEntrySchema` + `SyncQueueEntry` imports).
+- `shared/schemas.ts` (drop `PlaceBetRequestSchema`, `PlaceBetResponseSchema`, `SyncQueueRetryRequestSchema`; update `dispatch_status` comment).
+- `shared/types.ts` (drop the three matching `import` + `export type` lines).
+- `worker/index.test.ts` (drop 347 lines: comment block + `stubFetch` helper + `MockFetchResponse` / `RecordedFetchCall` types + the two dispatch-touching describes; drop `afterEach` and `vi` from vitest imports; trim `Write routes (non-dispatch)` section comment).
+- `docs/adr/0002-auth.md` (one-line update note about the manual-only flip).
+- `HANDOFF.md` (this entry + the bullet in the inheriting snapshot).
+
+### Files deleted
+- `worker/routes/place-bet.ts`
+- `worker/routes/state-sync-queue.ts`
+- `worker/routes/place-bets-legacy.ts`
+- `worker/lib/dispatch.ts`
+- `.github/workflows/place-bets.yml`
+
+### Verification
+- `npx tsc -b`: clean.
+- `npm test`: 82 / 82 across 3 files (was 92 / 92; the 10 dropped = 5 from the place-bet describe + 5 from the sync-queue retry describe).
+- Em-dash audit on the diff scope: clean. The two `—` matches in `worker/index.test.ts` are pre-existing fixture text + a test assertion that the strip works; not in this diff. HANDOFF.md em-dashes are exempt per the 2026-05-01 CLAUDE.md amendment.
+- Orphan-reference grep across `frontend/src worker/ shared/` for `usePlacePickBet`, `useRetrySyncQueue`, `dispatchPlaceBet`, `stubFetch`, `'/api/place-bet'`, `'/api/state/sync-queue/retry'`: clean.
+
+### What's next
+1. **Commit if Max signals.** Two-commit shape:
+   ```
+   git add frontend/src/api/mutations.ts frontend/src/tabs/PendingTab.tsx \
+           frontend/src/tabs/PositionsTab.tsx \
+           worker/index.ts worker/lib/state.ts worker/index.test.ts \
+           shared/schemas.ts shared/types.ts \
+           docs/adr/0002-auth.md
+   git rm worker/routes/place-bet.ts worker/routes/state-sync-queue.ts \
+          worker/routes/place-bets-legacy.ts worker/lib/dispatch.ts \
+          .github/workflows/place-bets.yml
+   git commit -m "chore(dispatch): retire auto-dispatch chain"
+   git add HANDOFF.md
+   git commit -m "chore: HANDOFF session 7 (dispatch cleanup)"
+   git pull --rebase origin main && git push origin main
+   ```
+2. **Confirm cron mirror catches up to slice 2 + slice 3** at next tick. Once `origin/cloudflare/workers-autoconfig` matches `origin/main`, hit the live URL and confirm `/api/place-bet`, `/api/state/sync-queue/retry`, and `/api/place-bets` all return 404 (auth-gated 404 since Access scope is `/*`, but no worker route).
+3. **Remaining polish (Max picks):**
+   - Rewrite `docs/cloudflare-access-setup.md` for the Zero Trust UI.
+   - Set up Google IdP (currently OTP-only).
+   - Balance-over-time graph in Account tab.
+   - Delete `rebuild/v2-frontend` branch (local + origin).
+   - Optionally drop `useDeletePlacement` mutation (no UI caller after this slice).
+   - Optionally `git rm scripts/place_bets.py` (orphaned after `place-bets.yml` deletion).
+   - Defer `worker/lib/normalize.ts` extract until a third consumer.
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && npx tsc -b && npm test` → expect clean tsc + 82 / 82.
 
 ---
 
