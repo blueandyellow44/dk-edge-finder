@@ -1,15 +1,22 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "dk-edge-finder",
-  "main": "worker/index.js",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-04-11",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": ".",
+    "directory": "public",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
-  }
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "kv_namespaces": [
+    {
+      "binding": "EDGE_STATE",
+      "id": "7dca36afc97d4d86bebed2e2948d6e83"
+    }
+  ]
 }
