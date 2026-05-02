@@ -30,15 +30,6 @@ export function useMarkPickAsPlaced() {
   })
 }
 
-export function useDeletePlacement() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: ({ key }: { key: string }) =>
-      apiDelete(`/api/state/placements/${encodeURIComponent(key)}`),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['state'] }),
-  })
-}
-
 export function useSetBalanceOverride() {
   const qc = useQueryClient()
   return useMutation({

@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import type { Env, Variables } from '../env'
 import { requireAuth } from '../middleware/auth'
 import { getLatestScanDate } from '../lib/picks'
-import { appendPlacement, removePlacement } from '../lib/state'
+import { appendPlacement } from '../lib/state'
 import { PlacementCreateRequestSchema, PlacementSchema } from '../../shared/schemas'
 import type { Placement } from '../../shared/types'
 
@@ -28,15 +28,6 @@ app.post('/', async (c) => {
   const record = await appendPlacement(c.env, email, scan_date, placement)
   const merged = record.placements.find((p) => p.idempotency_key === placement.idempotency_key) ?? placement
   return c.json(merged, 201)
-})
-
-app.delete('/:key', async (c) => {
-  const email = c.get('email')
-  const key = decodeURIComponent(c.req.param('key'))
-  const scan_date = await getLatestScanDate(c.env)
-  const result = await removePlacement(c.env, email, scan_date, key)
-  if (!result.removed) return c.json({ error: 'Placement not found' }, 404)
-  return c.body(null, 204)
 })
 
 export default app

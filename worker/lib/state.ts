@@ -82,22 +82,6 @@ export async function appendManualBet(
   return record
 }
 
-export async function removePlacement(
-  env: Env,
-  email: string,
-  scan_date: string,
-  key: string,
-): Promise<{ removed: boolean; record: StateRecord | null }> {
-  const record = await readState(env, email, scan_date)
-  if (!record) return { removed: false, record: null }
-  const before = record.placements.length
-  record.placements = record.placements.filter((p) => p.key !== key)
-  if (record.placements.length === before) return { removed: false, record }
-  record.updated_at = new Date().toISOString()
-  await writeState(env, record)
-  return { removed: true, record }
-}
-
 export async function removeManualBet(
   env: Env,
   email: string,
