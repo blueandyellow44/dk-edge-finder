@@ -33,6 +33,8 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**Picks click-to-expand shipped (2026-05-02 session 6, slice 2):** Picks tab rows now expand on click to reveal three actions: `Mark as placed` (manual placement, no GitHub repository_dispatch — new `useMarkPickAsPlaced` mutation, drops the auto-dispatch chain Max wanted off), `Ignore` (rebadged Skip), `Place on DraftKings ↗` (opens `pick.dk_link` in a new tab; first time `dk_link` has been surfaced in the v2 SPA). Single-row expansion (clicking another row collapses the previous; lifted state into `PicksTab`). Expanded panel shows Market / Model / Implied / EV per $ / Start (formatted via new `formatStartTime` in `lib/format.ts`) plus the pick's `notes` block in a gold-bordered card. Acted-on rows render the existing badge and are NOT click-expandable. Smoke-tested end-to-end against wrangler-dev + miniflare KV: click expand → click `Mark as placed` → POST `/api/state/placements` 201 → query invalidation → row collapses with `Placed` badge. `npx tsc -b` clean, `npm test` 92/92. Frontend-only diff (5 files); the dispatch backend (`/api/place-bet` route, `worker/lib/dispatch.ts`, `place-bet.yml` GH Action) is still wired but now uncalled from the Picks UI; cleanup of those + the Pending tab's "queued retries" section is the natural follow-up. NOT yet committed.
+
 **Phase 3 polish update (2026-05-02 session 6 below):** vitest coverage shipped for `worker/lib/activity.ts`. 17 new tests covering em-dash strip, odds coercion (string passthrough + numeric → `+165` / `-110` + null fallback), outcome filter and coercion (`pending` excluded, unknown coerced to pending then excluded, `win`/`loss`/`push` preserved), date-desc sort, wager/pnl coercion, sparse-bet defaults, and Zod schema validation (malformed/missing date throws via `z.iso.date()`). Test count is now 92 / 92 across 3 files. `npx tsc -b` still clean. Branch state unchanged: `main` is at `4bf4da1`, no commits made (Max gates commit timing). Note for resume: `/data.json` returns 302 to Access now (Access scope is `/*`, not `/api/*`); resume-prompt scripts that curl `/data.json` for JSON will need a `CF_AppSession` cookie or read the local file.
 
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
@@ -41,16 +43,18 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 
 ---
 
-## 2026-05-02 session 6 (Phase 3 polish: vitest for activity)
+## 2026-05-02 session 6 (Phase 3 polish + Picks click-to-expand)
 
 ### Goal
-Pick up Phase 3 polish backlog item 1: vitest coverage for `worker/lib/activity.ts`, mirroring `picks.test.ts`.
+Pick up Phase 3 polish backlog item 1 (vitest for `worker/lib/activity.ts`), then Max requested click-to-expand on Picks rows with three actions: mark as placed, ignore, place on DraftKings.
 
 ### Pre-flight
 - `git stash list`: empty. `npx tsc -b`: clean. `npm test`: 75 / 75.
 - Live URL still v2: `curl -sI .../api/me` → 302 to `sheahan.cloudflareaccess.com`. `/data.json` also returns 302 (Access scope is `/*`, as set late in session 5); resume-prompt curl for JSON body would need a session cookie. Local `data.json`: scan_date `2026-05-01`, 7 picks, 62 bets.
 
-### What shipped
+### Slice 1: vitest for activity (shipped + pushed)
+Commits: `a8b4e16` (test) + `357e4d0` (HANDOFF, post-rebase onto cron). On `main`. Cron mirror to `cloudflare/workers-autoconfig` runs on next tick.
+
 **`worker/lib/activity.test.ts` (NEW, 17 tests).** Mirrors `picks.test.ts` structure (same `makeEnv` helper; `minimalBet` fixture). Coverage:
 - Em-dash strip in `sport`, `event`, `pick`, `final_score`.
 - Odds string coercion: American string passthrough, `+165` from positive number, `-110` from negative number, `''` from null.
@@ -71,17 +75,62 @@ Test count: 75 → 92. Test files: 2 → 3 (added `worker/lib/activity.test.ts`)
 - `worker/lib/activity.test.ts` (new, untracked).
 - `HANDOFF.md` (this entry + the polish-update line in the inheriting section above).
 
+### Slice 2: Picks click-to-expand (working, not yet committed)
+
+**Behavior.** Picks tab rows are now clickable when the user has not acted on them. Clicking expands a details panel under the summary row with three actions: `Mark as placed` (gold primary), `Ignore` (outlined), and `Place on DraftKings ↗` (green link, `target="_blank"` to `pick.dk_link`). Already-acted rows render the existing `Placed`/`Skipped`/`Queued` badge and are not click-expandable. Single-row expansion is enforced by lifting the expanded-key state into `PicksTab` (`useState<string | null>`); expanding row B collapses row A. The expanded summary row gets a gold-tint background and a 90deg-rotated chevron in the actions slot.
+
+**Expanded panel contents.** A `<dl>` of metrics laid out via `grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))`: Market, Model %, Implied %, EV / $ (3-decimal), Start (formatted via new `formatStartTime` in `lib/format.ts`). The pick's `notes` block, if non-empty, is rendered in a card with a 3px gold left border. Then the three action buttons below.
+
+**New mutation: `useMarkPickAsPlaced`** (in `frontend/src/api/mutations.ts`). POSTs `{ key, action: 'placed', dispatch_status: 'ok', idempotency_key: crypto.randomUUID() }` to `/api/state/placements`. Distinct from `usePlacePickBet`, which fires the `/api/place-bet` GitHub `repository_dispatch` chain. Comment in code spells out the semantics: `dispatch_status: 'ok'` here means "no dispatch attempted, user marked manually" (mirrors the convention `useSkipPick` already uses).
+
+**Auto-dispatch is now uncalled from the UI.** Per Max's choice ("Manual record only, drop auto-dispatch"), `PicksTab` no longer imports `usePlacePickBet`. The mutation function still exists in `mutations.ts`, the worker route `/api/place-bet` is still mounted, `worker/lib/dispatch.ts` and `.github/workflows/place-bet.yml` are untouched. Cleanup is the natural follow-up; see "What's next" below.
+
+**Smoke test.** wrangler-dev (8787) + vite-dev (5173) both running. Loaded today's 8 picks (2026-05-02). Clicked pick #1 (MLS Orlando @ Inter Miami UNDER 3.5, 16.8% edge) — expanded with 5-metric dl, notes block ("Model (DRatings only): ORL 0.8, MIA 2.1..."), and 3 buttons. Inspected the DK link: `href` resolves to `https://sportsbook.draftkings.com/event/34057936?outcomes=0OU84525126U350_3`, `target="_blank"`, `rel="noopener noreferrer"`. Inspected chevron rotation: collapsed = `transform: none`, expanded = `transform: matrix(0, 1, -1, 0, 0, 0)` (= rotate 90deg). Clicked another pick, confirmed first auto-collapsed. Clicked `Mark as placed` on pick #8 (SERIE_A Genoa @ Atalanta OVER 2.5): network shows POST `/api/state/placements` → 201 Created → GET `/api/state` → 200 OK (TanStack Query refetch); pick #8 row collapsed and now shows the `Placed` badge. No console errors.
+
+**Files modified (slice 2).**
+- `frontend/src/components/PickRow.tsx` (rewritten as click-to-expand; props now include `isExpanded`, `onToggleExpand`, `onMarkPlaced`, `onIgnore`).
+- `frontend/src/tabs/PicksTab.tsx` (lifted expanded-key state, swapped `usePlacePickBet` for `useMarkPickAsPlaced`, wired `onSuccess: () => setExpandedKey(null)`).
+- `frontend/src/api/mutations.ts` (added `useMarkPickAsPlaced`).
+- `frontend/src/lib/format.ts` (added `formatStartTime`).
+- `frontend/src/styles.css` (added `.pick-item`, `.pick-row.clickable`, `.pick-chevron` + `.open` rotation, `.pick-details`, `.pick-metrics`, `.pick-metric` `dt`/`dd`, `.pick-notes`, `.pick-actions-expanded`, `.btn-dk` green variant; `.pick-row:last-child` border-removal moved to `.pick-item:last-child`).
+
+**Slice 2 decisions made.**
+- **dispatch_status: 'ok' for manual placements** (vs adding new `'manual'` enum value). Avoids a Zod schema change. Code comment notes the semantic. Acceptable because the badge UX doesn't distinguish manual vs auto-dispatched placements.
+- **Lifted expansion state to PicksTab** (vs local state in PickRow). Lets us enforce single-row-expanded UX. State key is the same `placementKey(pick)` already used elsewhere.
+- **Did NOT touch the Pending tab.** Pending shows queued retries (failed dispatches) + manual bets. With dispatch dropped from the UI, no new picks will queue, but existing queued items in KV are still rendered. Cleanup is a follow-up slice.
+- **Did NOT remove dispatch infra.** `usePlacePickBet`, `/api/place-bet`, `worker/lib/dispatch.ts`, `.github/workflows/place-bet.yml`, `useRetrySyncQueue` are all intact. Removing them is a meaningful diff (touches worker tests + GH Actions); held for explicit confirmation.
+- **Chevron glyph reuses `▸`** matching the no-edge-collapsible already in this file. CSS rotates 90deg when expanded. Visually consistent.
+- **DK button is green (`--color-positive`)** rather than gold primary. Differentiates the external action ("you'll be leaving the SPA") from the local actions (gold = primary site action).
+
 ### What's next
-1. **Commit (Max signals):** `git add worker/lib/activity.test.ts && git commit -m "test(worker): add 17 vitest cases for activity normalizer"` then update HANDOFF + commit. Push `main`. No branch needed; `rebuild/v2-frontend` is merged and queued for deletion.
-2. **Next polish item (Max picks):**
-   - Rewrite `docs/cloudflare-access-setup.md` for the Zero Trust UI (Subdomain + Domain + Path triplets).
-   - Set up Google IdP in Zero Trust (currently OTP-only).
-   - Balance-over-time graph in Account tab (needs `/api/history` route or `/api/bankroll` extension + chart lib).
-   - Cleanup: delete `rebuild/v2-frontend` branch (local + origin).
+1. **Commit slice 2 if Max signals.** Two-commit shape:
+   ```
+   git add frontend/src/components/PickRow.tsx frontend/src/tabs/PicksTab.tsx \
+           frontend/src/api/mutations.ts frontend/src/lib/format.ts \
+           frontend/src/styles.css
+   git commit -m "feat(picks): click-to-expand row with mark-as-placed / ignore / DK link"
+   git add HANDOFF.md
+   git commit -m "chore: HANDOFF session 6 slice 2 (Picks click-to-expand)"
+   git pull --rebase origin main && git push origin main
+   ```
+   The `git pull --rebase` is required because cron pushes regularly to main (4 commits dropped during slice 1 push).
+2. **Cleanup slice (Max picks if/when):** drop the now-unused auto-dispatch chain.
+   - Remove `usePlacePickBet` and `useRetrySyncQueue` from `frontend/src/api/mutations.ts`.
+   - Remove the queued-retries section from `frontend/src/tabs/PendingTab.tsx`.
+   - Remove `worker/routes/place-bet.ts` mount + the route file + the singular-vs-plural `/api/place-bet` distinction.
+   - Remove `worker/lib/dispatch.ts` and the `dispatch:` KV cache helpers.
+   - Remove `.github/workflows/place-bet.yml` (the GH Action that handles `repository_dispatch`).
+   - Update `worker/index.test.ts` to drop the `vi.stubGlobal('fetch')` block for `/api/place-bet` dispatch. Remove the place-bet test cases.
+   - Add a one-line note to ADR 0002 about the manual-only flip.
+3. **Remaining polish (Max picks):**
+   - Rewrite `docs/cloudflare-access-setup.md` for the Zero Trust UI.
+   - Set up Google IdP (currently OTP-only).
+   - Balance-over-time graph in Account tab.
+   - Delete `rebuild/v2-frontend` branch (local + origin).
    - Defer `worker/lib/normalize.ts` extract until a third consumer.
 
 ### If you just have one minute, do this
-`cd ~/Betting\ Skill && npx tsc -b && npm test` → expect clean tsc + 92 / 92. `curl -sI .../api/me` → 302 to Access. v2 SPA still live, no behavioral changes shipped this session (test-only).
+`cd ~/Betting\ Skill && npx tsc -b && npm test` → expect clean tsc + 92 / 92. `cat .claude/launch.json` lists `wrangler-dev` (8787) and `vite-dev` (5173); start both via the preview tool, navigate to `localhost:5173`, click any Picks row to see the expansion. Click `Mark as placed` to write a placement to local miniflare KV (idempotent; safe). Production live URL still serves the previous build until slice 2 is committed and the cron mirror picks it up.
 
 ---
 
