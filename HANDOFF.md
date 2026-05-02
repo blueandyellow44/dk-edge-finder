@@ -33,6 +33,8 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**SPA bundle staleness fixed (2026-05-02 session 9):** Sessions 6 / 7 / 8 each committed `frontend/src/` source changes but nobody ran `npm run build` and nobody copied `frontend/dist/*` into `public/`. The worker bundle gets rebuilt on every `wrangler deploy` from `worker/` source, so worker changes shipped fine. The SPA bundle is committed git artifacts at `public/assets/`, so frontend source changes only ship if someone manually rebuilds + recopies + commits. Production was serving the slice 1-5 cutover bundle (`index-cYVCSat3.js` from 2026-05-01 21:10 PT, commit `a72183b`) for ~30 hours with the slice 2 click-to-expand, slice 7 PendingTab simplification, and slice 8 `useDeletePlacement` removal all missing on the user side. Concrete prior-to-fix impact: Picks rows weren't click-to-expand; the Picks tab still POSTed `/api/place-bet` (405 since session 7 deleted the route); Pending tab still rendered the queued-retries section calling `/api/state/sync-queue/retry` (405); Pending tab still called DELETE `/api/state/placements/:key` (405 since session 8). Silent failures only triggered if Max acted; nothing crashed. Fix shipped: rebuilt the bundle, swapped `public/assets/index-{B4hwDnDa.css,cYVCSat3.js}` → `index-{WMNNWeYB.css,Djh7ZKAk.js}`, updated `public/index.html`. New bundle smoke-checked: `Mark as placed` / `Place on DraftKings` / `pick-actions-expanded` / `pick-chevron` / `pick-details` strings present; dispatch leftover URLs absent; expected v2 URLs present. Two-commit pair + manual mirror + `wrangler deploy`. Open process gap: a CI guard that fails if `public/index.html`'s referenced bundle hash doesn't exist in `public/assets/` would catch this bug class without trusting humans; filed as a polish follow-up.
+
 **Dead code cleanup shipped (2026-05-02 session 8):** Loose ends from session 7 tied off. `useDeletePlacement` removed from `frontend/src/api/mutations.ts` (no UI caller after sessions 6 + 7). Worker `DELETE /api/state/placements/:key` route removed from `worker/routes/state-placements.ts`, along with its sole consumer `removePlacement` in `worker/lib/state.ts` and the corresponding describe block (4 tests) in `worker/index.test.ts`. Orphaned `scripts/place_bets.py` deleted (sole invoker was the `place-bets.yml` workflow retired in session 7). Worker audit confirmed the rest of the `dispatch` / `sync_queue` matches are intentional back-compat: `sync_queue` field on `StateRecordSchema`, `dispatch_status` enum + `'ok'` default on `PlacementCreateRequestSchema`, the `dispatch_status: 'ok'` writes in `useSkipPick` / `useMarkPickAsPlaced`, the `state.ts` init + GET pass-through, and the defensive `queued` badge in `PickRow` / `PositionRow`. `npx tsc -b` clean, `npm test` 78 / 78 across 3 files (was 82 / 82; the 4 dropped = the DELETE describe). Em-dash audit clean. Net diff: 5 files, 295 line deletions, 1 insertion. Two-commit pair shipped + pushed. Mirror force-pushed to `cloudflare/workers-autoconfig` + manual `wrangler deploy` ran post-commit; live worker is on version `7d053fab` (the post-session-8 bundle). 404 verification of deleted routes deferred to Max's browser session (Cloudflare Access intercepts unauthenticated curls at the edge).
 
 **Dispatch cleanup shipped (2026-05-02 session 7):** Auto-dispatch chain fully retired. Frontend: `usePlacePickBet` + `useRetrySyncQueue` deleted from `mutations.ts`; `PositionsTab` + `PicksTab` both use `useMarkPickAsPlaced` now (manual placement, no GitHub `repository_dispatch`); `PendingTab` rewritten without queued-retries section. Worker routes deleted: `place-bet.ts` (singular), `state-sync-queue.ts`, `place-bets-legacy.ts` (legacy plural). Worker libs deleted: `dispatch.ts`. State helpers `upsertSyncQueueEntry` + `findSyncQueueEntry` dropped from `state.ts`. Schemas dropped: `PlaceBetRequestSchema`, `PlaceBetResponseSchema`, `SyncQueueRetryRequestSchema`. Workflow `.github/workflows/place-bets.yml` deleted (the `repository_dispatch` receiver and only consumer of `dispatch.ts`). Test file lost the dispatch-touching describes (10 tests) and the `vi.stubGlobal('fetch')` helper. The `sync_queue` field stays on `StateRecordSchema` for KV back-compat (existing records may carry entries; read-only via GET /api/state). One-line update note added to ADR 0002. `npx tsc -b` clean, `npm test` 92 / 92 → 82 / 82 across 3 files. Em-dash audit clean. NOT yet committed.
@@ -44,6 +46,76 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
 
 **Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-02 session 9 (Stale SPA bundle fix)
+
+### Goal
+Resume from session 8 to (a) close the deferred 404 verification loop and (b) pick a polish item. Mid-session, Max reported that Picks rows weren't clickable in the live SPA. Investigation revealed the production SPA bundle was 30 hours stale (frozen at session 5 slice 1-5 cutover); sessions 6 / 7 / 8 frontend source changes had never been built or copied into `public/`. Fixed by rebuilding and redeploying.
+
+### Pre-flight
+- `git stash list`: empty. `git status --short`: 3 expected carry-over untracked. `git log --oneline -4`: `4ceb333 e6df9bd 6a71bcb dc7c021` (matches session 8 ending state).
+- `npx tsc -b`: clean. `npm test`: 78 / 78.
+- `curl -sI .../api/me`: 302 to `sheahan.cloudflareaccess.com`.
+- `origin/cloudflare/workers-autoconfig..origin/main`: 1 commit (the docs-only `4ceb333`; the auto-deploy from session 8's manual mirror push had already caught up).
+- Local `data.json`: `2026-05-02`, 8 picks, 62 bets.
+- New auto-deploy at session start: `d4596531-177f-4d05-97c2-fff67d4ee012` at 22:20 UTC, `~10 min` after session 8's manual mirror push at 22:10 UTC. Confirms the auto-deploy chain works; the lag observed in session 8 is `~10 min`, not infinite. Updates session 8's "Aside on the auto-deploy lag" with hard data.
+
+### 404 verification close-out
+Done. See updated subsection in session 8 above. Both deleted routes returned 405 (not 404 as predicted); the 405 is the correct signal under the architecture, sessions 7 + 8 are end-to-end verified.
+
+### The real bug: stale SPA bundle in production
+After the 404 close-out, Max reported the Picks rows weren't clickable and the bankroll-over-time graph was missing. Investigation chain:
+- `/api/picks` returned 8 picks; `/api/state` returned 0 placements. Worker side healthy.
+- `git log origin/main -- frontend/src/components/PickRow.tsx`: latest commit `ca3efa4 feat(picks): click-to-expand` was on main since session 6 slice 2.
+- `git log origin/main -- public/assets/`: latest commit `a72183b chore(phase-3): v2 SPA cutover (slices 1-5)`. That predates `ca3efa4`.
+- `grep "isExpanded\|onToggleExpand\|handleRowClick" public/assets/index-cYVCSat3.js`: no hits. Click-to-expand symbols absent from the deployed bundle.
+
+Root cause: sessions 6 / 7 / 8 each committed `frontend/src/` changes but nobody ran `npm run build` and nobody copied `frontend/dist/*` → `public/*`. The worker bundle gets rebuilt by `wrangler deploy`, so worker source changes shipped fine across sessions. The SPA bundle is committed git artifacts in `public/assets/`, so frontend source changes only ship if someone manually rebuilds + recopies + commits.
+
+Concrete impact prior to fix:
+- Picks tab rows not click-to-expand (slice 2 absent).
+- Picks tab still calling deprecated `usePlacePickBet` → POST `/api/place-bet` → 405 (route deleted in session 7).
+- Pending tab still showing queued-retries section calling `/api/state/sync-queue/retry` → 405 (deleted session 7).
+- Pending tab still calling `useDeletePlacement` → DELETE `/api/state/placements/:key` → 405 (deleted session 8).
+- All silent failures Max would only hit if he acted; nothing crashed.
+
+### Decisions made
+- **Commit + push + manual mirror + `wrangler deploy`** (session 8 pattern). Faster than waiting for the ~10-min auto-deploy and persistent across the next cron tick.
+- **Did not auto-fix the build process this session.** A `predeploy` script or CI guard would prevent recurrence; filed as a polish follow-up so the fix lands cleanly without scope creep on the urgent diff.
+
+### Files modified
+- `public/index.html` (bundle hash references updated).
+- `HANDOFF.md` (this entry, the inheriting-state snapshot bullet, and the session 8 verification close-out).
+
+### Files added
+- `public/assets/index-Djh7ZKAk.js` (new bundle, 247.57 kB, gzip 74.81 kB).
+- `public/assets/index-WMNNWeYB.css` (new styles, 14.58 kB, gzip 3.08 kB).
+
+### Files deleted
+- `public/assets/index-cYVCSat3.js` (stale bundle from a72183b).
+- `public/assets/index-B4hwDnDa.css` (stale styles from a72183b).
+
+### Verification
+- `npx tsc -b`: clean.
+- `npm test`: 78 / 78 across 3 files (no regressions).
+- New bundle grep: visual strings `Mark as placed`, `Place on DraftKings`, `pick-actions-expanded`, `pick-chevron`, `pick-details` present. Dispatch URLs (`/api/place-bet`, `/api/state/sync-queue/retry`) absent. Expected v2 URLs (`/api/state/placements`, `/api/state/manual-bets`, `/api/balance-override`, `/api/activity`) present.
+- Live deploy verification: TBD (Max to confirm picks clickable in browser after deploy).
+
+### What's next
+1. **Bankroll-over-time graph** (Max-requested earlier this session). New `/api/history` route or extension of `/api/bankroll` exposing daily snapshots from `bankroll.json`. Account tab gets a chart card. Recharts is the obvious lib choice; hand-rolled SVG is heavier than the value justifies for a single chart.
+2. **CI guard for bundle-staleness**: a GitHub Action that fails if `public/index.html`'s referenced bundle hash doesn't exist in `public/assets/`. Catches this exact bug class without trusting humans.
+3. **Existing polish backlog** (still open): rewrite `docs/cloudflare-access-setup.md` for Zero Trust UI; set up Google IdP; delete `rebuild/v2-frontend` branch (local + origin); defer `worker/lib/normalize.ts` extract until 3rd consumer.
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && grep -c "isExpanded" public/assets/*.js` should print at least 1. If it prints 0, the bundle has gone stale again; rebuild via:
+```
+npm run build && \
+  rm public/assets/index-* && \
+  cp frontend/dist/assets/* public/assets/ && \
+  cp frontend/dist/index.html frontend/dist/.assetsignore frontend/dist/wrangler.json public/
+```
 
 ---
 
@@ -106,12 +178,12 @@ After the two-commit pair pushed, the cron mirror was 9 commits behind `origin/m
 
 **Live verification (without auth).** Access intact on all 6 paths checked: `/`, `/api/me`, `/api/place-bet`, `/api/place-bets`, `/api/state/sync-queue/retry`, `DELETE /api/state/placements/test-key`. All return `HTTP/2 302` to `sheahan.cloudflareaccess.com`. Access scope `/*` did not regress.
 
-**Definitive 404 verification (deferred to Max's browser).** Cloudflare Access intercepts unauthenticated requests at the edge before the worker can return its real status, so curl alone cannot prove the deleted routes are gone. To confirm, open the SPA, OTP login, then in devtools console:
+**Definitive 404 verification (closed 2026-05-02 ~22:25 UTC, session 9).** Both deleted routes confirmed gone. Max ran in-browser fetch from the devtools console after OTP login:
 ```js
-fetch('/api/place-bet', { method: 'POST' }).then(r => r.status)
-fetch('/api/state/placements/test', { method: 'DELETE' }).then(r => r.status)
+fetch('/api/place-bet', { method: 'POST' }).then(r => r.status)             // 405
+fetch('/api/state/placements/test', { method: 'DELETE' }).then(r => r.status) // 405
 ```
-Both should print `404`. That closes the verification loop end-to-end.
+Both returned `405 Method Not Allowed`, not `404` as predicted. The 405 is the correct end-to-end signal under the current architecture: worker's catch-all at `worker/index.ts:31` (`app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw))`) forwards unmatched paths to the ASSETS binding, and ASSETS rejects non-GET methods with 405. If the routes still existed, we'd have seen 201 / 400 / 502 instead. Sessions 7 + 8 cleanup is end-to-end verified. Tangential cosmetic follow-up worth filing: an explicit `app.all('/api/*', notFound)` before the global catch-all would return cleaner 404s on dead API paths; not a regression.
 
 **Aside on the auto-deploy lag.** Cloudflare's auto-deploy from `cloudflare/workers-autoconfig` did not visibly fire from this session's manual mirror push within 4 min, even though cron-tick deploys (e.g. 16:41 scan triggered a 16:41:23 deploy earlier today) confirm the integration works. Possible causes: deploy queue lag, batch interval, or a difference between cron-context pushes (via `actions/checkout`) and developer-machine pushes. Worth investigating if mirror-lag becomes a recurring issue; not blocking right now since the manual `wrangler deploy` covered it.
 
