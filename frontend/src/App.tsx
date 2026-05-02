@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Header } from './components/Header'
 import { TabBar } from './components/TabBar'
 import { BalanceCard } from './components/BalanceCard'
+import { BalanceChart } from './components/BalanceChart'
 import { PicksTab } from './tabs/PicksTab'
 import { PendingTab } from './tabs/PendingTab'
 import { ActivityTab } from './tabs/ActivityTab'
@@ -39,6 +40,7 @@ function App() {
         </div>
         <aside className="page-side">
           <BalanceCard />
+          <BalanceChart />
         </aside>
       </main>
     </div>

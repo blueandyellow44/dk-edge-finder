@@ -605,6 +605,54 @@ a {
 .account-form-status.success { color: var(--color-positive); }
 .account-form-status.error { color: var(--color-negative); }
 
+/* Sidebar balance-over-time card. Sits directly under BalanceCard.
+   Sparkline-scale: gold area + line, no Y-axis labels, first/last
+   date below. The card title and chrome match BalanceCard so the
+   two read as a single grouped object. */
+.balance-chart-section {
+  padding: 18px 20px 14px;
+}
+.balance-chart-empty {
+  padding: 18px 20px;
+  color: var(--color-muted);
+  font-size: 12px;
+  text-align: center;
+}
+.balance-chart-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.balance-chart-change {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg);
+  letter-spacing: -0.01em;
+}
+.balance-chart-change.positive { color: var(--color-positive); }
+.balance-chart-change.negative { color: var(--color-negative); }
+.balance-chart-meta {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+.balance-chart-svg {
+  width: 100%;
+  height: 80px;
+  display: block;
+}
+.balance-chart-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
 /* Lifetime stats grid */
 .stats-grid {
   display: grid;
