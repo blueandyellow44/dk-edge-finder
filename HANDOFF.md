@@ -33,6 +33,8 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**CI bundle-staleness guard shipped (2026-05-02 session 10):** New GitHub Actions workflow at `.github/workflows/spa-bundle-guard.yml` runs `npm ci` + `npm run build` and diffs `frontend/dist/` against committed `public/` (index.html, wrangler.json, .assetsignore, assets/) on every PR + push to main. Fails loudly if the SPA bundle is stale relative to source. Closes the process gap that caused session 9 slice 1 (sessions 6 / 7 / 8 changed `frontend/src/` without rebuilding `public/assets/`, so production served a 30-hour stale bundle until Max noticed Picks rows weren't clickable). Path filter scoped to `frontend/**`, `public/**`, `shared/**`, `vite.config.ts`, `tsconfig*.json`, `package.json`, `package-lock.json`, and the workflow itself; excludes cron-managed files (`data.json`, `bankroll.json`, `pick_history.json`) which are committed at repo root, not under `public/`, so the guard does not run on cron ticks. Verified locally: clean rebuild matches committed `public/` exactly (diff exits 0); a simulated stale `public/index.html` correctly fails the diff (exits 1) and restores cleanly. Failure step prints the recovery command (rebuild + cp + commit) inline so the next dev who hits this knows exactly what to do. YAML valid; em-dash + double-hyphen audit clean. One file, 61 lines, no other repo changes.
+
 **Sidebar balance-over-time chart shipped (2026-05-02 session 9 slice 2):** New `BalanceChart` component lives in the right sidebar directly under `BalanceCard`, on every tab (matches the established sidebar-shows-everywhere convention). Sparkline-style: gold line over a faint gold-tint area fill, single big-tabular delta headline (`+$186.69` color-coded green/red) with `over N days` muted next to it, first/last date labels below the chart. Card chrome is `.card` + `.card-header` matching `BalanceCard` so the two read as a single grouped object; same uppercase 12px header treatment, same white card on `--color-bg`. Skipped Recharts in favor of hand-rolled 240×80 SVG with `vectorEffect="non-scaling-stroke"` so the line stays 1.5px crisp under `preserveAspectRatio="none"` stretching. Data source: `useActivity()` filtered to resolved bets + `useBankroll().starting` for the anchor; computed on the client (no worker change). Caveat for next session: chart final balance ($686.69) and `lifetime_profit` ($179.34 → $679.34) disagree by ~$7. Both come from `bankroll.json`; the file's own `lifetime_bets` (43) vs `wins+losses+pushes` (59) are also internally inconsistent. Model-side issue, not a frontend bug. `npx tsc -b` clean, `npm test` 78 / 78. New bundle `index-DxPsRIoZ.js` (250 kB, 75.57 kB gzip).
 
 **SPA bundle staleness fixed (2026-05-02 session 9 slice 1):** Sessions 6 / 7 / 8 each committed `frontend/src/` source changes but nobody ran `npm run build` and nobody copied `frontend/dist/*` into `public/`. The worker bundle gets rebuilt on every `wrangler deploy` from `worker/` source, so worker changes shipped fine. The SPA bundle is committed git artifacts at `public/assets/`, so frontend source changes only ship if someone manually rebuilds + recopies + commits. Production was serving the slice 1-5 cutover bundle (`index-cYVCSat3.js` from 2026-05-01 21:10 PT, commit `a72183b`) for ~30 hours with the slice 2 click-to-expand, slice 7 PendingTab simplification, and slice 8 `useDeletePlacement` removal all missing on the user side. Concrete prior-to-fix impact: Picks rows weren't click-to-expand; the Picks tab still POSTed `/api/place-bet` (405 since session 7 deleted the route); Pending tab still rendered the queued-retries section calling `/api/state/sync-queue/retry` (405); Pending tab still called DELETE `/api/state/placements/:key` (405 since session 8). Silent failures only triggered if Max acted; nothing crashed. Fix shipped: rebuilt the bundle, swapped `public/assets/index-{B4hwDnDa.css,cYVCSat3.js}` → `index-{WMNNWeYB.css,Djh7ZKAk.js}`, updated `public/index.html`. New bundle smoke-checked: `Mark as placed` / `Place on DraftKings` / `pick-actions-expanded` / `pick-chevron` / `pick-details` strings present; dispatch leftover URLs absent; expected v2 URLs present. Two-commit pair + manual mirror + `wrangler deploy`. Open process gap: a CI guard that fails if `public/index.html`'s referenced bundle hash doesn't exist in `public/assets/` would catch this bug class without trusting humans; filed as a polish follow-up.
@@ -48,6 +50,54 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
 
 **Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-02 session 10 (CI bundle-staleness guard)
+
+### Goal
+Close the process gap from session 9 slice 1: a CI guard that fails if the committed SPA bundle in `public/` is stale relative to `frontend/src/` source. The literal description in the resume prompt was a hash-existence check (fail if `public/index.html`'s referenced bundle hash does not exist in `public/assets/`), but that does NOT catch the session 9 bug. In session 9, `public/index.html` referenced `index-cYVCSat3.js`, the file existed in `public/assets/`, the bundle was just outdated. To actually catch the bug class, the guard has to rebuild and diff. Confirmed scope with Max via `AskUserQuestion`.
+
+### Pre-flight
+- `git stash list`: empty. `git status --short`: 3 expected carry-over untracked (`.claude/handoffs/`, `index.html.bak`, `mockups/`). `git log --oneline -4`: `8bf4137 a67ab19 db9d47e 058075a` (session 9 ending state).
+- `npx tsc -b`: clean. `npm test`: 78 / 78 across 3 files.
+- `curl -sI .../api/me`: 302 to `sheahan.cloudflareaccess.com`.
+- `origin/cloudflare/workers-autoconfig..origin/main`: 0 commits (in sync from session 9 close).
+- Latest visible Cloudflare deploy: `ace6f118-fafe-40e3-aa80-5a64b14cf9ea` from 2026-05-02 23:23:58 UTC. The `28f8b384` referenced in the resume prompt was rolled forward by an auto-deploy that fired between session 9 close and this session start; the bundle still has the sidebar chart so v2 is unchanged.
+- `grep -c "Balance over time" public/assets/*.js`: 1 (sidebar chart bundle is live).
+- Local `data.json`: 2026-05-02, 8 picks, 62 bets.
+
+### Decisions made
+- **Rebuild and diff over hash-existence.** The literal resume-prompt description ("fails if `public/index.html`'s referenced bundle hash does not exist in `public/assets/`") catches typos and missing assets, but does NOT catch the session 9 bug. In session 9, `index-cYVCSat3.js` existed in `public/assets/`; the bundle was stale. To catch staleness, the guard has to rebuild from source and diff against committed artifacts. Confirmed with Max (chose "Rebuild and diff (Recommended)" over hash-only and both-layers).
+- **Path filter scoped to source-affecting paths.** `frontend/**`, `public/**`, `shared/**`, `vite.config.ts`, `tsconfig*.json`, `package.json`, `package-lock.json`, and the workflow itself. Cron commits modify `data.json`, `bankroll.json`, `pick_history.json` at repo root (verified by reading `game-scan.yml`), so the path filter does not match cron pushes. The guard does not run on every cron tick.
+- **Node 22 for the runner.** Vite 8 needs Node 20.18+ or 22+; project has no `engines` field or `.nvmrc`. Picked 22 LTS for forward-compat. Different Node versions would not affect Vite content-hash determinism here (Vite is deterministic for the same input within a major).
+- **Failure step prints the recovery command.** Step `Failure hint` (with `if: failure()`) echoes the rebuild + cp + commit recipe so the next dev who hits this knows exactly what to do without grepping HANDOFF for context.
+- **Diff each file individually with `::group::` lines.** Cleaner CI log than one big `diff -r` over the whole tree. Failure shows which specific file is stale.
+
+### Files added
+- `.github/workflows/spa-bundle-guard.yml` (61 lines).
+
+### Files modified
+- `HANDOFF.md` (this entry + the inheriting-state bullet).
+
+### Verification
+- `rm -rf frontend/dist && npm run build`: clean (250.05 kB JS, 75.57 kB gzip; same `index-DxPsRIoZ.js` and `index-CxUyVhg5.css` hashes as committed `public/assets/`).
+- `diff frontend/dist/index.html public/index.html`: clean (exit 0).
+- `diff frontend/dist/wrangler.json public/wrangler.json`: clean.
+- `diff frontend/dist/.assetsignore public/.assetsignore`: clean.
+- `diff -r frontend/dist/assets public/assets`: clean.
+- Negative test: appended `<!-- staleness test -->` to `public/index.html`; the diff returned `17a18 > <!-- staleness test -->` and exit 1; restored from `/tmp/index.html.backup` and re-verified the chain returns clean. Confirms the guard fails loudly on a stale bundle.
+- YAML valid via `python3 -c "import yaml; yaml.safe_load(open(...))"`. Top-level keys: `name`, `on`, `jobs`. One job: `bundle-guard`. Triggers: `pull_request`, `push`.
+- Em-dash + double-hyphen audit on the new workflow: clean.
+
+### What's next
+1. **Confirm the workflow runs green on first push.** GH Actions will fire the guard on the commit that adds it (the workflow file itself is in the path filter). Should pass since `public/` is in sync with `frontend/src/`. Watch one full run via `gh run list --workflow="SPA Bundle Guard" --limit 3` to confirm.
+2. **Future-game scanning** (still on the backlog from session 9 close). Widen the Python scanner window beyond today + tomorrow; line-staleness handling; UI affordance for non-today edges. Real model-side scope.
+3. **bankroll.json lifetime-stats consistency**: 43 vs 59 mismatch (lifetime_bets vs wins+losses+pushes); $7 chart-vs-lifetime_profit divergence. Model-side investigation.
+4. **Existing polish backlog**: rewrite `docs/cloudflare-access-setup.md` for Zero Trust UI; set up Google IdP (currently OTP-only); delete `rebuild/v2-frontend` branch (local + origin); defer `worker/lib/normalize.ts` extract until a third consumer of `stripEmDash` / `coerceOddsString` exists.
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && gh run list --workflow="SPA Bundle Guard" --limit 3` to see the most recent run status. Expect green on every PR and main push that touches `frontend/`, `public/`, `shared/`, `vite.config.ts`, `tsconfig*.json`, `package.json`, or `package-lock.json`. If a run fails: the `Failure hint` step prints the rebuild + cp + commit recipe inline.
 
 ---
 
