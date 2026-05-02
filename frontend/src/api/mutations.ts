@@ -1,41 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type {
-  BalanceOverrideRecord,
-  Placement,
-  PlaceBetResponse,
-} from '../../../shared/types'
-import { ApiError, apiDelete, apiPost } from './client'
-
-export function usePlacePickBet() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: async ({ pickIndex, key }: { pickIndex: number; key: string }) => {
-      const idempotencyKey = crypto.randomUUID()
-      let dispatchStatus: 'ok' | 'queued' = 'ok'
-      try {
-        await apiPost<PlaceBetResponse>('/api/place-bet', {
-          pick_indices: [pickIndex],
-          idempotency_key: idempotencyKey,
-        })
-      } catch (err) {
-        if (err instanceof ApiError && err.status === 502) {
-          dispatchStatus = 'queued'
-        } else {
-          throw err
-        }
-      }
-      return apiPost<Placement>('/api/state/placements', {
-        key,
-        action: 'placed' as const,
-        dispatch_status: dispatchStatus,
-        idempotency_key: idempotencyKey,
-      })
-    },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['state'] })
-    },
-  })
-}
+import type { BalanceOverrideRecord, Placement } from '../../../shared/types'
+import { apiDelete, apiPost } from './client'
 
 export function useSkipPick() {
   const qc = useQueryClient()
@@ -51,10 +16,6 @@ export function useSkipPick() {
   })
 }
 
-// Manual placement: records that the user placed the bet themselves on DK.
-// No GitHub repository_dispatch; dispatch_status='ok' here means "no dispatch
-// attempted, user marked manually." Distinct from usePlacePickBet, which fires
-// the auto-dispatch chain and may queue on 502.
 export function useMarkPickAsPlaced() {
   const qc = useQueryClient()
   return useMutation({
@@ -94,18 +55,6 @@ export function useDeleteManualBet() {
   return useMutation({
     mutationFn: ({ id }: { id: string }) =>
       apiDelete(`/api/state/manual-bets/${encodeURIComponent(id)}`),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['state'] }),
-  })
-}
-
-export function useRetrySyncQueue() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: ({ key }: { key: string }) =>
-      apiPost<PlaceBetResponse>('/api/state/sync-queue/retry', {
-        key,
-        idempotency_key: crypto.randomUUID(),
-      }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['state'] }),
   })
 }

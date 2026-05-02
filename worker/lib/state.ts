@@ -3,14 +3,12 @@ import {
   StateRecordSchema,
   PlacementSchema,
   ManualBetSchema,
-  SyncQueueEntrySchema,
   BalanceOverrideRecordSchema,
 } from '../../shared/schemas'
 import type {
   StateRecord,
   Placement,
   ManualBet,
-  SyncQueueEntry,
   BalanceOverrideRecord,
 } from '../../shared/types'
 
@@ -82,35 +80,6 @@ export async function appendManualBet(
   record.updated_at = new Date().toISOString()
   await writeState(env, record)
   return record
-}
-
-// Sync queue is keyed by Placement.key (one entry per failed placement),
-// not by idempotency_key. Each retry attempt rotates the entry's
-// idempotency_key, so dedupe-by-idempotency would create a new row per
-// retry. The 'key' field is the stable identifier; idempotency_key here
-// reflects the latest attempt.
-export async function upsertSyncQueueEntry(
-  env: Env,
-  email: string,
-  scan_date: string,
-  entry: SyncQueueEntry,
-): Promise<StateRecord> {
-  const validated = SyncQueueEntrySchema.parse(entry)
-  const record = await readOrInit(env, email, scan_date)
-  const idx = record.sync_queue.findIndex((e) => e.key === validated.key)
-  if (idx >= 0) record.sync_queue[idx] = validated
-  else record.sync_queue.push(validated)
-  record.updated_at = new Date().toISOString()
-  await writeState(env, record)
-  return record
-}
-
-export function findSyncQueueEntry(
-  record: StateRecord | null,
-  key: string,
-): SyncQueueEntry | null {
-  if (!record) return null
-  return record.sync_queue.find((e) => e.key === key) ?? null
 }
 
 export async function removePlacement(

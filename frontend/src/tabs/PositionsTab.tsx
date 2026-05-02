@@ -1,5 +1,5 @@
 import { usePicks, useStateRecord } from '../api/queries'
-import { usePlacePickBet, useSkipPick } from '../api/mutations'
+import { useMarkPickAsPlaced, useSkipPick } from '../api/mutations'
 import { PositionRow } from '../components/PositionRow'
 import type { Pick, Placement } from '../../../shared/types'
 
@@ -8,7 +8,7 @@ const placementKey = (pick: Pick) => `${pick.pick}|${pick.event}`
 export function PositionsTab() {
   const picks = usePicks()
   const state = useStateRecord()
-  const placeMutation = usePlacePickBet()
+  const placeMutation = useMarkPickAsPlaced()
   const skipMutation = useSkipPick()
 
   if (picks.isLoading) {
@@ -48,7 +48,7 @@ export function PositionsTab() {
             index={index}
             placement={placementByKey.get(key)}
             isPending={isPending}
-            onPlace={() => placeMutation.mutate({ pickIndex: index, key })}
+            onPlace={() => placeMutation.mutate({ key })}
             onSkip={() => skipMutation.mutate({ key })}
           />
         )

@@ -158,10 +158,8 @@ export const StateResponseSchema = z.object({
 export const PlacementCreateRequestSchema = z.object({
   key: z.string(),
   action: z.enum(['placed', 'skipped']),
-  // Frontend reports the outcome of its place-bet dispatch attempt so the
-  // server can store it without round-tripping through KV. Defaults to 'ok'
-  // for skipped placements (no dispatch happens) and for cases where the
-  // frontend records intent before learning the dispatch result.
+  // 'queued' / 'failed' are vestigial: pre-existing KV records may still
+  // carry them from the retired auto-dispatch chain. New writes are 'ok'.
   dispatch_status: z.enum(['ok', 'queued', 'failed']).default('ok'),
   idempotency_key: z.string().min(1),
 })
@@ -175,25 +173,9 @@ export const ManualBetCreateRequestSchema = z.object({
   idempotency_key: z.string().min(1),
 })
 
-export const SyncQueueRetryRequestSchema = z.object({
-  key: z.string(),
-  idempotency_key: z.string().min(1),
-})
-
 export const BalanceOverrideRequestSchema = z.object({
   amount: z.number(),
   note: z.string(),
-})
-
-export const PlaceBetRequestSchema = z.object({
-  pick_indices: z.array(z.number().int().nonnegative()).min(1),
-  idempotency_key: z.string().min(1),
-})
-
-export const PlaceBetResponseSchema = z.object({
-  status: z.enum(['ok', 'failed']),
-  dispatch_id: z.string().optional(),
-  error: z.string().optional(),
 })
 
 // ──────────── Activity (resolved bets from data.json.bets[]) ────────────
