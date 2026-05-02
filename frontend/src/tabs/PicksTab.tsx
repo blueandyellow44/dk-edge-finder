@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { usePicks, useStateRecord } from '../api/queries'
-import { usePlacePickBet, useSkipPick } from '../api/mutations'
+import { useMarkPickAsPlaced, useSkipPick } from '../api/mutations'
 import { PickRow } from '../components/PickRow'
 import { formatAgo } from '../lib/format'
 import type { Pick, Placement } from '../../../shared/types'
@@ -9,8 +10,9 @@ const placementKey = (pick: Pick) => `${pick.pick}|${pick.event}`
 export function PicksTab() {
   const picks = usePicks()
   const state = useStateRecord()
-  const placeMutation = usePlacePickBet()
+  const markPlacedMutation = useMarkPickAsPlaced()
   const skipMutation = useSkipPick()
+  const [expandedKey, setExpandedKey] = useState<string | null>(null)
 
   if (picks.isLoading) {
     return <div className="placeholder">Loading picks...</div>
@@ -32,7 +34,7 @@ export function PicksTab() {
   }
   const stale = scan_age_seconds !== null && scan_age_seconds > 12 * 3600
   const ago = formatAgo(scan_age_seconds)
-  const isPending = placeMutation.isPending || skipMutation.isPending
+  const isPending = markPlacedMutation.isPending || skipMutation.isPending
 
   return (
     <>
@@ -57,6 +59,7 @@ export function PicksTab() {
           </div>
           {pickList.map((pick, index) => {
             const key = placementKey(pick)
+            const isExpanded = expandedKey === key
             return (
               <PickRow
                 key={key}
@@ -64,8 +67,20 @@ export function PicksTab() {
                 index={index}
                 placement={placementByKey.get(key)}
                 isPending={isPending}
-                onPlace={() => placeMutation.mutate({ pickIndex: index, key })}
-                onSkip={() => skipMutation.mutate({ key })}
+                isExpanded={isExpanded}
+                onToggleExpand={() => setExpandedKey(isExpanded ? null : key)}
+                onMarkPlaced={() => {
+                  markPlacedMutation.mutate(
+                    { key },
+                    { onSuccess: () => setExpandedKey(null) },
+                  )
+                }}
+                onIgnore={() => {
+                  skipMutation.mutate(
+                    { key },
+                    { onSuccess: () => setExpandedKey(null) },
+                  )
+                }}
               />
             )
           })}

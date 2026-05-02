@@ -25,3 +25,15 @@ export function formatAgo(seconds: number | null): string | null {
   if (seconds < 86400) return `${Math.round(seconds / 3600)}h ago`
   return `${Math.round(seconds / 86400)}d ago`
 }
+
+export function formatStartTime(iso: string): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}

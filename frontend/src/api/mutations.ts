@@ -51,6 +51,24 @@ export function useSkipPick() {
   })
 }
 
+// Manual placement: records that the user placed the bet themselves on DK.
+// No GitHub repository_dispatch; dispatch_status='ok' here means "no dispatch
+// attempted, user marked manually." Distinct from usePlacePickBet, which fires
+// the auto-dispatch chain and may queue on 502.
+export function useMarkPickAsPlaced() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ key }: { key: string }) =>
+      apiPost<Placement>('/api/state/placements', {
+        key,
+        action: 'placed' as const,
+        dispatch_status: 'ok' as const,
+        idempotency_key: crypto.randomUUID(),
+      }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['state'] }),
+  })
+}
+
 export function useDeletePlacement() {
   const qc = useQueryClient()
   return useMutation({
