@@ -11,6 +11,7 @@ import stateManualBetsApp from './routes/state-manual-bets'
 import stateSyncQueueApp from './routes/state-sync-queue'
 import balanceOverrideApp from './routes/balance-override'
 import placeBetApp from './routes/place-bet'
+import activityApp from './routes/activity'
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>()
 
@@ -33,6 +34,7 @@ app.route('/api/state', stateApp)
 
 app.route('/api/balance-override', balanceOverrideApp)
 app.route('/api/place-bet', placeBetApp)
+app.route('/api/activity', activityApp)
 
 app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw))
 

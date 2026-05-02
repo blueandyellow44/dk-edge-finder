@@ -8,6 +8,12 @@
       "port": 8787
     },
     {
+      "name": "vite-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/maxsheahan/Betting Skill' && exec npm run dev -- --port 5173 --strictPort"],
+      "port": 5173
+    },
+    {
       "name": "site",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8080", "--directory", "/Users/maxsheahan/Betting Skill"],

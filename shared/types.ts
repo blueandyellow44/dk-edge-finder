@@ -19,6 +19,8 @@ import type {
   BalanceOverrideRequestSchema,
   PlaceBetRequestSchema,
   PlaceBetResponseSchema,
+  ResolvedBetSchema,
+  ActivityResponseSchema,
 } from './schemas'
 
 export type Pick = z.infer<typeof PickSchema>
@@ -44,3 +46,6 @@ export type SyncQueueRetryRequest = z.infer<typeof SyncQueueRetryRequestSchema>
 export type BalanceOverrideRequest = z.infer<typeof BalanceOverrideRequestSchema>
 export type PlaceBetRequest = z.infer<typeof PlaceBetRequestSchema>
 export type PlaceBetResponse = z.infer<typeof PlaceBetResponseSchema>
+
+export type ResolvedBet = z.infer<typeof ResolvedBetSchema>
+export type ActivityResponse = z.infer<typeof ActivityResponseSchema>

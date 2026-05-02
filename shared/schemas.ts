@@ -195,3 +195,21 @@ export const PlaceBetResponseSchema = z.object({
   dispatch_id: z.string().optional(),
   error: z.string().optional(),
 })
+
+// ──────────── Activity (resolved bets from data.json.bets[]) ────────────
+
+export const ResolvedBetSchema = z.object({
+  date: ScanDateSchema,
+  sport: z.string(),
+  event: z.string(),
+  pick: z.string(),
+  odds: z.string(),
+  wager: z.number(),
+  outcome: z.enum(['win', 'loss', 'push', 'pending']),
+  pnl: z.number(),
+  final_score: z.string(),
+})
+
+export const ActivityResponseSchema = z.object({
+  bets: z.array(ResolvedBetSchema),
+})
