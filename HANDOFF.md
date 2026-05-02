@@ -33,7 +33,7 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
-**Dead code cleanup shipped (2026-05-02 session 8):** Loose ends from session 7 tied off. `useDeletePlacement` removed from `frontend/src/api/mutations.ts` (no UI caller after sessions 6 + 7). Worker `DELETE /api/state/placements/:key` route removed from `worker/routes/state-placements.ts`, along with its sole consumer `removePlacement` in `worker/lib/state.ts` and the corresponding describe block (4 tests) in `worker/index.test.ts`. Orphaned `scripts/place_bets.py` deleted (sole invoker was the `place-bets.yml` workflow retired in session 7). Worker audit confirmed the rest of the `dispatch` / `sync_queue` matches are intentional back-compat: `sync_queue` field on `StateRecordSchema`, `dispatch_status` enum + `'ok'` default on `PlacementCreateRequestSchema`, the `dispatch_status: 'ok'` writes in `useSkipPick` / `useMarkPickAsPlaced`, the `state.ts` init + GET pass-through, and the defensive `queued` badge in `PickRow` / `PositionRow`. `npx tsc -b` clean, `npm test` 78 / 78 across 3 files (was 82 / 82; the 4 dropped = the DELETE describe). Em-dash audit clean. Net diff: 5 files, 295 line deletions, 1 insertion. Two-commit pair shipped + pushed.
+**Dead code cleanup shipped (2026-05-02 session 8):** Loose ends from session 7 tied off. `useDeletePlacement` removed from `frontend/src/api/mutations.ts` (no UI caller after sessions 6 + 7). Worker `DELETE /api/state/placements/:key` route removed from `worker/routes/state-placements.ts`, along with its sole consumer `removePlacement` in `worker/lib/state.ts` and the corresponding describe block (4 tests) in `worker/index.test.ts`. Orphaned `scripts/place_bets.py` deleted (sole invoker was the `place-bets.yml` workflow retired in session 7). Worker audit confirmed the rest of the `dispatch` / `sync_queue` matches are intentional back-compat: `sync_queue` field on `StateRecordSchema`, `dispatch_status` enum + `'ok'` default on `PlacementCreateRequestSchema`, the `dispatch_status: 'ok'` writes in `useSkipPick` / `useMarkPickAsPlaced`, the `state.ts` init + GET pass-through, and the defensive `queued` badge in `PickRow` / `PositionRow`. `npx tsc -b` clean, `npm test` 78 / 78 across 3 files (was 82 / 82; the 4 dropped = the DELETE describe). Em-dash audit clean. Net diff: 5 files, 295 line deletions, 1 insertion. Two-commit pair shipped + pushed. Mirror force-pushed to `cloudflare/workers-autoconfig` + manual `wrangler deploy` ran post-commit; live worker is on version `7d053fab` (the post-session-8 bundle). 404 verification of deleted routes deferred to Max's browser session (Cloudflare Access intercepts unauthenticated curls at the edge).
 
 **Dispatch cleanup shipped (2026-05-02 session 7):** Auto-dispatch chain fully retired. Frontend: `usePlacePickBet` + `useRetrySyncQueue` deleted from `mutations.ts`; `PositionsTab` + `PicksTab` both use `useMarkPickAsPlaced` now (manual placement, no GitHub `repository_dispatch`); `PendingTab` rewritten without queued-retries section. Worker routes deleted: `place-bet.ts` (singular), `state-sync-queue.ts`, `place-bets-legacy.ts` (legacy plural). Worker libs deleted: `dispatch.ts`. State helpers `upsertSyncQueueEntry` + `findSyncQueueEntry` dropped from `state.ts`. Schemas dropped: `PlaceBetRequestSchema`, `PlaceBetResponseSchema`, `SyncQueueRetryRequestSchema`. Workflow `.github/workflows/place-bets.yml` deleted (the `repository_dispatch` receiver and only consumer of `dispatch.ts`). Test file lost the dispatch-touching describes (10 tests) and the `vi.stubGlobal('fetch')` helper. The `sync_queue` field stays on `StateRecordSchema` for KV back-compat (existing records may carry entries; read-only via GET /api/state). One-line update note added to ADR 0002. `npx tsc -b` clean, `npm test` 92 / 92 → 82 / 82 across 3 files. Em-dash audit clean. NOT yet committed.
 
@@ -96,6 +96,24 @@ Tie off the dispatch-cleanup loose ends from session 7: drop orphaned client/ser
    - Balance-over-time graph in Account tab.
    - Delete `rebuild/v2-frontend` branch (local + origin).
    - Defer `worker/lib/normalize.ts` extract until a third consumer of `stripEmDash` / `coerceOddsString` exists.
+
+### Post-commit deploy (2026-05-02 ~22:10 UTC)
+
+After the two-commit pair pushed, the cron mirror was 9 commits behind `origin/main` (the 19:51 UTC scan and sessions 6 / 7 / 8 had not mirrored), and the most recent visible Cloudflare deploy (21:59 UTC) predated this session's commits. Two manual actions to bring production current:
+
+1. **Manual mirror push.** `git push origin main:cloudflare/workers-autoconfig` ran cleanly: `3c35b37..e6df9bd  main -> cloudflare/workers-autoconfig`. The 19:51 UTC scan + sessions 6 / 7 / 8 commits all rode along.
+2. **Manual `wrangler deploy`.** Cloudflare's git-trigger had not fired within ~4 min of the mirror push (no new entry in `npx wrangler deployments list`), so a direct deploy was used. New live version: `7d053fab-424a-4ea3-8a5e-cbff9c99b24f`. 8 assets in `public/`, no asset changes since the last deploy. Worker startup time 22 ms.
+
+**Live verification (without auth).** Access intact on all 6 paths checked: `/`, `/api/me`, `/api/place-bet`, `/api/place-bets`, `/api/state/sync-queue/retry`, `DELETE /api/state/placements/test-key`. All return `HTTP/2 302` to `sheahan.cloudflareaccess.com`. Access scope `/*` did not regress.
+
+**Definitive 404 verification (deferred to Max's browser).** Cloudflare Access intercepts unauthenticated requests at the edge before the worker can return its real status, so curl alone cannot prove the deleted routes are gone. To confirm, open the SPA, OTP login, then in devtools console:
+```js
+fetch('/api/place-bet', { method: 'POST' }).then(r => r.status)
+fetch('/api/state/placements/test', { method: 'DELETE' }).then(r => r.status)
+```
+Both should print `404`. That closes the verification loop end-to-end.
+
+**Aside on the auto-deploy lag.** Cloudflare's auto-deploy from `cloudflare/workers-autoconfig` did not visibly fire from this session's manual mirror push within 4 min, even though cron-tick deploys (e.g. 16:41 scan triggered a 16:41:23 deploy earlier today) confirm the integration works. Possible causes: deploy queue lag, batch interval, or a difference between cron-context pushes (via `actions/checkout`) and developer-machine pushes. Worth investigating if mirror-lag becomes a recurring issue; not blocking right now since the manual `wrangler deploy` covered it.
 
 ### If you just have one minute, do this
 `cd ~/Betting\ Skill && npx tsc -b && npm test` → expect clean tsc + 78 / 78.
