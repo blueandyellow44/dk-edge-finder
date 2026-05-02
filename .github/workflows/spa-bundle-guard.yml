@@ -1,0 +1,84 @@
+name: SPA Bundle Guard
+
+# Fails if the committed public/ SPA bundle is stale relative to frontend/ source.
+#
+# Background: public/assets/ holds the deployed SPA bundle (committed git artifacts).
+# `wrangler deploy` rebuilds the worker bundle from worker/ source on every deploy,
+# but it does NOT rebuild the SPA bundle. If a developer edits frontend/src/ and
+# forgets to `npm run build` + copy frontend/dist/* into public/, production keeps
+# serving the old SPA. This guard runs `npm run build` in CI and diffs the output
+# against committed public/, so the staleness fails loudly in PR before it ships.
+#
+# Path filter excludes cron-managed files (data.json, bankroll.json, pick_history.json)
+# so the guard does not run on every cron tick.
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - 'public/**'
+      - 'shared/**'
+      - 'vite.config.ts'
+      - 'tsconfig*.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/spa-bundle-guard.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - 'public/**'
+      - 'shared/**'
+      - 'vite.config.ts'
+      - 'tsconfig*.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/spa-bundle-guard.yml'
+
+jobs:
+  bundle-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build SPA
+        run: npm run build
+
+      - name: Verify public/ matches frontend/dist/
+        run: |
+          set -e
+          echo "::group::index.html"
+          diff frontend/dist/index.html public/index.html
+          echo "::endgroup::"
+          echo "::group::wrangler.json"
+          diff frontend/dist/wrangler.json public/wrangler.json
+          echo "::endgroup::"
+          echo "::group::.assetsignore"
+          diff frontend/dist/.assetsignore public/.assetsignore
+          echo "::endgroup::"
+          echo "::group::assets/"
+          diff -r frontend/dist/assets public/assets
+          echo "::endgroup::"
+          echo "Bundle guard OK: committed public/ matches a clean build of frontend/."
+
+      - name: Failure hint
+        if: failure()
+        run: |
+          echo "Committed public/ does not match a clean build."
+          echo "Fix on a developer machine:"
+          echo "  npm run build"
+          echo "  rm public/assets/index-*"
+          echo "  cp frontend/dist/assets/* public/assets/"
+          echo "  cp frontend/dist/index.html frontend/dist/.assetsignore frontend/dist/wrangler.json public/"
+          echo "  git add public/ && git commit"
