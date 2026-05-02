@@ -12,7 +12,7 @@ Before any project-specific work, the next thread must load these:
 4. `dk-edge-finder/tasks/lessons.md` for model lessons (existing file with full history).
 5. `lessons.md` at repo root for rebuild-specific lessons (currently empty template; populate as you work).
 
-## What you are inheriting (2026-05-01, Phases 0 / 1 / 2 all closed, ready for Phase 3)
+## What you are inheriting (2026-05-01 PM, Phase 3 slice 1 in flight)
 
 A live Cloudflare Workers site at https://dk-edge-finder.max-sheahan.workers.dev/ that serves a 66 kB single-file vanilla `index.html` backed by a Python edge-finder model on GitHub Actions cron. **Phase 0 closed. Phase 1 closed (step 8 landed late in session 4 via Max's dashboard click-through). Phase 2 closed (75 vitest tests + Phase 1 step 9's wrangler-dev smoke + step 8's live-URL 302 verification combined to satisfy the quality gate; the live deploy of the new worker is deferred until Phase 3 cutover).** The combined verification rationale: Access intercepts → forwards `cf-access-authenticated-user-email` → worker reads it → returns the expected JSON. Both halves are proven separately (live URL → 302 redirect; wrangler dev with mocked header → all 9 v2 routes green); a live deploy would just stitch them together with no new information expected.
 
@@ -32,6 +32,260 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 - [x] **Step 9**: EMFILE fix landed. Root cause was NOT the asset upload size (`.assetsignore` does not affect the dev watcher); it was the dev watcher walking the entire repo because `wrangler.jsonc` had `assets.directory: "."`. Fixed by narrowing `assets.directory` to `public/` and creating three symlinks inside it pointing one level up at the actual served files (`index.html`, `data.json`, `bankroll.json`). The Python cron still writes to repo root unchanged; symlinks expose the writes transparently. macOS launchd's default per-process file-descriptor cap is 256 (visible via `launchctl limit maxfiles`), which is why the wide watch tree exhausted descriptors despite `ulimit -n` reporting 1M+. `.assetsignore` was added too as defense-in-depth (default-deny, allowlists only the three served files), which has the side benefit of stopping the public site from serving `pick_history.json` (535 KB of model calibration data, no purpose on the public URL). Live `wrangler dev` smoke now passes for all 9 v2 routes (read + write); see commit message for the round-trip details.
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
+
+**Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
+
+**Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-01 session 5 (IN PROGRESS, Phase 3 slice 1 done)
+
+### Goal
+Phase 3 cutover, slice 1 of 5: replace the Vite welcome scaffold with the v2 SPA shell. Install TanStack Query, wire the read-side query layer against the locked backend contract, ship 5 tab placeholders against the legacy visual language. Slice 2+ fills tab content; this slice proves the architecture compiles and renders.
+
+### Pre-flight
+- `git stash list` empty.
+- `git fetch origin`: `main` advanced (cron commits, `80052c6..1ef6f3b`); `rebuild/v2-frontend` is 23 ahead, 0 behind, no rebase needed.
+- Inherited-state verification: `npm test` 75/75 in 185ms, `npx tsc -b` clean, `curl -sI .../api/me` returns 302 to `sheahan.cloudflareaccess.com`. State holds, ready to build on.
+
+### Slice 1 (foundation): what shipped
+
+**Dep added.** `@tanstack/react-query` (v5 line). 2 new packages after dedup, 0 vulnerabilities.
+
+**`tsconfig.app.json`.** `include` extended from `["frontend/src"]` to `["frontend/src", "shared"]` so the frontend can `import type` from `shared/types.ts`. Worker tsconfig already had `shared/`; this brings the app tsconfig in line.
+
+**Files written under `frontend/src/`.**
+- `styles.css` — consolidated, hand-rolled. Legacy palette extracted from the live `index.html` (lines 9-300): gold accent `#c9a633`, gold hover `#b8952a`, gold tint `#fdf8e8`, header bg `#111`, secondary bg `#1a1a1a`, body bg `#f0f0f0`, card `#fff`, positive `#00a651`, negative `#cc0000`, warning `#996600` on `#fff3cd`, pending row `#fffef5`, tabs bg `#fafafa`, borders `#eee`/`#f2f2f2`. Inter font, 1100px container, 52px sticky header, UPPERCASE tabs with gold underline. `.btn`, `.btn-primary`, `.btn-outline`, `.btn-sm` carried over verbatim from legacy so slice 2 has them ready. Transaction-row and position-row classes are intentionally NOT yet here; slice 2 adds `.tx-*` and slice 4 adds `.pos-*`.
+- `api/client.ts` — fetch helper. `apiGet<T>`, `apiPost<T>`, `apiDelete`. `ApiError extends Error` with `status` and `body`. `credentials: 'same-origin'` so the `CF_AppSession` cookie rides on every call.
+- `api/queries.ts` — TanStack Query read hooks. `useMe`, `usePicks`, `useBankroll`, `useStateRecord`. Types come from `shared/types`. `useMe` has 5min stale time; the others use the global default (30s).
+- `components/Header.tsx` — sticky header with brand mark, avatar (image when `picture_url`, otherwise email-initial fallback), email text, sign-out link to `/cdn-cgi/access/logout`. Avatar wrapper has `aria-hidden="true"` so screen readers don't announce the redundant initial.
+- `components/TabBar.tsx` — `<nav role="tablist">` with 5 `<button role="tab" aria-selected>`. Tabs render from a passed-in array so `App.tsx` owns the canonical TAB list.
+- `tabs/PicksTab.tsx`, `PendingTab.tsx`, `ActivityTab.tsx`, `PositionsTab.tsx`, `AccountTab.tsx` — placeholders that name the tab and which slice wires it.
+
+**Files replaced.**
+- `frontend/index.html` — inline gold-on-black favicon (data: URL, matches the legacy site's), Inter font import (preconnect + stylesheet link), title "Edge Finder".
+- `frontend/src/main.tsx` — wrapped App in `<QueryClientProvider>`. QueryClient defaults: `staleTime: 30_000`, `refetchOnWindowFocus: true`, `retry: 1`.
+- `frontend/src/App.tsx` — AppShell. Sticky header + tab bar + tab panel. `activeTab` is a single `useState<TabId>`. `TabId` is exported from `App.tsx` and consumed via `import type` in `TabBar.tsx` (erased at compile time, no runtime cycle).
+
+**Files deleted.**
+- `frontend/src/App.css`, `frontend/src/index.css` — replaced by `styles.css`.
+- `frontend/src/assets/` (hero.png, react.svg, vite.svg) — Vite welcome assets.
+- `frontend/public/icons.svg`, `frontend/public/favicon.svg` — Vite welcome icons sprite + Vite logo favicon. The new favicon is inline in `index.html`.
+
+**`.claude/launch.json`.** Added a `vite-dev` configuration so the SPA can be previewed locally via `npm run dev` (Vite dev server with `@cloudflare/vite-plugin`) on port 5173 in addition to the existing `wrangler-dev` entry on 8787. Both `~/Betting Skill/.claude/launch.json` and `~/DK3/.claude/launch.json` updated (the preview tool reads the latter because the session's primary CWD is DK3). Wrangler-dev still serves the legacy `index.html` from `public/` symlinks; the v2 SPA is served by Vite dev until cutover wires `assets.directory` to `frontend/dist`.
+
+### Verification
+
+- `npx tsc -b` — clean exit 0.
+- `npm test` — 2 files / 75 tests passing in 150ms. No regression on the worker side.
+- `npm run build` — Vite + tsc clean. Output: 227.41 kB JS (70.78 kB gzip), 3.28 kB CSS (1.19 kB gzip), 0.96 kB HTML. Built in 421ms.
+- `npm run dev` via preview tool, http://localhost:5173. Verified:
+  - Header renders: "DK EDGE FINDER" with gold "EDGE", avatar circle (showing "?" because `/api/me` 401s in dev without an Access header), "..." for email placeholder, "Sign out" link.
+  - Tab bar shows all 5 tabs UPPERCASE, Picks active with gold underline.
+  - Clicking ACCOUNT swaps the panel content and moves the gold underline. Tab navigation works.
+  - Console: clean. Only Vite HMR connect messages and the React DevTools nag. No app errors.
+  - Accessibility tree: `banner` for header, `tablist` with 5 `tab` children, `main` for content area, `aria-selected` reflects active state, avatar `aria-hidden`.
+
+### Slice 2 (Picks tab): what shipped
+
+**Dev wiring deviation, recorded.** The original plan was to use `npm run dev` (vite dev with `@cloudflare/vite-plugin`) for a single-port HMR + worker dev loop. Empirically that didn't work in v1.35.0 of the plugin — `/api/*` returned 404 from vite dev with no worker activity. wrangler dev on 8787 served `/api/picks` correctly (200 with the mock email header), so the dev loop is now: run `wrangler dev` (port 8787) AND `vite dev` (port 5173) in parallel, with vite proxying `/api/*` to 8787. `vite.config.ts` got a `server.proxy` block to make this clean. The cloudflare plugin stays in vite.config.ts because the production `npm run build` step still uses it (it generates `frontend/dist/wrangler.json` which `wrangler deploy` consumes at cutover). Worth revisiting at slice 5: with the assets-directory swap in cutover, wrangler dev can serve both pieces together for a closer-to-prod dev loop.
+
+**Files added under `frontend/src/`.**
+- `lib/format.ts` — `formatMoney`, `formatSignedMoney` (with leading sign for stats), `formatPercent`, `formatAgo` (Xs/Xm/Xh/Xd ago). Uses `Intl.NumberFormat('en-US')` for thousands separators.
+- `api/mutations.ts` — three TanStack Query mutations:
+  - `usePlacePickBet({ pickIndex, key })` — generates a single `crypto.randomUUID()`, calls `POST /api/place-bet` with that idempotency_key. On 502 (dispatch failed), catches the ApiError and records `dispatch_status: 'queued'`. Otherwise records `'ok'`. Then calls `POST /api/state/placements` (same idempotency_key) so the worker dedupes if a retry sends the same key. Invalidates `['state']` on success.
+  - `useSkipPick({ key })` — `POST /api/state/placements` with `action: 'skipped'`, `dispatch_status: 'ok'`, fresh idempotency_key. No dispatch.
+  - `useDeletePlacement({ key })` — `DELETE /api/state/placements/<urlencoded-key>`. Wired but not yet used by any UI; held for slice 4 (Pending tab cancel).
+- `components/BalanceCard.tsx` — sidebar card. Loading: `$...`. Error: "Failed to load." Success: BALANCE header, "AVAILABLE" label, big tabular `$XXX.XX` (with `.dollar` span for the legacy small-dollar-sign treatment), and 3 stats: Profit (signed, green/red), Lifetime ROI (green/red), W-L-P record (using `lifetime.wins-losses-pushes`).
+- `components/PickRow.tsx` — one pick row. 6-column grid: rank, sport+pick+event multiline, odds, edge%, wager$, actions. Edge color-coded by tier (HIGH=green, MEDIUM=amber, LOW=brown). Actions area is a Place + Skip button pair when no placement exists, or a single colored badge ("Placed" green / "Skipped" gray / "Queued" amber) when one does. Buttons disable while ANY mutation is pending across the table (one click at a time UX).
+
+**Files updated.**
+- `frontend/src/api/client.ts` — added `devHeaders` const that injects `cf-access-authenticated-user-email: max.sheahan@icloud.com` only when `import.meta.env.DEV`. The conditional erases to `{}` in production builds, so the header never ships. In production, Cloudflare Access strips client-sent `cf-*` headers and re-injects its own verified value, so even if the conditional somehow leaked the header could not be trusted.
+- `frontend/src/tabs/PicksTab.tsx` — full implementation. Reads `usePicks()`, `useStateRecord()` for the placement-by-key Map, fires `usePlacePickBet` and `useSkipPick`. Renders: scan-meta dark banner with `scan_subtitle` + relative `scan_age_seconds`, a `stale` modifier when age > 12h. Empty state ("No edges today" + cron explanation) when `picks.length === 0` (today's case). Pick list otherwise. Then the no-edge collapsible at the bottom when `no_edge_games.length > 0`. The collapsible uses native `<details>` / `<summary>` with a custom rotating `▸` triangle so we don't import a chevron icon library for one component.
+- `frontend/src/App.tsx` — replaced the single-column shell with a 2-col grid. `<main className="page">` now has `.page-main` (tabs + tab panel) and `.page-side` (BalanceCard) children. Sidebar shows on every tab, not just Picks (matches legacy behavior).
+- `frontend/src/styles.css` — added: `.page` 2-col grid (1fr 280px) with `@media (max-width: 880px)` collapse to single column, `.card`/`.card-header`, `.balance-section`/`.balance-amount`/`.balance-stats`/`.balance-stat-*`, `.scan-meta`/`.scan-meta-age`/`.scan-meta.stale`, `.tx-list`/`.tx-header`, `.pick-row`/`.pick-rank`/`.pick-sport`/`.pick-text`/`.pick-event`/`.pick-odds`/`.pick-edge`(.high/.medium/.low)/`.pick-wager`/`.pick-actions`, `.pick-badge`(.placed/.skipped/.queued), `.no-edge`/`.no-edge-summary` (with `::before` rotation on `[open]`)/`.no-edge-row`/`.no-edge-event`/`.no-edge-line`/`.no-edge-reason`. Also added `.btn:disabled` styling. `.tab-panel` got `overflow: hidden` so the dark scan-meta clips inside the panel's bottom-rounded corners.
+- `vite.config.ts` — added `server.proxy: { '/api': 'http://localhost:8787' }` so vite dev (5173) hands `/api/*` requests to wrangler dev (8787). Dev-only; `vite build` does not use `server.proxy`.
+- `.claude/launch.json` (both `~/Betting Skill/.claude/launch.json` and `~/DK3/.claude/launch.json`) — added a `vite-dev` configuration on port 5173 alongside the existing `wrangler-dev` on 8787.
+
+### Slice 2 verification
+
+- `npx tsc -b` — clean exit 0.
+- `npm test` — 75/75 still passing in 163ms. No worker-side regression.
+- `npm run build` — 76 modules transformed, 236.07 kB JS (72.89 kB gzip), 7.60 kB CSS (2.07 kB gzip). Built in 69ms.
+- Live SPA preview at `http://localhost:5173` (vite dev) backed by `http://localhost:8787` (wrangler dev) with `/api/*` proxied:
+  - **Header**: brand, `M` avatar initial (because `picture_url` is null without a Google IdP), `max.sheahan@icloud.com`, Sign out link.
+  - **Picks tab**: dark scan-meta banner reads "Thursday, April 30, 2026 - MLB (11), NBA (3), NHL (2)" — em-dash from `data.json`'s `scan_subtitle` is verifiably stripped to a hyphen by the worker normalizer. Empty state ("No edges today / The latest scan found no profitable bets. The next cron tick refreshes data.") renders.
+  - **No-edge collapsible**: "▸ NO-EDGE GAMES (8)" expands to ▼ showing all 8 rejected games (NBA NY @ ATL, NBA BOS @ PHI, NBA DEN @ MIN, NHL DAL @ MIN, NHL EDM @ ANA, MLB HOU @ BAL, plus 2 below the fold) with sport badges, line text, and "Edge below 3% threshold" reason.
+  - **BalanceCard sidebar**: AVAILABLE `$700.00` (the override left in miniflare KV by session 4 step 9's smoke), PROFIT `+$179.34` (green), LIFETIME ROI `35.9%` (green), RECORD `37-21-1`. Numbers pulled from `bankroll.json` via the worker's `getBankrollResponse`.
+  - **2-col layout**: at >= 880px viewport the BalanceCard sits to the right of the tab panel; below 880px it stacks below.
+  - **Console**: clean. Only Vite HMR connect messages and the React DevTools nag. No fetch errors, no React warnings.
+  - **Tab navigation**: clicking ACCOUNT (slice 1 verification) and switching back to PICKS keeps state correct.
+
+### Where this leaves us
+- Slices 1 + 2 functionally complete. Picks tab renders today's empty case and the 8-game no-edge section against real data.
+- The live data on hand:
+  - `data.json` reflects 0 picks + 8 no-edge games for 2026-04-30 (the playoff-discount calibration is doing its job).
+  - `bankroll.json` reflects $679.34 + 37-21-1 lifetime + 35.9% ROI; the displayed `$700.00 available` is from the `balance_override` KV record left over from step 9's smoke.
+- No commits yet for slices 1 + 2. Per the established two-commit pattern, code commit + HANDOFF update commit are held until Max signals to ship.
+- Branch is still 23 ahead of origin (no new commits this session).
+
+### Slice 3 (Account tab): what shipped
+
+**`api/mutations.ts`.** Added `useSetBalanceOverride({ amount, note })` calling `POST /api/balance-override` and invalidating `['bankroll']` on success.
+
+**`components/BalanceOverrideForm.tsx`.** Local-state form (amount string + note string) pre-filled from `bankroll.balance_override` when present. Submit handler: parses amount via `Number(...)`, no-ops on `!Number.isFinite`, fires the mutation. Status row shows "Saving..." while pending, "Saved." (green) on success, "Save failed." (red) on error. Help text below the inputs shows `Last updated <toLocaleString>` when an override already exists. Submit button disabled while pending or when amount is blank.
+
+**`tabs/AccountTab.tsx`.** Three sections separated by inset borders:
+- **Identity**: 56px gold-on-dark avatar (image when `picture_url` present, email-initial fallback), email, "Signed in via Cloudflare Access" subtitle, outline Sign-out button (links to `/cdn-cgi/access/logout`).
+- **Balance override**: just the form.
+- **Lifetime stats**: 3-column grid (collapses to 2 cols below 600px) with 6 stat cards: Bets, Wins, Losses, Pushes, Profit (signed + green/red), ROI (signed + green/red). Same `lifetime` data the BalanceCard sidebar uses, just the full breakdown.
+
+**`styles.css`.** Added `.account-section` (with last-child border removal), `.account-section-title`, `.identity-row` flex with `.identity-avatar` (56px), `.identity-info`, `.identity-email` (16px, word-break), `.identity-sub`. Form: `.account-form` 12px gap flex column, `.account-form-row`, `.account-form-label` (uppercase, 11px), `.account-form-input` (Inter, tabular-nums, gold focus ring with `box-shadow: 0 0 0 2px rgba(201, 166, 51, 0.2)`). Status: `.account-form-status.success` / `.error`. Stats grid: `.stats-grid` (3 cols → 2 cols at 600px), `.stat`, `.stat-label`, `.stat-value` (with positive/negative variants).
+
+### Slice 3 verification
+
+- `npx tsc -b` — clean exit 0.
+- `npm test` — 75/75 passing.
+- `npm run build` — 77 modules, 240.05 kB JS (73.58 kB gzip), 9.84 kB CSS (2.40 kB gzip), built in 52ms.
+- Live SPA preview at `http://localhost:5173` (vite dev) backed by `http://localhost:8787` (wrangler dev). Verified Account tab:
+  - **Identity**: 56px gold-on-dark "M" avatar, `max.sheahan@icloud.com`, "Signed in via Cloudflare Access", outline "Sign out" button.
+  - **Balance override pre-fill**: amount `700` and note `smoke test` (the values left over from session 4 step 9), with "Last updated 4/30/2026, 4:09:03 PM" help text.
+  - **Lifetime stats**: Bets 43, Wins 37, Losses 21, Pushes 1, Profit `+$179.34` green, ROI `35.9%` green. The 43-vs-37+21+1=59 mismatch is from the model side (bets count differs from resolved-bet sum); not a v2 frontend concern, just rendering what `bankroll.json` carries.
+  - **Save flow tested**: changed amount to `725.50`, clicked Save override. Form showed "Saved." (green), help text updated to "Last updated 5/1/2026, 6:53:38 PM", and the BalanceCard sidebar refetched and re-rendered to `$725.50`. Cross-component invalidation flow (`invalidateQueries(['bankroll'])` → both BalanceCard and BalanceOverrideForm refetch) proven.
+  - **Console**: no errors at `level: 'error'` filter.
+
+### Where this leaves us
+- Slices 1 + 2 + 3 functionally complete and verified end-to-end with real worker data.
+- Picks tab and Account tab are "real". Pending, Activity, Positions remain placeholders.
+- KV state in miniflare currently holds the `725.50 / smoke test` override from this session's verification. Production KV is untouched (no deploy).
+- No commits this session. The two-commit shape is held until Max signals to ship.
+- Branch is still 23 ahead of origin.
+
+### Slice 4 (Pending, Activity, Positions tabs): what shipped
+
+**Worker side.**
+- `shared/schemas.ts` — added `ResolvedBetSchema` (date, sport, event, pick, odds, wager, outcome win|loss|push|pending, pnl, final_score) and `ActivityResponseSchema { bets: ResolvedBet[] }`.
+- `shared/types.ts` — added `ResolvedBet`, `ActivityResponse` exports.
+- `worker/lib/activity.ts` — `getActivityResponse(env)` reads `data.json` via the existing `loadDataJson(env)` helper from `worker/lib/picks.ts` (no refactor; just an import). Has its own small `stripEmDash`, `coerceOddsString`, `coerceOutcome`, `normalizeResolvedBet` helpers (duplicated from picks.ts because the picks helpers are file-private; if a third consumer ever shows up, extract to `worker/lib/normalize.ts`). Filters out `outcome === 'pending'` so the Activity tab is strictly "resolved" history. Sorts by `date` desc (lex sort works for ISO YYYY-MM-DD).
+- `worker/routes/activity.ts` — `GET /` mounted under `requireAuth`, returns `ActivityResponseSchema.parse(...)` payload.
+- `worker/index.ts` — mounts `/api/activity` after the existing v2 routes. Order doesn't matter for this route (no `/api/activity/...` sub-paths), but kept consistent.
+
+**Worker tests deliberately not added this slice.** The bets[] data has known shape mismatches between scan dates (some entries have `odds` as number, others as string; some have `decimal_odds`/`edge` extras, others don't) that would require a fixture-style test setup. The normalizer absorbs all of this, but it's worth a Phase-2-style vitest pass in a follow-up. 75/75 existing tests still pass; the new route is exercised by the live preview.
+
+**Frontend side.**
+- `api/queries.ts` — added `useActivity()` hitting `/api/activity`.
+- `api/mutations.ts` — added `useDeleteManualBet({ id })` (DELETE `/api/state/manual-bets/:id`, encoded) and `useRetrySyncQueue({ key })` (POST `/api/state/sync-queue/retry` with a fresh idempotency_key per click).
+- `components/PositionRow.tsx` — new component. Same data shape as `PickRow` but two-tier layout: a `.position-summary` grid row identical to PickRow, then a `.position-detail` panel below with Market / Implied / Model / Confidence / Sources / Notes. Sources and Notes only render when present.
+- `tabs/PositionsTab.tsx` — full impl. Reuses `usePicks()` and the `usePlacePickBet`/`useSkipPick` mutations. Empty state for today (0 picks).
+- `tabs/PendingTab.tsx` — full impl. Two sections: "Queued retries" (placements with `dispatch_status === 'queued'`) and "Manual bets" (manual_bets with `outcome === 'pending'`). Looks up pick details by `key` against `usePicks()` to render context; falls back to splitting the key on `|` if the pick has rolled off the latest scan. Per row: Retry Now + Cancel for queued, Remove for manual bets.
+- `tabs/ActivityTab.tsx` — full impl. Header row + scrolling list. Per row: date, sport badge, pick + event + final_score (joined with `•`), wager, odds, color-coded outcome, signed P/L (green/red).
+
+**Styles added.** All in `frontend/src/styles.css`:
+- `.position-list`, `.position-row`, `.position-summary` (6-col grid), `.position-detail` (2-col grid below summary, light-bg block, indented past the rank column on desktop, single-col + un-indented at <600px), `.position-detail-row`, `.position-detail-label`, `.position-detail-value`.
+- `.pending-list`, `.pending-section`, `.pending-section-title`, `.pending-row` (flex layout: info | meta/badge | actions), `.pending-row-info`, `.pending-row-pick`, `.pending-row-event`, `.pending-row-meta`, `.pending-row-actions`.
+- `.activity-list`, `.activity-header`, `.activity-row` (6-col grid: 90/1fr/80/80/80/90), `.activity-date`, `.activity-wager`, `.activity-odds`, `.activity-outcome` (.win/.loss/.push/.pending), `.activity-pnl` (.positive/.negative).
+
+### Slice 4 verification
+
+- `npx tsc -b` — clean exit 0.
+- `npm test` — 75/75 still passing in 172ms.
+- `npm run build` — 78 modules, 247.48 kB JS (74.57 kB gzip), 12.84 kB CSS (2.77 kB gzip), built in 56ms.
+- Live preview at vite dev (5173) + wrangler dev (8787 with /api proxy):
+  - **Activity tab**: 62 resolved bets render. Top rows are 2026-04-08 (latest resolved date in `data.json.bets[]`). Sport badges (MLB/NHL/UCL/NBA), pick + event + final_score on the second line, wager `$13.50` right-aligned, odds centered, outcome WIN/LOSS uppercase color-coded, P/L `+$22.28` (green) or `-$13.50` (red) right-aligned. Sort confirmed: `2026-04-08 > 2026-04-08 > ...` descending.
+  - **Pending tab**: shows the existing manual bet left over from prior smoke (`NBA OVER 212.5 BOS @ PHI -110 • $12.50` with Remove button under "MANUAL BETS (1)" section). No queued placements section visible (no queued state in current KV).
+  - **Positions tab**: empty state ("No positions today / The latest scan found no profitable bets.") because today's `picks[]` is empty.
+  - **Tab nav**: only one tab gold-active at a time (verified via `getComputedStyle(tab).color` returning `rgb(201, 166, 51)` only for the active tab; muted `rgb(136, 136, 136)` for the others).
+  - **Console**: clean, no errors.
+
+### Where this leaves us
+- All 5 tabs fully functional. The v2 SPA is feature-complete against the locked backend contract for v2.0.
+- 1 missing piece for v2.0: live deploy. Slice 5 is the final mile.
+- Worker bundle size: 247 kB JS / 75 kB gzip. Reasonable for the feature set.
+- KV state in miniflare currently has: `725.50 / smoke test` balance override and 1 leftover manual bet from prior tests. Production KV is untouched (no deploy this session).
+- No commits this session. Two-commit shape held until Max signals.
+- Branch is 23 ahead of origin.
+
+### Slice 5 (deploy + live smoke): what shipped + what I broke
+
+**File system changes for the cutover.**
+- `wrangler.jsonc` `assets.directory` stays at `"public"` (initially I tried flipping to `"frontend/dist"` but reverted: `frontend/dist/` is gitignored, so Cloudflare's auto-deploy from the `cloudflare/workers-autoconfig` branch wouldn't see it).
+- `public/index.html` — replaced the legacy symlink with `frontend/dist/index.html` (the SPA entry).
+- `public/assets/` — copied from `frontend/dist/assets/` (CSS + JS bundles).
+- `public/.assetsignore` — copied from `frontend/dist/.assetsignore` (excludes `wrangler.json`, `.dev.vars` from being served).
+- `public/wrangler.json` — copied from `frontend/dist/wrangler.json` (Cloudflare plugin output, not served thanks to `.assetsignore`).
+- `public/data.json` and `public/bankroll.json` — symlinks to repo-root files **kept as-is**, so the cron's repo-root writes still surface live.
+- `frontend/public/data.json` and `frontend/public/bankroll.json` — short-lived symlinks added then removed during the flip-flop. Net change zero.
+
+**Bug 1 (APIs returning SPA HTML, caught by Max in live use).** With `not_found_handling: single-page-application` on the assets binding, ANY non-matching path falls back to `/index.html` BEFORE the worker is reached. `/api/me`, `/api/picks`, etc. all returned the SPA HTML, which the React app then tried to JSON.parse and threw "Failed to load" on every tab. Fixed by adding `run_worker_first: ["/api/*"]` to the assets config:
+
+```jsonc
+"assets": {
+  "directory": "public",
+  "binding": "ASSETS",
+  "not_found_handling": "single-page-application",
+  "run_worker_first": ["/api/*"]
+}
+```
+
+This tells Cloudflare: for `/api/*` paths, skip the assets dispatcher and run the worker. All other paths use the assets-first behavior with SPA fallback for client-side routing. Verified after re-deploy: `curl -sI .../api/me` returns 302 to `sheahan.cloudflareaccess.com` (worker hit, Access redirected unauth user). `curl .../random-spa-route` still returns 200 SPA HTML.
+
+**Bug 2 (stale data.json deployed, caught by me during post-deploy curl).** Pre-deploy, the live `/data.json` served `scan_date: 2026-05-01, 7 picks` (origin/main's view, served by the cron's auto-deploy). My deploy from `rebuild/v2-frontend` uploaded my LOCAL `data.json`, which was `scan_date: 2026-04-30, 0 picks` because my rebuild branch never pulled origin/main's cron commits. The deploy regressed the live data by one cron tick. Fixed surgically with `git checkout origin/main -- data.json bankroll.json` (no rebase, just grabbed those two files), then re-deployed. Verified: `/data.json` now serves `2026-05-01, 7 picks, 62 bets`.
+
+**Open follow-up (not addressed this session): cron auto-deploy will revert this.** The Cloudflare auto-deploy mechanism reads the `cloudflare/workers-autoconfig` branch (a mirror of `main`). My deploys from `rebuild/v2-frontend` are NOT mirrored to that branch. When the next cron tick runs (game-scan / morning-scan / resolve-bets), it pushes to `main` + mirrors to `workers-autoconfig`, and Cloudflare auto-deploys main's view, which still has the OLD `public/index.html` symlink to the legacy SPA. **This means: the v2 deploy WILL be reverted at next cron tick (next is game-scan at 04 UTC, ~5 min after deploy).** Mitigation: merge `rebuild/v2-frontend` into `main` and push, then cron auto-deploys carry the v2 forward. That merge is held until Max signals ready (per the established two-commit pattern).
+
+### Live deploy verification
+
+- Version IDs: `9b68279d-d8ac-4ebb-b597-873a7ffa49ec` (initial, broken APIs), `c83765fa-58fb-45ce-a3d4-4d0da5570705` (run_worker_first fix), `e6901079-06fa-4b53-aaaa-b2e50eab3741` (fresh data.json).
+- `curl -sI .../api/me` → 302 to `sheahan.cloudflareaccess.com/cdn-cgi/access/login/...?redirect_url=%2Fapi%2Fme`.
+- `curl -sI .../api/picks` → 302 to Access.
+- `curl .../` → SPA HTML (Edge Finder title, Vite-built script + style refs).
+- `curl .../some-random-spa-route` → 200 SPA HTML (SPA fallback for client-side routing intact).
+- `curl .../data.json` → `scan_date: 2026-05-01, 7 picks, 62 bets`. Fresh.
+- Browser SPA + curl with `CF_AppSession` cookie: pending Max's confirmation in this session.
+
+### Where this leaves us
+- Slice 5 deploy is technically live but at risk of cron auto-revert. Real fix needs rebuild-branch merge to main.
+- All 5 tabs ship in this version. Picks tab will render today's 7 edges (not the 0 my local branch knew about).
+- KV state in production is what production already had (untouched by the deploy; the worker writes to KV at runtime, not at deploy time).
+- No commits this session. Two-commit shape held; merging to main is the natural next step.
+
+### What's next (continue here on resume)
+
+1. **Land + push rebuild/v2-frontend → main before next cron-induced revert.**
+   - This requires committing all the slice 1-5 work. Sub-decisions: one big commit, or commit-per-slice. The `commit-work` skill or just `git add -p` + iterative commits.
+   - After commits land: `git checkout main && git merge rebuild/v2-frontend` (or `--ff-only` if rebuild was rebased onto current main first), then `git push origin main`. The push triggers cron's mirror to `cloudflare/workers-autoconfig` on next tick, which then deploys the v2 stably.
+   - Or as a faster mitigation: `git push origin main:cloudflare/workers-autoconfig --force-with-lease` directly, immediately syncing the deploy branch. Risky if Cloudflare bot has pushed there since last sync.
+2. **OTP-log-in via browser**, then `curl --cookie "CF_AppSession=..." .../api/me /api/picks /api/bankroll /api/state /api/activity` to confirm v2 routes return their JSON shapes against real Cloudflare KV (not miniflare). This closes the deferred Phase 2.3 live smoke.
+3. **Polish, deferred items**:
+   - Vitest for `worker/lib/activity.ts` (mirrors `picks.test.ts`).
+   - Extract shared normalizer helpers to `worker/lib/normalize.ts` once a third consumer wants `stripEmDash` / `coerceOddsString`.
+   - Rewrite `docs/cloudflare-access-setup.md` for the new Cloudflare Zero Trust UI.
+   - Set up Google IdP (currently OTP-only).
+   - Repo-root `.assetsignore` is now inactive (it was for `assets.directory: "."`); leave or delete.
+
+### What's next (alternative path if continuing without merge to main)
+
+1. **Slice 5 (build + deploy + live smoke).** Sequence:
+   - `npm run build` → `frontend/dist/` populated.
+   - **Decision point**: legacy `index.html` fate. Two options:
+     - **(a) Hard cutover**: update `wrangler.jsonc` `assets.directory` from `public` → `frontend/dist`. Legacy site stops working. Pros: simplest, smallest diff. Cons: any in-flight legacy localStorage state Max has on existing browsers is orphaned. The Place button on legacy already breaks when Access gates `/api/*`, so this isn't a new break.
+     - **(b) Cohabitation for a week**: move legacy to `legacy/index.html`, add a worker route `/legacy` that serves it via env.ASSETS.fetch. New SPA at `/`. Phase 3 plan section 19 already calls for this.
+   - Update `.assetsignore` (the symlink trick in `public/` is no longer needed once `assets.directory: frontend/dist`).
+   - `wrangler deploy`. Closes deferred Phase 2.3 live smoke automatically.
+   - **Live smoke** (post-deploy):
+     - Browser: load `https://dk-edge-finder.max-sheahan.workers.dev/`. Cloudflare Access OTP flow → land on the v2 SPA.
+     - Curl with cookie: `CF_APP="$(curl ... | grep CF_AppSession ...)"` then `curl -H "Cookie: CF_AppSession=$CF_APP" .../api/me /api/picks /api/bankroll /api/state /api/activity`. Confirm 200 with expected JSON shapes against real Cloudflare KV (not miniflare).
+     - Confirm scan_subtitle in `/api/picks` is em-dash-free.
+   - **Two-commit shape**: code commit + HANDOFF update commit. Max pushes when ready (he does not auto-commit).
+2. **Polish, deferred items**:
+   - Vitest for `worker/lib/activity.ts` (mirrors `picks.test.ts`).
+   - Extract shared normalizer helpers to `worker/lib/normalize.ts` once a third consumer wants `stripEmDash` / `coerceOddsString`.
+   - Rewrite `docs/cloudflare-access-setup.md` for the new Cloudflare Zero Trust UI.
+   - Set up Google IdP (currently OTP-only).
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && npx tsc -b && npm test` should pass clean. Then `npm run build` should produce `frontend/dist/` with a ~250 kB JS bundle. If all three pass, the v2 SPA is shippable; slice 5 is the deploy mile.
 
 ---
 
