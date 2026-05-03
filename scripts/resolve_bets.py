@@ -21,34 +21,10 @@ BANKROLL_JSON = REPO_ROOT / "bankroll.json"
 
 # ── ESPN Scoreboard API (free, no key needed) ──────────────────────────
 def fetch_nba_scores(date_str: str) -> list[dict]:
-    """Fetch NBA scores from ESPN API for a given date (YYYYMMDD)."""
-    url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={date_str}"
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            data = json.loads(resp.read().decode())
-        games = []
-        for event in data.get("events", []):
-            competition = event["competitions"][0]
-            status = competition["status"]["type"]["name"]  # STATUS_FINAL, STATUS_IN_PROGRESS, etc.
-            teams = {}
-            for competitor in competition["competitors"]:
-                hoa = competitor["homeAway"]
-                teams[hoa] = {
-                    "name": competitor["team"]["displayName"],
-                    "abbr": competitor["team"]["abbreviation"],
-                    "score": int(competitor.get("score", 0)),
-                }
-            games.append({
-                "home": teams.get("home", {}),
-                "away": teams.get("away", {}),
-                "status": status,
-                "is_final": status == "STATUS_FINAL",
-            })
-        return games
-    except Exception as e:
-        print(f"ESPN API error: {e}", file=sys.stderr)
-        return []
+    """Fetch NBA scores from ESPN API for a given date (YYYYMMDD).
+    Delegates to fetch_espn_scores so event_id (needed for box-score lookups
+    in prop resolution) is included in the returned game dicts."""
+    return fetch_espn_scores("basketball/nba", date_str)
 
 
 def fetch_espn_scores(sport_path: str, date_str: str) -> list[dict]:
@@ -109,6 +85,70 @@ def fetch_soccer_scores(league: str, date_str: str) -> list[dict]:
     """Fetch soccer scores from ESPN API for a specific league."""
     path = SOCCER_LEAGUES.get(league.lower(), f"soccer/{league}")
     return fetch_espn_scores(path, date_str)
+
+
+# ── Player box scores (for prop resolution) ────────────────────────────
+# Mapping from our pick-string stat label to the ESPN box-score key.
+# fetch_props.py emits picks like "Player Name OVER 12.5 Rebounds" using
+# these stat labels; the ESPN summary endpoint reports them under different
+# field names. Add new entries here when adding new prop markets.
+NBA_PROP_STAT_TO_ESPN = {
+    "Points": "points",
+    "Rebounds": "rebounds",
+    "Assists": "assists",
+    "Steals": "steals",
+    "Blocked Shots": "blocks",
+    "Blocks": "blocks",
+    "Turnovers": "turnovers",
+    "3-PT Made": "threePointFieldGoalsMade-threePointFieldGoalsAttempted",
+    "Threes Made": "threePointFieldGoalsMade-threePointFieldGoalsAttempted",
+}
+
+
+def fetch_nba_player_box(event_id: str) -> dict:
+    """Fetch NBA box score and return {player_name: {stat_label: value}}.
+    stat_label is one of NBA_PROP_STAT_TO_ESPN keys ("Points", "Rebounds", etc.).
+    Returns {} on any error so callers can leave picks pending rather than crash."""
+    if not event_id:
+        return {}
+    url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={event_id}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            summary = json.loads(resp.read().decode())
+    except Exception as e:
+        print(f"  ESPN box error (event {event_id}): {e}", file=sys.stderr)
+        return {}
+
+    out = {}
+    for team in summary.get("boxscore", {}).get("players", []):
+        for stat_block in team.get("statistics", []):
+            keys = stat_block.get("keys", [])
+            for athlete in stat_block.get("athletes", []):
+                name = athlete.get("athlete", {}).get("displayName", "")
+                stats_arr = athlete.get("stats", [])
+                if not name or not stats_arr or len(stats_arr) != len(keys):
+                    continue
+                stats_by_key = dict(zip(keys, stats_arr))
+                player_stats = {}
+                for label, espn_key in NBA_PROP_STAT_TO_ESPN.items():
+                    raw = stats_by_key.get(espn_key)
+                    if raw is None or raw == "":
+                        continue
+                    # 3PM is reported as "made-attempted" e.g. "2-6"; take made.
+                    if "-" in str(raw) and "FieldGoals" in espn_key:
+                        try:
+                            player_stats[label] = int(str(raw).split("-")[0])
+                        except (ValueError, IndexError):
+                            continue
+                    else:
+                        try:
+                            player_stats[label] = int(raw)
+                        except (ValueError, TypeError):
+                            continue
+                if player_stats:
+                    out[name] = player_stats
+    return out
 
 
 # Sport → fetcher mapping
@@ -190,6 +230,54 @@ def resolve_moneyline(pick_str: str, home_score: int, away_score: int, event_str
     elif team_name.lower() in event_parts[0].lower():
         return "win" if away_score > home_score else "loss"
     return "unknown"
+
+
+def resolve_prop(pick_str: str, player_box: dict) -> tuple[str, str]:
+    """Determine WIN/LOSS/PUSH for a player prop.
+    pick_str like 'Victor Wembanyama OVER 12.5 Rebounds'.
+    player_box is the dict returned by fetch_nba_player_box.
+    Returns (outcome, detail_str). Outcome is 'win', 'loss', 'push', or 'unknown'.
+    detail_str is a human-readable summary like 'Victor Wembanyama: 18 Rebounds'."""
+    import re
+    m = re.match(r"^(.+?)\s+(OVER|UNDER)\s+([\d.]+)\s+(.+)$", pick_str.strip())
+    if not m:
+        return ("unknown", "")
+    player, direction, line_str, stat = m.group(1), m.group(2), m.group(3), m.group(4).strip()
+    try:
+        line = float(line_str)
+    except ValueError:
+        return ("unknown", "")
+
+    # Player lookup: exact, then case-insensitive, then last-name fallback
+    stats = player_box.get(player)
+    if stats is None:
+        for k, v in player_box.items():
+            if k.lower() == player.lower():
+                stats = v
+                break
+    if stats is None:
+        # Last-name fallback handles minor name variations (e.g. "DeMar DeRozan" vs "Demar Derozan")
+        last = player.rsplit(" ", 1)[-1].lower()
+        for k, v in player_box.items():
+            if k.lower().rsplit(" ", 1)[-1] == last:
+                stats = v
+                break
+    if stats is None:
+        return ("unknown", f"{player} not in box score")
+
+    actual = stats.get(stat)
+    if actual is None:
+        return ("unknown", f"{stat} not tracked for {player}")
+
+    detail = f"{player}: {actual} {stat}"
+    if direction == "OVER":
+        if actual > line: return ("win", detail)
+        if actual < line: return ("loss", detail)
+        return ("push", detail)
+    # UNDER
+    if actual < line: return ("win", detail)
+    if actual > line: return ("loss", detail)
+    return ("push", detail)
 
 
 def resolve_total(pick_str: str, home_score: int, away_score: int) -> str:
@@ -478,6 +566,10 @@ def resolve_pick_history(all_games: dict):
             games = fetcher(d)
             all_games[(sport, d)] = games
 
+    # Player-prop box-score cache: keyed on event_id so multiple props from the
+    # same game share one ESPN summary fetch.
+    box_cache: dict = {}
+
     resolved_count = 0
     for h in history:
         if h.get("outcome") != "pending":
@@ -496,9 +588,23 @@ def resolve_pick_history(all_games: dict):
 
         pick = h.get("pick", "")
         pick_upper = pick.strip().upper()
+        is_prop = h.get("type") == "prop" or h.get("market") == "Player Prop"
+        prop_detail = ""
 
-        # Determine outcome — same logic as main resolver
-        if "ML" in pick:
+        # Determine outcome — same logic as main resolver, with props handled first.
+        # Props need a per-game box-score fetch keyed on event_id; cached above so a
+        # second prop from the same game costs nothing.
+        if is_prop:
+            if sport != "nba":
+                # Only NBA props are supported today; other sports' fetchers TBD.
+                continue
+            event_id = game.get("event_id", "")
+            if not event_id:
+                continue
+            if event_id not in box_cache:
+                box_cache[event_id] = fetch_nba_player_box(event_id)
+            outcome, prop_detail = resolve_prop(pick, box_cache[event_id])
+        elif "ML" in pick:
             outcome = resolve_moneyline(pick, home_score, away_score, h.get("event", ""))
         elif pick_upper.startswith("OVER ") or pick_upper.startswith("UNDER "):
             outcome = resolve_total(pick, home_score, away_score)
@@ -509,6 +615,11 @@ def resolve_pick_history(all_games: dict):
 
         if outcome == "unknown":
             continue
+
+        # For props, surface the actual stat line in final_score so the activity
+        # view shows WHY the prop won/lost (game score alone is not enough).
+        if is_prop and prop_detail:
+            score_str = f"{score_str} | {prop_detail}"
 
         # Calculate hypothetical P/L (what we WOULD have made)
         odds_str = h.get("odds", "-110")
