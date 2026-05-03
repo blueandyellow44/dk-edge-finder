@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-02",
-  "scan_subtitle": "2026-05-02 \u2014 All 51 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-05-03",
+  "scan_subtitle": "Sunday, May 03, 2026 \u2014 BUNDESLIGA (3), EPL (3), LA_LIGA (4), LIGUE_1 (5), MLB (15), MLS (2), NBA (2), NHL (2), SERIE_A (4)",
   "bankroll": {
     "available": 679.34,
     "starting": 500.0,
@@ -14,89 +14,353 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 51,
+  "games_analyzed": 40,
   "best_bet": {
-    "title": "UNDER 3.5 (-170) \u2014 11.4% Edge (High Tier)",
-    "desc": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.4%): Model predicts 2.4 vs market 3.5 \u2014 1.1 p"
+    "title": "Colorado Rockies +1.5 (-112) \u2014 8.4% Edge (High Tier)",
+    "desc": "Model (DRatings only + oddsshark + actionnetwork): ATL 5.5, COL 4.9 (margin: 0.6). 0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.2 pts (DRatings: ?, Dimers: ?). Lower confid"
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "MLS",
-      "event": "LAFC @ San Diego FC",
-      "event_short": "LAFC @ SD",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-170",
-      "implied": "63.0%",
-      "model": "74.4%",
-      "edge": 11.4,
-      "ev_per_dollar": 0.1811,
+      "sport": "MLB",
+      "event": "Atlanta Braves @ Colorado Rockies",
+      "event_short": "ATL @ COL",
+      "market": "Spread",
+      "pick": "Colorado Rockies +1.5",
+      "odds": "-112",
+      "implied": "52.8%",
+      "model": "61.3%",
+      "edge": 8.4,
+      "ev_per_dollar": 0.16,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.4%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34061376?outcomes=0OU84533401U350_3",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 5.5, COL 4.9 (margin: 0.6). 0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.2 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088805?outcomes=0HC84612971P150_1",
       "type": "game",
-      "start_time": "2026-05-03T01:30Z"
+      "start_time": "2026-05-03T19:10Z"
     },
     {
       "rank": 2,
-      "sport": "MLS",
-      "event": "Vancouver Whitecaps @ LA Galaxy",
-      "event_short": "VAN @ LA",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-170",
-      "implied": "63.0%",
-      "model": "71.9%",
-      "edge": 8.9,
-      "ev_per_dollar": 0.1413,
+      "sport": "MLB",
+      "event": "Toronto Blue Jays @ Minnesota Twins",
+      "event_short": "TOR @ MIN",
+      "market": "Spread",
+      "pick": "Minnesota Twins +1.5",
+      "odds": "-186",
+      "implied": "65.0%",
+      "model": "73.2%",
+      "edge": 8.2,
+      "ev_per_dollar": 0.1265,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): VAN 1.3, LA 1.2 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.8, MIN 4.0 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088783?outcomes=0HC84612936P150_1",
+      "type": "game",
+      "start_time": "2026-05-03T16:45Z"
+    },
+    {
+      "rank": 3,
+      "sport": "BUNDESLIGA",
+      "event": "VfL Wolfsburg @ SC Freiburg",
+      "event_short": "WOB @ SCF",
+      "market": "Over/Under",
+      "pick": "OVER 2.5",
+      "odds": "-155",
+      "implied": "60.8%",
+      "model": "68.0%",
+      "edge": 7.2,
+      "ev_per_dollar": 0.1187,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (oddsshark): WOB 1.5, SCF 1.8 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
+      "sources": "oddsshark, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34020510?outcomes=0OU84418675O250_1",
+      "type": "game",
+      "start_time": "2026-05-03T17:30Z"
+    },
+    {
+      "rank": 4,
+      "sport": "MLB",
+      "event": "Cincinnati Reds @ Pittsburgh Pirates",
+      "event_short": "CIN @ PIT",
+      "market": "Spread",
+      "pick": "Pittsburgh Pirates +1.5",
+      "odds": "-188",
+      "implied": "65.3%",
+      "model": "73.0%",
+      "edge": 7.7,
+      "ev_per_dollar": 0.1181,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): CIN 3.9, PIT 4.1 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088785?outcomes=0HC84612938P150_1",
+      "type": "game",
+      "start_time": "2026-05-03T17:35Z"
+    },
+    {
+      "rank": 5,
+      "sport": "MLB",
+      "event": "Philadelphia Phillies @ Miami Marlins",
+      "event_short": "PHI @ MIA",
+      "market": "Spread",
+      "pick": "Miami Marlins +1.5",
+      "odds": "-136",
+      "implied": "57.6%",
+      "model": "64.1%",
+      "edge": 6.5,
+      "ev_per_dollar": 0.1119,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): PHI 4.5, MIA 3.9 (margin: 0.6). 0.9 pts of cushion beyond the spread. | PHI on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088788?outcomes=0HC84612941P150_1",
+      "type": "game",
+      "start_time": "2026-05-03T17:40Z"
+    },
+    {
+      "rank": 6,
+      "sport": "MLB",
+      "event": "New York Mets @ Los Angeles Angels",
+      "event_short": "NYM @ LAA",
+      "market": "Spread",
+      "pick": "Los Angeles Angels +1.5",
+      "odds": "-143",
+      "implied": "58.8%",
+      "model": "65.2%",
+      "edge": 6.3,
+      "ev_per_dollar": 0.1072,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): NYM 4.4, LAA 4.0 (margin: 0.4). 1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088807?outcomes=0HC84612973P150_1",
+      "type": "game",
+      "start_time": "2026-05-03T20:07Z"
+    },
+    {
+      "rank": 7,
+      "sport": "EPL",
+      "event": "Liverpool @ Manchester United",
+      "event_short": "LIV @ MAN",
+      "market": "Over/Under",
+      "pick": "UNDER 3.5",
+      "odds": "-165",
+      "implied": "62.3%",
+      "model": "68.8%",
+      "edge": 6.6,
+      "ev_per_dollar": 0.1055,
+      "tier": "High",
+      "bet": "$13.59",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): LIV 1.6, MAN 1.1 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
       "sources": "DRatings only, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34061374?outcomes=0OU84533345U350_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/34020284?outcomes=0OU84418261U350_3",
       "type": "game",
-      "start_time": "2026-05-03T02:30Z"
+      "start_time": "2026-05-03T14:30Z"
+    },
+    {
+      "rank": 8,
+      "sport": "MLB",
+      "event": "Cleveland Guardians @ Athletics",
+      "event_short": "CLE @ ATH",
+      "market": "Spread",
+      "pick": "Athletics +1.5",
+      "odds": "-156",
+      "implied": "60.9%",
+      "model": "67.1%",
+      "edge": 6.2,
+      "ev_per_dollar": 0.101,
+      "tier": "High",
+      "bet": "$6.77",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): CLE 4.6, ATH 4.4 (margin: 0.2). 1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34088806?outcomes=0HC84612972P150_1",
+      "type": "game",
+      "start_time": "2026-05-03T20:05Z"
     }
   ],
   "no_edge_games": [
     {
-      "sport": "MLB",
-      "event": "CHW @ SD",
-      "line": "SD -192",
+      "sport": "NBA",
+      "event": "ORL @ DET",
+      "line": "DET -8.5",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NBA",
+      "event": "TOR @ CLE",
+      "line": "CLE -7.5",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NHL",
+      "event": "MTL @ TB",
+      "line": "TB -162",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NHL",
+      "event": "MIN @ COL",
+      "line": "COL -185",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "NYM @ LAA",
-      "line": "NYM -122",
+      "event": "BAL @ NYY",
+      "line": "NYY -240",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "HOU @ BOS",
+      "line": "BOS -163",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIL @ WSH",
+      "line": "MIL -136",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "SF @ TB",
+      "line": "TB -131",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "LAD @ STL",
+      "line": "LAD -149",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "ARI @ CHC",
+      "line": "CHC -156",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "CHW @ SD",
+      "line": "SD -186",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ SEA",
-      "line": "SEA -143",
+      "line": "SEA -126",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TEX @ DET",
+      "line": "DET -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
-      "event": "CIN @ CHI",
-      "line": "N/A",
-      "reason": "Edge below 3% threshold"
+      "event": "DC @ NYC",
+      "line": "NYC -150",
+      "reason": "No model data"
     },
     {
       "sport": "MLS",
-      "event": "COL @ HOU",
-      "line": "N/A",
+      "event": "STL @ ATX",
+      "line": "ATX +150",
+      "reason": "No model data"
+    },
+    {
+      "sport": "EPL",
+      "event": "TOT @ AVL",
+      "line": "AVL +115",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "RAY @ GET",
+      "line": "GET +110",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "OVI @ BET",
+      "line": "BET -170",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "RMA @ ESP",
+      "line": "RMA -135",
+      "reason": "No model data"
+    },
+    {
+      "sport": "BUNDESLIGA",
+      "event": "DOR @ BMG",
+      "line": "DOR -110",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "SERIE_A",
+      "event": "VER @ JUV",
+      "line": "JUV -550",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "SERIE_A",
+      "event": "PAR @ INT",
+      "line": "INT -500",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "ANG @ AUX",
+      "line": "AUX -145",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "BRE @ PAR",
+      "line": "PAR +105",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "TOU @ STR",
+      "line": "TOU +135",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "REN @ LYON",
+      "line": "LYON +115",
+      "reason": "No model data"
     }
   ],
   "bets": [
