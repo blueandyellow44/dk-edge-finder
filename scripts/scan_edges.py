@@ -1325,10 +1325,20 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     if not candidates:
         return None
 
-    # Apply situational adjustments to each candidate, then pick the best edge
+    # Apply situational adjustments to each candidate, then pick the best EV.
+    # Selection criterion is EV per $1 risked, NOT raw edge%. Edge% systematically
+    # favors the chalk side because of how cushion-beyond-the-spread translates
+    # through Skellam/normal CDF math: the side the model agrees with the market
+    # about gets a bigger absolute edge at the same true probability gap. But
+    # underdogs pay more per $1 risked, so a 5% edge on a +150 dog is +12.5% EV
+    # while a 5% edge on a -150 fav is only +8.3% EV. Backtest 2026-03-24 to
+    # 2026-05-01: favorites are 71.7% of bets and lose -$294; underdogs are
+    # 28.3% of bets and win +$942 (66% hit rate on +151 to +250 bucket alone).
+    # See lessons.md root entry 2026-05-03.
     source_label = pred.get("source_label", "DRatings")
     best = None
-    best_edge = -1
+    best_ev = -1.0
+    best_edge = -1  # tracked for downstream use; selection is via best_ev
 
     for cand in candidates:
         pick_team = cand["team"]
@@ -1392,7 +1402,15 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
             if edge >= NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT:
                 continue
 
-        if edge >= min_edge and edge > best_edge:
+        # Selection is via EV per $1 risked, not raw edge%. See block comment
+        # at the top of the candidate loop. Both candidates must still clear
+        # min_edge (so we never bet a 1% edge dog just because it has higher
+        # payout); among those that clear, the higher-EV side wins.
+        decimal_odds_cand = american_to_decimal(dk_odds_val)
+        cand_ev = model_prob * (decimal_odds_cand - 1.0) - (1.0 - model_prob)
+
+        if edge >= min_edge and cand_ev > best_ev:
+            best_ev = cand_ev
             best_edge = edge
             best = {
                 "cand": cand, "model_prob": model_prob, "edge": edge,
