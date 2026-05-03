@@ -67,6 +67,39 @@ NBA_PLAYOFF_HARD_SKIP_AT = 0.10
 # in-window NBA picks. See lessons.md root entry 2026-05-02.
 NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 
+# Per-sport probability calibration (May 2026): linear least-squares fit of
+# binary outcomes on raw model_prob across resolved historical picks. The
+# calibrated probability replaces raw model_prob in calculate_edge before
+# situational adjustments and edge math. Fit details in lessons.md 2026-05-03c.
+#
+# MLB (n=414): Avg model 67.3% → calibrated 61.4% (matches realized 61.4%).
+#   Replay 2026-03-24 to 2026-05-03: 144 of 414 picks pass calibrated filter,
+#   $+800 P/L on kept (vs $+654 original on all 414). Drops 270 underperforming
+#   picks worth -$147.
+# NBA (n=205): Avg model 65.2% → calibrated 46.8%. Effectively disables NBA
+#   model since calibrated_prob hovers near 50% regardless of input. Replay:
+#   only 2 of 205 picks pass; -$241 of historical NBA losses avoided. NBA
+#   model has zero calibration in current data (every model_prob bucket
+#   realizes ~40-55%).
+# NHL deliberately omitted: linear fit (a=0.803, b=0.109) over-corrects at
+#   the heavy-juice tail. Drops 32 picks that hit 94% historically. Original
+#   NHL signal (+$269) is preserved by leaving NHL un-calibrated.
+# Other sports (soccer, mls, mma) too small to fit; default identity (raw_prob).
+PROB_CALIBRATION = {
+    "mlb": {"a": 0.396, "b": 0.347},
+    "nba": {"a": 0.258, "b": 0.300},
+}
+
+
+def calibrate_prob(sport: str, raw_prob: float) -> float:
+    """Apply per-sport probability calibration. Returns calibrated probability
+    clipped to [0.05, 0.95]. Sports without a fit return raw_prob unchanged."""
+    coeffs = PROB_CALIBRATION.get(sport.lower())
+    if coeffs is None:
+        return raw_prob
+    return max(0.05, min(0.95, coeffs["a"] * raw_prob + coeffs["b"]))
+
+
 # Graduated edge discount for bet sizing.
 # 10%+ edges hit only 58.8% vs 75% for 5-8% edges.
 EDGE_DISCOUNT_TIERS = [
@@ -1369,6 +1402,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         if opponent.get("abbr", "") in b2b_teams:
             model_prob += REST_ADVANTAGE
             b2b_note += f" | {opponent['abbr']} on B2B (+1.5% boost)"
+
+        # Apply per-sport probability calibration (May 2026). Calibration is the
+        # last thing applied to model_prob before edge math; it captures the net
+        # systematic bias in the model AFTER situational adjustments. See
+        # PROB_CALIBRATION dict above and lessons.md 2026-05-03c.
+        model_prob = calibrate_prob(sport, model_prob)
 
         # Calculate edge
         implied_prob = cand["implied_prob"]
