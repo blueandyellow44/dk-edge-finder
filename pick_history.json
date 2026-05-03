@@ -4513,9 +4513,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 14.7 Rebounds (last 10g), line is 12.5 \u2014 2.2 over with 0.7\u03c3 separation. Trending up (season avg: 13.2). Raw edge: 18.7% (capped at 15%). Def adj: vs DEN (116.6 PPG allowed, boost 4.1%) | Edge capped: 18.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 134, DEN 136 | Victor Wembanyama: 18 Rebounds",
+    "pnl_if_bet": 7.52
   },
   {
     "scan_date": "2026-04-04",
@@ -4531,9 +4531,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Tyrese Maxey averages 25.4 Points (last 10g), line is 28.5 \u2014 3.1 under with 0.7\u03c3 separation. Trending down (season avg: 26.8). Raw edge: 23.7% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 23.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 116, PHI 93 | Tyrese Maxey: 23 Points",
+    "pnl_if_bet": 8.77
   },
   {
     "scan_date": "2026-04-04",
@@ -4549,9 +4549,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 22.9 Points (last 10g), line is 27.5 \u2014 4.6 under with 0.7\u03c3 separation. Trending up (season avg: 22.4). Raw edge: 22.4% (capped at 15%). Edge capped: 22.4% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 134, DEN 136 | Nikola Jokic: 40 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4747,9 +4747,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 14.7 Rebounds (last 10g), line is 12.5 \u2014 2.2 over with 0.7\u03c3 separation. Trending up (season avg: 13.2). Raw edge: 18.7% (capped at 15%). Def adj: vs DEN (116.6 PPG allowed, boost 4.1%) | Edge capped: 18.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 134, DEN 136 | Victor Wembanyama: 18 Rebounds",
+    "pnl_if_bet": 7.52
   },
   {
     "scan_date": "2026-04-04",
@@ -4765,9 +4765,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Tyrese Maxey averages 25.4 Points (last 10g), line is 28.5 \u2014 3.1 under with 0.7\u03c3 separation. Trending down (season avg: 26.8). Raw edge: 23.7% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 23.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 116, PHI 93 | Tyrese Maxey: 23 Points",
+    "pnl_if_bet": 8.77
   },
   {
     "scan_date": "2026-04-04",
@@ -4783,9 +4783,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 22.9 Points (last 10g), line is 27.5 \u2014 4.6 under with 0.7\u03c3 separation. Trending up (season avg: 22.4). Raw edge: 22.4% (capped at 15%). Edge capped: 22.4% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 134, DEN 136 | Nikola Jokic: 40 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -5305,9 +5305,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Jalen Green averages 20.8 Points (last 10g), line is 26.5 \u2014 5.8 under with 0.9\u03c3 separation. Trending up (season avg: 19.7). Raw edge: 26.2% (capped at 15%). Def adj: vs CHI (121.6 PPG allowed, boost 8.0%) | Edge capped: 26.2% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHX 120, CHI 110 | Jalen Green: 25 Points",
+    "pnl_if_bet": 8.33
   },
   {
     "scan_date": "2026-04-05",
@@ -5323,9 +5323,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Jaylen Brown averages 31.6 Points (last 10g), line is 22.5 \u2014 9.1 over with 1.3\u03c3 separation. Raw edge: 40.9% (capped at 15%). Edge capped: 40.9% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOR 101, BOS 115 | Jaylen Brown: 26 Points",
+    "pnl_if_bet": 10.5
   },
   {
     "scan_date": "2026-04-05",
@@ -5341,9 +5341,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Brandon Miller averages 4.0 3-PT Made (last 10g), line is 3.5 \u2014 0.5 over with 0.6\u03c3 separation. Raw edge: 28.1% (capped at 15%). Def adj: vs MIN (114.1 PPG allowed, boost 1.9%) | Edge capped: 28.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CHA 122, MIN 108 | Brandon Miller: 1 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-05",
@@ -5359,9 +5359,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Neemias Queta averages 13.7 Points (last 10g), line is 18.5 \u2014 4.8 under with 0.7\u03c3 separation. Trending up (season avg: 12.3).",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOR 101, BOS 115 | Neemias Queta: 18 Points",
+    "pnl_if_bet": 6.02
   },
   {
     "scan_date": "2026-04-06",
@@ -5485,9 +5485,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 15.4 Rebounds (last 10g), line is 12.5 \u2014 2.9 over with 0.9\u03c3 separation. Trending up (season avg: 13.8). Raw edge: 23.3% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 23.3% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 5 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -5503,9 +5503,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 1.9 3-PT Made (last 10g), line is 2.5 \u2014 0.6 under with 0.8\u03c3 separation. Raw edge: 19.4% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 19.4% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 1 3-PT Made",
+    "pnl_if_bet": 7.04
   },
   {
     "scan_date": "2026-04-06",
@@ -5521,9 +5521,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Deni Avdija averages 8.2 Rebounds (last 10g), line is 6.5 \u2014 1.7 over with 0.7\u03c3 separation. Trending up (season avg: 7.5). Raw edge: 18.1% (capped at 15%). Def adj: vs DEN (116.8 PPG allowed, boost 4.3%) | Edge capped: 18.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "POR 132, DEN 137 | Deni Avdija: 4 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -5791,9 +5791,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 15.4 Rebounds (last 10g), line is 12.5 \u2014 2.9 over with 0.9\u03c3 separation. Trending up (season avg: 13.8). Raw edge: 24.4% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 24.4% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 5 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -5809,9 +5809,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 1.9 3-PT Made (last 10g), line is 2.5 \u2014 0.6 under with 0.8\u03c3 separation. Raw edge: 15.7% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 15.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 1 3-PT Made",
+    "pnl_if_bet": 6.02
   },
   {
     "scan_date": "2026-04-06",
@@ -5827,9 +5827,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 12.6 Assists (last 10g), line is 10.5 \u2014 2.1 over with 0.6\u03c3 separation. Raw edge: 15.1% (capped at 15%). Def adj: vs POR (115.9 PPG allowed, boost 3.4%) | Edge capped: 15.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 132, DEN 137 | Nikola Jokic: 13 Assists",
+    "pnl_if_bet": 7.04
   },
   {
     "scan_date": "2026-04-06",
@@ -5989,9 +5989,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 15.4 Rebounds (last 10g), line is 12.5 \u2014 2.9 over with 0.9\u03c3 separation. Trending up (season avg: 13.8). Raw edge: 24.4% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 24.4% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 5 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -6007,9 +6007,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 1.9 3-PT Made (last 10g), line is 2.5 \u2014 0.6 under with 0.8\u03c3 separation. Raw edge: 15.7% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 15.7% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 1 3-PT Made",
+    "pnl_if_bet": 6.02
   },
   {
     "scan_date": "2026-04-06",
@@ -6025,9 +6025,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 12.6 Assists (last 10g), line is 10.5 \u2014 2.1 over with 0.6\u03c3 separation. Raw edge: 15.1% (capped at 15%). Def adj: vs POR (115.9 PPG allowed, boost 3.4%) | Edge capped: 15.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 132, DEN 137 | Nikola Jokic: 13 Assists",
+    "pnl_if_bet": 7.04
   },
   {
     "scan_date": "2026-04-06",
@@ -6187,9 +6187,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Joel Embiid averages 2.1 3-PT Made (last 10g), line is 1.5 \u2014 0.6 over with 0.5\u03c3 separation. Raw edge: 17.1% (capped at 15%). Edge capped: 17.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 102, SA 115 | Joel Embiid: 2 3-PT Made",
+    "pnl_if_bet": 8.62
   },
   {
     "scan_date": "2026-04-06",
@@ -6205,9 +6205,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 32.1 Points (last 10g), line is 27.5 \u2014 4.6 over with 0.5\u03c3 separation. Trending up (season avg: 27.7). Raw edge: 15.0% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 15.0% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 17 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -6223,9 +6223,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 12.6 Assists (last 10g), line is 10.5 \u2014 2.1 over with 0.6\u03c3 separation. Raw edge: 15.1% (capped at 15%). Def adj: vs POR (115.9 PPG allowed, boost 3.4%) | Edge capped: 15.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 132, DEN 137 | Nikola Jokic: 13 Assists",
+    "pnl_if_bet": 7.04
   },
   {
     "scan_date": "2026-04-06",
@@ -6385,9 +6385,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Joel Embiid averages 2.1 3-PT Made (last 10g), line is 1.5 \u2014 0.6 over with 0.5\u03c3 separation. Raw edge: 17.1% (capped at 15%). Edge capped: 17.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PHI 102, SA 115 | Joel Embiid: 2 3-PT Made",
+    "pnl_if_bet": 8.62
   },
   {
     "scan_date": "2026-04-06",
@@ -6403,9 +6403,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Victor Wembanyama averages 32.1 Points (last 10g), line is 27.5 \u2014 4.6 over with 0.5\u03c3 separation. Trending up (season avg: 27.7). Raw edge: 15.0% (capped at 15%). Def adj: vs PHI (116.5 PPG allowed, boost 4.0%) | Edge capped: 15.0% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PHI 102, SA 115 | Victor Wembanyama: 17 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-06",
@@ -6421,9 +6421,9 @@
     "confidence": "MEDIUM",
     "type": "prop",
     "notes": "Nikola Jokic averages 12.6 Assists (last 10g), line is 10.5 \u2014 2.1 over with 0.6\u03c3 separation. Raw edge: 15.1% (capped at 15%). Def adj: vs POR (115.9 PPG allowed, boost 3.4%) | Edge capped: 15.1% \u2192 15.0%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 132, DEN 137 | Nikola Jokic: 13 Assists",
+    "pnl_if_bet": 7.04
   },
   {
     "scan_date": "2026-04-07",
