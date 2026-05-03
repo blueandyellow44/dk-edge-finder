@@ -41,7 +41,8 @@
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/34088806?outcomes=0HC84612972P150_1",
       "type": "game",
-      "start_time": "2026-05-03T20:05Z"
+      "start_time": "2026-05-03T20:05Z",
+      "is_favorite": false
     },
     {
       "rank": 2,
@@ -50,11 +51,11 @@
       "event_short": "KC @ SEA",
       "market": "Spread",
       "pick": "Seattle Mariners +1.5",
-      "odds": "-183",
-      "implied": "64.7%",
+      "odds": "-182",
+      "implied": "64.5%",
       "model": "70.0%",
-      "edge": 5.3,
-      "ev_per_dollar": 0.0816,
+      "edge": 5.4,
+      "ev_per_dollar": 0.0837,
       "tier": "High",
       "bet": "$13.59",
       "status": "",
@@ -64,7 +65,8 @@
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/event/34088809?outcomes=0HC84612975P150_1",
       "type": "game",
-      "start_time": "2026-05-03T20:10Z"
+      "start_time": "2026-05-03T20:10Z",
+      "is_favorite": false
     }
   ],
   "no_edge_games": [
