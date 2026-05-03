@@ -1511,6 +1511,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         "confidence": confidence,
         "dk_link": game.get("dk_spread_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
         "start_time": game.get("start_time", ""),
+        "is_favorite": bool(cand.get("is_favorite", False)),
     }
 
 

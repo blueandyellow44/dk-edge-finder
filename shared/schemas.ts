@@ -32,6 +32,7 @@ export const PickSchema = z.object({
   dk_link: z.string(),
   type: z.enum(['game', 'prop']),
   start_time: z.string(),
+  is_favorite: z.boolean().optional(),
 })
 
 export const NoEdgeGameSchema = z.object({

@@ -364,6 +364,28 @@ a {
   letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
+.pick-favdog {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 6px;
+  margin-bottom: 4px;
+  vertical-align: middle;
+}
+.pick-favdog.fav {
+  background: var(--color-accent-tint);
+  color: var(--color-warning);
+  border: 1px solid var(--color-accent);
+}
+.pick-favdog.dog {
+  background: rgba(136, 136, 136, 0.12);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
 .pick-text {
   color: var(--color-fg);
   font-weight: 600;

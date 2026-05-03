@@ -40,7 +40,7 @@ function coercePickType(raw: unknown): 'game' | 'prop' {
 }
 
 function normalizePick(raw: Record<string, unknown>, fallbackRank: number): Pick {
-  return {
+  const out: Pick = {
     rank: typeof raw.rank === 'number' ? raw.rank : fallbackRank,
     sport: stripEmDash(String(raw.sport ?? '')),
     event: stripEmDash(String(raw.event ?? '')),
@@ -60,6 +60,10 @@ function normalizePick(raw: Record<string, unknown>, fallbackRank: number): Pick
     type: coercePickType(raw.type),
     start_time: typeof raw.start_time === 'string' ? raw.start_time : '',
   }
+  if (typeof raw.is_favorite === 'boolean') {
+    out.is_favorite = raw.is_favorite
+  }
+  return out
 }
 
 function normalizeNoEdgeGame(raw: Record<string, unknown>): NoEdgeGame {

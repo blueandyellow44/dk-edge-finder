@@ -44,6 +44,11 @@ export function PositionRow({
         <div className="pick-rank">#{pick.rank || index + 1}</div>
         <div>
           <span className="pick-sport">{pick.sport}</span>
+          {pick.is_favorite !== undefined && (
+            <span className={`pick-favdog ${pick.is_favorite ? 'fav' : 'dog'}`}>
+              {pick.is_favorite ? 'FAV' : 'DOG'}
+            </span>
+          )}
           <div className="pick-text">{pick.pick}</div>
           <div className="pick-event">{pick.event}</div>
         </div>
