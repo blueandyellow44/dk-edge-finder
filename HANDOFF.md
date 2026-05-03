@@ -33,6 +33,8 @@ Phase 1 step status (sequence per the bottom of session 2 below):
 
 Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after step 8/9 commits), not yet pushed. Live site unaffected.
 
+**FAV/DOG pill on spread picks shipped (2026-05-03 session 11):** New affordance on the Picks tab and Positions tab to disambiguate spread-side selections. Bug context: a `Minnesota Twins +1.5` pick at `-192` odds reads as "underdog by 1.5" by sign alone, but the heavy juice signals the reverse run-line favorite shape. Without surfacing favorite-vs-underdog, a user can mistake a favorite-side pick for underdog-side and either skip a winning pick or click through to the wrong DK line. `is_favorite` was already computed per candidate in `calculate_edge` ([scan_edges.py:1310/1322](scripts/scan_edges.py:1310)) but never made it past the best-edge selection. Now passed through to the spread pick output, declared optional in `PickSchema` for back-compat, normalized server-side in `worker/lib/picks.ts`, and conditionally rendered as a small pill (`pick-favdog.fav` / `.dog`) next to the sport badge in `PickRow.tsx` and `PositionRow.tsx`. Totals (`calculate_total_edge`) and prop picks leave `is_favorite` unset, so no pill renders for those. Verified locally with transient `is_favorite` values injected into `data.json`: FAV pill on Colorado Rockies (is_favorite=true), DOG pill on Pittsburgh Pirates (is_favorite=false), no pill on Bundesliga over/under or on picks without the field. `npx tsc -b` clean, `npm test` 78 / 78. Bundle rebuilt: `index-BG8hF7Nf.js` (250.31 kB JS, +0.26 kB) + `index-B9QC8aQB.css` (15.77 kB CSS, +0.42 kB). Two-commit pair on top of cron scan `1b84695`; rebased and pushed. Cloudflare auto-deploys from `main` directly per session 10 finding, so no manual `workers-autoconfig` mirror needed; that branch is now 8 commits behind main but not blocking live.
+
 **CI bundle-staleness guard shipped (2026-05-02 session 10):** New GitHub Actions workflow at `.github/workflows/spa-bundle-guard.yml` runs `npm ci` + `npm run build` and diffs `frontend/dist/` against committed `public/` (index.html, wrangler.json, .assetsignore, assets/) on every PR + push to main. Fails loudly if the SPA bundle is stale relative to source. Closes the process gap that caused session 9 slice 1 (sessions 6 / 7 / 8 changed `frontend/src/` without rebuilding `public/assets/`, so production served a 30-hour stale bundle until Max noticed Picks rows weren't clickable). Path filter scoped to `frontend/**`, `public/**`, `shared/**`, `vite.config.ts`, `tsconfig*.json`, `package.json`, `package-lock.json`, and the workflow itself; excludes cron-managed files (`data.json`, `bankroll.json`, `pick_history.json`) which are committed at repo root, not under `public/`, so the guard does not run on cron ticks. Verified locally: clean rebuild matches committed `public/` exactly (diff exits 0); a simulated stale `public/index.html` correctly fails the diff (exits 1) and restores cleanly. Failure step prints the recovery command (rebuild + cp + commit) inline so the next dev who hits this knows exactly what to do. YAML valid; em-dash + double-hyphen audit clean. One file, 84 lines, no other repo changes.
 
 **Sidebar balance-over-time chart shipped (2026-05-02 session 9 slice 2):** New `BalanceChart` component lives in the right sidebar directly under `BalanceCard`, on every tab (matches the established sidebar-shows-everywhere convention). Sparkline-style: gold line over a faint gold-tint area fill, single big-tabular delta headline (`+$186.69` color-coded green/red) with `over N days` muted next to it, first/last date labels below the chart. Card chrome is `.card` + `.card-header` matching `BalanceCard` so the two read as a single grouped object; same uppercase 12px header treatment, same white card on `--color-bg`. Skipped Recharts in favor of hand-rolled 240×80 SVG with `vectorEffect="non-scaling-stroke"` so the line stays 1.5px crisp under `preserveAspectRatio="none"` stretching. Data source: `useActivity()` filtered to resolved bets + `useBankroll().starting` for the anchor; computed on the client (no worker change). Caveat for next session: chart final balance ($686.69) and `lifetime_profit` ($179.34 → $679.34) disagree by ~$7. Both come from `bankroll.json`; the file's own `lifetime_bets` (43) vs `wins+losses+pushes` (59) are also internally inconsistent. Model-side issue, not a frontend bug. `npx tsc -b` clean, `npm test` 78 / 78. New bundle `index-DxPsRIoZ.js` (250 kB, 75.57 kB gzip).
@@ -50,6 +52,63 @@ Branch `rebuild/v2-frontend` is ahead of origin (commits will increment after st
 **Phase 3 slices 1 + 2 + 3 + 4 + 5 LIVE (2026-05-02 ~03:55 UTC, session 5 below):** v2 SPA deployed and serving at https://dk-edge-finder.max-sheahan.workers.dev/. `wrangler deploy` from rebuild/v2-frontend. Two real bugs hit and fixed in sequence during the live smoke; both documented below in the "Slice 5 deploy: what shipped + what I broke" section. Final live state: `/api/me` returns 302 to Access (worker hit), `/data.json` returns fresh cron data (2026-05-01, 7 picks, 62 bets), SPA loads at root.
 
 **Phase 3 slices 1 + 2 + 3 + 4 update (2026-05-01 PM, session 5 below):** v2 SPA fully composed. All 5 tabs render real data: Picks, Pending, Activity, Positions, Account. New worker route `/api/activity` ships `data.json.bets[]` filtered to resolved + sorted date desc, with em-dash strip + odds normalization. New mutations: `useDeleteManualBet`, `useRetrySyncQueue`, plus the slice-2 set. Verified locally: Picks empty state + 8-game no-edge collapsible (today is 0 edges), Pending shows existing manual bet from KV with Remove button, Activity shows 62 resolved bets with color-coded WIN/LOSS and signed P/L, Positions shows empty state, Account roundtrips a balance-override save through KV with cross-component refetch. Branch is still 23 ahead of origin. `npx tsc -b` clean, 75/75 tests still pass, `npm run build` clean. Slice 5 (deploy + live smoke) is what's left.
+
+---
+
+## 2026-05-03 session 11 (FAV/DOG pill on spread picks)
+
+### Goal
+Three bug reports from Max during a verification round: (1) bets do not show under Pending tab, (2) placed bets do not affect balance, (3) the spread for the Twins game was "flipped (they are now favorites)". After investigation, bug 3 turned out to be a label-clarity issue rather than a model bug; this session ships the fix for that. Bugs 1 and 2 are filed below as known gaps for a future session.
+
+### Pre-flight
+- `git stash list`: empty. `git status --short`: 3 expected carry-over untracked.
+- `npx tsc -b`: clean. `npm test`: 78 / 78.
+- `curl -sI .../api/me`: 302 to Access (intact).
+- Local `data.json` (after multiple cron ticks): `2026-05-03`, 7 picks (5 MLB Spread, 1 BUNDESLIGA Over/Under, with the disputed Twins pick at rank 2).
+- Cloudflare auto-deploy chain healthy: `wrangler deployments list` shows a new deploy fired within 1 second of every cron commit on main today. The `workers-autoconfig` branch is many commits behind main but the live URL stays current via direct main-deploys; mirror failures are cosmetic, not blocking.
+
+### Bug 3 root-cause (the one fixed this session)
+The disputed pick: `Minnesota Twins +1.5 -192` (rank 2 in today's data.json, scan time 2026-05-03 09:42 PT). Max said DK had Twins on `-1.5` when he opened the page; he read the model as picking the wrong side.
+
+Investigation timeline:
+1. Initial hypothesis: ESPN/DK direction mismatch at scan time. Looked at `calculate_edge` ([scan_edges.py:1245](scripts/scan_edges.py:1245), `espn_spread = game["home_spread"]`) and the favorite/underdog branch at lines 1252-1259. The function reads spread direction entirely from ESPN's `pointSpread.home/away.close.line`, which ESPN claims is DK's line.
+2. Second hypothesis: live in-game line vs pre-game line confusion. Game start: `2026-05-03T16:45Z` (09:45 PT), 3 min after scan. Once the pre-game market closes, DK shows live in-game lines with totally different shape. Asked Max via `AskUserQuestion`; he confirmed he checked DK BEFORE first pitch and the direction was already different.
+3. Third look: pulled the resolved pick from `pick_history.json`. Final score `TOR 3, MIN 4` — Twins won by 1, so Twins +1.5 covers easily. **The pick was correct and would have won.**
+4. Reconciliation: in MLB, "+1.5 at -192" is the standard reverse run-line shape used for HEAVY favorites. Both lines on the same market are valid bets at the same time; the model picked the +1.5 -192 side because at that price, it has +7.4% edge. Max saw "Twins -1.5" on DK (the other side of the same market, plus odds) and concluded the model was on the wrong side.
+
+This is not a model bug. It is a label-clarity bug.
+
+### Decisions made
+- **Add an `is_favorite` flag to spread pick output and render as a FAV/DOG pill on the row.** `is_favorite` is already computed per candidate at [scan_edges.py:1310](scripts/scan_edges.py:1310) (dog) / [scan_edges.py:1322](scripts/scan_edges.py:1322) (fav), but only the cand dict held it. Now passed through to the pick output dict at [scan_edges.py:1514](scripts/scan_edges.py:1514).
+- **Optional in `PickSchema`** so historical data.json files (which lack the field) still parse. Worker normalizer adds it to the output only when present in raw input.
+- **Render only when defined.** Conditional `{pick.is_favorite !== undefined && ...}` in both `PickRow` and `PositionRow`. Totals (`calculate_total_edge`) and prop picks omit the field, so no pill renders there. Avoids surfacing meaningless "FAV/DOG" on over-under markets.
+- **`FAV` / `DOG` over `Favorite` / `Underdog`.** Concise, uppercase, sportsbook lingo. Fits next to the sport badge without wrapping on desktop. On narrow viewports it wraps below the sport badge — acceptable mobile behavior.
+- **Pill styling matches palette.** `.pick-favdog.fav` uses gold accent (`--color-accent-tint` background, `--color-warning` text, `--color-accent` border). `.pick-favdog.dog` uses muted (`rgba(136,136,136,0.12)` background, `--color-muted` text, `--color-border` border). Same 10px / uppercase / letter-spacing as `.pick-sport` so the two pills read as a metadata cluster.
+
+### Files modified
+- `shared/schemas.ts` (added `is_favorite: z.boolean().optional()` to `PickSchema`).
+- `worker/lib/picks.ts` (`normalizePick` conditionally sets `is_favorite` on output when raw input has it).
+- `scripts/scan_edges.py` (added `"is_favorite": bool(cand.get("is_favorite", False))` to spread pick output dict).
+- `frontend/src/components/PickRow.tsx` (FAV/DOG pill next to sport badge).
+- `frontend/src/components/PositionRow.tsx` (same pill, same place).
+- `frontend/src/styles.css` (`.pick-favdog`, `.pick-favdog.fav`, `.pick-favdog.dog`).
+- `public/index.html` + `public/assets/*` (rebuild artifacts).
+- `HANDOFF.md` (this entry + the inheriting-state bullet).
+
+### Verification
+- `npx tsc -b`: clean.
+- `npm test`: 78 / 78 across 3 files.
+- Em-dash audit on the diff (lines I added): clean. The `--` matches are CSS `var(--foo)` custom properties, not double-hyphens.
+- Browser preview verification (vite-dev + wrangler-dev): injected transient `is_favorite: true` on Colorado Rockies pick and `false` on Pittsburgh Pirates pick in `data.json`; reloaded the SPA. Snapshot confirms `MLB FAV Colorado Rockies +1.5` on rank 1 and `MLB DOG Pittsburgh Pirates +1.5` on rank 6, with no pill on the Bundesliga over/under (rank 4) or other picks without the field. Restored `data.json` from `/tmp/data.json.backup`.
+- Bundle rebuild: clean. Sizes: `index-BG8hF7Nf.js` 250.31 kB (gzip 75.62), `index-B9QC8aQB.css` 15.77 kB (gzip 3.27). Diff against `frontend/dist/` clean (the SPA bundle guard from session 10 will run on push and verify).
+
+### What's next (still-open from this session's bug reports)
+1. **Bug 1: Pending tab does not show placements.** [PendingTab.tsx:20](frontend/src/tabs/PendingTab.tsx:20) only filters `state.data.manual_bets`. Picks marked as Placed land in `state.data.placements`, which the tab does not read. The Picks tab shows them with a "Placed" badge and the Positions tab shows them with details, but there is no flat "things I have put down that have not resolved yet" view. ~30-line frontend-only fix: add a placements section to PendingTab, filter by unresolved.
+2. **Bug 2: Available balance does not subtract active stakes.** [worker/lib/bankroll.ts:34](worker/lib/bankroll.ts:34) computes `available = starting + lifetime_profit` (or override). Active placements are not subtracted. Two layers of work needed: (a) `PlacementSchema` does not currently carry a wager amount — the `useMarkPickAsPlaced` mutation only POSTs `{key, action, dispatch_status, idempotency_key}` — so the worker would not know how much to subtract. Need to add `wager: z.number()` to `PlacementSchema` and have the frontend send the Kelly-suggested wager from the pick at click time. (b) Update the bankroll worker to compute `available = starting + lifetime_profit - sum(unresolved placements wager)`. ~1-2 hour change.
+3. **`workers-autoconfig` mirror is stuck many commits behind `main`.** Cron's mirror push step is failing silently behind a `|| true`. Live URL is unaffected because Cloudflare auto-deploys from `main` directly. Worth investigating if anyone ever needs `workers-autoconfig` to actually work; not blocking right now.
+
+### If you just have one minute, do this
+`cd ~/Betting\ Skill && grep -c "pick-favdog" public/assets/*.css` should print 3 (one for the base class plus the two modifier rules). If it prints 0, the bundle has not picked up the FAV/DOG styling and the rebuild was missed; run `npm run build && rm public/assets/index-* && cp frontend/dist/assets/* public/assets/ && cp frontend/dist/index.html frontend/dist/.assetsignore frontend/dist/wrangler.json public/`.
 
 ---
 
