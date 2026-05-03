@@ -59,6 +59,14 @@ NBA_PLAYOFF_MIN_EDGE = 0.08            # raise NBA min-edge to 8% during playoff
 # (29.3% raw -> 14.7% post discount, still > 10% suspicious -> dropped).
 NBA_PLAYOFF_HARD_SKIP_AT = 0.10
 
+# NBA regular-season spread hard-skip (May 2026): backtest 2026-03-24 to
+# 2026-05-01 shows NBA Spread picks at raw edge >= 8% hit only 35.0% (21W-39L)
+# at -$198 over 60 picks. The model is anti-signal in this range, likely
+# closing-line-value loss vs sharp money on big NBA spreads. Drop the pick
+# entirely. Outside the playoff window only; the playoff block above handles
+# in-window NBA picks. See lessons.md root entry 2026-05-02.
+NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
+
 # Graduated edge discount for bet sizing.
 # 10%+ edges hit only 58.8% vs 75% for 5-8% edges.
 EDGE_DISCOUNT_TIERS = [
@@ -1375,6 +1383,14 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
             min_edge = max(min_edge, NBA_PLAYOFF_MIN_EDGE)
             if edge > NBA_PLAYOFF_HARD_SKIP_AT:
                 continue  # model is hallucinating, drop this candidate
+
+        # NBA regular-season spread guard (May 2026): raw edges >= 8% are
+        # anti-signal (35.0% hit / -$198 over 60 picks). Drop the candidate.
+        # Outside playoff window only; the in-window block above already handles
+        # playoff picks. See lessons.md root entry 2026-05-02.
+        if sport.lower() == "nba" and not is_nba_playoff_window():
+            if edge >= NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT:
+                continue
 
         if edge >= min_edge and edge > best_edge:
             best_edge = edge

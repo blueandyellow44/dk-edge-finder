@@ -1,5 +1,16 @@
 # DK Edge Finder — Lessons Learned
 
+## 2026-05-02: NBA regular-season Spread picks at raw edge >= 8% are anti-signal [AUTOMATE - DONE]
+**Observation:** Microscopic audit of pick_history.json (759 resolved picks, 2026-03-24 to 2026-05-01) shows NBA Spread picks split sharply by raw edge. Edges below 8% are roughly break-even (15W-14L over the 3-5% and 5-8% buckets combined). Edges at or above 8% hit 21W-39L (35.0%) at -$198.40 over 60 picks. The 8-12% bucket alone is 7W-18L (28.0%) at -$115. The 2026-04-30 NBA playoff discount block already protects in-window picks; the bleed is regular-season-only.
+**Impact:** Replay against historical picks: if the new guard had been live since 2026-03-24, it would have dropped 57 NBA Spread picks (18W-39L at -$225) and kept 32 (18W-14L at +$25). Net +$250 swing on NBA alone. Patch is mostly forward-looking because the NBA regular season has already ended; takes effect for the 2026-27 season opener.
+**Rule:** When a model's edge estimate is ANTI-correlated with realized outcome over a meaningful sample (here n=60, p < 0.05 against fair coin), the model is fighting market closing line value, not finding alpha. Hard-skip the bucket. Mirror the existing playoff hard-skip pattern; do not try to fix the underlying SD or DRatings prediction in the same patch (one change per audit window).
+**Code fix:** scripts/scan_edges.py added NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08 constant and a guard block in calculate_edge() that skips NBA Spread candidates with raw edge >= 8% when not in the playoff window. Mirrors the lines 1373-1377 playoff pattern. Commit forthcoming.
+**Backlog (deferred per panel):**
+- Instrument CLV in resolve_bets.py: log closing line and bet line per pick, so a future audit can confirm whether the NBA bleed is sharp-money exploitation vs model error.
+- Press MLB Spread 12%+ bucket (74.4% / +$714 over 90 picks): consider raising Kelly fraction. Defer until next audit so this NBA change has clean attribution.
+- Consolidate the NBA override layer (NBA_SPREAD_MIN_EDGE, NBA_LARGE_*, NBA_PLAYOFF_*, regular-season hard-skip) into a single per-sport-per-market filter table. Tech debt, not a bleed.
+- Confidence labeler is broken: HIGH only fires on NBA, hits 50.8%, no signal. Fix or retire the field. Not bleed-stopping.
+
 ## 2026-04-30: Resolver scoreboard cache must key on (sport, date), not sport alone [AUTOMATE - DONE]
 **Mistake:** scripts/resolve_bets.py cached fetched ESPN scoreboards under all_games[sport]. The first pending pick of each sport triggered a fetch for that pick's scan_date. Every subsequent pending pick of the same sport silently reused the same scoreboard regardless of its own date. find_game_score then could not locate games on other dates and the picks stayed pending forever.
 **Impact:** 110 NBA paper picks across April 5-29 were stuck pending for weeks. After fix, all resolved. Record went from 363W-257L to 415W-315L.
