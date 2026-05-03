@@ -2000,7 +2000,7 @@ def main(games_only: bool = False):
 
     for pick, bet_amount in game_sized + prop_sized:
         rank += 1
-        formatted_picks.append({
+        formatted = {
             "rank": rank,
             "sport": pick.get("sport", "NBA"),
             "event": pick.get("event", pick.get("event_short", "")),
@@ -2022,7 +2022,10 @@ def main(games_only: bool = False):
             "dk_link": pick.get("dk_link", ""),
             "type": "prop" if pick.get("market") == "Player Prop" else "game",
             "start_time": pick.get("start_time", ""),
-        })
+        }
+        if "is_favorite" in pick:
+            formatted["is_favorite"] = pick["is_favorite"]
+        formatted_picks.append(formatted)
         print(f"  #{rank}: {pick['pick']} ({pick['odds']}) — {pick['edge']}% edge — ${bet_amount:.2f}")
 
     print(f"  Games: {len(game_sized)} picks (${game_spent:.2f}), Props: {len(prop_sized)} picks (${prop_spent:.2f})")
