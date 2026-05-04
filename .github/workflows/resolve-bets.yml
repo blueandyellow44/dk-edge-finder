@@ -30,6 +30,17 @@ jobs:
         working-directory: scripts
         run: python resolve_bets.py
 
+      - name: Generate AI daily summaries
+        working-directory: scripts
+        env:
+          # Optional: when unset, the script logs and skips so the cron
+          # keeps running. Set ANTHROPIC_API_KEY as a repo secret in
+          # GitHub Actions Settings to enable Anthropic-backed daily
+          # commentary on the Activity tab. Idempotent: only generates
+          # summaries for dates not already in daily_summaries.json.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python generate_daily_summary.py
+
       - name: Check for changes
         id: changes
         run: |
@@ -40,7 +51,7 @@ jobs:
         run: |
           git config user.name "DK Edge Bot"
           git config user.email "max.sheahan@icloud.com"
-          git add data.json bankroll.json pick_history.json
+          git add data.json bankroll.json pick_history.json daily_summaries.json
           git commit -m "Auto-resolve: $(date +%Y-%m-%d) bet results"
           git push
           # Sync to Cloudflare deploy branch. The Cloudflare bot occasionally

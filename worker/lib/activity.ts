@@ -1,8 +1,12 @@
 import type { Env } from '../env'
 import { ActivityResponseSchema } from '../../shared/schemas'
 import type { ActivityResponse, ResolvedBet } from '../../shared/types'
-import { loadDataJson, loadPickHistory } from './picks'
-import type { PickHistoryEntry } from './picks'
+import {
+  loadDataJson,
+  loadDailySummaries,
+  loadPickHistory,
+} from './picks'
+import type { DailySummaryEntry, PickHistoryEntry } from './picks'
 
 const EM_DASH_RE = /—/g
 function stripEmDash(s: string): string {
@@ -103,10 +107,29 @@ function normalizeResolvedBet(
   return bet
 }
 
+function normalizeSummaries(
+  raw: Record<string, DailySummaryEntry>,
+): Record<string, { summary: string; generated_at?: string; model?: string }> {
+  const out: Record<string, { summary: string; generated_at?: string; model?: string }> = {}
+  for (const [date, entry] of Object.entries(raw)) {
+    if (!date || !entry || typeof entry !== 'object') continue
+    const summary = typeof entry.summary === 'string' ? entry.summary : ''
+    if (!summary) continue
+    const item: { summary: string; generated_at?: string; model?: string } = {
+      summary: stripEmDash(summary),
+    }
+    if (typeof entry.generated_at === 'string') item.generated_at = entry.generated_at
+    if (typeof entry.model === 'string') item.model = entry.model
+    out[date] = item
+  }
+  return out
+}
+
 export async function getActivityResponse(env: Env): Promise<ActivityResponse> {
-  const [{ data }, history] = await Promise.all([
+  const [{ data }, history, summariesRaw] = await Promise.all([
     loadDataJson(env),
     loadPickHistory(env),
+    loadDailySummaries(env),
   ])
   const historyIndex = buildPickHistoryIndex(history)
   const rawBets = Array.isArray((data as { bets?: unknown }).bets)
@@ -116,5 +139,6 @@ export async function getActivityResponse(env: Env): Promise<ActivityResponse> {
     .map((b) => normalizeResolvedBet((b ?? {}) as Record<string, unknown>, historyIndex))
     .filter((b) => b.outcome !== 'pending')
   bets.sort((a, b) => b.date.localeCompare(a.date))
-  return ActivityResponseSchema.parse({ bets })
+  const summaries = normalizeSummaries(summariesRaw)
+  return ActivityResponseSchema.parse({ bets, summaries })
 }

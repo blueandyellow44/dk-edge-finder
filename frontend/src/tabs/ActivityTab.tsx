@@ -187,44 +187,55 @@ export function ActivityTab() {
     )
   }
 
+  const summaries = activity.data.summaries ?? {}
+
   return (
     <div className="activity-days">
-      {days.map((day) => (
-        <section key={day.date} className="activity-day">
-          <header className="activity-day-header">
-            <div className="activity-day-date">{formatDayHeader(day.date)}</div>
-            <div className="activity-day-stats">
-              <span className="activity-day-record">
-                {day.wins}W-{day.losses}L
-                {day.pushes > 0 ? `-${day.pushes}P` : ''}
-              </span>
-              <span
-                className={`activity-day-net ${
-                  day.net > 0 ? 'positive' : day.net < 0 ? 'negative' : ''
-                }`}
-              >
-                {formatSignedMoney(day.net)}
-              </span>
+      {days.map((day) => {
+        const summary = summaries[day.date]?.summary
+        return (
+          <section key={day.date} className="activity-day">
+            <header className="activity-day-header">
+              <div className="activity-day-date">{formatDayHeader(day.date)}</div>
+              <div className="activity-day-stats">
+                <span className="activity-day-record">
+                  {day.wins}W-{day.losses}L
+                  {day.pushes > 0 ? `-${day.pushes}P` : ''}
+                </span>
+                <span
+                  className={`activity-day-net ${
+                    day.net > 0 ? 'positive' : day.net < 0 ? 'negative' : ''
+                  }`}
+                >
+                  {formatSignedMoney(day.net)}
+                </span>
+              </div>
+            </header>
+            {summary && (
+              <p className="activity-day-summary">
+                <span className="activity-day-summary-label">AI</span>
+                {summary}
+              </p>
+            )}
+            <div className="activity-day-bets">
+              {day.bets.map((bet, i) => {
+                const key = `${bet.date}|${bet.event}|${bet.pick}|${i}`
+                return (
+                  <ActivityRow
+                    key={key}
+                    bet={bet}
+                    index={i}
+                    expanded={expandedKey === key}
+                    onToggle={() =>
+                      setExpandedKey(expandedKey === key ? null : key)
+                    }
+                  />
+                )
+              })}
             </div>
-          </header>
-          <div className="activity-day-bets">
-            {day.bets.map((bet, i) => {
-              const key = `${bet.date}|${bet.event}|${bet.pick}|${i}`
-              return (
-                <ActivityRow
-                  key={key}
-                  bet={bet}
-                  index={i}
-                  expanded={expandedKey === key}
-                  onToggle={() =>
-                    setExpandedKey(expandedKey === key ? null : key)
-                  }
-                />
-              )
-            })}
-          </div>
-        </section>
-      ))}
+          </section>
+        )
+      })}
     </div>
   )
 }

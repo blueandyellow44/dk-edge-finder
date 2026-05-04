@@ -27,6 +27,12 @@
 !data.json
 !bankroll.json
 !pick_history.json
+# daily_summaries.json: AI-generated per-date commentary, written by
+# scripts/generate_daily_summary.py inside the resolve-bets cron when
+# ANTHROPIC_API_KEY is set. Worker reads to merge into /api/activity.
+# Same Access-gated semantics as the others.
+# (added 2026-05-04 session 14)
+!daily_summaries.json
 
 # When the v2 SPA cuts over (Phase 3), the cleanest path is to switch
 # wrangler.jsonc `assets.directory` to `frontend/dist` and rewrite this
