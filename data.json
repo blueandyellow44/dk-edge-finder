@@ -2,17 +2,17 @@
   "scan_date": "2026-05-04",
   "scan_subtitle": "Monday, May 04, 2026 \u2014 EPL (2), LA_LIGA (1), MLB (12), NBA (2), NHL (2), SERIE_A (2)",
   "bankroll": {
-    "available": 679.34,
+    "available": 549.11,
     "starting": 500.0,
-    "profit": 179.34,
+    "profit": 147.11,
     "record": {
-      "wins": 37,
-      "losses": 21,
+      "wins": 42,
+      "losses": 25,
       "pushes": 1
     },
-    "pending_count": 0,
-    "pending_total": 0,
-    "pending_label": "No unsettled bets"
+    "pending_count": 7,
+    "pending_total": 98.0,
+    "pending_label": "7 bet(s) pending ($98.00)"
   },
   "games_analyzed": 21,
   "best_bet": {
@@ -1025,6 +1025,149 @@
       "wager": 25.0,
       "outcome": "win",
       "pnl": 67.5,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "Colorado Rockies +1.5",
+      "event": "Atlanta Braves @ Colorado Rockies",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": -112,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "ATL 11, COL 6"
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "Los Angeles Angels +1.5",
+      "event": "New York Mets @ Los Angeles Angels",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": -143,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "NYM 5, LAA 1"
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "OVER 2.5",
+      "event": "VfL Wolfsburg @ SC Freiburg",
+      "sport": "BUNDESLIGA",
+      "wager": 14.0,
+      "odds": -155,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "WOB 1, SCF 1"
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "Athletics +1.5",
+      "event": "Cleveland Guardians @ Athletics",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": -156,
+      "outcome": "win",
+      "pnl": 8.97,
+      "final_score": "CLE 1, ATH 7"
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "Pittsburgh Pirates +1.5",
+      "event": "Cincinnati Reds @ Pittsburgh Pirates",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": -188,
+      "outcome": "win",
+      "pnl": 7.45,
+      "final_score": "CIN 0, PIT 1"
+    },
+    {
+      "date": "2026-05-03",
+      "pick": "Miami Marlins +1.5",
+      "event": "Philadelphia Phillies @ Miami Marlins",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": -136,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "PHI 7, MIA 2"
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Milwaukee Brewers -1.5",
+      "event": "Milwaukee Brewers @ St. Louis Cardinals",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 141,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Toronto Blue Jays -1.5",
+      "event": "Toronto Blue Jays @ Tampa Bay Rays",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 165,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Los Angeles Angels -1.5",
+      "event": "Chicago White Sox @ Los Angeles Angels",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 135,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Cleveland Guardians -1.5",
+      "event": "Cleveland Guardians @ Kansas City Royals",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 157,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Philadelphia Phillies -1.5",
+      "event": "Philadelphia Phillies @ Miami Marlins",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 144,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Houston Astros +1.5",
+      "event": "Los Angeles Dodgers @ Houston Astros",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 104,
+      "outcome": "pending",
+      "pnl": 0.0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-04",
+      "pick": "Seattle Mariners -1.5",
+      "event": "Atlanta Braves @ Seattle Mariners",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 139,
+      "outcome": "pending",
+      "pnl": 0.0,
       "final_score": ""
     }
   ]

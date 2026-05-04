@@ -50,7 +50,7 @@ def fetch_espn_scores(sport_path: str, date_str: str) -> list[dict]:
                 "home": teams.get("home", {}),
                 "away": teams.get("away", {}),
                 "status": status,
-                "is_final": status == "STATUS_FINAL",
+                "is_final": status in ("STATUS_FINAL", "STATUS_FULL_TIME"),
                 "event_id": event.get("id", ""),
             })
         return games

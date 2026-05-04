@@ -2,15 +2,15 @@
   "starting_bankroll": 500.0,
   "balance_override": 679.34,
   "override_note": "DK app balance $679.34 as of April 10. April 7-8 bets recorded (5W-4L, +$4.46).",
-  "current_bankroll": 679.34,
-  "last_updated": "2026-04-10T00:00:00.000000+00:00",
+  "current_bankroll": 647.11,
+  "last_updated": "2026-05-04T16:40:58.079035+00:00",
   "pending_bets": [],
-  "lifetime_bets": 43,
-  "lifetime_wins": 37,
-  "lifetime_losses": 21,
+  "lifetime_bets": 68,
+  "lifetime_wins": 42,
+  "lifetime_losses": 25,
   "lifetime_pushes": 1,
-  "lifetime_profit": 179.34,
-  "roi_pct": 35.87,
+  "lifetime_profit": 147.11,
+  "roi_pct": 14.59,
   "resolved_bets": [
     {
       "id": "mem-spread-20260321",
@@ -476,7 +476,7 @@
       "bet_size": 12.0,
       "outcome": "push",
       "pnl": 0,
-      "final_score": "Early Exit Protected — wager returned"
+      "final_score": "Early Exit Protected \u2014 wager returned"
     },
     {
       "id": "ove-nba-clemem-20260406",
@@ -504,7 +504,7 @@
       "pick": "OVER 222.5",
       "odds": -105,
       "decimal_odds": 1.952,
-      "model_prob": 0.60,
+      "model_prob": 0.6,
       "edge_pct": 7.5,
       "tier": "High",
       "bet_size": 15.0,
@@ -555,7 +555,7 @@
       "pick": "Boston Red Sox +1.5",
       "odds": -171,
       "decimal_odds": 1.585,
-      "model_prob": 0.70,
+      "model_prob": 0.7,
       "edge_pct": 7.0,
       "tier": "High",
       "bet_size": 12.0,
@@ -592,10 +592,10 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "loss",
-      "pnl": -13.50,
-      "final_score": "Manual bet — DK had different line than site"
+      "pnl": -13.5,
+      "final_score": "Manual bet \u2014 DK had different line than site"
     },
     {
       "id": "chc-spread-20260408",
@@ -609,7 +609,7 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "win",
       "pnl": 22.28,
       "final_score": "Cubs won by 2+"
@@ -626,16 +626,16 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "loss",
-      "pnl": -13.50,
+      "pnl": -13.5,
       "final_score": "Rangers lost outright"
     },
     {
       "id": "und-ucl-20260408",
       "date": "2026-04-08",
       "sport": "ucl",
-      "event": "Atlético Madrid @ Barcelona",
+      "event": "Atl\u00e9tico Madrid @ Barcelona",
       "market": "over/under",
       "pick": "UNDER 3.5 Goals",
       "odds": -115,
@@ -643,7 +643,7 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "win",
       "pnl": 11.74,
       "final_score": "Combined 3 or fewer goals"
@@ -660,9 +660,9 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "loss",
-      "pnl": -13.50,
+      "pnl": -13.5,
       "final_score": "Wolves lost by 8+"
     },
     {
@@ -677,7 +677,7 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "win",
       "pnl": 8.04,
       "final_score": "Guardians within 1 or won"
@@ -694,9 +694,9 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "loss",
-      "pnl": -13.50,
+      "pnl": -13.5,
       "final_score": "Pirates lost by 2+"
     },
     {
@@ -711,7 +711,7 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "win",
       "pnl": 9.93,
       "final_score": "Twins within 1 or won"
@@ -728,7 +728,7 @@
       "model_prob": 0.5,
       "edge_pct": 0,
       "tier": "Manual",
-      "bet_size": 13.50,
+      "bet_size": 13.5,
       "outcome": "win",
       "pnl": 9.06,
       "final_score": "Giants within 1 or won"

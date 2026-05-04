@@ -16033,9 +16033,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark): WOB 1.5, SCF 1.8 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "WOB 1, SCF 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-03",
