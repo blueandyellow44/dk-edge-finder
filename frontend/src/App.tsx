@@ -6,17 +6,15 @@ import { BalanceChart } from './components/BalanceChart'
 import { PicksTab } from './tabs/PicksTab'
 import { PendingTab } from './tabs/PendingTab'
 import { ActivityTab } from './tabs/ActivityTab'
-import { PositionsTab } from './tabs/PositionsTab'
 import { AccountTab } from './tabs/AccountTab'
 import { useMe } from './api/queries'
 
-export type TabId = 'picks' | 'pending' | 'activity' | 'positions' | 'account'
+export type TabId = 'picks' | 'pending' | 'activity' | 'account'
 
 const TABS: { id: TabId; label: string }[] = [
   { id: 'picks', label: 'Picks' },
   { id: 'pending', label: 'Pending' },
   { id: 'activity', label: 'Activity' },
-  { id: 'positions', label: 'Positions' },
   { id: 'account', label: 'Account' },
 ]
 
@@ -34,7 +32,6 @@ function App() {
             {activeTab === 'picks' && <PicksTab />}
             {activeTab === 'pending' && <PendingTab />}
             {activeTab === 'activity' && <ActivityTab />}
-            {activeTab === 'positions' && <PositionsTab />}
             {activeTab === 'account' && <AccountTab />}
           </section>
         </div>

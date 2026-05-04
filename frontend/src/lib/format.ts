@@ -37,3 +37,14 @@ export function formatStartTime(iso: string): string {
     minute: '2-digit',
   })
 }
+
+// American odds → profit on a winning bet (excludes returned stake).
+// "+150" with $20 wager wins $30 profit. "-110" with $22 wins $20 profit.
+export function americanWinAmount(odds: string, wager: number): number {
+  const cleaned = odds.replace(/^\+/, '').trim()
+  const n = parseFloat(cleaned)
+  if (!Number.isFinite(n) || wager <= 0) return 0
+  if (n > 0) return (wager * n) / 100
+  if (n < 0) return (wager * 100) / Math.abs(n)
+  return 0
+}

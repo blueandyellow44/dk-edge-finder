@@ -71,7 +71,7 @@ export function PicksTab() {
                 onToggleExpand={() => setExpandedKey(isExpanded ? null : key)}
                 onMarkPlaced={() => {
                   markPlacedMutation.mutate(
-                    { key },
+                    { key, wager: Math.ceil(pick.wager) },
                     { onSuccess: () => setExpandedKey(null) },
                   )
                 }}

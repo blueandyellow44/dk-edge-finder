@@ -101,6 +101,8 @@ export const PlacementSchema = z.object({
   dispatch_status: z.enum(['ok', 'queued', 'failed']),
   placed_at: TimestampSchema,
   idempotency_key: z.string(),
+  // Optional for back-compat: KV records written before Bug 2 fix have no wager.
+  wager: z.number().nonnegative().optional(),
 })
 
 export const SyncQueueEntrySchema = z.object({
@@ -163,6 +165,9 @@ export const PlacementCreateRequestSchema = z.object({
   // carry them from the retired auto-dispatch chain. New writes are 'ok'.
   dispatch_status: z.enum(['ok', 'queued', 'failed']).default('ok'),
   idempotency_key: z.string().min(1),
+  // Optional on the request: 'skipped' actions don't carry a wager.
+  // When action is 'placed', the route requires it (validated below).
+  wager: z.number().nonnegative().optional(),
 })
 
 export const ManualBetCreateRequestSchema = z.object({

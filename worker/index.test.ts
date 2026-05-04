@@ -291,6 +291,138 @@ describe('GET /api/bankroll', () => {
     expect(body.balance_override?.amount).toBe(750.0)
     expect(body.balance_override?.note).toBe('Bumped after Saturday wins')
   })
+
+  test('subtracts unresolved placed wagers from available (Bug 2 fix)', async () => {
+    // Two placements on today's scan: one resolved (in data.json.bets[]),
+    // one still pending. Only the pending one should subtract.
+    const dataJson = {
+      ...baseDataJson,
+      bets: [
+        {
+          date: '2026-04-30',
+          sport: 'MLB',
+          event: 'NYY @ BOS',
+          pick: 'NYY ML',
+          odds: '-110',
+          wager: 30,
+          outcome: 'win',
+          pnl: 27.27,
+          final_score: 'NYY 5, BOS 3',
+        },
+      ],
+    }
+    const env = makeEnv({ dataJson, bankrollJson: baseBankrollJson })
+    const record = {
+      schema_version: 1,
+      email: 'max.sheahan@icloud.com',
+      scan_date: '2026-04-30',
+      placements: [
+        // Resolved placement: matches a bet in activity (won't subtract).
+        {
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-30T19:00:00Z',
+          idempotency_key: 'idem-resolved',
+          wager: 30,
+        },
+        // Unresolved placement: not in activity (subtracts $25).
+        {
+          key: 'BOS -6.5|BOS @ PHI',
+          action: 'placed',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-30T19:05:00Z',
+          idempotency_key: 'idem-unresolved',
+          wager: 25,
+        },
+        // Skipped placement (won't subtract).
+        {
+          key: 'PHI ML|BOS @ PHI',
+          action: 'skipped',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-30T19:10:00Z',
+          idempotency_key: 'idem-skipped',
+        },
+      ],
+      sync_queue: [],
+      manual_bets: [],
+      updated_at: '2026-04-30T19:10:00Z',
+    }
+    await env.EDGE_STATE.put(SCAN_KEY, JSON.stringify(record))
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { available: number }
+    // file current_bankroll 679.34 minus the one unresolved $25 = 654.34.
+    expect(body.available).toBeCloseTo(654.34, 2)
+  })
+
+  test('placements written before Bug 2 fix (no wager) do not subtract', async () => {
+    const env = makeEnv({ dataJson: baseDataJson, bankrollJson: baseBankrollJson })
+    const record = {
+      schema_version: 1,
+      email: 'max.sheahan@icloud.com',
+      scan_date: '2026-04-30',
+      placements: [
+        {
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-30T19:00:00Z',
+          idempotency_key: 'idem-legacy',
+          // wager intentionally absent: pre-fix KV record.
+        },
+      ],
+      sync_queue: [],
+      manual_bets: [],
+      updated_at: '2026-04-30T19:00:00Z',
+    }
+    await env.EDGE_STATE.put(SCAN_KEY, JSON.stringify(record))
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { available: number }
+    expect(body.available).toBe(679.34)
+  })
+
+  test('subtracts from override when an override is set', async () => {
+    const env = makeEnv({ dataJson: baseDataJson, bankrollJson: baseBankrollJson })
+    await env.EDGE_STATE.put(
+      'balance_override:max.sheahan@icloud.com',
+      JSON.stringify({
+        schema_version: 1,
+        email: 'max.sheahan@icloud.com',
+        amount: 1000,
+        note: 'manual',
+        updated_at: '2026-04-30T18:00:00Z',
+      }),
+    )
+    await env.EDGE_STATE.put(
+      SCAN_KEY,
+      JSON.stringify({
+        schema_version: 1,
+        email: 'max.sheahan@icloud.com',
+        scan_date: '2026-04-30',
+        placements: [
+          {
+            key: 'BOS -6.5|BOS @ PHI',
+            action: 'placed',
+            dispatch_status: 'ok',
+            placed_at: '2026-04-30T19:05:00Z',
+            idempotency_key: 'idem-with-override',
+            wager: 40,
+          },
+        ],
+        sync_queue: [],
+        manual_bets: [],
+        updated_at: '2026-04-30T19:05:00Z',
+      }),
+    )
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    const body = (await res.json()) as { available: number }
+    expect(body.available).toBe(960)
+  })
 })
 
 // ────────────────────────────────────────────────────────────────────────
@@ -402,6 +534,7 @@ describe('POST /api/state/placements', () => {
           action: 'placed',
           dispatch_status: 'ok',
           idempotency_key: 'idem-create-1',
+          wager: 25,
         }),
       }),
       env,
@@ -413,11 +546,13 @@ describe('POST /api/state/placements', () => {
       dispatch_status: 'ok' | 'queued' | 'failed'
       placed_at: string
       idempotency_key: string
+      wager?: number
     }
     expect(body.key).toBe('NYY ML|NYY @ BOS')
     expect(body.action).toBe('placed')
     expect(body.dispatch_status).toBe('ok')
     expect(body.idempotency_key).toBe('idem-create-1')
+    expect(body.wager).toBe(25)
     // placed_at is server-stamped: it should be an ISO timestamp at or
     // after the request started.
     expect(body.placed_at >= before).toBe(true)
@@ -437,6 +572,7 @@ describe('POST /api/state/placements', () => {
       action: 'placed' as const,
       dispatch_status: 'ok' as const,
       idempotency_key: 'idem-dupe',
+      wager: 20,
     }
     const headers = { ...AUTHED, 'content-type': 'application/json' }
     const r1 = await app.fetch(
@@ -496,6 +632,46 @@ describe('POST /api/state/placements', () => {
     const body = (await res.json()) as { error: string; issues: unknown[] }
     expect(body.error).toMatch(/Invalid placement body/i)
     expect(Array.isArray(body.issues)).toBe(true)
+  })
+
+  test('rejects action="placed" body that omits wager', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          idempotency_key: 'idem-no-wager',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(400)
+    const body = (await res.json()) as { error: string }
+    expect(body.error).toMatch(/wager is required/i)
+  })
+
+  test('action="skipped" omitting wager succeeds', async () => {
+    const env = makeEnv({ dataJson: baseDataJson })
+    const res = await app.fetch(
+      new Request('https://worker.test/api/state/placements', {
+        method: 'POST',
+        headers: { ...AUTHED, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          key: 'NYY ML|NYY @ BOS',
+          action: 'skipped',
+          idempotency_key: 'idem-skip-no-wager',
+        }),
+      }),
+      env,
+    )
+    expect(res.status).toBe(201)
+    const body = (await res.json()) as { wager?: number; action: string }
+    expect(body.action).toBe('skipped')
+    expect(body.wager).toBeUndefined()
   })
 
   test('rejects without auth header', async () => {

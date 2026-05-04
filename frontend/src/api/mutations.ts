@@ -19,14 +19,18 @@ export function useSkipPick() {
 export function useMarkPickAsPlaced() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ key }: { key: string }) =>
+    mutationFn: ({ key, wager }: { key: string; wager: number }) =>
       apiPost<Placement>('/api/state/placements', {
         key,
         action: 'placed' as const,
         dispatch_status: 'ok' as const,
         idempotency_key: crypto.randomUUID(),
+        wager,
       }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['state'] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['state'] })
+      qc.invalidateQueries({ queryKey: ['bankroll'] })
+    },
   })
 }
 

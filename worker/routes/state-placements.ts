@@ -17,6 +17,9 @@ app.post('/', async (c) => {
   if (!parsed.success) {
     return c.json({ error: 'Invalid placement body', issues: parsed.error.issues }, 400)
   }
+  if (parsed.data.action === 'placed' && typeof parsed.data.wager !== 'number') {
+    return c.json({ error: 'wager is required when action is "placed"' }, 400)
+  }
   const scan_date = await getLatestScanDate(c.env)
   const placement: Placement = PlacementSchema.parse({
     key: parsed.data.key,
@@ -24,6 +27,7 @@ app.post('/', async (c) => {
     dispatch_status: parsed.data.dispatch_status,
     placed_at: new Date().toISOString(),
     idempotency_key: parsed.data.idempotency_key,
+    ...(typeof parsed.data.wager === 'number' ? { wager: parsed.data.wager } : {}),
   })
   const record = await appendPlacement(c.env, email, scan_date, placement)
   const merged = record.placements.find((p) => p.idempotency_key === placement.idempotency_key) ?? placement
