@@ -113,6 +113,40 @@ export async function getLatestScanDate(env: Env): Promise<string> {
   return typeof data.scan_date === 'string' ? data.scan_date : ''
 }
 
+// pick_history.json is the model's paper-trading log. Used by /api/activity
+// to enrich resolved bets with model metadata (market, edge, tier, notes)
+// for the Positions-style click-to-expand detail in ActivityTab. Defensive:
+// returns [] on any failure so /api/activity keeps serving with bare bets.
+export type PickHistoryEntry = {
+  scan_date?: unknown
+  sport?: unknown
+  event?: unknown
+  market?: unknown
+  pick?: unknown
+  odds?: unknown
+  implied?: unknown
+  model?: unknown
+  edge?: unknown
+  tier?: unknown
+  confidence?: unknown
+  type?: unknown
+  notes?: unknown
+  outcome?: unknown
+  final_score?: unknown
+  pnl_if_bet?: unknown
+}
+
+export async function loadPickHistory(env: Env): Promise<PickHistoryEntry[]> {
+  try {
+    const res = await fetchAsset(env, '/pick_history.json')
+    if (!res.ok) return []
+    const raw = (await res.json()) as unknown
+    return Array.isArray(raw) ? (raw as PickHistoryEntry[]) : []
+  } catch {
+    return []
+  }
+}
+
 export async function getPicksResponse(env: Env): Promise<PicksResponse> {
   const { data, lastModified } = await loadDataJson(env)
 

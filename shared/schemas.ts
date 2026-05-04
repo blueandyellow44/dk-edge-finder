@@ -196,6 +196,16 @@ export const ResolvedBetSchema = z.object({
   outcome: z.enum(['win', 'loss', 'push', 'pending']),
   pnl: z.number(),
   final_score: z.string(),
+  // Optional metadata copied from pick_history.json on the activity worker
+  // when (scan_date, pick, event) matches. Drives the Positions-style
+  // expand-on-click detail view in ActivityTab.
+  market: z.string().optional(),
+  model: z.number().optional(),
+  implied: z.number().optional(),
+  edge: z.number().optional(),
+  tier: z.string().optional(),
+  confidence: z.string().optional(),
+  notes: z.string().optional(),
 })
 
 export const ActivityResponseSchema = z.object({

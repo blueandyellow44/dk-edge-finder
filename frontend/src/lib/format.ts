@@ -38,6 +38,21 @@ export function formatStartTime(iso: string): string {
   })
 }
 
+// "2026-05-03" -> "Sun, May 3" for ActivityTab day-group headers. Uses
+// UTC parse so a date string never shifts a day backward in PT.
+export function formatDayHeader(yyyymmdd: string): string {
+  if (!yyyymmdd || !/^\d{4}-\d{2}-\d{2}$/.test(yyyymmdd)) return yyyymmdd
+  const [y, m, d] = yyyymmdd.split('-').map(Number)
+  const dt = new Date(Date.UTC(y, m - 1, d))
+  if (isNaN(dt.getTime())) return yyyymmdd
+  return dt.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
 // American odds → profit on a winning bet (excludes returned stake).
 // "+150" with $20 wager wins $30 profit. "-110" with $22 wins $20 profit.
 export function americanWinAmount(odds: string, wager: number): number {

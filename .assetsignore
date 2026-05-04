@@ -19,9 +19,14 @@
 #   - index.html: legacy single-file SPA (kept until Phase 3 cutover)
 #   - data.json:  read by /api/picks via the ASSETS binding (lib/picks.ts)
 #   - bankroll.json: read by /api/bankroll via the ASSETS binding (lib/bankroll.ts)
+#   - pick_history.json: read by /api/activity to enrich resolved bets with
+#     model metadata (market, model%, edge, tier, notes). Cloudflare Access
+#     scope is /* so direct URL access is gated; not a public exposure.
+#     (added 2026-05-04 session 14)
 !index.html
 !data.json
 !bankroll.json
+!pick_history.json
 
 # When the v2 SPA cuts over (Phase 3), the cleanest path is to switch
 # wrangler.jsonc `assets.directory` to `frontend/dist` and rewrite this
