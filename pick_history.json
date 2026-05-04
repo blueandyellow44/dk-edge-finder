@@ -4333,9 +4333,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.8, VAN 2.1 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 DRatings only.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "POR 2, VAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4459,9 +4459,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.8, VAN 2.1 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "POR 2, VAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -4693,9 +4693,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.8, VAN 2.1 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "POR 2, VAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-04",
@@ -6493,9 +6493,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): MUN 1.1, RMA 1.6 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (18.0%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MUN 2, RMA 1",
+    "pnl_if_bet": 10.0
   },
   {
     "scan_date": "2026-04-07",
@@ -6763,9 +6763,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): ATM 1.0, BAR 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.6%): Model predicts 2.6 vs market 3.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATM 2, BAR 0",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-08",
@@ -6907,9 +6907,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): ATM 1.0, BAR 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.6%): Model predicts 2.6 vs market 3.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATM 2, BAR 0",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-08",
@@ -7609,9 +7609,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): GIR 0.7, RMA 1.8 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (12.9%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "GIR 1, RMA 1",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-04-10",
@@ -7735,9 +7735,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): GIR 0.7, RMA 1.8 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (13.7%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "GIR 1, RMA 1",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-04-10",
@@ -8023,9 +8023,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): UDI 1.1, MIL 2.3 (total: 3.4). Line: 2.5. Cushion: 0.9 pts. \u26a0 SUSPICIOUS EDGE (15.5%): Model predicts 3.4 vs market 2.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "UDI 3, MIL 0",
+    "pnl_if_bet": 8.33
   },
   {
     "scan_date": "2026-04-11",
@@ -8131,9 +8131,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SJ 1.2, SKC 1.1 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SJ 3, SKC 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8149,9 +8149,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.8, MIA 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.5%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "RBNY 2, MIA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8167,9 +8167,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): UDI 1.1, MIL 2.3 (total: 3.4). Line: 2.5. Cushion: 0.9 pts. \u26a0 SUSPICIOUS EDGE (14.5%): Model predicts 3.4 vs market 2.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "UDI 3, MIL 0",
+    "pnl_if_bet": 8.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8221,9 +8221,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.5, POR 1.1 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAFC 1, POR 2",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-11",
@@ -8275,9 +8275,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SJ 1.2, SKC 1.1 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SJ 3, SKC 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8293,9 +8293,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.8, MIA 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.6%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "RBNY 2, MIA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8365,9 +8365,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.5, POR 1.1 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAFC 1, POR 2",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-11",
@@ -8419,9 +8419,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SJ 1.2, SKC 1.1 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SJ 3, SKC 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8437,9 +8437,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.8, MIA 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.6%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "RBNY 2, MIA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-11",
@@ -8491,9 +8491,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.5, POR 1.1 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAFC 1, POR 2",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-04-11",
@@ -8599,9 +8599,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): LEC 1.2, BOL 2.1 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (22.6%): Model predicts 3.3 vs market 2.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LEC 0, BOL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-12",
@@ -8617,9 +8617,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CLB 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.9%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 1, CLB 1",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-12",
@@ -8761,9 +8761,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CLB 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.9%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 1, CLB 1",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-12",
@@ -8905,9 +8905,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CLB 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.0%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ORL 1, CLB 1",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-12",
@@ -9085,9 +9085,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + clubelo): GET 1.1, LEV 1.2 (total: 2.3). Line: 1.5. Cushion: 0.8 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "GET 0, LEV 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-13",
@@ -9229,9 +9229,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + clubelo): GET 1.1, LEV 1.2 (total: 2.3). Line: 1.5. Cushion: 0.8 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "GET 0, LEV 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-13",
@@ -9391,9 +9391,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): BAR 1.4, ATM 1.2 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.7%): Model predicts 2.6 vs market 3.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BAR 2, ATM 1",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-14",
@@ -9517,9 +9517,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): BAR 1.4, ATM 1.2 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.7%): Model predicts 2.6 vs market 3.5 \u2014 0.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "BAR 2, ATM 1",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-14",
@@ -9805,9 +9805,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): RMA 1.3, MUN 1.3 (total: 2.6). Line: 4.5. Cushion: 1.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (25.1%): Model predicts 2.6 vs market 4.5 \u2014 1.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "RMA 3, MUN 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-15",
@@ -9949,9 +9949,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): RMA 1.3, MUN 1.3 (total: 2.6). Line: 4.5. Cushion: 1.9 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (28.3%): Model predicts 2.6 vs market 4.5 \u2014 1.9 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "RMA 3, MUN 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-15",
@@ -10507,9 +10507,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark): KOE 1.7, STP 1.4 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "KOE 1, STP 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-17",
@@ -10561,9 +10561,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): CAG 0.9, INT 2.5 (total: 3.4). Line: 2.5. Cushion: 0.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAG 0, INT 3",
+    "pnl_if_bet": 5.71
   },
   {
     "scan_date": "2026-04-17",
@@ -10597,9 +10597,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SKC 0.7, VAN 2.3 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (20.0%): Model predicts 3.0 vs market 4.5 \u2014 1.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SKC 0, VAN 3",
+    "pnl_if_bet": 6.45
   },
   {
     "scan_date": "2026-04-17",
@@ -10615,9 +10615,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark): KOE 1.7, STP 1.4 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 oddsshark. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (13.7%): Model predicts 3.1 vs market 2.5 \u2014 0.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "KOE 1, STP 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-17",
@@ -10687,9 +10687,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): CAG 0.9, INT 2.5 (total: 3.4). Line: 2.5. Cushion: 0.9 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAG 0, INT 3",
+    "pnl_if_bet": 5.56
   },
   {
     "scan_date": "2026-04-17",
@@ -10741,9 +10741,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SKC 0.7, VAN 2.3 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (20.8%): Model predicts 3.0 vs market 4.5 \u2014 1.5 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SKC 0, VAN 3",
+    "pnl_if_bet": 6.67
   },
   {
     "scan_date": "2026-04-17",
@@ -10813,9 +10813,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SD 1.0, RSL 1.4 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.7%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 2, RSL 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -10831,9 +10831,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): MIA 1.1, COL 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.1%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 3, COL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -10849,9 +10849,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): HOU 1.0, ORL 1.4 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (12.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 1, ORL 0",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-04-18",
@@ -10939,9 +10939,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LA 1.0, DAL 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LA 2, DAL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -10957,9 +10957,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SD 1.0, RSL 1.4 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.7%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 2, RSL 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -10975,9 +10975,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): MIA 1.1, COL 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.0%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 3, COL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-18",
@@ -10993,9 +10993,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): HOU 1.0, ORL 1.4 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (12.2%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "HOU 1, ORL 0",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-04-18",
@@ -11083,9 +11083,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LA 1.0, DAL 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LA 2, DAL 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-19",
@@ -11785,9 +11785,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): ALA 0.7, RMA 1.8 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.5%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ALA 1, RMA 2",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-04-21",
@@ -11929,9 +11929,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): ALA 0.7, RMA 1.8 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.5%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ALA 1, RMA 2",
+    "pnl_if_bet": 8.0
   },
   {
     "scan_date": "2026-04-21",
@@ -12217,9 +12217,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): MIA 1.1, RSL 1.4 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.5%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIA 2, RSL 0",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-04-22",
@@ -12235,9 +12235,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SD 1.0, HOU 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.3%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SD 0, HOU 1",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-22",
@@ -12289,9 +12289,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): COL 0.9, LAFC 2.0 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 0, LAFC 0",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-04-22",
@@ -12361,9 +12361,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): MIA 1.1, RSL 1.4 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.4%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIA 2, RSL 0",
+    "pnl_if_bet": 7.41
   },
   {
     "scan_date": "2026-04-22",
@@ -12379,9 +12379,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SD 1.0, HOU 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (14.3%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SD 0, HOU 1",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-22",
@@ -12469,9 +12469,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): COL 0.9, LAFC 2.0 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 0, LAFC 0",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-04-22",
@@ -12505,9 +12505,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): MIA 1.1, RSL 1.4 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.4%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIA 2, RSL 0",
+    "pnl_if_bet": 7.41
   },
   {
     "scan_date": "2026-04-22",
@@ -12523,9 +12523,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SD 1.0, HOU 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.0%): Model predicts 2.3 vs market 3.5 \u2014 1.2 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SD 0, HOU 1",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-04-22",
@@ -12613,9 +12613,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): COL 0.9, LAFC 2.0 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 0, LAFC 0",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-04-23",
@@ -12937,9 +12937,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): CRE 0.8, NAP 2.7 (total: 3.5). Line: 2.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.5%): Model predicts 3.5 vs market 2.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CRE 0, NAP 4",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-24",
@@ -13045,9 +13045,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): CRE 0.8, NAP 2.7 (total: 3.5). Line: 2.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (18.4%): Model predicts 3.5 vs market 2.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CRE 0, NAP 4",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-04-24",
@@ -13243,9 +13243,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.9, CIN 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (21.0%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 0, CIN 2",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-04-25",
@@ -13261,9 +13261,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SKC 0.8, CHI 1.9 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.6%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SKC 0, CHI 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13297,9 +13297,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.9%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 2, SD 1",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-04-25",
@@ -13387,9 +13387,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.9, CIN 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.9%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 0, CIN 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-04-25",
@@ -13405,9 +13405,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SKC 0.8, CHI 1.9 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SKC 0, CHI 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13441,9 +13441,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.9%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 2, SD 1",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-04-25",
@@ -13477,9 +13477,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): COL 0.8, VAN 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 1, VAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13531,9 +13531,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RBNY 0.9, CIN 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (22.3%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 0, CIN 2",
+    "pnl_if_bet": 10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13549,9 +13549,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): SKC 0.8, CHI 1.9 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.6%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SKC 0, CHI 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13567,9 +13567,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.9%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 2, SD 1",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-04-25",
@@ -13603,9 +13603,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): COL 0.8, VAN 2.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 1, VAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-04-25",
@@ -13639,9 +13639,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): NE 0.8, MIA 2.1 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NE 1, MIA 1",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-04-25",
@@ -13783,9 +13783,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RSL 1.1, LA 1.5 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RSL 1, LA 2",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-26",
@@ -13945,9 +13945,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RSL 1.1, LA 1.5 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RSL 1, LA 2",
+    "pnl_if_bet": 6.06
   },
   {
     "scan_date": "2026-04-26",
@@ -14017,9 +14017,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): RSL 1.1, LA 1.5 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RSL 1, LA 2",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-04-26",
@@ -15187,9 +15187,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LEC 1.1, PIS 1.4 (total: 2.5). Line: 1.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LEC 2, PIS 1",
+    "pnl_if_bet": 5.26
   },
   {
     "scan_date": "2026-05-01",
@@ -15349,9 +15349,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LEC 1.1, PIS 1.4 (total: 2.5). Line: 1.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LEC 2, PIS 1",
+    "pnl_if_bet": 5.13
   },
   {
     "scan_date": "2026-05-01",
@@ -15529,9 +15529,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.8, MIA 2.1 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.9 vs market 3.5 \u2014 0.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 4, MIA 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15547,9 +15547,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): DAL 1.0, RBNY 1.1 (total: 2.1). Line: 3.5. Cushion: 1.4 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.3%): Model predicts 2.1 vs market 3.5 \u2014 1.4 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DAL 2, RBNY 0",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-05-02",
@@ -15565,9 +15565,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, RSL 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.5%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, RSL 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-05-02",
@@ -15583,9 +15583,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): CIN 0.9, CHI 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.9%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CIN 3, CHI 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15601,9 +15601,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): FUL 0.9, ARS 2.3 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. \u26a0 CONTESTED: Sources disagree by 0.8 pts. \u26a0 SUSPICIOUS EDGE (12.4%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "FUL 0, ARS 3",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-05-02",
@@ -15619,9 +15619,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (12.1%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAFC 2, SD 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15637,9 +15637,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): VAN 1.3, LA 1.2 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.3%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 1, LA 1",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-02",
@@ -15673,9 +15673,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.8, MIA 2.1 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.9 vs market 3.5 \u2014 0.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 4, MIA 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15691,9 +15691,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, RSL 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.6%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, RSL 2",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-05-02",
@@ -15709,9 +15709,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): DAL 1.0, RBNY 1.1 (total: 2.1). Line: 3.5. Cushion: 1.4 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.3%): Model predicts 2.1 vs market 3.5 \u2014 1.4 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DAL 2, RBNY 0",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-05-02",
@@ -15727,9 +15727,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): CIN 0.9, CHI 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.9%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CIN 3, CHI 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15745,9 +15745,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.7%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAFC 2, SD 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15763,9 +15763,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): VAN 1.3, LA 1.2 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.3%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 1, LA 1",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-02",
@@ -15799,9 +15799,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): GEN 1.0, ATA 2.1 (total: 3.1). Line: 2.5. Cushion: 0.6 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "GEN 0, ATA 0",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15817,9 +15817,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.8, MIA 2.1 (total: 2.9). Line: 3.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.9 vs market 3.5 \u2014 0.6 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 4, MIA 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15835,9 +15835,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, RSL 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (16.5%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, RSL 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-05-02",
@@ -15853,9 +15853,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): DAL 1.0, RBNY 1.1 (total: 2.1). Line: 3.5. Cushion: 1.4 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.7%): Model predicts 2.1 vs market 3.5 \u2014 1.4 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DAL 2, RBNY 0",
+    "pnl_if_bet": 6.45
   },
   {
     "scan_date": "2026-05-02",
@@ -15871,9 +15871,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): CIN 0.9, CHI 1.6 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (15.9%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CIN 3, CHI 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15889,9 +15889,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.7%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAFC 2, SD 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15907,9 +15907,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): VAN 1.3, LA 1.2 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.3%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 1, LA 1",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-02",
@@ -15961,9 +15961,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LAFC 1.1, SD 1.3 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.4%): Model predicts 2.4 vs market 3.5 \u2014 1.1 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAFC 2, SD 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-02",
@@ -15979,9 +15979,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): VAN 1.3, LA 1.2 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VAN 1, LA 1",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-05-03",
@@ -16105,9 +16105,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): LIV 1.6, MAN 1.1 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LIV 2, MAN 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-03",
@@ -16195,9 +16195,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (oddsshark): WOB 1.5, SCF 1.8 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "WOB 1, SCF 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-03",
@@ -16483,6 +16483,132 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 3.7, SEA 4.0 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Milwaukee Brewers @ St. Louis Cardinals",
+    "market": "Spread",
+    "pick": "Milwaukee Brewers -1.5",
+    "odds": "144",
+    "implied": "41.0%",
+    "model": "49.5%",
+    "edge": 8.5,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 4.5, STL 3.9 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Toronto Blue Jays @ Tampa Bay Rays",
+    "market": "Spread",
+    "pick": "Toronto Blue Jays -1.5",
+    "odds": "165",
+    "implied": "37.7%",
+    "model": "44.4%",
+    "edge": 6.7,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 4.1, TB 4.2 (margin: 0.1). -1.4 pts of cushion beyond the spread. TANK WATCH: 36-32, playoff push (-1.5% adj) TOR on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Philadelphia Phillies @ Miami Marlins",
+    "market": "Spread",
+    "pick": "Philadelphia Phillies -1.5",
+    "odds": "144",
+    "implied": "41.0%",
+    "model": "47.6%",
+    "edge": 6.6,
+    "tier": "High",
+    "confidence": "LOW",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): PHI 4.4, MIA 4.2 (margin: 0.2). -1.3 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Atlanta Braves @ Seattle Mariners",
+    "market": "Spread",
+    "pick": "Seattle Mariners -1.5",
+    "odds": "141",
+    "implied": "41.5%",
+    "model": "47.7%",
+    "edge": 6.2,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 3.7, SEA 4.0 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Los Angeles Dodgers @ Houston Astros",
+    "market": "Spread",
+    "pick": "Houston Astros +1.5",
+    "odds": "104",
+    "implied": "49.0%",
+    "model": "56.3%",
+    "edge": 7.2,
+    "tier": "High",
+    "confidence": "LOW",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 5.0, HOU 3.8 (margin: 1.2). 0.3 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.7 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Cleveland Guardians @ Kansas City Royals",
+    "market": "Spread",
+    "pick": "Cleveland Guardians -1.5",
+    "odds": "152",
+    "implied": "39.7%",
+    "model": "45.3%",
+    "edge": 5.6,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): CLE 4.4, KC 4.5 (margin: 0.1). -1.4 pts of cushion beyond the spread. CLE on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-04",
+    "sport": "MLB",
+    "event": "Chicago White Sox @ Los Angeles Angels",
+    "market": "Spread",
+    "pick": "Los Angeles Angels -1.5",
+    "odds": "135",
+    "implied": "42.6%",
+    "model": "48.0%",
+    "edge": 5.4,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): CHW 4.0, LAA 4.3 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
     "outcome": "pending",
     "final_score": "",
     "pnl_if_bet": 0
