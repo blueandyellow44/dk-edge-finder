@@ -1,18 +1,18 @@
 {
   "scan_date": "2026-05-04",
-  "scan_subtitle": "Monday, May 04, 2026 \u2014 EPL (2), LA_LIGA (1), MLB (12), NBA (2), NHL (2), SERIE_A (2)",
+  "scan_subtitle": "2026-05-04 \u2014 All 21 games in progress or final \u00b7 Next scan 6 AM PT",
   "bankroll": {
-    "available": 679.34,
+    "available": 549.11,
     "starting": 500.0,
-    "profit": 179.34,
+    "profit": 63.11,
     "record": {
       "wins": 42,
-      "losses": 25,
+      "losses": 31,
       "pushes": 1
     },
-    "pending_count": 7,
-    "pending_total": 98.0,
-    "pending_label": "7 bet(s) pending ($98.00)"
+    "pending_count": 1,
+    "pending_total": 14.0,
+    "pending_label": "1 bet(s) pending ($14.00)"
   },
   "games_analyzed": 21,
   "best_bet": {
@@ -58,8 +58,8 @@
       "ev_per_dollar": 0.1847,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "PHI 1, MIA 0",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): PHI 4.4, MIA 4.2 (margin: 0.2). -1.3 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "LOW",
@@ -82,8 +82,8 @@
       "ev_per_dollar": 0.1752,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "MIL 3, STL 6",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 4.5, STL 3.8 (margin: 0.7). -0.8 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -106,8 +106,8 @@
       "ev_per_dollar": 0.1641,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "CLE 2, KC 6",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): CLE 4.4, KC 4.5 (margin: 0.1). -1.4 pts of cushion beyond the spread. CLE on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -154,8 +154,8 @@
       "ev_per_dollar": 0.1476,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "LAD 8, HOU 3",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 5.0, HOU 3.8 (margin: 1.2). 0.3 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.7 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "LOW",
@@ -178,8 +178,8 @@
       "ev_per_dollar": 0.1269,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "CHW 6, LAA 0",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): CHW 4.0, LAA 4.3 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -1076,9 +1076,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 141,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "MIL 3, STL 6"
     },
     {
       "date": "2026-05-04",
@@ -1087,9 +1087,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 165,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "TOR 1, TB 5"
     },
     {
       "date": "2026-05-04",
@@ -1098,9 +1098,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 135,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "CHW 6, LAA 0"
     },
     {
       "date": "2026-05-04",
@@ -1109,9 +1109,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 157,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "CLE 2, KC 6"
     },
     {
       "date": "2026-05-04",
@@ -1120,9 +1120,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 144,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "PHI 1, MIA 0"
     },
     {
       "date": "2026-05-04",
@@ -1131,9 +1131,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 104,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "LAD 8, HOU 3"
     },
     {
       "date": "2026-05-04",
