@@ -1,9 +1,9 @@
 {
   "starting_bankroll": 500.0,
-  "balance_override": 679.34,
-  "override_note": "DK app balance $679.34 as of April 10. April 7-8 bets recorded (5W-4L, +$4.46).",
+  "balance_override": null,
+  "override_note": "Cleared 2026-05-04 session 14: file lifetime_profit drives the displayed balance now ($147.11 from 68 model bets). KV override also cleared. Use Account tab to set a new override if DK reality drifts from tracked.",
   "current_bankroll": 647.11,
-  "last_updated": "2026-05-04T16:40:58.079035+00:00",
+  "last_updated": "2026-05-04T23:58:43.521826+00:00",
   "pending_bets": [],
   "lifetime_bets": 68,
   "lifetime_wins": 42,

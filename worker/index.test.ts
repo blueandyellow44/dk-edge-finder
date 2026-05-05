@@ -292,9 +292,48 @@ describe('GET /api/bankroll', () => {
     expect(body.balance_override?.note).toBe('Bumped after Saturday wins')
   })
 
-  test('subtracts unresolved placed wagers from available (Bug 2 fix)', async () => {
-    // Two placements on today's scan: one resolved (in data.json.bets[]),
-    // one still pending. Only the pending one should subtract.
+  test('subtracts pending bets from available (session 14 reconcile)', async () => {
+    // data.json.bets[] now drives active-stakes subtraction (replaces the
+    // KV-state-placement read from session 13's Bug 2 fix). One resolved
+    // bet (no subtract) + one pending bet ($25 subtracts).
+    const dataJson = {
+      ...baseDataJson,
+      bets: [
+        {
+          date: '2026-04-30',
+          sport: 'MLB',
+          event: 'NYY @ BOS',
+          pick: 'NYY ML',
+          odds: '-110',
+          wager: 30,
+          outcome: 'win',
+          pnl: 27.27,
+          final_score: 'NYY 5, BOS 3',
+        },
+        {
+          date: '2026-04-30',
+          sport: 'MLB',
+          event: 'BOS @ PHI',
+          pick: 'BOS -6.5',
+          odds: '-110',
+          wager: 25,
+          outcome: 'pending',
+          pnl: 0,
+          final_score: '',
+        },
+      ],
+    }
+    const env = makeEnv({ dataJson, bankrollJson: baseBankrollJson })
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { available: number }
+    // file current_bankroll 679.34 minus the one pending $25 = 654.34.
+    expect(body.available).toBeCloseTo(654.34, 2)
+  })
+
+  test('only resolved bets in data.json.bets[] return full file_current available', async () => {
+    // No pending bets means no subtraction; available = file current_bankroll.
     const dataJson = {
       ...baseDataJson,
       bets: [
@@ -312,73 +351,6 @@ describe('GET /api/bankroll', () => {
       ],
     }
     const env = makeEnv({ dataJson, bankrollJson: baseBankrollJson })
-    const record = {
-      schema_version: 1,
-      email: 'max.sheahan@icloud.com',
-      scan_date: '2026-04-30',
-      placements: [
-        // Resolved placement: matches a bet in activity (won't subtract).
-        {
-          key: 'NYY ML|NYY @ BOS',
-          action: 'placed',
-          dispatch_status: 'ok',
-          placed_at: '2026-04-30T19:00:00Z',
-          idempotency_key: 'idem-resolved',
-          wager: 30,
-        },
-        // Unresolved placement: not in activity (subtracts $25).
-        {
-          key: 'BOS -6.5|BOS @ PHI',
-          action: 'placed',
-          dispatch_status: 'ok',
-          placed_at: '2026-04-30T19:05:00Z',
-          idempotency_key: 'idem-unresolved',
-          wager: 25,
-        },
-        // Skipped placement (won't subtract).
-        {
-          key: 'PHI ML|BOS @ PHI',
-          action: 'skipped',
-          dispatch_status: 'ok',
-          placed_at: '2026-04-30T19:10:00Z',
-          idempotency_key: 'idem-skipped',
-        },
-      ],
-      sync_queue: [],
-      manual_bets: [],
-      updated_at: '2026-04-30T19:10:00Z',
-    }
-    await env.EDGE_STATE.put(SCAN_KEY, JSON.stringify(record))
-
-    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
-    expect(res.status).toBe(200)
-    const body = (await res.json()) as { available: number }
-    // file current_bankroll 679.34 minus the one unresolved $25 = 654.34.
-    expect(body.available).toBeCloseTo(654.34, 2)
-  })
-
-  test('placements written before Bug 2 fix (no wager) do not subtract', async () => {
-    const env = makeEnv({ dataJson: baseDataJson, bankrollJson: baseBankrollJson })
-    const record = {
-      schema_version: 1,
-      email: 'max.sheahan@icloud.com',
-      scan_date: '2026-04-30',
-      placements: [
-        {
-          key: 'NYY ML|NYY @ BOS',
-          action: 'placed',
-          dispatch_status: 'ok',
-          placed_at: '2026-04-30T19:00:00Z',
-          idempotency_key: 'idem-legacy',
-          // wager intentionally absent: pre-fix KV record.
-        },
-      ],
-      sync_queue: [],
-      manual_bets: [],
-      updated_at: '2026-04-30T19:00:00Z',
-    }
-    await env.EDGE_STATE.put(SCAN_KEY, JSON.stringify(record))
-
     const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
     expect(res.status).toBe(200)
     const body = (await res.json()) as { available: number }
@@ -386,7 +358,24 @@ describe('GET /api/bankroll', () => {
   })
 
   test('subtracts from override when an override is set', async () => {
-    const env = makeEnv({ dataJson: baseDataJson, bankrollJson: baseBankrollJson })
+    // Override drives base; pending bets in data.json.bets[] still subtract.
+    const dataJson = {
+      ...baseDataJson,
+      bets: [
+        {
+          date: '2026-04-30',
+          sport: 'MLB',
+          event: 'BOS @ PHI',
+          pick: 'BOS -6.5',
+          odds: '-110',
+          wager: 40,
+          outcome: 'pending',
+          pnl: 0,
+          final_score: '',
+        },
+      ],
+    }
+    const env = makeEnv({ dataJson, bankrollJson: baseBankrollJson })
     await env.EDGE_STATE.put(
       'balance_override:max.sheahan@icloud.com',
       JSON.stringify({
@@ -395,27 +384,6 @@ describe('GET /api/bankroll', () => {
         amount: 1000,
         note: 'manual',
         updated_at: '2026-04-30T18:00:00Z',
-      }),
-    )
-    await env.EDGE_STATE.put(
-      SCAN_KEY,
-      JSON.stringify({
-        schema_version: 1,
-        email: 'max.sheahan@icloud.com',
-        scan_date: '2026-04-30',
-        placements: [
-          {
-            key: 'BOS -6.5|BOS @ PHI',
-            action: 'placed',
-            dispatch_status: 'ok',
-            placed_at: '2026-04-30T19:05:00Z',
-            idempotency_key: 'idem-with-override',
-            wager: 40,
-          },
-        ],
-        sync_queue: [],
-        manual_bets: [],
-        updated_at: '2026-04-30T19:05:00Z',
       }),
     )
 
