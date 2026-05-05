@@ -4,15 +4,15 @@
   "bankroll": {
     "available": 549.11,
     "starting": 500.0,
-    "profit": 63.11,
+    "profit": 49.11,
     "record": {
       "wins": 42,
-      "losses": 31,
+      "losses": 32,
       "pushes": 1
     },
-    "pending_count": 1,
-    "pending_total": 14.0,
-    "pending_label": "1 bet(s) pending ($14.00)"
+    "pending_count": 0,
+    "pending_total": 0,
+    "pending_label": "No unsettled bets"
   },
   "games_analyzed": 21,
   "best_bet": {
@@ -130,8 +130,8 @@
       "ev_per_dollar": 0.1641,
       "tier": "High",
       "bet": "$13.59",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "ATL 4, SEA 5",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 3.7, SEA 4.0 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -1142,9 +1142,9 @@
       "sport": "MLB",
       "wager": 14.0,
       "odds": 139,
-      "outcome": "pending",
-      "pnl": 0.0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "ATL 4, SEA 5"
     }
   ]
 }

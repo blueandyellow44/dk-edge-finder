@@ -1,1 +1,72 @@
-{}
+{
+  "2026-05-04": {
+    "summary": "This was a complete blowout with all seven bets losing for -$98, though the damage was uniformly distributed since each loss cost exactly $14\u2014there were no outsized winners or losers to point to. The model's confidence proved irrelevant to the outcomes: five MEDIUM confidence picks and two LOW confidence picks all failed, suggesting the edge calculations (ranging 5.9%-8.5%) were either miscalibrated or the sample size of one day is too small to validate. Most notably, the Phillies bet lost despite winning 1-0, exposing a -1.5 spread bet against a team that couldn't cover the run line even in a win.",
+    "generated_at": "2026-05-05T07:19:33.489704+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-05-03": {
+    "summary": "The day's damage came primarily from three consecutive losses (Rockies, Angels, Marlins) that each cost $14, wiping out both wins despite the Pirates hitting at 73% model confidence. The most painful miss was the Bundesliga Over at -155\u2014a HIGH confidence play that should have cashed when the model was most convinced\u2014losing to a 1-1 scoreline that directly contradicted the 68% edge assessment. The two wins (Athletics and Pirates) generated only $16.42 combined, leaving the portfolio underwater because the model's confidence failed to correlate with actual execution on the higher-conviction plays.",
+    "generated_at": "2026-05-05T07:19:36.313294+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-04-08": {
+    "summary": "The Rangers loss and Pirates upset were the day's biggest drags at -$13.50 each, though the Cubs runline (+$22.28) more than compensated and carried the session to profitability. Model confidence proved unreliable across the board\u2014the Timberwolves loss came despite high-tier edge and 67.5% model conviction, while the low-confidence Twins and Giants plays both hit, suggesting the model was overconfident on its stronger convictions and undervaluing the plus-money underdogs.",
+    "generated_at": "2026-05-05T07:19:38.549092+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-04-07": {
+    "summary": "The Cardinals -1.5 loss wiped out the day's action, a manual play placed due to a line discrepancy between DK and the site that didn't pan out. With only one bet on the card and a 0-1 record, there's no pattern to evaluate yet on model confidence versus results\u2014this was essentially a single-bet session that went against the grain.",
+    "generated_at": "2026-05-05T07:19:40.370937+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-04-06": {
+    "summary": "The day's profit was essentially built on two NBA player props\u2014Jokic's assists and Embiid's threes\u2014that each netted around $12, while the Deni Avdija rebound miss and Boston Red Sox loss each clawed back $12, leaving the session barely profitable at $37. The model showed strong conviction on the losses (73.7% on the Red Sox, 78.1% on the Wembanyama under), yet those high-confidence plays didn't pan out, while the medium-confidence NBA player props that actually hit displayed reasonable but not exceptional model scores (70-74%), suggesting the model's confidence calibration wasn't sharp enough to separate winners from losers on this slate.",
+    "generated_at": "2026-05-05T07:19:43.279978+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-04-05": {
+    "summary": "The Mets (+1.5 @ 165) and Rays (+1.5 @ 148) were the session's primary profit drivers, combining for $37.56 in winnings on high-edge plays where the model's 69-77% confidence aligned perfectly with results. The Yankees loss (-$12.00) stung despite a respectable 8.7% edge and 66.3% model rating, suggesting the lower confidence was warranted\u2014but the other six wins, particularly the underdog plays with 30%+ edges (Rays, Braves, Mets), validated the model's ability to identify mispriced lines where public sentiment lagged objective probability.",
+    "generated_at": "2026-05-05T07:19:45.953386+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-29": {
+    "summary": "The two wins came from lower-confidence plays (both 66.1% model confidence) and generated modest gains of $7.46 and $8.51, while the two losses hit your highest-conviction bets\u2014the Cardinals at 73.0% model confidence and the Mets at 56.5%\u2014wiping out those gains and leaving you down $8.37 on the day. The Cardinals loss stings most since it had your strongest model edge at 10.4% but got blown out 11-7, suggesting the model overestimated Tampa Bay's run prevention despite the high-tier edge rating. The pattern here is inverted confidence: your medium-confidence underdogs delivered while your high-confidence plays, particularly the Cardinals, failed to validate their theoretical edges.",
+    "generated_at": "2026-05-05T07:19:48.913737+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-21": {
+    "summary": "The day's profitability hinged entirely on three spread bets that generated real money: the Bucks +11.5 win (+$10.37), the Under 234.5 (+$9.73), and the Serie A Over 2.5 (+$9.13), which collectively accounted for $29.23 in gains and easily offset the losses from Warriors and Grizzlies spreads (-$22.82 combined). The player props (Harden, Doncic, Mitchell, SGA, Wembanyama) all showed -125 to +138 odds but registered as $0.00 payouts, suggesting these were either tracking bets or the system didn't properly calculate fractional returns, masking whether the model's individual player prediction confidence was actually sound. The real pattern: confident spread selections at -105 to -265 odds paid out when right (Bucks, Philadelphia) but got crushed on high-volume favorites (Warriors, Grizzlies), indicating the model may have overestimated edge on chalk and underestimated variance on double-digit spreads.",
+    "generated_at": "2026-05-05T07:19:53.066059+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-20": {
+    "summary": "The day's losses were driven almost entirely by the EPL Under at -175, which cost $29.28 when Manchester-Bournemouth hit exactly 4 goals\u2014a sharp miss for what appeared to be a high-confidence play given the steep odds. The two NBA unders salvaged the card ($7.32 net), but they were modest-sized positions that couldn't overcome the EPL miscalculation, while the Grizzlies spread win (+$26.14) proved the model had better feel for NBA lines than soccer totals. The pattern suggests overconfidence in the EPL Under specifically, as a lower-probability outcome (4 goals) still materialized despite pricing that screamed certainty.",
+    "generated_at": "2026-05-05T07:19:56.147599+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-19": {
+    "summary": "The Florida Panthers bet was the clear money-maker, netting $14.83 on a dominant 6-0 shutout win that justified the model's relatively high confidence at -185 odds. All three bets landed as underdogs with spread plays, suggesting the model identified value in teams getting points despite being slight favorites in the matchups\u2014Detroit and the Islanders confirmed this with tighter margins (1-goal and 1-goal wins respectively), while Florida crushed expectations with an elite defensive performance. The modest overall profit of $37.03 reflects the model playing it conservative across all three positions with similar bet sizes, prioritizing consistency over capitalizing heavily on any single conviction.",
+    "generated_at": "2026-05-05T07:19:59.028675+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-18": {
+    "summary": "The day was dragged underwater by two early spread losses on Nets and Jazz that combined for -$54, neither of which came close to their lines despite solid cushions (Nets got blown out by 29, Jazz lost by 34). The unders salvaged what they could with two wins totaling +$44.56, but those gains weren't enough to overcome the spread damage, and the final under loss on Toronto-Chicago showed the model got caught wrong-footed when that game unexpectedly burst through 237.5 despite looking like a defensive matchup. The core issue: spreads with -110 to -118 juice kept the risk high while the actual outcomes suggested the model was underestimating blowout risk in mismatches rather than finding genuine value.",
+    "generated_at": "2026-05-05T07:20:02.348397+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-17": {
+    "summary": "The Wizards cover at +18 was the only profitable bet, netting $21.82 and keeping the day from being a complete loss despite the larger risk amount. Both losses came from double-digit spread picks (Pacers -15.5, Kings -13.5) where the model clearly overestimated the underdog value, as these teams got thoroughly blown out\u2014Indiana lost by 26 and Sacramento by 28\u2014suggesting the spreads were actually sharp and the model's confidence in finding value was misplaced.",
+    "generated_at": "2026-05-05T07:20:07.017822+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-16": {
+    "summary": "The Suns cover at +8.5 was the only play and it delivered a modest winner, generating $16.69 profit on an $18.37 risk\u2014a clean 91% ROI on a single bet. The model's confidence in Phoenix's ability to stay within the spread proved justified, though the tight risk-to-reward ratio (risking nearly as much as you're winning) suggests this wasn't a high-conviction play.",
+    "generated_at": "2026-05-05T07:20:08.996469+00:00",
+    "model": "claude-haiku-4-5"
+  },
+  "2026-03-15": {
+    "summary": "The 76ers moneyline at +270 was the sole play and delivered the session's entire $67.50 profit\u2014a solid return on the $25 risked that validates backing underdog value when odds justified it. The model's confidence in that pick proved well-placed, converting the plus-money opportunity into a clean win with no conflicting signals or close calls to second-guess.",
+    "generated_at": "2026-05-05T07:20:10.708187+00:00",
+    "model": "claude-haiku-4-5"
+  }
+}
