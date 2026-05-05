@@ -260,6 +260,28 @@ a {
   line-height: 44px;
   margin-right: 2px;
 }
+.balance-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 8px;
+  margin: -10px 0 16px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+}
+.balance-breakdown-piece {
+  color: var(--color-muted);
+}
+.balance-breakdown-equals {
+  color: var(--color-subtle);
+  margin: 0 2px;
+}
+.balance-breakdown-total {
+  color: var(--color-fg);
+  font-weight: 600;
+}
+
 .balance-stats {
   display: flex;
   gap: 24px;
