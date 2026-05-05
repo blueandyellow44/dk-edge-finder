@@ -109,8 +109,16 @@ export function BalanceChart() {
   const firstX = xScale(xVals[0]).toFixed(1)
   const areaPath = `${linePath} L${lastX},${baseY} L${firstX},${baseY} Z`
 
+  // Headline change comes from bankroll.profit (DK-reconciled lifetime P/L),
+  // not from the chart series' cumulative. Source-of-truth split on purpose:
+  // the line shape shows MODEL-pick trajectory (one bet per data.json.bets[]
+  // entry, computed client-side); the headline shows ACTUAL DK lifetime
+  // profit (from bankroll.json which is DK-reconciled). The two can diverge
+  // when there's untracked DK activity (parlays, props, in-game bets that
+  // never flowed through "Mark as placed"). Headline reflects reality;
+  // line shows the model-only slice for analysis.
   const finalBalance = series[series.length - 1].balance
-  const change = finalBalance - starting
+  const change = bankroll.data.profit
   const changeClass =
     change > 0 ? 'positive' : change < 0 ? 'negative' : ''
   const changeSign = change >= 0 ? '+' : ''

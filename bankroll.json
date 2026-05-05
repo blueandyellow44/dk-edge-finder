@@ -1,16 +1,16 @@
 {
   "starting_bankroll": 500.0,
   "balance_override": null,
-  "override_note": "Cleared 2026-05-04 session 14: file lifetime_profit drives the displayed balance now ($147.11 from 68 model bets). KV override also cleared. Use Account tab to set a new override if DK reality drifts from tracked.",
-  "current_bankroll": 647.11,
-  "last_updated": "2026-05-04T23:58:43.521826+00:00",
+  "override_note": "Reconciled to DK transaction history 2026-05-04: lifetime_profit $102.68 (settled bets only) and current_bankroll $602.68 reflect DK actual. Cash on hand right now is $504.68 with $98 of 5/4 wagers pending. Model bet record stays in lifetime_wins/losses/pushes (those count model picks; DK includes parlays/props/in-game, ~$44 of which lost money the model never saw).",
+  "current_bankroll": 602.68,
+  "last_updated": "2026-05-05T00:26:18.689258+00:00",
   "pending_bets": [],
   "lifetime_bets": 68,
   "lifetime_wins": 42,
   "lifetime_losses": 25,
   "lifetime_pushes": 1,
-  "lifetime_profit": 147.11,
-  "roi_pct": 14.59,
+  "lifetime_profit": 102.68,
+  "roi_pct": 10.18,
   "resolved_bets": [
     {
       "id": "mem-spread-20260321",
