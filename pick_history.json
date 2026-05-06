@@ -16753,9 +16753,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): BAL 4.0, MIA 4.7 (margin: 0.7). -0.8 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BAL 9, MIA 7",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16771,9 +16771,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.4, TB 3.5 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 3, TB 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16789,9 +16789,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 4.1, SEA 4.2 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 3, SEA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16807,9 +16807,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): SD 4.1, SF 4.2 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 10, SF 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16825,9 +16825,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 4.6, HOU 3.6 (margin: 1.0). 0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAD 1, HOU 2",
+    "pnl_if_bet": 10.9
   },
   {
     "scan_date": "2026-05-05",
@@ -16843,9 +16843,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): BOS 3.4, DET 4.4 (margin: 1.0). -0.5 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BOS 10, DET 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16879,9 +16879,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TEX 4.3, NYY 4.6 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TEX 4, NYY 7",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16897,9 +16897,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): BAL 4.0, MIA 4.7 (margin: 0.7). -0.8 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "BAL 9, MIA 7",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16915,9 +16915,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): LAD 4.8, HOU 3.8 (margin: 1.0). 0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 SUSPICIOUS EDGE (10.4%): Model disagrees with market by 0.5 pts. Investigate before betting. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LAD 1, HOU 2",
+    "pnl_if_bet": 11.3
   },
   {
     "scan_date": "2026-05-05",
@@ -16933,9 +16933,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 4.1, SEA 4.2 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 3, SEA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16951,9 +16951,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): SD 4.1, SF 4.2 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SD 10, SF 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -16969,9 +16969,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TOR 3.4, TB 3.5 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "TOR 3, TB 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -17005,9 +17005,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): CLE 4.3, KC 4.1 (margin: 0.2). -1.3 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 3, KC 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-05",
@@ -17023,8 +17023,8 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): CIN 3.7, CHC 4.5 (margin: 0.8). -0.7 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.3 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CIN 2, CHC 3",
+    "pnl_if_bet": -10.0
   }
 ]
