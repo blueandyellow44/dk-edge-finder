@@ -983,6 +983,61 @@
       "outcome": "loss",
       "pnl": -14.0,
       "final_score": "ATL 4, SEA 5"
+    },
+    {
+      "date": "2026-05-05",
+      "pick": "Miami Marlins -1.5",
+      "event": "Baltimore Orioles @ Miami Marlins",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 149,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "BAL 9, MIA 7"
+    },
+    {
+      "date": "2026-05-05",
+      "pick": "Tampa Bay Rays -1.5",
+      "event": "Toronto Blue Jays @ Tampa Bay Rays",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 163,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "TOR 3, TB 4"
+    },
+    {
+      "date": "2026-05-05",
+      "pick": "Houston Astros +1.5",
+      "event": "Los Angeles Dodgers @ Houston Astros",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 109,
+      "outcome": "win",
+      "pnl": 15.26,
+      "final_score": "LAD 1, HOU 2"
+    },
+    {
+      "date": "2026-05-05",
+      "pick": "Seattle Mariners -1.5",
+      "event": "Atlanta Braves @ Seattle Mariners",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 159,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "ATL 3, SEA 2"
+    },
+    {
+      "date": "2026-05-05",
+      "pick": "San Francisco Giants -1.5",
+      "event": "San Diego Padres @ San Francisco Giants",
+      "sport": "MLB",
+      "wager": 14.0,
+      "odds": 159,
+      "outcome": "loss",
+      "pnl": -14.0,
+      "final_score": "SD 10, SF 5"
     }
   ]
 }
