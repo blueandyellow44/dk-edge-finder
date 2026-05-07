@@ -110,7 +110,14 @@ EDGE_DISCOUNT_TIERS = [
 
 # MLB run line calibration: model overestimates due to right-skewed margins.
 # Even with widened SD, require higher min edge for MLB.
-MLB_SPREAD_MIN_EDGE = 0.05              # 5% min for MLB run lines
+# Raised 2026-05-07: pick_history shows 5-8pp MLB spread bucket at 109W-110L (49.8%)
+# on 219 picks, paper P/L -$316. The 8%+ buckets clear 60% comfortably.
+MLB_SPREAD_MIN_EDGE = 0.08              # 8% min for MLB run lines
+
+# NHL run line calibration: same shape as MLB, smaller sample but same direction.
+# Added 2026-05-07: pick_history 5-8pp NHL spread bucket was 31W-41L (43.1%)
+# on 72 picks, paper P/L -$134. Falls under MIN_EDGE_HIGH (3%) without this floor.
+NHL_SPREAD_MIN_EDGE = 0.08              # 8% min for NHL run lines
 
 # Single-source Kelly penalty (25% reduction for DRatings-only picks)
 SINGLE_SOURCE_KELLY_DISCOUNT = 0.75
@@ -1220,6 +1227,9 @@ def get_effective_min_edge(sport: str, market: str, spread_points: float, base_m
     # MLB run line: model overestimates due to right-skewed margins
     if sport.lower() == "mlb" and market.lower() in ("spread", "spreads"):
         return max(base_min_edge, MLB_SPREAD_MIN_EDGE)
+    # NHL run line: same shape as MLB; bleeder bucket at 5-8pp
+    if sport.lower() == "nhl" and market.lower() in ("spread", "spreads"):
+        return max(base_min_edge, NHL_SPREAD_MIN_EDGE)
     return base_min_edge
 
 
