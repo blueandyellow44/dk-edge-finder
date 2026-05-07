@@ -2,12 +2,12 @@
   "scan_date": "2026-05-07",
   "scan_subtitle": "Thursday, May 07, 2026 \u2014 MLB (10), NBA (2), NHL (1)",
   "bankroll": {
-    "available": 549.11,
+    "available": 508.37,
     "starting": 500.0,
-    "profit": 49.11,
+    "profit": 8.37,
     "record": {
-      "wins": 42,
-      "losses": 32,
+      "wins": 43,
+      "losses": 36,
       "pushes": 1
     },
     "pending_count": 0,
