@@ -68,5 +68,10 @@
     "summary": "The 76ers moneyline at +270 was the sole play and delivered the session's entire $67.50 profit\u2014a solid return on the $25 risked that validates backing underdog value when odds justified it. The model's confidence in that pick proved well-placed, converting the plus-money opportunity into a clean win with no conflicting signals or close calls to second-guess.",
     "generated_at": "2026-05-05T07:20:10.708187+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-05-05": {
+    "summary": "The day was dragged down by four spread losses totaling -$56, with the Mariners and Giants bets particularly costly despite identical -1.5 spreads and 8.4% edges that the model only gave 47% confidence to. The lone winner\u2014the Astros at +15.26\u2014came from the bet where the model showed the most conviction at 57.4%, suggesting confidence mattered more than edge size; conversely, the three other losses all came from medium-confidence picks where the model's skepticism (46-47%) proved warranted. The pattern here is clear: medium-confidence medium-edge bets are a money pit, and future sessions should either raise the bar on model conviction or skip the spread entirely.",
+    "generated_at": "2026-05-07T20:22:33.274861+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
