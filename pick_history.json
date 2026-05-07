@@ -17491,9 +17491,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIN 4.6, WSH 4.6 (margin: 0.0). -1.5 pts of cushion beyond the spread. MIN on road B2B (-2.5% adj) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIN 5, WSH 7",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-07",
@@ -17599,9 +17599,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TEX 4.3, NYY 4.8 (margin: 0.5). -1.0 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.8 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TEX 2, NYY 9",
+    "pnl_if_bet": 13.3
   },
   {
     "scan_date": "2026-05-07",
@@ -17725,6 +17725,24 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): CAR 3.5, PHI 2.5 (margin: 1.0). -0.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.7 pts (DRatings: ?, Dimers: ?). Lower confidence. | PHI on B2B (+1.5% boost) \u26a0 Confidence: LOW",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-05-07",
+    "sport": "MLB",
+    "event": "Baltimore Orioles @ Miami Marlins",
+    "market": "Spread",
+    "pick": "Miami Marlins -1.5",
+    "odds": "159",
+    "implied": "38.6%",
+    "model": "50.6%",
+    "edge": 11.9,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): BAL 3.8, MIA 4.6 (margin: 0.8). -0.7 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.9%): Model disagrees with market by -0.7 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
     "outcome": "pending",
     "final_score": "",
     "pnl_if_bet": 0
