@@ -626,38 +626,6 @@ body {
   .no-edge-reason { grid-column: 1 / -1; text-align: left; }
   .no-edge-place-btn, .no-edge-placed-pill { grid-column: 2; }
 }
-
-/* ── Cloudflare Access auth gate ── */
-/* When the page can't reach /api/* (Access OTP cookie missing), every Place
-   button is disabled and the red banner at the top of the page tells the
-   user to sign in. This prevents the silent-fail mode where a click looks
-   like it worked but the bet never reached the Worker. */
-#authBanner {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  background: #c0392b;
-  color: #fff;
-  padding: 14px 24px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-#authBanner a {
-  color: #fff;
-  text-decoration: underline;
-  margin-left: 12px;
-}
-body.auth-required #placeAllBtn,
-body.auth-required #pickPlaceAll,
-body.auth-required .pick-place-all-btn,
-body.auth-required .no-edge-place-btn,
-body.auth-required .btn-primary[data-action="placed"] {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-}
 </style>
 </head>
 <body>
@@ -780,7 +748,6 @@ body.auth-required .btn-primary[data-action="placed"] {
   loadPlacements();
   loadManualBets();
   fetchData();
-  checkAuth();
 
   // ── Data loading ──
   function fetchData() {
@@ -1368,15 +1335,8 @@ body.auth-required .btn-primary[data-action="placed"] {
       return;
     }
     var lines = queue.map(function(q, i) {
-      var when = '';
-      if (q.ts) {
-        var d = new Date(q.ts);
-        when = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
-      }
-      var dateTag = q.scan_date && data && q.scan_date !== data.scan_date
-        ? ' <span style="color:#cc0000">[' + esc(q.scan_date) + ']</span>'
-        : '';
-      return (i + 1) + '. picks=' + esc(String(q.picks)) + dateTag + ' <span style="color:#999">(' + when + ')</span>';
+      var time = q.ts ? new Date(q.ts).toLocaleTimeString() : '';
+      return (i + 1) + '. picks=' + esc(String(q.picks)) + ' <span style="color:#999">(' + time + ')</span>';
     }).join('<br>');
     queueEl.innerHTML = '<strong style="color:#cc0000">' + queue.length + ' placement(s) failed to sync:</strong><br>' + lines;
     retryBtn.style.display = 'inline-block';
@@ -1613,45 +1573,6 @@ body.auth-required .btn-primary[data-action="placed"] {
     }
   }
 
-  // ── Cloudflare Access auth gate ──
-  //
-  // /api/* is gated by Cloudflare Access. A browser without a valid
-  // CF_AppSession cookie hits a 302 redirect to the Access OTP login on
-  // sheahan.cloudflareaccess.com when it tries to fetch any /api path. With
-  // default `redirect: 'follow'`, the cross-origin redirect fails CORS and
-  // the fetch rejects as a generic network error, which is how the silent
-  // "bet placed but never logged" bug happens.
-  //
-  // Strategy: probe /api/me on page load with `redirect: 'manual'`. Access
-  // returns 302; the browser surfaces an opaqueredirect Response that we
-  // can detect (status 0, type === 'opaqueredirect'). If we see one, we
-  // disable Place buttons and show a sticky red banner with a Sign in link.
-  // The Place button itself uses the same `redirect: 'manual'` trick so a
-  // failed POST raises a specific error instead of pretending to succeed.
-  function checkAuth() {
-    fetch('/api/me', { method: 'GET', redirect: 'manual', cache: 'no-store' })
-      .then(function(res) {
-        if (res.type === 'opaqueredirect' || res.status === 0) {
-          showAuthRequiredBanner();
-        }
-      })
-      .catch(function() {
-        // Genuine network failures (offline, DNS, etc.) aren't the auth bug
-        // we're guarding against. The Place button has its own catch-all
-        // for those.
-      });
-  }
-
-  function showAuthRequiredBanner() {
-    if (document.getElementById('authBanner')) return;
-    var bar = document.createElement('div');
-    bar.id = 'authBanner';
-    bar.innerHTML = 'Sign in required to place bets. ' +
-      '<a href="/api/me">Sign in</a>';
-    document.body.insertBefore(bar, document.body.firstChild);
-    document.body.classList.add('auth-required');
-  }
-
   // ── Server-side placement persistence ──
   //
   // Background sync from the Place button to the GitHub workflow via
@@ -1678,39 +1599,27 @@ body.auth-required .btn-primary[data-action="placed"] {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ picks: picksArg }),
-      redirect: 'manual',
     }).then(function(res) {
-      // Cloudflare Access intercept: same-origin POST got bounced to the
-      // OTP login. With redirect: 'manual' the browser hands us an
-      // opaqueredirect Response (type 'opaqueredirect', status 0). Treat
-      // this as auth failure, NOT a generic network blip.
-      if (res.type === 'opaqueredirect' || res.status === 0) {
-        console.error('[dispatch] AUTH REDIRECT, bet NOT placed', res);
-        showToast('Sign in required. Bet was NOT placed. Click Sign in.', 'error');
-        showAuthRequiredBanner();
-        queueFailedSync(picksArg);
-        return false;
-      }
       return res.json().catch(function() { return {}; }).then(function(body) {
         return { ok: res.ok, status: res.status, body: body };
-      }).then(function(result) {
-        if (result.ok) {
-          console.log('[dispatch] SUCCESS', result);
-          if (!opts.silent) {
-            showToast('Bet synced — will appear in Activity shortly', 'success');
-          }
-          return true;
-        }
-        console.error('[dispatch] FAIL', result);
-        if (result.body && result.body.detail) {
-          console.error('[dispatch] GitHub detail:', result.body.detail);
-        }
-        var errTxt = (result.body && result.body.error) || ('HTTP ' + result.status);
-        var detailTxt = (result.body && result.body.detail) ? ' — ' + String(result.body.detail).slice(0, 120) : '';
-        showToast('Sync failed: ' + errTxt + detailTxt, 'error');
-        queueFailedSync(picksArg);
-        return false;
       });
+    }).then(function(result) {
+      if (result.ok) {
+        console.log('[dispatch] SUCCESS', result);
+        if (!opts.silent) {
+          showToast('Bet synced — will appear in Activity shortly', 'success');
+        }
+        return true;
+      }
+      console.error('[dispatch] FAIL', result);
+      if (result.body && result.body.detail) {
+        console.error('[dispatch] GitHub detail:', result.body.detail);
+      }
+      var errTxt = (result.body && result.body.error) || ('HTTP ' + result.status);
+      var detailTxt = (result.body && result.body.detail) ? ' — ' + String(result.body.detail).slice(0, 120) : '';
+      showToast('Sync failed: ' + errTxt + detailTxt, 'error');
+      queueFailedSync(picksArg);
+      return false;
     }).catch(function(err) {
       console.error('[dispatch] NETWORK FAIL', err);
       showToast('Sync failed (network) — retry from Settings', 'error');
@@ -1741,11 +1650,10 @@ body.auth-required .btn-primary[data-action="placed"] {
     try {
       var raw = localStorage.getItem('dk-edge-sync-queue');
       if (!raw) return [];
-      return JSON.parse(raw) || [];
-      // Note: previous versions filtered by scan_date so yesterday's
-      // failed placements disappeared on today's scan. That hid bets the
-      // user needed to recover. Now everything stays visible until the
-      // user explicitly retries or clears.
+      var queue = JSON.parse(raw) || [];
+      var currentDate = (data && data.scan_date) || '';
+      // Drop entries from older scans
+      return queue.filter(function(q) { return !q.scan_date || q.scan_date === currentDate; });
     } catch (e) {
       return [];
     }
