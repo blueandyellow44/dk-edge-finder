@@ -16,7 +16,7 @@
   },
   "games_analyzed": 23,
   "best_bet": {
-    "title": "Miami Marlins -1.5 (158) \u2014 9.2% Edge (High Tier)",
+    "title": "Miami Marlins -1.5 (154) \u2014 8.6% Edge (High Tier)",
     "desc": "Model (DRatings only + oddsshark + actionnetwork): WSH 4.0, MIA 4.3 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: ?, Dimers: ?). Lower confi"
   },
   "picks": [
@@ -27,11 +27,11 @@
       "event_short": "WSH @ MIA",
       "market": "Spread",
       "pick": "Miami Marlins -1.5",
-      "odds": "158",
-      "implied": "38.8%",
+      "odds": "154",
+      "implied": "39.4%",
       "model": "48.0%",
-      "edge": 9.2,
-      "ev_per_dollar": 0.2372,
+      "edge": 8.6,
+      "ev_per_dollar": 0.2181,
       "tier": "High",
       "bet": "$10.17",
       "status": "",
@@ -46,6 +46,30 @@
     },
     {
       "rank": 2,
+      "sport": "MLB",
+      "event": "Minnesota Twins @ Cleveland Guardians",
+      "event_short": "MIN @ CLE",
+      "market": "Spread",
+      "pick": "Cleveland Guardians -1.5",
+      "odds": "149",
+      "implied": "40.2%",
+      "model": "48.7%",
+      "edge": 8.5,
+      "ev_per_dollar": 0.2116,
+      "tier": "High",
+      "bet": "$10.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): MIN 3.5, CLE 4.1 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. CLE on B2B (-1.5% adj) \u26a0 Confidence: LOW",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "LOW",
+      "dk_link": "https://sportsbook.draftkings.com/event/34114061?outcomes=0HC84684335N150_1",
+      "type": "game",
+      "start_time": "2026-05-08T23:15Z",
+      "is_favorite": true
+    },
+    {
+      "rank": 3,
       "sport": "MLB",
       "event": "Detroit Tigers @ Kansas City Royals",
       "event_short": "DET @ KC",
@@ -66,6 +90,30 @@
       "dk_link": "https://sportsbook.draftkings.com/event/34114063?outcomes=0HC84684337N150_1",
       "type": "game",
       "start_time": "2026-05-08T23:40Z",
+      "is_favorite": true
+    },
+    {
+      "rank": 4,
+      "sport": "MLB",
+      "event": "Tampa Bay Rays @ Boston Red Sox",
+      "event_short": "TB @ BOS",
+      "market": "Spread",
+      "pick": "Boston Red Sox -1.5",
+      "odds": "149",
+      "implied": "40.2%",
+      "model": "48.5%",
+      "edge": 8.3,
+      "ev_per_dollar": 0.2075,
+      "tier": "High",
+      "bet": "$10.17",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 4.0, BOS 4.4 (margin: 0.4). -1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/event/34114059?outcomes=0HC84684333N150_1",
+      "type": "game",
+      "start_time": "2026-05-08T23:10Z",
       "is_favorite": true
     }
   ],
@@ -120,20 +168,8 @@
     },
     {
       "sport": "MLB",
-      "event": "TB @ BOS",
-      "line": "BOS -136",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ CLE",
-      "line": "CLE -149",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "NYY @ MIL",
-      "line": "NYY -131",
+      "line": "NYY -126",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -163,13 +199,13 @@
     {
       "sport": "MLB",
       "event": "ATL @ LAD",
-      "line": "LAD -120",
+      "line": "LAD -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PIT @ SF",
-      "line": "SF -115",
+      "line": "SF -112",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -193,7 +229,7 @@
     {
       "sport": "LIGUE_1",
       "event": "NAN @ RCL",
-      "line": "RCL -220",
+      "line": "RCL -230",
       "reason": "No model data"
     }
   ],
