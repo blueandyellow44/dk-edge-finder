@@ -73,5 +73,10 @@
     "summary": "The day was dragged down by four spread losses totaling -$56, with the Mariners and Giants bets particularly costly despite identical -1.5 spreads and 8.4% edges that the model only gave 47% confidence to. The lone winner\u2014the Astros at +15.26\u2014came from the bet where the model showed the most conviction at 57.4%, suggesting confidence mattered more than edge size; conversely, the three other losses all came from medium-confidence picks where the model's skepticism (46-47%) proved warranted. The pattern here is clear: medium-confidence medium-edge bets are a money pit, and future sessions should either raise the bar on model conviction or skip the spread entirely.",
     "generated_at": "2026-05-07T20:22:33.274861+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-05-07": {
+    "summary": "The Marlins and Padres losses were the damage dealers, each costing $11 and both featuring medium-to-high confidence despite moderate edges, suggesting the model's conviction didn't match reality on those plays. The three wins came from lower-confidence spots (the Hurricanes at 42.7% model confidence) and medium-confidence plays with smaller edges (Pirates, Rays), meaning the day's profitable bets were actually the ones where the model was more cautious\u2014the opposite of what you'd want to see for a sustainable edge.",
+    "generated_at": "2026-05-08T17:44:57.217459+00:00",
+    "model": "claude-haiku-4-5"
   }
 }

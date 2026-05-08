@@ -2,17 +2,17 @@
   "scan_date": "2026-05-08",
   "scan_subtitle": "Friday, May 08, 2026 \u2014 BUNDESLIGA (1), LA_LIGA (1), LIGUE_1 (1), MLB (15), NBA (2), NHL (2), SERIE_A (1)",
   "bankroll": {
-    "available": 508.37,
+    "available": 480.64,
     "starting": 500.0,
-    "profit": 8.37,
+    "profit": 2.64,
     "record": {
-      "wins": 43,
-      "losses": 36,
+      "wins": 46,
+      "losses": 39,
       "pushes": 1
     },
-    "pending_count": 0,
-    "pending_total": 0,
-    "pending_label": "No unsettled bets"
+    "pending_count": 2,
+    "pending_total": 22,
+    "pending_label": "2 bet(s) pending ($22.00)"
   },
   "games_analyzed": 23,
   "best_bet": {
@@ -1188,6 +1188,94 @@
       "outcome": "loss",
       "pnl": -14.0,
       "final_score": "SD 10, SF 5"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "Miami Marlins -1.5",
+      "event": "Baltimore Orioles @ Miami Marlins",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 159,
+      "outcome": "loss",
+      "pnl": -11,
+      "final_score": "BAL 3, MIA 4"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "San Diego Padres -1.5",
+      "event": "St. Louis Cardinals @ San Diego Padres",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 129,
+      "outcome": "loss",
+      "pnl": -11,
+      "final_score": "STL 2, SD 1"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "Pittsburgh Pirates -1.5",
+      "event": "Pittsburgh Pirates @ Arizona Diamondbacks",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 148,
+      "outcome": "win",
+      "pnl": 10.0,
+      "final_score": "PIT 4, ARI 2"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "Philadelphia Phillies -1.5",
+      "event": "Athletics @ Philadelphia Phillies",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 153,
+      "outcome": "loss",
+      "pnl": -11,
+      "final_score": "ATH 12, PHI 1"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "Tampa Bay Rays -1.5",
+      "event": "Tampa Bay Rays @ Boston Red Sox",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 155,
+      "outcome": "win",
+      "pnl": 10.0,
+      "final_score": "TB 8, BOS 4"
+    },
+    {
+      "date": "2026-05-07",
+      "pick": "Carolina Hurricanes -1.5",
+      "event": "Carolina Hurricanes @ Philadelphia Flyers",
+      "sport": "NHL",
+      "wager": 8,
+      "odds": 160,
+      "outcome": "win",
+      "pnl": 7.27,
+      "final_score": "CAR 4, PHI 1"
+    },
+    {
+      "date": "2026-05-08",
+      "pick": "Miami Marlins -1.5",
+      "event": "Washington Nationals @ Miami Marlins",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 158,
+      "outcome": "pending",
+      "pnl": 0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-08",
+      "pick": "Kansas City Royals -1.5",
+      "event": "Detroit Tigers @ Kansas City Royals",
+      "sport": "MLB",
+      "wager": 11,
+      "odds": 144,
+      "outcome": "pending",
+      "pnl": 0,
+      "final_score": ""
     }
   ]
 }
