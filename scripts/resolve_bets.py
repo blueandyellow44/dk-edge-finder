@@ -114,6 +114,26 @@ NHL_PROP_STAT_TO_ESPN = {
     "Shots on Goal": "shotsTotal",
 }
 
+# MLB hitter stats. Box-score key names match the gamelog where possible.
+MLB_HITTER_PROP_STAT_TO_ESPN = {
+    "Hits": "hits",
+    "Home Runs": "homeRuns",
+    "RBIs": "RBIs",
+    "Runs": "runs",
+}
+
+# MLB pitcher stats. Note that "Hits Allowed" and "Walks Allowed" map to the
+# same box-score keys as the hitter "Hits" and "Walks" since the box
+# distinguishes pitcher rows by being in a separate stat block (with
+# 'earnedRuns' or 'fullInnings.partInnings' in keys). "Pitcher Outs" is
+# computed from the IP string ('7.0', '6.1', '6.2' style) at fetch time.
+MLB_PITCHER_PROP_STAT_TO_ESPN = {
+    "Hits Allowed": "hits",
+    "Earned Runs": "earnedRuns",
+    "Walks Allowed": "walks",
+    "Strikeouts": "strikeouts",
+}
+
 
 def fetch_nba_player_box(event_id: str) -> dict:
     """Fetch NBA box score and return {player_name: {stat_label: value}}.
@@ -219,12 +239,92 @@ def fetch_nhl_player_box(event_id: str) -> dict:
     return out
 
 
+def _ip_string_to_outs(ip_str) -> int | None:
+    """Convert ESPN's 'fullInnings.partInnings' string into total outs.
+
+    '7.0' -> 21 outs. '6.1' -> 19 outs. '6.2' -> 20 outs.
+    """
+    if ip_str is None:
+        return None
+    try:
+        s = str(ip_str)
+        if "." in s:
+            whole, frac = s.split(".", 1)
+            return int(whole) * 3 + int(frac)
+        return int(s) * 3
+    except (ValueError, TypeError):
+        return None
+
+
+def fetch_mlb_player_box(event_id: str) -> dict:
+    """Fetch MLB box score and return {player_name: {stat_label: value}}.
+
+    Both hitter and pitcher stat blocks are parsed. Stat blocks are
+    distinguished by the presence of 'earnedRuns' or
+    'fullInnings.partInnings' in their keys (pitcher) versus 'atBats' or
+    'slugAvg' (hitter). Two-way players (e.g., Ohtani) get a merged dict
+    with both hitter and pitcher labels.
+
+    Returns {} on any error so callers can leave picks pending.
+    """
+    if not event_id:
+        return {}
+    url = f"https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event={event_id}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            summary = json.loads(resp.read().decode())
+    except Exception as e:
+        print(f"  ESPN MLB box error (event {event_id}): {e}", file=sys.stderr)
+        return {}
+
+    out: dict = {}
+    for team in summary.get("boxscore", {}).get("players", []):
+        for stat_block in team.get("statistics", []):
+            keys = stat_block.get("keys", [])
+            if not keys:
+                continue
+
+            is_pitcher = "earnedRuns" in keys or "fullInnings.partInnings" in keys
+            stat_map = MLB_PITCHER_PROP_STAT_TO_ESPN if is_pitcher else MLB_HITTER_PROP_STAT_TO_ESPN
+
+            for athlete in stat_block.get("athletes", []):
+                name = athlete.get("athlete", {}).get("displayName", "")
+                stats_arr = athlete.get("stats", [])
+                if not name or not stats_arr or len(stats_arr) != len(keys):
+                    continue
+                stats_by_key = dict(zip(keys, stats_arr))
+
+                player_stats: dict = {}
+                for label, espn_key in stat_map.items():
+                    raw = stats_by_key.get(espn_key)
+                    if raw is None or raw == "":
+                        continue
+                    try:
+                        player_stats[label] = int(raw)
+                    except (ValueError, TypeError):
+                        continue
+
+                if is_pitcher:
+                    outs = _ip_string_to_outs(stats_by_key.get("fullInnings.partInnings"))
+                    if outs is not None:
+                        player_stats["Pitcher Outs"] = outs
+
+                if player_stats:
+                    if name in out:
+                        out[name].update(player_stats)
+                    else:
+                        out[name] = player_stats
+    return out
+
+
 # Sport → prop box fetcher. Add a new entry here when a sport's prop scanner
 # starts emitting picks. Lesson 2026-05-03b: every new pick-type emitted by
 # the scanner must have a corresponding resolver branch in the same commit.
 PROP_BOX_FETCHERS = {
     "nba": fetch_nba_player_box,
     "nhl": fetch_nhl_player_box,
+    "mlb": fetch_mlb_player_box,
 }
 
 

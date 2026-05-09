@@ -75,7 +75,11 @@ NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 # MLB (n=414): Avg model 67.3% → calibrated 61.4% (matches realized 61.4%).
 #   Replay 2026-03-24 to 2026-05-03: 144 of 414 picks pass calibrated filter,
 #   $+800 P/L on kept (vs $+654 original on all 414). Drops 270 underperforming
-#   picks worth -$147.
+#   picks worth -$147. NOTE 2026-05-09: this fit was dominated by underdog
+#   picks (avg raw 67.3%); favorites at avg raw ~50% get squashed by the
+#   constant b=0.347 to ~55% calibrated even though realized cover is 29%.
+#   MLB_FAVORITE_HARD_SKIP now blocks favorites at the candidate stage so
+#   this calibration is effectively underdog-only for MLB.
 # NBA (n=205): Avg model 65.2% → calibrated 46.8%. Effectively disables NBA
 #   model since calibrated_prob hovers near 50% regardless of input. Replay:
 #   only 2 of 205 picks pass; -$241 of historical NBA losses avoided. NBA
@@ -1403,6 +1407,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         pick_side = cand["side"]
         model_prob = cand["model_prob"]
 
+        # MLB favorite hard-skip: structurally anti-signal because Skellam
+        # underestimates run-margin variance for favorites (skewed run
+        # distribution). See MLB_FAVORITE_HARD_SKIP block above.
+        if MLB_FAVORITE_HARD_SKIP and sport.lower() == "mlb" and cand.get("is_favorite"):
+            continue
+
         # Tanking check
         tank_info = TANK_TEAMS_2026.get(pick_team.get("abbr", ""), None)
         tank_note = ""
@@ -1950,7 +1960,7 @@ def main(games_only: bool = False):
     else:
         # Sports to scan for props. Each sport has its own plugin in
         # scripts/props_<sport>.py registered in fetch_props.PLUGINS.
-        prop_sports = ["nba", "nhl"]
+        prop_sports = ["nba", "nhl", "mlb"]
 
         for sport in prop_sports:
             # Build sport-specific game margin map. Only NBA's blowout discount
