@@ -78,5 +78,10 @@
     "summary": "The Marlins and Padres losses were the damage dealers, each costing $11 and both featuring medium-to-high confidence despite moderate edges, suggesting the model's conviction didn't match reality on those plays. The three wins came from lower-confidence spots (the Hurricanes at 42.7% model confidence) and medium-confidence plays with smaller edges (Pirates, Rays), meaning the day's profitable bets were actually the ones where the model was more cautious\u2014the opposite of what you'd want to see for a sustainable edge.",
     "generated_at": "2026-05-08T17:44:57.217459+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-05-08": {
+    "summary": "Both losses came from runline bets with modest edges (8.5-9.2%) and the model showed weak conviction on both plays\u2014sitting at 48.0% and 49.5% respectively, essentially coin-flip territory\u2014yet the confidence levels didn't match the execution, with the Kansas City pick rated MEDIUM confidence despite the model's near-50% probability. The Marlins loss was particularly brutal given it was labeled HIGH tier but LOW confidence, a red flag combination that should've warranted either more caution or complete avoidance, and the fact that you risked the full $11 on each suggests the confidence tags weren't driving position sizing decisions.",
+    "generated_at": "2026-05-09T07:08:47.270492+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
