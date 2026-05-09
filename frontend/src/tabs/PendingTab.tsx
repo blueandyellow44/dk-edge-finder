@@ -24,15 +24,21 @@ export function PendingTab() {
     (b) => b.outcome === 'pending',
   )
 
+  // Scope the collision key by date. Pick + event alone is not unique across
+  // a series: a Padres -1.5 vs Cardinals @ Padres on Tuesday and the same
+  // pick again on Thursday share `${pick}|${event}` but are different bets.
+  // Without the date, today's placement gets hidden the moment a previous
+  // day's identical bet resolves.
   const resolvedKeys = new Set(
-    (activity.data?.bets ?? []).map((b) => `${b.pick}|${b.event}`),
+    (activity.data?.bets ?? []).map((b) => `${b.date}|${b.pick}|${b.event}`),
   )
+  const scanDate = state.data.scan_date
   const pickByKey = new Map<string, Pick>()
   for (const pk of picks.data?.picks ?? []) {
     pickByKey.set(`${pk.pick}|${pk.event}`, pk)
   }
   const unresolvedPlacements = state.data.placements.filter(
-    (p) => p.action === 'placed' && !resolvedKeys.has(p.key),
+    (p) => p.action === 'placed' && !resolvedKeys.has(`${scanDate}|${p.key}`),
   )
 
   if (pendingManual.length === 0 && unresolvedPlacements.length === 0) {
