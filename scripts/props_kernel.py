@@ -34,9 +34,15 @@ Functions:
     athlete_url(athlete_id) -> str
         ESPN athlete URL used to fetch the player's current team. Only called
         when NEEDS_PLAYER_TEAM is True.
+    extract_gamelog_rows(response_data) -> list[list]
+        Walk the parsed JSON response from gamelog_url and return a flat list
+        of stats rows. NBA, NHL, and MLB use the standard
+        seasonTypes[].categories[].events[].stats path (use the
+        standard_gamelog_rows helper exported below). Soccer overrides this:
+        per-game stats live at gameLog.statistics[0].events[].stats.
     parse_gamelog_row(stats_list) -> dict[stat_label, float]
-        Parse one ESPN gamelog row into a dict keyed by stat_label. Sport-
-        specific because ESPN column ordering differs across sports.
+        Parse one stats row into a dict keyed by stat_label. Sport-specific
+        because ESPN column ordering differs across sports.
     event_to_team_abbrs(event_str) -> tuple[str | None, str | None]
         Parse "Home @ Away" (full names from Odds API) into ESPN abbrs.
         Used to determine opponent_abbr from player_team_abbr.
@@ -292,17 +298,7 @@ def fetch_player_recent_stats(plugin, athlete_id: str, n_games: int = 10) -> dic
     except Exception:
         return None
 
-    # ESPN gamelog structure: seasonTypes[].categories[].events[].stats[]
-    rows: list[list] = []
-    for st in data.get("seasonTypes", []):
-        if "preseason" in st.get("displayName", "").lower():
-            continue
-        for cat in st.get("categories", []):
-            for event_row in cat.get("events", []):
-                stats_list = event_row.get("stats", [])
-                if stats_list:
-                    rows.append(stats_list)
-
+    rows = plugin.extract_gamelog_rows(data)
     if not rows:
         return None
 
@@ -553,6 +549,26 @@ def no_projection_adjustment(prop, projection, context) -> tuple[float, list[str
 
 def no_prob_adjustment(prop, pick_side, context) -> tuple[float, list[str]]:
     return 1.0, []
+
+
+# ── Standard gamelog row extractor ────────────────────────
+# Used by NBA, NHL, MLB. Soccer overrides because its data lives at
+# gameLog.statistics[0].events[].stats instead of the standard path.
+
+def standard_gamelog_rows(data: dict) -> list[list]:
+    """Walk seasonTypes[].categories[].events[].stats and return a flat
+    list of stats rows. Skips preseason types.
+    """
+    rows: list[list] = []
+    for st in data.get("seasonTypes", []):
+        if "preseason" in st.get("displayName", "").lower():
+            continue
+        for cat in st.get("categories", []):
+            for event_row in cat.get("events", []):
+                stats_list = event_row.get("stats", [])
+                if stats_list:
+                    rows.append(stats_list)
+    return rows
 
 
 # ── Scan orchestrator ─────────────────────────────────────

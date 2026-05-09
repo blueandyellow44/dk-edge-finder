@@ -23,7 +23,7 @@ Excluded from Phase A:
 See props_kernel.py for the plugin contract.
 """
 
-from props_kernel import no_projection_adjustment, no_prob_adjustment
+from props_kernel import no_projection_adjustment, no_prob_adjustment, standard_gamelog_rows
 
 
 # ── Plugin contract: constants ────────────────────────────
@@ -118,6 +118,9 @@ def parse_gamelog_row(stats_list: list) -> dict[str, float]:
             if v is not None:
                 out[label] = v
     return out
+
+
+extract_gamelog_rows = standard_gamelog_rows
 
 
 # ── Event string parser (no-op) ───────────────────────────

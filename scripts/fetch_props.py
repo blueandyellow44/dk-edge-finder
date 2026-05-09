@@ -16,6 +16,7 @@ import props_kernel
 import props_nba
 import props_nhl
 import props_mlb
+import props_soccer
 
 
 PLUGINS = {
@@ -23,6 +24,7 @@ PLUGINS = {
     "nhl": props_nhl,
     "mlb": props_mlb,
 }
+PLUGINS.update(props_soccer.PLUGINS)
 
 
 def scan_props(sport: str = "nba", bankroll: float = 500.0, max_lookups: int = 30,

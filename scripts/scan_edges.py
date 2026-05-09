@@ -1960,7 +1960,8 @@ def main(games_only: bool = False):
     else:
         # Sports to scan for props. Each sport has its own plugin in
         # scripts/props_<sport>.py registered in fetch_props.PLUGINS.
-        prop_sports = ["nba", "nhl", "mlb"]
+        prop_sports = ["nba", "nhl", "mlb", "mls", "epl", "la_liga",
+                       "bundesliga", "serie_a", "ucl"]
 
         for sport in prop_sports:
             # Build sport-specific game margin map. Only NBA's blowout discount

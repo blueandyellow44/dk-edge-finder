@@ -28,7 +28,7 @@ follow-up if it becomes meaningful.
 See props_kernel.py for the plugin contract.
 """
 
-from props_kernel import no_projection_adjustment, no_prob_adjustment
+from props_kernel import no_projection_adjustment, no_prob_adjustment, standard_gamelog_rows
 
 
 # ── Plugin contract: constants ────────────────────────────
@@ -187,6 +187,9 @@ def parse_gamelog_row(stats_list: list) -> dict[str, float]:
 def event_to_team_abbrs(event_str: str) -> tuple[str | None, str | None]:
     """Stub: MLB Phase A has no defense angle so opponent abbr is unused."""
     return (None, None)
+
+
+extract_gamelog_rows = standard_gamelog_rows
 
 
 # ── Adjustment hooks: identity ────────────────────────────

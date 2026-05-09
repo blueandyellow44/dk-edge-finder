@@ -318,6 +318,68 @@ def fetch_mlb_player_box(event_id: str) -> dict:
     return out
 
 
+# Soccer per-player stats live in rosters[].roster[].stats[] as a list of
+# {name, value} dicts (not a column-indexed row like US sports). The same
+# stat-name layout is used across all leagues, so one parser works for all
+# six leagues; each league only differs by URL slug.
+SOCCER_PROP_STAT_TO_ESPN = {
+    "Shots": "totalShots",
+    "Shots on Target": "shotsOnTarget",
+}
+
+# (sport_key, ESPN league slug) for the six soccer leagues we resolve.
+_SOCCER_LEAGUE_SLUGS = {
+    "mls": "usa.1",
+    "epl": "eng.1",
+    "la_liga": "esp.1",
+    "bundesliga": "ger.1",
+    "serie_a": "ita.1",
+    "ucl": "uefa.champions",
+}
+
+
+def _make_soccer_player_box_fetcher(league_slug: str):
+    """Return a fetcher closure bound to one league's ESPN slug.
+    Returns {} on any error so callers can leave picks pending.
+    """
+    def _fetcher(event_id: str) -> dict:
+        if not event_id:
+            return {}
+        url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{league_slug}/summary?event={event_id}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                summary = json.loads(resp.read().decode())
+        except Exception as e:
+            print(f"  ESPN soccer box error (event {event_id}, {league_slug}): {e}", file=sys.stderr)
+            return {}
+
+        out: dict = {}
+        for roster_team in summary.get("rosters", []):
+            for player in roster_team.get("roster", []):
+                name = player.get("athlete", {}).get("displayName", "")
+                if not name:
+                    continue
+                player_stats: dict = {}
+                for stat in player.get("stats", []):
+                    espn_name = stat.get("name")
+                    label = next(
+                        (lbl for lbl, key in SOCCER_PROP_STAT_TO_ESPN.items() if key == espn_name),
+                        None,
+                    )
+                    if label is None:
+                        continue
+                    raw = stat.get("value")
+                    try:
+                        player_stats[label] = int(raw)
+                    except (ValueError, TypeError):
+                        continue
+                if player_stats:
+                    out[name] = player_stats
+        return out
+    return _fetcher
+
+
 # Sport → prop box fetcher. Add a new entry here when a sport's prop scanner
 # starts emitting picks. Lesson 2026-05-03b: every new pick-type emitted by
 # the scanner must have a corresponding resolver branch in the same commit.
@@ -326,6 +388,8 @@ PROP_BOX_FETCHERS = {
     "nhl": fetch_nhl_player_box,
     "mlb": fetch_mlb_player_box,
 }
+for _league, _slug in _SOCCER_LEAGUE_SLUGS.items():
+    PROP_BOX_FETCHERS[_league] = _make_soccer_player_box_fetcher(_slug)
 
 
 # Sport → fetcher mapping
