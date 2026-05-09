@@ -104,6 +104,16 @@ NBA_PROP_STAT_TO_ESPN = {
     "Threes Made": "threePointFieldGoalsMade-threePointFieldGoalsAttempted",
 }
 
+# NHL skater stats. The ESPN NHL box-score endpoint does not expose a points
+# field directly, so "Points" is computed as Goals + Assists in
+# fetch_nhl_player_box. Phase A is skater-only: goalie saves and per-strength
+# stats (PPG/PPA) are not graded yet.
+NHL_PROP_STAT_TO_ESPN = {
+    "Goals": "goals",
+    "Assists": "assists",
+    "Shots on Goal": "shotsTotal",
+}
+
 
 def fetch_nba_player_box(event_id: str) -> dict:
     """Fetch NBA box score and return {player_name: {stat_label: value}}.
@@ -149,6 +159,73 @@ def fetch_nba_player_box(event_id: str) -> dict:
                 if player_stats:
                     out[name] = player_stats
     return out
+
+
+def fetch_nhl_player_box(event_id: str) -> dict:
+    """Fetch NHL box score and return {player_name: {stat_label: value}}.
+
+    stat_label is one of NHL_PROP_STAT_TO_ESPN keys plus "Points" (computed
+    as Goals + Assists, since the ESPN summary endpoint does not expose a
+    points field for hockey). Phase A is skater-only; the goalies stat
+    block is intentionally skipped.
+
+    Returns {} on any error so callers can leave picks pending rather than
+    crash.
+    """
+    if not event_id:
+        return {}
+    url = f"https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/summary?event={event_id}"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "DKEdgeFinder/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            summary = json.loads(resp.read().decode())
+    except Exception as e:
+        print(f"  ESPN NHL box error (event {event_id}): {e}", file=sys.stderr)
+        return {}
+
+    out: dict = {}
+    for team in summary.get("boxscore", {}).get("players", []):
+        for stat_block in team.get("statistics", []):
+            # Phase A is skater-only.
+            if stat_block.get("name") == "goalies":
+                continue
+
+            keys = stat_block.get("keys", [])
+            for athlete in stat_block.get("athletes", []):
+                name = athlete.get("athlete", {}).get("displayName", "")
+                stats_arr = athlete.get("stats", [])
+                if not name or not stats_arr or len(stats_arr) != len(keys):
+                    continue
+                stats_by_key = dict(zip(keys, stats_arr))
+
+                player_stats: dict = {}
+                for label, espn_key in NHL_PROP_STAT_TO_ESPN.items():
+                    raw = stats_by_key.get(espn_key)
+                    if raw is None or raw == "":
+                        continue
+                    try:
+                        player_stats[label] = int(raw)
+                    except (ValueError, TypeError):
+                        continue
+
+                if "Goals" in player_stats and "Assists" in player_stats:
+                    player_stats["Points"] = player_stats["Goals"] + player_stats["Assists"]
+
+                if player_stats:
+                    # ESPN sometimes lists a player in multiple blocks (forwards
+                    # AND skaters). Stats match across blocks, so last-write-wins
+                    # is benign.
+                    out[name] = player_stats
+    return out
+
+
+# Sport → prop box fetcher. Add a new entry here when a sport's prop scanner
+# starts emitting picks. Lesson 2026-05-03b: every new pick-type emitted by
+# the scanner must have a corresponding resolver branch in the same commit.
+PROP_BOX_FETCHERS = {
+    "nba": fetch_nba_player_box,
+    "nhl": fetch_nhl_player_box,
+}
 
 
 # Sport → fetcher mapping
@@ -595,15 +672,17 @@ def resolve_pick_history(all_games: dict):
         # Props need a per-game box-score fetch keyed on event_id; cached above so a
         # second prop from the same game costs nothing.
         if is_prop:
-            if sport != "nba":
-                # Only NBA props are supported today; other sports' fetchers TBD.
+            fetcher = PROP_BOX_FETCHERS.get(sport)
+            if fetcher is None:
+                # Sport's prop fetcher not wired up yet; leave pending.
                 continue
             event_id = game.get("event_id", "")
             if not event_id:
                 continue
-            if event_id not in box_cache:
-                box_cache[event_id] = fetch_nba_player_box(event_id)
-            outcome, prop_detail = resolve_prop(pick, box_cache[event_id])
+            cache_key = (sport, event_id)
+            if cache_key not in box_cache:
+                box_cache[cache_key] = fetcher(event_id)
+            outcome, prop_detail = resolve_prop(pick, box_cache[cache_key])
         elif "ML" in pick:
             outcome = resolve_moneyline(pick, home_score, away_score, h.get("event", ""))
         elif pick_upper.startswith("OVER ") or pick_upper.startswith("UNDER "):

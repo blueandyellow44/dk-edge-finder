@@ -14,10 +14,12 @@ Public surface (kept stable for callers like scripts/scan_edges.py):
 
 import props_kernel
 import props_nba
+import props_nhl
 
 
 PLUGINS = {
     "nba": props_nba,
+    "nhl": props_nhl,
 }
 
 

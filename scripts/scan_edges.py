@@ -114,6 +114,21 @@ EDGE_DISCOUNT_TIERS = [
 # on 219 picks, paper P/L -$316. The 8%+ buckets clear 60% comfortably.
 MLB_SPREAD_MIN_EDGE = 0.08              # 8% min for MLB run lines
 
+# MLB favorite (-1.5) hard-skip (May 2026): pick_history 2026-03-25 to 2026-05-08
+# shows MLB -1.5 favorites at 35W-85L on cover (29.2% cover rate, 44.2% outright
+# win rate), paper P/L -$378.84 over 120 bets. Underdogs in the same window
+# went +$704.14 over 395 bets. The asymmetry is structural: Skellam under-models
+# MLB run-margin variance because runs are overdispersed and right-skewed
+# (blowouts happen more than Poisson predicts), so the model overestimates the
+# probability that a favorite covers by 2+ runs. PROB_CALIBRATION's single
+# linear fit cannot correct this because it was trained on a sample dominated
+# by underdog picks (avg raw 67.3%); the constant b=0.347 floors all calibrated
+# probs near 50% regardless of input. Skip the favorite candidate entirely
+# until either (a) Skellam is replaced with a heavier-tailed model for MLB or
+# (b) a favorite-only calibration is fitted on enough data to be stable.
+# See skellam.py:24-26 for the underlying distributional issue.
+MLB_FAVORITE_HARD_SKIP = True
+
 # NHL run line calibration: same shape as MLB, smaller sample but same direction.
 # Added 2026-05-07: pick_history 5-8pp NHL spread bucket was 31W-41L (43.1%)
 # on 72 picks, paper P/L -$134. Falls under MIN_EDGE_HIGH (3%) without this floor.
@@ -1933,34 +1948,42 @@ def main(games_only: bool = False):
     if games_only:
         print("\n[5b] Skipping player props (--games-only mode, no API credits used)")
     else:
-        # Build game margin map for blowout discount on props
-        game_margins = {}
-        nba_preds = all_predictions.get("nba", {})
-        for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
-            pred = nba_preds.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
-            if pred:
-                margin = abs(pred["home_score"] - pred["away_score"])
-                event_str = game.get("event_str", "")
-                if event_str:
-                    game_margins[event_str] = margin
-        print(f"\n[5b] Scanning player props (real DK odds, {len(game_margins)} games with margins)...")
-        try:
-            prop_edges = scan_player_props("nba", bankroll=available, max_lookups=20,
-                                           game_margins=game_margins)
-            if prop_edges:
-                for pe in prop_edges:
-                    impl_str = pe.get("implied", "0%").replace("%", "")
-                    model_str = pe.get("model", "0%").replace("%", "")
-                    pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
-                    pe["model_prob"] = float(model_str) / 100 if model_str else 0
-                    pe["event_short"] = pe.get("event", "")
-                    pe["tier"] = pe.get("tier", "Medium")
-                picks.extend(prop_edges)
-                print(f"  Found {len(prop_edges)} prop edges")
-            else:
-                print("  No prop edges found")
-        except Exception as e:
-            print(f"  Prop scanning error: {e}", file=sys.stderr)
+        # Sports to scan for props. Each sport has its own plugin in
+        # scripts/props_<sport>.py registered in fetch_props.PLUGINS.
+        prop_sports = ["nba", "nhl"]
+
+        for sport in prop_sports:
+            # Build sport-specific game margin map. Only NBA's blowout discount
+            # uses this today; other sports ignore game_margins.
+            sport_margins: dict = {}
+            if sport == "nba":
+                nba_preds = all_predictions.get("nba", {})
+                for game in [g for g in all_games if g.get("sport", "").lower() == "nba"]:
+                    pred = nba_preds.get(f"{game.get('away_abbr', '')}@{game.get('home_abbr', '')}")
+                    if pred:
+                        margin = abs(pred["home_score"] - pred["away_score"])
+                        event_str = game.get("event_str", "")
+                        if event_str:
+                            sport_margins[event_str] = margin
+
+            print(f"\n[5b] Scanning {sport.upper()} player props (real DK odds, {len(sport_margins)} games with margins)...")
+            try:
+                prop_edges = scan_player_props(sport, bankroll=available, max_lookups=20,
+                                               game_margins=sport_margins)
+                if prop_edges:
+                    for pe in prop_edges:
+                        impl_str = pe.get("implied", "0%").replace("%", "")
+                        model_str = pe.get("model", "0%").replace("%", "")
+                        pe["implied_prob"] = float(impl_str) / 100 if impl_str else 0
+                        pe["model_prob"] = float(model_str) / 100 if model_str else 0
+                        pe["event_short"] = pe.get("event", "")
+                        pe["tier"] = pe.get("tier", "Medium")
+                    picks.extend(prop_edges)
+                    print(f"  Found {len(prop_edges)} {sport.upper()} prop edges")
+                else:
+                    print(f"  No {sport.upper()} prop edges found")
+            except Exception as e:
+                print(f"  {sport.upper()} prop scanning error: {e}", file=sys.stderr)
 
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
     # Split picks into game edges and prop edges, sort each by EV per dollar
