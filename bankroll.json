@@ -3,14 +3,14 @@
   "balance_override": null,
   "override_note": "Reconciled to DK transaction history 2026-05-04: lifetime_profit $102.68 (settled bets only) and current_bankroll $602.68 reflect DK actual. Cash on hand right now is $504.68 with $98 of 5/4 wagers pending. Model bet record stays in lifetime_wins/losses/pushes (those count model picks; DK includes parlays/props/in-game, ~$44 of which lost money the model never saw).",
   "current_bankroll": 480.64,
-  "last_updated": "2026-05-08T17:44:54.410532+00:00",
+  "last_updated": "2026-05-09T04:19:52.644519+00:00",
   "pending_bets": [],
   "lifetime_bets": 43,
   "lifetime_wins": 46,
-  "lifetime_losses": 39,
+  "lifetime_losses": 41,
   "lifetime_pushes": 1,
-  "lifetime_profit": 2.64,
-  "roi_pct": 0.2,
+  "lifetime_profit": -19.36,
+  "roi_pct": -1.5,
   "resolved_bets": [
     {
       "id": "mem-spread-20260321",

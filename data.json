@@ -1,18 +1,18 @@
 {
   "scan_date": "2026-05-08",
-  "scan_subtitle": "Friday, May 08, 2026 \u2014 BUNDESLIGA (1), LA_LIGA (1), LIGUE_1 (1), MLB (15), NBA (2), NHL (2), SERIE_A (1)",
+  "scan_subtitle": "2026-05-08 \u2014 All 23 games in progress or final \u00b7 Next scan 6 AM PT",
   "bankroll": {
     "available": 480.64,
     "starting": 500.0,
-    "profit": 2.64,
+    "profit": -19.36,
     "record": {
       "wins": 46,
-      "losses": 39,
+      "losses": 41,
       "pushes": 1
     },
-    "pending_count": 2,
-    "pending_total": 22,
-    "pending_label": "2 bet(s) pending ($22.00)"
+    "pending_count": 0,
+    "pending_total": 0,
+    "pending_label": "No unsettled bets"
   },
   "games_analyzed": 23,
   "best_bet": {
@@ -106,8 +106,8 @@
       "ev_per_dollar": 0.2077,
       "tier": "High",
       "bet": "$9.61",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "DET 3, KC 4",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -1238,9 +1238,9 @@
       "sport": "MLB",
       "wager": 11,
       "odds": 158,
-      "outcome": "pending",
-      "pnl": 0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -11,
+      "final_score": "WSH 3, MIA 2"
     },
     {
       "date": "2026-05-08",
@@ -1249,9 +1249,9 @@
       "sport": "MLB",
       "wager": 11,
       "odds": 144,
-      "outcome": "pending",
-      "pnl": 0,
-      "final_score": ""
+      "outcome": "loss",
+      "pnl": -11,
+      "final_score": "DET 3, KC 4"
     }
   ]
 }

@@ -17761,9 +17761,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): WSH 4.0, MIA 4.3 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "WSH 3, MIA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-08",
@@ -17779,9 +17779,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 3, KC 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-08",
@@ -17797,9 +17797,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): WSH 4.0, MIA 4.3 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.4 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "WSH 3, MIA 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-08",
@@ -17815,9 +17815,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIN 3.5, CLE 4.1 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. CLE on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIN 4, CLE 6",
+    "pnl_if_bet": 14.9
   },
   {
     "scan_date": "2026-05-08",
@@ -17833,9 +17833,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 3, KC 4",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-08",
@@ -17851,9 +17851,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 4.0, BOS 4.4 (margin: 0.4). -1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 0, BOS 2",
+    "pnl_if_bet": 14.9
   },
   {
     "scan_date": "2026-05-08",
@@ -17869,9 +17869,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): TB 4.0, BOS 4.4 (margin: 0.4). -1.1 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TB 0, BOS 2",
+    "pnl_if_bet": 15.3
   },
   {
     "scan_date": "2026-05-08",
@@ -17887,9 +17887,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): HOU 4.8, CIN 4.8 (margin: 0.0). -1.5 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.5 pts (DRatings: ?, Dimers: ?). Lower confidence. \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "HOU 10, CIN 0",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-08",
@@ -17905,9 +17905,9 @@
     "confidence": "LOW",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIN 3.5, CLE 4.1 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 CONTESTED: Sources disagree by 1.1 pts (DRatings: ?, Dimers: ?). Lower confidence. CLE on B2B (-1.5% adj) \u26a0 Confidence: LOW",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIN 4, CLE 6",
+    "pnl_if_bet": 14.9
   },
   {
     "scan_date": "2026-05-08",
@@ -17923,8 +17923,8 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 3, KC 4",
+    "pnl_if_bet": -10.0
   }
 ]
