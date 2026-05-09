@@ -3,6 +3,7 @@ import { Header } from './components/Header'
 import { TabBar } from './components/TabBar'
 import { BalanceCard } from './components/BalanceCard'
 import { BalanceChart } from './components/BalanceChart'
+import { AuthExpiredBanner } from './components/AuthExpiredBanner'
 import { PicksTab } from './tabs/PicksTab'
 import { PendingTab } from './tabs/PendingTab'
 import { ActivityTab } from './tabs/ActivityTab'
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <div className="app">
+      <AuthExpiredBanner />
       <Header email={me.data?.email} pictureUrl={me.data?.picture_url ?? null} />
       <main className="page">
         <div className="page-main">

@@ -1077,3 +1077,34 @@ a {
   font-style: italic;
   margin: 0;
 }
+
+/* Auth expired banner: shown when an /api/* call gets opaqueredirect from Cloudflare Access */
+.auth-expired-banner {
+  background: var(--color-negative);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.auth-expired-banner strong {
+  font-weight: 700;
+  margin-right: 4px;
+}
+.auth-expired-banner button {
+  background: #fff;
+  color: var(--color-negative);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.auth-expired-banner button:hover {
+  background: #f5f5f5;
+}
