@@ -83,5 +83,10 @@
     "summary": "Both losses came from runline bets with modest edges (8.5-9.2%) and the model showed weak conviction on both plays\u2014sitting at 48.0% and 49.5% respectively, essentially coin-flip territory\u2014yet the confidence levels didn't match the execution, with the Kansas City pick rated MEDIUM confidence despite the model's near-50% probability. The Marlins loss was particularly brutal given it was labeled HIGH tier but LOW confidence, a red flag combination that should've warranted either more caution or complete avoidance, and the fact that you risked the full $11 on each suggests the confidence tags weren't driving position sizing decisions.",
     "generated_at": "2026-05-09T07:08:47.270492+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-05-09": {
+    "summary": "The two MLB runline wins (+$9.09 each) carried the day despite the MLS under taking a $10 hit, with the Padres and Royals both delivering comfortable covers that aligned with the model's edge calculations even though confidence was only medium. The loss stings more because it came from the highest-confidence play (HIGH conf, 67.4% model) with solid 10.9% edge, suggesting the model's conviction didn't translate to execution on that SKC-Portland matchup. Overall the session stayed profitable thanks to the baseball picks, but the gap between high-confidence prediction and actual outcome on the MLS bet is worth reviewing.",
+    "generated_at": "2026-05-10T07:26:15.783638+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
