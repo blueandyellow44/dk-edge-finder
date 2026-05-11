@@ -143,7 +143,12 @@ def main() -> int:
             history_idx.setdefault((d, p, e), h)
 
     bets = data.setdefault("bets", [])
-    existing = {(b.get("date", ""), b.get("pick", "")) for b in bets}
+    # Dedup on (date, pick, event), not (date, pick). Multiple games on the
+    # same day legitimately share a `pick` string (e.g. four MLS totals all
+    # named "UNDER 3.5"); a (date, pick)-only key conflated them and
+    # silently dropped every KV placement after the first match per day.
+    # Lost five 5/9-5/10 soccer placements to this until 2026-05-11.
+    existing = {(b.get("date", ""), b.get("pick", ""), b.get("event", "")) for b in bets}
 
     keys = list_state_keys(account_id, token)
     if not keys:
@@ -169,7 +174,7 @@ def main() -> int:
             pick, event = pkey.split("|", 1)
             pick = pick.strip()
             event = event.strip()
-            if (scan_date, pick) in existing:
+            if (scan_date, pick, event) in existing:
                 continue
 
             ph = history_idx.get((scan_date, pick, event))
@@ -203,7 +208,7 @@ def main() -> int:
                 "pnl": 0,
                 "final_score": "",
             })
-            existing.add((scan_date, pick))
+            existing.add((scan_date, pick, event))
             added += 1
             print(f"  + KV-synced as pending: {scan_date} {pick}")
 
