@@ -73,7 +73,7 @@ from pathlib import Path
 
 # ── The Odds API ─────────────────────────────────────────
 
-ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "")
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY", "").strip()
 
 # Load from .env if not in environment
 if not ODDS_API_KEY:
