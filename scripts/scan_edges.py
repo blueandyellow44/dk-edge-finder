@@ -14,6 +14,7 @@ Pipeline:
 """
 
 import json
+import math
 import sys
 import re
 import urllib.request
@@ -67,41 +68,69 @@ NBA_PLAYOFF_HARD_SKIP_AT = 0.10
 # in-window NBA picks. See lessons.md root entry 2026-05-02.
 NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 
-# Per-sport probability calibration (May 2026): linear least-squares fit of
-# binary outcomes on raw model_prob across resolved historical picks. The
-# calibrated probability replaces raw model_prob in calculate_edge before
-# situational adjustments and edge math. Fit details in lessons.md 2026-05-03c.
+# Per-(sport, market) probability calibration (May 2026): Platt scaling
+# (sigmoid of a*logit(p) + b) fit by Newton-Raphson on the Bernoulli
+# log-posterior under an isotropic Gaussian prior centered at the
+# identity mapping (a=1, b=0) with precision 10. The prior keeps fits
+# with weak signal from drifting into anti-predictive territory just
+# because of a thin high-confidence tail; with strong data it's
+# overwhelmed and the fit reproduces pure MLE.
 #
-# MLB (n=414): Avg model 67.3% → calibrated 61.4% (matches realized 61.4%).
-#   Replay 2026-03-24 to 2026-05-03: 144 of 414 picks pass calibrated filter,
-#   $+800 P/L on kept (vs $+654 original on all 414). Drops 270 underperforming
-#   picks worth -$147. NOTE 2026-05-09: this fit was dominated by underdog
-#   picks (avg raw 67.3%); favorites at avg raw ~50% get squashed by the
-#   constant b=0.347 to ~55% calibrated even though realized cover is 29%.
-#   MLB_FAVORITE_HARD_SKIP now blocks favorites at the candidate stage so
-#   this calibration is effectively underdog-only for MLB.
-# NBA (n=205): Avg model 65.2% → calibrated 46.8%. Effectively disables NBA
-#   model since calibrated_prob hovers near 50% regardless of input. Replay:
-#   only 2 of 205 picks pass; -$241 of historical NBA losses avoided. NBA
-#   model has zero calibration in current data (every model_prob bucket
-#   realizes ~40-55%).
-# NHL deliberately omitted: linear fit (a=0.803, b=0.109) over-corrects at
-#   the heavy-juice tail. Drops 32 picks that hit 94% historically. Original
-#   NHL signal (+$269) is preserved by leaving NHL un-calibrated.
-# Other sports (soccer, mls, mma) too small to fit; default identity (raw_prob).
+# Calibration is applied to model_prob (the cover/over/prop probability
+# the model emits) right before edge math, after situational adjustments
+# (B2B, playoff discount, etc.).
+#
+# Fit on pick_history.json 2026-05-10 (775 Spread + 91 NBA totals + 71
+# MLS totals = 935 cover-level resolved observations; 56 below the
+# 30-obs threshold are skipped):
+#
+#   (sport, market)        n   a       b       baseline brier  fitted brier
+#   (mlb, spread)        515  +0.994  -0.358   0.2431          0.2351
+#   (nba, spread)         89  +0.592  -0.506   0.3013          0.2454
+#   (nhl, spread)        171  +0.842  +0.037   0.2282          0.2268
+#   (nba, over/under)     91  +0.538  -0.263   0.2838          0.2560
+#   (mls, over/under)     71  +0.789  -0.323   0.2664          0.2435
+#
+# All slopes are non-negative (no inversion). All biases except NHL are
+# negative, reflecting that the model is on average over-confident on the
+# bet it picks. NHL's near-identity fit (a=0.84, b=+0.04) replaces the
+# previous "leave NHL un-calibrated" carve-out: the prior keeps the fit
+# from over-correcting the heavy-juice tail that broke the prior linear
+# attempt. NBA and MLS Over/Under are newly calibrated; previously the
+# totals path had no calibration step at all.
+#
+# Keys outside this dict (e.g. soccer leagues with <30 obs, NBA Player
+# Prop with 25 obs) fall through to identity. They auto-fit on the next
+# refit run once their sample crosses the threshold.
 PROB_CALIBRATION = {
-    "mlb": {"a": 0.396, "b": 0.347},
-    "nba": {"a": 0.258, "b": 0.300},
+    ("mlb", "spread"):     {"a": 0.993764, "b": -0.358189},
+    ("mls", "over/under"): {"a": 0.788701, "b": -0.323309},
+    ("nba", "over/under"): {"a": 0.538304, "b": -0.263229},
+    ("nba", "spread"):     {"a": 0.591943, "b": -0.505624},
+    ("nhl", "spread"):     {"a": 0.842284, "b":  0.036548},
 }
 
+_CALIBRATION_CLAMP_LOW = 0.000001
+_CALIBRATION_CLAMP_HIGH = 0.999999
 
-def calibrate_prob(sport: str, raw_prob: float) -> float:
-    """Apply per-sport probability calibration. Returns calibrated probability
-    clipped to [0.05, 0.95]. Sports without a fit return raw_prob unchanged."""
-    coeffs = PROB_CALIBRATION.get(sport.lower())
+
+def calibrate_prob(sport: str, market: str, raw_prob: float) -> float:
+    """Apply per-(sport, market) Platt calibration. Returns the calibrated
+    probability clipped to [0.05, 0.95]. Keys without a fit return raw_prob
+    unchanged so the caller's existing edge math sees the model output as-is.
+
+    Math: p_cal = sigmoid(a * logit(p_raw) + b). With (a=1, b=0) this
+    reduces to identity. The prior centers the fit there; it deviates
+    only when the data demands it.
+    """
+    coeffs = PROB_CALIBRATION.get((sport.lower(), market.lower()))
     if coeffs is None:
         return raw_prob
-    return max(0.05, min(0.95, coeffs["a"] * raw_prob + coeffs["b"]))
+    p = min(max(raw_prob, _CALIBRATION_CLAMP_LOW), _CALIBRATION_CLAMP_HIGH)
+    z = math.log(p / (1.0 - p))
+    scaled = coeffs["a"] * z + coeffs["b"]
+    p_cal = 1.0 / (1.0 + math.exp(-scaled))
+    return max(0.05, min(0.95, p_cal))
 
 
 # Graduated edge discount for bet sizing.
@@ -1438,11 +1467,11 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
             model_prob += REST_ADVANTAGE
             b2b_note += f" | {opponent['abbr']} on B2B (+1.5% boost)"
 
-        # Apply per-sport probability calibration (May 2026). Calibration is the
-        # last thing applied to model_prob before edge math; it captures the net
-        # systematic bias in the model AFTER situational adjustments. See
-        # PROB_CALIBRATION dict above and lessons.md 2026-05-03c.
-        model_prob = calibrate_prob(sport, model_prob)
+        # Apply per-(sport, market) probability calibration. Calibration is
+        # the last thing applied to model_prob before edge math; it captures
+        # the net systematic bias in the model AFTER situational adjustments.
+        # See PROB_CALIBRATION dict above and lessons.md 2026-05-10.
+        model_prob = calibrate_prob(sport, "spread", model_prob)
 
         # Calculate edge
         implied_prob = cand["implied_prob"]
@@ -1662,6 +1691,12 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     model_prob = cushion_to_probability(abs(cushion), sport, "total")
     if model_prob is None:
         return None  # No researched SD for this sport — skip
+
+    # Apply per-(sport, market) probability calibration. NBA Over/Under
+    # (a=+0.54, b=-0.26) and MLS Over/Under (a=+0.79, b=-0.32) are
+    # currently fitted; other sports fall through to identity until they
+    # cross the 30-obs threshold. Same shape as the spread path.
+    model_prob = calibrate_prob(sport, "over/under", model_prob)
 
     # Use ACTUAL DK total odds from ESPN when available
     if pick_side == "over" and game.get("over_odds"):
