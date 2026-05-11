@@ -18319,9 +18319,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): RMA 1.0, BAR 1.5 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (19.7%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RMA 0, BAR 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-05-10",
@@ -18337,9 +18337,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by -0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 2, SD 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18355,9 +18355,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.9%): Model disagrees with market by -1.0 pts. Investigate before betting. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 6, KC 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18391,9 +18391,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): CHC 3.8, TEX 3.9 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CHC 0, TEX 3",
+    "pnl_if_bet": 16.3
   },
   {
     "scan_date": "2026-05-10",
@@ -18409,9 +18409,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATL 4.2, LAD 4.5 (margin: 0.3). -1.2 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATL 7, LAD 2",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18427,9 +18427,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): PAR 0.9, REN 1.9 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.6%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PAR 1, REN 2",
+    "pnl_if_bet": 8.33
   },
   {
     "scan_date": "2026-05-10",
@@ -18445,9 +18445,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (clubelo): RMA 1.0, BAR 1.5 (total: 2.5). Line: 3.5. Cushion: 1.0 pts. Single source \u2014 clubelo. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (20.8%): Model predicts 2.5 vs market 3.5 \u2014 1.0 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RMA 0, BAR 2",
+    "pnl_if_bet": 9.52
   },
   {
     "scan_date": "2026-05-10",
@@ -18463,9 +18463,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): DET 3.8, KC 4.3 (margin: 0.5). -1.0 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.5%): Model disagrees with market by -1.0 pts. Investigate before betting. | DET on B2B (+1.5% boost) \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 6, KC 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18481,9 +18481,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by -0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 2, SD 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18499,9 +18499,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only): PAR 0.9, REN 1.9 (total: 2.8). Line: 3.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (11.6%): Model predicts 2.8 vs market 3.5 \u2014 0.7 pt gap.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PAR 1, REN 2",
+    "pnl_if_bet": 8.33
   },
   {
     "scan_date": "2026-05-10",
@@ -18517,9 +18517,9 @@
     "confidence": "HIGH",
     "type": "game",
     "notes": "Model (DRatings only + clubelo): ATA 1.3, MIL 1.7 (total: 3.0). Line: 2.5. Cushion: 0.5 pts.",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "ATA 3, MIL 2",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-05-10",
@@ -18535,9 +18535,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.4%): Model disagrees with market by -0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "STL 2, SD 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18553,9 +18553,9 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 4.0, SF 3.9 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "PIT 6, SF 7",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-10",
@@ -18571,8 +18571,8 @@
     "confidence": "MEDIUM",
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): VGK 3.4, ANA 3.1 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by 1.2 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VGK 3, ANA 4",
+    "pnl_if_bet": 5.26
   }
 ]
