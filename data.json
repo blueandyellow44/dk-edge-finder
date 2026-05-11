@@ -2,12 +2,12 @@
   "scan_date": "2026-05-11",
   "scan_subtitle": "Monday, May 11, 2026 \u2014 EPL (1), LA_LIGA (1), MLB (6), NBA (2), NHL (1), SERIE_A (1)",
   "bankroll": {
-    "available": 497.0,
+    "available": 504.27,
     "starting": 500.0,
-    "profit": -3.0,
+    "profit": 4.27,
     "record": {
-      "wins": 50,
-      "losses": 43,
+      "wins": 53,
+      "losses": 45,
       "pushes": 1
     },
     "pending_count": 0,
@@ -1182,6 +1182,61 @@
       "outcome": "win",
       "pnl": 9.09,
       "final_score": "ATA 3, MIL 2"
+    },
+    {
+      "date": "2026-05-09",
+      "pick": "UNDER 3.5",
+      "event": "Orlando City SC @ CF Montr\u00e9al",
+      "sport": "MLS",
+      "wager": 10,
+      "odds": -165,
+      "outcome": "win",
+      "pnl": 9.09,
+      "final_score": "ORL 0, MTL 2"
+    },
+    {
+      "date": "2026-05-09",
+      "pick": "UNDER 3.5",
+      "event": "FC Cincinnati @ Charlotte FC",
+      "sport": "MLS",
+      "wager": 10,
+      "odds": -155,
+      "outcome": "loss",
+      "pnl": -10,
+      "final_score": "CIN 2, CLT 2"
+    },
+    {
+      "date": "2026-05-09",
+      "pick": "UNDER 3.5",
+      "event": "Real Salt Lake @ FC Dallas",
+      "sport": "MLS",
+      "wager": 10,
+      "odds": -170,
+      "outcome": "loss",
+      "pnl": -10,
+      "final_score": "RSL 1, DAL 3"
+    },
+    {
+      "date": "2026-05-09",
+      "pick": "UNDER 3.5",
+      "event": "Vancouver Whitecaps @ San Jose Earthquakes",
+      "sport": "MLS",
+      "wager": 10,
+      "odds": -160,
+      "outcome": "win",
+      "pnl": 9.09,
+      "final_score": "VAN 1, SJ 1"
+    },
+    {
+      "date": "2026-05-10",
+      "pick": "UNDER 3.5",
+      "event": "Paris FC @ Stade Rennais",
+      "sport": "LIGUE_1",
+      "wager": 10,
+      "odds": -120,
+      "outcome": "win",
+      "pnl": 9.09,
+      "final_score": "PAR 1, REN 2"
     }
   ]
 }
