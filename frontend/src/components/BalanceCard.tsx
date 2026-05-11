@@ -1,9 +1,12 @@
-import { useActivity, useBankroll } from '../api/queries'
+import { useActivity, useBankroll, useStateRecord } from '../api/queries'
 import { formatMoney, formatPercent, formatSignedMoney } from '../lib/format'
+
+const LEGACY_WAGER_FALLBACK = 14
 
 export function BalanceCard() {
   const bankroll = useBankroll()
   const activity = useActivity()
+  const state = useStateRecord()
 
   if (bankroll.isLoading) {
     return (
@@ -28,24 +31,46 @@ export function BalanceCard() {
     )
   }
 
-  const { available, starting, profit, lifetime } = bankroll.data
+  const { available, profit, lifetime } = bankroll.data
   const profitClass = profit > 0 ? 'positive' : profit < 0 ? 'negative' : ''
   const roiClass = lifetime.roi_pct > 0 ? 'positive' : lifetime.roi_pct < 0 ? 'negative' : ''
 
-  // Pending = 5/4 wagers DK has already debited but haven't graded yet.
-  // Without surfacing this, "$500 start + $102 profit = $602" doesn't square
-  // with "Available $504" - the missing $98 is locked in active bets.
-  // Read the activity bets, but the data.json bets[] also includes pending
-  // entries (which /api/activity filters out). Use a fallback: pending =
-  // starting + profit - available.
-  const totalBankroll = starting + profit
-  const pending = Math.max(0, totalBankroll - available)
-  const activityBets = activity.data?.bets ?? []
-  const pendingFromActivity = activityBets.length // resolved only; doesn't help count pending
-  // Fallback pending count: try to infer from totalBankroll-available rounding
-  // up to typical $14 stake. Better: read pending count from /api/activity if
-  // we ever expose it. For now, just show the dollar amount.
-  void pendingFromActivity
+  // Active bets = wagers on placed-but-not-yet-resolved picks. Compute
+  // directly from state.placements (aggregated across all scan_dates) and
+  // dedupe against resolved activity bets. This is the same calculation
+  // the worker performs server-side when deriving `available`; doing it
+  // again client-side gives a stable display number that doesn't bounce
+  // when the bankroll endpoint races the state endpoint.
+  const resolvedKeys = new Set(
+    (activity.data?.bets ?? []).map((b) => `${b.date}|${b.pick}|${b.event}`),
+  )
+  const placedPlacements = (state.data?.placements ?? []).filter((p) => {
+    if (p.action !== 'placed') return false
+    const date = p.scan_date ?? state.data?.scan_date ?? ''
+    return !resolvedKeys.has(`${date}|${p.key}`)
+  })
+  // Dedupe by (date, pick, event) — same key the worker uses — so a
+  // placement that appears in multiple scan-date records counts once.
+  const seen = new Set<string>()
+  let activeBets = 0
+  let activeBetCount = 0
+  for (const p of placedPlacements) {
+    const date = p.scan_date ?? state.data?.scan_date ?? ''
+    const tripleKey = `${date}|${p.key}`
+    if (seen.has(tripleKey)) continue
+    seen.add(tripleKey)
+    activeBets += typeof p.wager === 'number' ? p.wager : LEGACY_WAGER_FALLBACK
+    activeBetCount += 1
+  }
+  const pendingManualCount = (state.data?.manual_bets ?? []).filter(
+    (b) => b.outcome === 'pending',
+  ).length
+  for (const m of state.data?.manual_bets ?? []) {
+    if (m.outcome !== 'pending') continue
+    activeBets += m.wager
+  }
+  const totalActiveCount = activeBetCount + pendingManualCount
+  const totalBankroll = available + activeBets
 
   return (
     <div className="card">
@@ -56,10 +81,11 @@ export function BalanceCard() {
           <span className="dollar">$</span>
           {formatMoney(available)}
         </div>
-        {pending > 0.005 && (
+        {activeBets > 0.005 && (
           <div className="balance-breakdown">
             <span className="balance-breakdown-piece">
-              + ${formatMoney(pending)} in active bets
+              + ${formatMoney(activeBets)} in {totalActiveCount} active{' '}
+              {totalActiveCount === 1 ? 'bet' : 'bets'}
             </span>
             <span className="balance-breakdown-equals">=</span>
             <span className="balance-breakdown-total">

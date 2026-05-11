@@ -32,6 +32,40 @@ function emptyRecord(email: string, scan_date: string): StateRecord {
   }
 }
 
+// Walk every state:<email>:<scan_date> KV entry for the user and return
+// the parsed records sorted oldest-first. The /api/state route uses this
+// to surface placements + manual bets across every scan_date the user has
+// touched, not just the latest scan. Without this aggregation, placing a
+// bet on Monday and viewing the SPA on Tuesday after a fresh cron makes
+// Monday's placement invisible because the route only loaded
+// state:email:<Tuesday>.
+export async function listAllStateRecords(
+  env: Env,
+  email: string,
+): Promise<StateRecord[]> {
+  const prefix = `state:${email}:`
+  const records: StateRecord[] = []
+  let cursor: string | undefined
+  for (let safety = 0; safety < 50; safety++) {
+    const list = await env.EDGE_STATE.list({ prefix, cursor, limit: 1000 })
+    const keys = list.keys.map((k) => k.name)
+    const values = await Promise.all(keys.map((k) => env.EDGE_STATE.get(k)))
+    for (const raw of values) {
+      if (!raw) continue
+      try {
+        records.push(StateRecordSchema.parse(JSON.parse(raw)))
+      } catch {
+        // Skip malformed records rather than failing the whole response.
+      }
+    }
+    if (list.list_complete) break
+    cursor = list.cursor
+    if (!cursor) break
+  }
+  records.sort((a, b) => a.scan_date.localeCompare(b.scan_date))
+  return records
+}
+
 export async function readState(env: Env, email: string, scan_date: string): Promise<StateRecord | null> {
   const raw = await env.EDGE_STATE.get(stateKey(email, scan_date))
   if (!raw) return null

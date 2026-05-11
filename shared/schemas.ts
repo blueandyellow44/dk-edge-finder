@@ -103,6 +103,9 @@ export const PlacementSchema = z.object({
   idempotency_key: z.string(),
   // Optional for back-compat: KV records written before Bug 2 fix have no wager.
   wager: z.number().nonnegative().optional(),
+  // Optional. Attached server-side on API responses so the SPA can dedupe
+  // across multiple KV state records (one per scan_date). Not stored in KV.
+  scan_date: ScanDateSchema.optional(),
 })
 
 export const SyncQueueEntrySchema = z.object({
@@ -123,6 +126,9 @@ export const ManualBetSchema = z.object({
   outcome: z.enum(['pending', 'win', 'loss', 'push']),
   placed_at: TimestampSchema,
   idempotency_key: z.string(),
+  // Optional. Attached server-side on API responses so the SPA can dedupe
+  // across multiple KV state records (one per scan_date). Not stored in KV.
+  scan_date: ScanDateSchema.optional(),
 })
 
 export const StateRecordSchema = z.object({

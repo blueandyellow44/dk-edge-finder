@@ -45,8 +45,12 @@ function makeKv(): Env['EDGE_STATE'] {
     async delete(key: string) {
       store.delete(key)
     },
-    async list() {
-      return { keys: Array.from(store.keys()).map((name) => ({ name })), list_complete: true, cacheStatus: null }
+    async list(opts?: { prefix?: string }) {
+      const prefix = opts?.prefix ?? ''
+      const matching = Array.from(store.keys())
+        .filter((k) => k.startsWith(prefix))
+        .map((name) => ({ name }))
+      return { keys: matching, list_complete: true, cacheStatus: null }
     },
   } as unknown as Env['EDGE_STATE']
 }
@@ -357,6 +361,61 @@ describe('GET /api/bankroll', () => {
     expect(body.available).toBe(679.34)
   })
 
+  test('subtracts cross-date KV placements from available, not just data.json pending', async () => {
+    // The SPA writes a placement to KV the instant the user clicks Mark as
+    // placed. Bankroll should reflect that immediately, even before the
+    // nightly cron syncs the placement into data.json.bets[]. Two KV state
+    // records for different scan_dates with placements that have no
+    // matching data.json pending entry.
+    const env = makeEnv({ dataJson: baseDataJson, bankrollJson: baseBankrollJson })
+    await env.EDGE_STATE.put(
+      'state:max.sheahan@icloud.com:2026-04-28',
+      JSON.stringify({
+        schema_version: 1,
+        email: 'max.sheahan@icloud.com',
+        scan_date: '2026-04-28',
+        placements: [
+          {
+            key: 'BOS -1.5|BOS @ NYY',
+            action: 'placed',
+            dispatch_status: 'ok',
+            placed_at: '2026-04-28T19:05:00Z',
+            idempotency_key: 'mon-1',
+            wager: 22,
+          },
+        ],
+        sync_queue: [],
+        manual_bets: [],
+        updated_at: '2026-04-28T19:05:00Z',
+      }),
+    )
+    await env.EDGE_STATE.put(
+      'state:max.sheahan@icloud.com:2026-04-30',
+      JSON.stringify({
+        schema_version: 1,
+        email: 'max.sheahan@icloud.com',
+        scan_date: '2026-04-30',
+        placements: [
+          {
+            key: 'NYY ML|NYY @ BOS',
+            action: 'placed',
+            dispatch_status: 'ok',
+            placed_at: '2026-04-30T19:05:00Z',
+            idempotency_key: 'wed-1',
+            wager: 14,
+          },
+        ],
+        sync_queue: [],
+        manual_bets: [],
+        updated_at: '2026-04-30T19:05:00Z',
+      }),
+    )
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    const body = (await res.json()) as { available: number }
+    // 679.34 - 22 - 14 = 643.34.
+    expect(body.available).toBeCloseTo(643.34, 2)
+  })
+
   test('subtracts from override when an override is set', async () => {
     // Override drives base; pending bets in data.json.bets[] still subtract.
     const dataJson = {
@@ -419,6 +478,72 @@ describe('GET /api/state', () => {
     expect(body.sync_queue).toEqual([])
     expect(body.manual_bets).toEqual([])
     expect(body.updated_at).toBeNull()
+  })
+
+  test('aggregates placements across multiple scan_dates, tagging each with its scan_date', async () => {
+    // Two scan_date records for the same user. Without aggregation, only the
+    // latest one would have surfaced and Monday's placement would be invisible
+    // until the user re-scrolled history.
+    const monday = {
+      schema_version: 1,
+      email: 'max.sheahan@icloud.com',
+      scan_date: '2026-04-28',
+      placements: [
+        {
+          key: 'BOS -1.5|BOS @ NYY',
+          action: 'placed',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-28T19:05:00Z',
+          idempotency_key: 'mon-1',
+          wager: 22,
+        },
+      ],
+      sync_queue: [],
+      manual_bets: [],
+      updated_at: '2026-04-28T19:05:00Z',
+    }
+    const wednesday = {
+      schema_version: 1,
+      email: 'max.sheahan@icloud.com',
+      scan_date: '2026-04-30',
+      placements: [
+        {
+          key: 'NYY ML|NYY @ BOS',
+          action: 'placed',
+          dispatch_status: 'ok',
+          placed_at: '2026-04-30T19:05:00Z',
+          idempotency_key: 'wed-1',
+          wager: 14,
+        },
+      ],
+      sync_queue: [],
+      manual_bets: [],
+      updated_at: '2026-04-30T19:05:00Z',
+    }
+    await env.EDGE_STATE.put(
+      'state:max.sheahan@icloud.com:2026-04-28',
+      JSON.stringify(monday),
+    )
+    await env.EDGE_STATE.put(
+      'state:max.sheahan@icloud.com:2026-04-30',
+      JSON.stringify(wednesday),
+    )
+
+    const res = await app.fetch(reqJson('/api/state', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as {
+      scan_date: string
+      placements: { key: string; idempotency_key: string; scan_date?: string }[]
+      updated_at: string | null
+    }
+    expect(body.placements).toHaveLength(2)
+    expect(body.scan_date).toBe('2026-04-30')
+    const monKey = body.placements.find((p) => p.idempotency_key === 'mon-1')
+    const wedKey = body.placements.find((p) => p.idempotency_key === 'wed-1')
+    expect(monKey?.scan_date).toBe('2026-04-28')
+    expect(wedKey?.scan_date).toBe('2026-04-30')
+    // updated_at reflects the most recent record.
+    expect(body.updated_at).toBe('2026-04-30T19:05:00Z')
   })
 
   test('returns the merged record when KV has state for (email, scan_date)', async () => {

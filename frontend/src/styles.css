@@ -829,15 +829,36 @@ a {
   border-bottom: 1px solid var(--color-border);
 }
 .pending-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  gap: 16px;
   border-bottom: 1px solid var(--color-border-soft);
   font-size: 13px;
 }
 .pending-row:last-child { border-bottom: none; }
+.pending-row-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 20px;
+  gap: 16px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.pending-row-summary:hover { background: #f7f7f7; }
+.pending-row-summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+.pending-row-expanded .pending-row-summary {
+  background: var(--color-accent-tint);
+}
+.pending-row-expanded .pending-row-summary:hover {
+  background: var(--color-accent-tint);
+}
 .pending-row-info {
   flex: 1;
   min-width: 0;
@@ -847,23 +868,85 @@ a {
   font-weight: 600;
   color: var(--color-fg);
   margin-top: 4px;
+  word-break: break-word;
 }
 .pending-row-event {
   display: block;
   font-size: 11px;
   color: var(--color-muted);
   margin-top: 2px;
+  word-break: break-word;
 }
 .pending-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 12px;
   color: var(--color-muted);
-  white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
+.pending-meta-piece { white-space: nowrap; }
+.pending-meta-win { color: var(--color-positive); font-weight: 600; }
+.pending-row-chevron {
+  display: inline-block;
+  color: var(--color-subtle);
+  font-size: 14px;
+  transition: transform 120ms ease;
+  width: 12px;
+  text-align: center;
+}
+.pending-row-chevron.open { transform: rotate(180deg); color: var(--color-accent); }
 .pending-row-actions {
   display: flex;
   gap: 6px;
   flex-shrink: 0;
+  margin-top: 10px;
+}
+.pending-row-detail {
+  padding: 12px 20px 16px;
+  background: var(--color-accent-tint);
+  border-top: 1px dashed var(--color-border);
+}
+.pending-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 6px 18px;
+  margin-bottom: 10px;
+}
+.pending-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  gap: 8px;
+}
+.pending-detail-label {
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.pending-detail-value {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.pending-detail-notes {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-fg);
+  background: var(--color-card);
+  border-left: 3px solid var(--color-accent);
+  padding: 8px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+.pending-detail-empty {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-style: italic;
+  margin: 0;
 }
 
 /* Activity rows (Activity tab) */
@@ -1107,4 +1190,141 @@ a {
 }
 .auth-expired-banner button:hover {
   background: #f5f5f5;
+}
+
+/* Mobile: stack the pick / activity / pending grids so they fit a 375px
+   viewport. The desktop grids assume ~440px of horizontal room across six
+   tabular columns; on an iPhone that overflows hard, badges crash, and
+   click targets get squeezed below 32px. The patches below collapse the
+   right-side meta into a two-row stack while keeping the row clickable. */
+@media (max-width: 600px) {
+  .page {
+    margin: 12px auto;
+    padding: 0 10px;
+    gap: 14px;
+  }
+  .header { padding: 0 14px; }
+  .header-logo { font-size: 15px; letter-spacing: 1.2px; }
+  .header-logo .tag { display: none; }
+  .header-right { font-size: 12px; gap: 10px; }
+
+  .tabs { padding: 0 10px; }
+  .tab { padding: 10px 12px; font-size: 11px; }
+
+  /* Picks: kill the wide column grid, stack meta below the pick. */
+  .tx-header { display: none; }
+  .pick-row {
+    grid-template-columns: 40px 1fr auto;
+    grid-template-areas:
+      'rank info actions'
+      '.    meta meta';
+    gap: 6px 10px;
+    padding: 10px 14px;
+    align-items: start;
+  }
+  .pick-rank { grid-area: rank; align-self: center; }
+  .pick-row > div:nth-child(2) { grid-area: info; min-width: 0; }
+  .pick-actions { grid-area: actions; align-self: center; }
+  .pick-odds,
+  .pick-edge,
+  .pick-wager {
+    grid-area: meta;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-size: 12px;
+    text-align: left;
+  }
+  .pick-odds::before { content: 'Odds '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
+  .pick-edge::before { content: 'Edge '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
+  .pick-wager::before { content: 'Wager '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
+  .pick-odds + .pick-edge::before,
+  .pick-edge + .pick-wager::before { margin-left: 10px; }
+  .pick-text { font-size: 13px; word-break: break-word; }
+  .pick-event { font-size: 11px; word-break: break-word; }
+  .pick-details { padding: 12px 14px 14px 14px; }
+  .pick-metrics { grid-template-columns: repeat(2, 1fr); gap: 6px 12px; }
+  .pick-actions-expanded { gap: 6px; }
+  .pick-actions-expanded .btn { padding: 5px 10px; font-size: 11px; flex: 1 0 auto; }
+
+  /* Activity rows: stack the meta row under the pick / event lines so the
+     mobile width doesn't have to absorb five inline columns. */
+  .activity-row-summary {
+    grid-template-columns: 1fr auto;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .activity-row-info { gap: 1px; }
+  .activity-row-pick {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 13px;
+  }
+  .activity-row-event {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 11px;
+  }
+  .activity-row-meta {
+    gap: 8px;
+    align-self: start;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 130px;
+  }
+  .activity-row-odds { min-width: 0; font-size: 11px; }
+  .activity-row-wager { min-width: 0; font-size: 12px; }
+  .activity-outcome { min-width: 0; font-size: 10px; padding: 1px 4px; }
+  .activity-pnl { min-width: 0; font-size: 12px; }
+  .activity-row-detail { padding: 10px 14px 14px; }
+  .activity-detail-grid { grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+
+  /* Day-group headers: keep the date + record/net visible without wrap. */
+  .activity-day-header { padding: 12px 14px 8px; }
+  .activity-day-stats { gap: 8px; }
+  .activity-day-net { font-size: 13px; }
+  .activity-day-summary { padding: 8px 14px 10px; font-size: 12px; }
+
+  /* Pending rows: same stack pattern. */
+  .pending-row-summary { padding: 10px 14px; gap: 8px; }
+  .pending-row-meta {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 140px;
+    font-size: 11px;
+  }
+  .pending-row-detail { padding: 10px 14px 14px; }
+  .pending-detail-grid { grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+
+  /* Balance card mobile breathing room. */
+  .balance-section { padding: 18px 14px 12px; }
+  .balance-amount { font-size: 30px; }
+  .balance-amount .dollar { font-size: 20px; line-height: 36px; }
+  .balance-stats { gap: 14px; }
+  .balance-breakdown { font-size: 11px; gap: 4px 6px; margin: -8px 0 12px; }
+
+  /* Card chrome */
+  .card-header { padding: 12px 14px; font-size: 11px; }
+
+  /* No-edge row */
+  .no-edge-summary { padding: 12px 14px; }
+  .no-edge-row { padding: 8px 14px; }
+
+  /* Pending section headers */
+  .pending-section-title { padding: 8px 14px 6px; }
+
+  /* Auth banner: keep readable on narrow screens. */
+  .auth-expired-banner { flex-direction: column; gap: 8px; padding: 10px 14px; }
+}
+
+@media (max-width: 380px) {
+  /* Extra-tight: 375px iPhone safe area. Drop badge text size so multi-word
+     sport names like NBA + DOG don't push the pick column to wrap awkwardly. */
+  .pick-sport,
+  .pick-favdog { font-size: 9px; padding: 1px 4px; }
+  .activity-row-meta { max-width: 110px; }
+  .pending-row-meta { max-width: 120px; }
+  .pick-row { grid-template-columns: 32px 1fr auto; gap: 4px 8px; }
+  .pick-rank { font-size: 11px; }
 }
