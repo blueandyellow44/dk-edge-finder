@@ -127,10 +127,20 @@ export async function getBankrollResponse(env: Env, email: string): Promise<Bank
   const baseAvailable = userOverride ? userOverride.amount : fileCurrent
   const available = baseAvailable - activeStakes
 
+  // When a balance override is set, the user is telling us their actual DK
+  // balance — which captures untracked activity (parlays, props, in-game
+  // bets the model never saw) that diverges from paper P/L. Treat
+  // (override + active stakes) - starting as the headline "profit" so the
+  // BalanceCard math reconciles with the override. Lifetime ROI and
+  // Record stay paper-based since they measure model-pick performance
+  // specifically.
+  const totalBankroll = baseAvailable + activeStakes
+  const profit = userOverride ? totalBankroll - starting : lifetimeProfit
+
   const response: BankrollResponse = {
     available,
     starting,
-    profit: lifetimeProfit,
+    profit,
     lifetime: {
       bets: int(file.lifetime_bets, 0),
       wins: int(file.lifetime_wins, 0),

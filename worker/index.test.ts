@@ -296,6 +296,39 @@ describe('GET /api/bankroll', () => {
     expect(body.balance_override?.note).toBe('Bumped after Saturday wins')
   })
 
+  test('profit reconciles to (override + active) - starting when override is set', async () => {
+    // When the user has set a balance override (their actual DK balance),
+    // profit reflects DK reality: total bankroll minus starting. The paper
+    // P/L in lifetime_profit only tracks model picks, but DK includes
+    // parlays/props/in-game bets the model never saw, so the two diverge.
+    // Lifetime stats (ROI, Record) stay paper-based because they measure
+    // model-pick performance specifically.
+    const env = makeEnv({ bankrollJson: baseBankrollJson })
+    const override = {
+      schema_version: 1,
+      email: 'max.sheahan@icloud.com',
+      amount: 481.86,
+      note: 'DK app balance as of 5/10',
+      updated_at: new Date().toISOString(),
+    }
+    await env.EDGE_STATE.put(
+      `balance_override:max.sheahan@icloud.com`,
+      JSON.stringify(override),
+    )
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as {
+      profit: number
+      lifetime: { profit: number; roi_pct: number }
+    }
+    // override 481.86 + 0 active - starting 500 = -18.14 (actual DK loss).
+    expect(body.profit).toBeCloseTo(-18.14, 2)
+    // Lifetime profit stays paper P/L from bankroll.json fixture.
+    expect(body.lifetime.profit).toBe(179.34)
+    expect(body.lifetime.roi_pct).toBe(35.87)
+  })
+
   test('subtracts pending bets from available (session 14 reconcile)', async () => {
     // data.json.bets[] now drives active-stakes subtraction (replaces the
     // KV-state-placement read from session 13's Bug 2 fix). One resolved
