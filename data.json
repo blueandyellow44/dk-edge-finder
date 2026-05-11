@@ -15,35 +15,8 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 12,
-  "best_bet": {
-    "title": "OVER 2.5 (-125) \u2014 8.2% Edge (High Tier)",
-    "desc": "Model (DRatings only): LEE 1.2, TOT 1.9 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
-  },
-  "picks": [
-    {
-      "rank": 1,
-      "sport": "EPL",
-      "event": "Leeds United @ Tottenham Hotspur",
-      "event_short": "LEE @ TOT",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "-125",
-      "implied": "55.6%",
-      "model": "63.7%",
-      "edge": 8.2,
-      "ev_per_dollar": 0.1469,
-      "tier": "High",
-      "bet": "$9.94",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): LEE 1.2, TOT 1.9 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34061966?outcomes=0OU84535353O250_1",
-      "type": "game",
-      "start_time": "2026-05-11T19:00Z"
-    }
-  ],
+  "best_bet": null,
+  "picks": [],
   "no_edge_games": [
     {
       "sport": "NBA",
@@ -60,19 +33,19 @@
     {
       "sport": "NHL",
       "event": "COL @ MIN",
-      "line": "COL -142",
+      "line": "COL -148",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "LAA @ CLE",
-      "line": "CLE -175",
+      "line": "CLE -171",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ BAL",
-      "line": "NYY -156",
+      "line": "NYY -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -97,18 +70,6 @@
       "sport": "MLB",
       "event": "SF @ LAD",
       "line": "LAD -194",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "GIR @ RAY",
-      "line": "RAY +155",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "BOL @ NAP",
-      "line": "NAP -190",
       "reason": "Edge below 3% threshold"
     }
   ],
