@@ -2,12 +2,12 @@
   "scan_date": "2026-05-10",
   "scan_subtitle": "2026-05-10 \u2014 All 46 games in progress or final \u00b7 Next scan 6 AM PT",
   "bankroll": {
-    "available": 488.82,
+    "available": 497.0,
     "starting": 500.0,
-    "profit": -11.18,
+    "profit": -3.0,
     "record": {
-      "wins": 48,
-      "losses": 42,
+      "wins": 50,
+      "losses": 43,
       "pushes": 1
     },
     "pending_count": 0,
@@ -34,8 +34,8 @@
       "ev_per_dollar": 0.2642,
       "tier": "High",
       "bet": "$9.78",
-      "status": "",
-      "result": "",
+      "status": "LOSS",
+      "result": "STL 2, SD 3",
       "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.4%): Model disagrees with market by -0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "MEDIUM",
@@ -1219,6 +1219,39 @@
       "outcome": "win",
       "pnl": 9.09,
       "final_score": "DET 1, KC 5"
+    },
+    {
+      "date": "2026-05-10",
+      "pick": "UNDER 3.5",
+      "event": "Real Madrid @ Barcelona",
+      "sport": "LA_LIGA",
+      "wager": 10,
+      "odds": -110,
+      "outcome": "win",
+      "pnl": 9.09,
+      "final_score": "RMA 0, BAR 2"
+    },
+    {
+      "date": "2026-05-10",
+      "pick": "San Diego Padres -1.5",
+      "event": "St. Louis Cardinals @ San Diego Padres",
+      "sport": "MLB",
+      "wager": 10,
+      "odds": 159,
+      "outcome": "loss",
+      "pnl": -10,
+      "final_score": "STL 2, SD 3"
+    },
+    {
+      "date": "2026-05-10",
+      "pick": "OVER 2.5",
+      "event": "Atalanta @ AC Milan",
+      "sport": "SERIE_A",
+      "wager": 10,
+      "odds": -115,
+      "outcome": "win",
+      "pnl": 9.09,
+      "final_score": "ATA 3, MIL 2"
     }
   ]
 }
