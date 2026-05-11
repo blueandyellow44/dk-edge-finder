@@ -136,6 +136,18 @@ a {
   .page { grid-template-columns: 1fr; }
 }
 
+/* Touch devices: cancel the :hover background that iOS Safari latches
+   onto the first tap and only clears on the second tap (which is what
+   then registers as the click). With hover suppressed on (hover: none)
+   inputs, the very first tap fires handleRowClick. */
+@media (hover: none) {
+  .pick-row.clickable:hover,
+  .pending-row-summary:hover,
+  .activity-row-summary:hover {
+    background: transparent;
+  }
+}
+
 /* Tab bar */
 .tabs {
   display: flex;
@@ -1211,35 +1223,49 @@ a {
   .tabs { padding: 0 10px; }
   .tab { padding: 10px 12px; font-size: 11px; }
 
-  /* Picks: kill the wide column grid, stack meta below the pick. */
+  /* Picks: kill the wide column grid, stack meta below the pick. Each
+     meta cell gets its OWN grid-area so the three values sit side-by-side
+     instead of stacking into the same cell (which made them overlap and
+     render as e.g. "Odds: 1$89.78" on a 375px viewport). */
   .tx-header { display: none; }
   .pick-row {
-    grid-template-columns: 40px 1fr auto;
+    grid-template-columns: 34px auto auto minmax(0, 1fr) auto;
     grid-template-areas:
-      'rank info actions'
-      '.    meta meta';
-    gap: 6px 10px;
+      'rank info info info actions'
+      '.    odds edge wager .';
+    gap: 4px 10px;
     padding: 10px 14px;
-    align-items: start;
+    align-items: center;
   }
   .pick-rank { grid-area: rank; align-self: center; }
   .pick-row > div:nth-child(2) { grid-area: info; min-width: 0; }
   .pick-actions { grid-area: actions; align-self: center; }
+  .pick-odds { grid-area: odds; }
+  .pick-edge { grid-area: edge; }
+  .pick-wager { grid-area: wager; }
   .pick-odds,
   .pick-edge,
   .pick-wager {
-    grid-area: meta;
     display: inline-flex;
     align-items: baseline;
     gap: 4px;
     font-size: 12px;
     text-align: left;
+    white-space: nowrap;
+    font-weight: 600;
   }
-  .pick-odds::before { content: 'Odds '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
-  .pick-edge::before { content: 'Edge '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
-  .pick-wager::before { content: 'Wager '; color: var(--color-muted); font-weight: 400; font-size: 10px; }
-  .pick-odds + .pick-edge::before,
-  .pick-edge + .pick-wager::before { margin-left: 10px; }
+  .pick-odds::before,
+  .pick-edge::before,
+  .pick-wager::before {
+    color: var(--color-muted);
+    font-weight: 500;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .pick-odds::before { content: 'Odds'; }
+  .pick-edge::before { content: 'Edge'; }
+  .pick-wager::before { content: 'Wager'; }
   .pick-text { font-size: 13px; word-break: break-word; }
   .pick-event { font-size: 11px; word-break: break-word; }
   .pick-details { padding: 12px 14px 14px 14px; }

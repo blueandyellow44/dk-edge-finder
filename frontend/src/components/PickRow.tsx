@@ -37,12 +37,10 @@ export function PickRow({
   const startTime = formatStartTime(pick.start_time)
 
   const handleRowClick = () => {
-    if (acted) return
     onToggleExpand()
   }
 
   const handleRowKeyDown = (e: KeyboardEvent) => {
-    if (acted) return
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       onToggleExpand()
@@ -52,12 +50,12 @@ export function PickRow({
   return (
     <div className={`pick-item ${isExpanded ? 'expanded' : ''}`}>
       <div
-        className={`pick-row ${acted ? 'acted' : 'clickable'}`}
+        className={`pick-row clickable${acted ? ' acted' : ''}`}
         onClick={handleRowClick}
         onKeyDown={handleRowKeyDown}
-        role={acted ? undefined : 'button'}
-        tabIndex={acted ? undefined : 0}
-        aria-expanded={acted ? undefined : isExpanded}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
       >
         <div className="pick-rank">#{pick.rank || index + 1}</div>
         <div>
@@ -90,7 +88,7 @@ export function PickRow({
         </div>
       </div>
 
-      {isExpanded && !acted && (
+      {isExpanded && (
         <div className="pick-details">
           <dl className="pick-metrics">
             {pick.market && (
@@ -117,40 +115,54 @@ export function PickRow({
                 <dd>{startTime}</dd>
               </div>
             )}
+            {placed && typeof placement?.wager === 'number' && (
+              <div className="pick-metric">
+                <dt>Wager (placed)</dt>
+                <dd>${placement.wager.toFixed(2)}</dd>
+              </div>
+            )}
+            {placement?.placed_at && (
+              <div className="pick-metric">
+                <dt>{placed ? 'Placed at' : 'Skipped at'}</dt>
+                <dd>{formatStartTime(placement.placed_at)}</dd>
+              </div>
+            )}
           </dl>
           {pick.notes && <div className="pick-notes">{pick.notes}</div>}
-          <div className="pick-actions-expanded">
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              disabled={isPending}
-              onClick={onMarkPlaced}
-            >
-              Mark as placed
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline btn-sm"
-              disabled={isPending}
-              onClick={onIgnore}
-            >
-              Ignore
-            </button>
-            {pick.dk_link ? (
-              <a
-                className="btn btn-dk btn-sm"
-                href={pick.dk_link}
-                target="_blank"
-                rel="noopener noreferrer"
+          {!acted && (
+            <div className="pick-actions-expanded">
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                disabled={isPending}
+                onClick={onMarkPlaced}
               >
-                Place on DraftKings ↗
-              </a>
-            ) : (
-              <button type="button" className="btn btn-dk btn-sm" disabled>
-                Place on DraftKings
+                Mark as placed
               </button>
-            )}
-          </div>
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                disabled={isPending}
+                onClick={onIgnore}
+              >
+                Ignore
+              </button>
+              {pick.dk_link ? (
+                <a
+                  className="btn btn-dk btn-sm"
+                  href={pick.dk_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Place on DraftKings
+                </a>
+              ) : (
+                <button type="button" className="btn btn-dk btn-sm" disabled>
+                  Place on DraftKings
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
