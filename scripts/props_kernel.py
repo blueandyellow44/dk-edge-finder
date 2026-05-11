@@ -134,10 +134,15 @@ def fetch_dk_prop_odds(plugin, max_events: int = 6) -> list[dict]:
         away = event.get("away_team", "")
         event_label = f"{away} @ {home}"
 
+        # includeLinks=true asks the Odds API to attach DK deep-link URLs to
+        # each outcome. Without it, prop picks ship with dk_link="" and the
+        # SPA renders a disabled "Place on DraftKings" button. The cost is
+        # informational metadata on the response — does not change credit
+        # counting per the API docs.
         props_url = (
             f"https://api.the-odds-api.com/v4/sports/{sport_key}/events/{event_id}/odds"
             f"?apiKey={ODDS_API_KEY}&regions=us&bookmakers=draftkings"
-            f"&oddsFormat=american&markets={markets_str}"
+            f"&oddsFormat=american&markets={markets_str}&includeLinks=true"
         )
 
         try:
@@ -160,8 +165,9 @@ def fetch_dk_prop_odds(plugin, max_events: int = 6) -> list[dict]:
                     continue
 
                 # Group outcomes by player + point (line). Each player has Over and Under
-                # at the same point.
-                player_lines: dict[tuple[str, float], dict[str, int | None]] = {}
+                # at the same point. Capture per-side DK deep links so the pick
+                # output can use the side that actually got picked.
+                player_lines: dict[tuple[str, float], dict] = {}
                 for outcome in market.get("outcomes", []):
                     name = outcome.get("description", "")
                     if not name:
@@ -173,15 +179,23 @@ def fetch_dk_prop_odds(plugin, max_events: int = 6) -> list[dict]:
                     if price is None:
                         continue
                     side = outcome.get("name", "").lower()
+                    link = outcome.get("link", "") or ""
 
                     key = (name, point)
                     if key not in player_lines:
-                        player_lines[key] = {"over": None, "under": None}
+                        player_lines[key] = {
+                            "over": None,
+                            "under": None,
+                            "over_link": "",
+                            "under_link": "",
+                        }
 
                     if side == "over":
                         player_lines[key]["over"] = int(price)
+                        player_lines[key]["over_link"] = link
                     elif side == "under":
                         player_lines[key]["under"] = int(price)
+                        player_lines[key]["under_link"] = link
 
                 for (player_name, point), sides in player_lines.items():
                     over_odds = sides.get("over")
@@ -200,6 +214,8 @@ def fetch_dk_prop_odds(plugin, max_events: int = 6) -> list[dict]:
                         "event": event_label,
                         "start_time": event.get("commence_time", ""),
                         "description": event_label,
+                        "dk_over_link": sides.get("over_link", "") or "",
+                        "dk_under_link": sides.get("under_link", "") or "",
                     })
 
         time.sleep(0.3)
@@ -535,7 +551,11 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
         "sources": "The Odds API (DK), ESPN",
         "market": "Player Prop",
         "event": prop.get("event", ""),
-        "dk_link": "",
+        "dk_link": (
+            prop.get("dk_over_link", "")
+            if pick_side == "over"
+            else prop.get("dk_under_link", "")
+        ),
     }
 
 
