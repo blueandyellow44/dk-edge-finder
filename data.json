@@ -27,7 +27,7 @@
     {
       "sport": "NBA",
       "event": "OKC @ LAL",
-      "line": "OKC -11.5",
+      "line": "OKC -12.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -39,7 +39,7 @@
     {
       "sport": "MLB",
       "event": "LAA @ CLE",
-      "line": "CLE -171",
+      "line": "CLE -168",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -51,13 +51,13 @@
     {
       "sport": "MLB",
       "event": "TB @ TOR",
-      "line": "TOR -131",
+      "line": "TOR -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ TEX",
-      "line": "TEX -131",
+      "line": "TEX -115",
       "reason": "Edge below 3% threshold"
     },
     {
