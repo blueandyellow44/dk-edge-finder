@@ -2140,6 +2140,7 @@ def main(games_only: bool = False):
             "dk_link": pick.get("dk_link", ""),
             "type": "prop" if pick.get("market") == "Player Prop" else "game",
             "start_time": pick.get("start_time", ""),
+            "prop_bucket": pick.get("prop_bucket", ""),
         }
         if "is_favorite" in pick:
             formatted["is_favorite"] = pick["is_favorite"]
@@ -2273,6 +2274,7 @@ def main(games_only: bool = False):
             "confidence": pick.get("confidence", ""),
             "type": pick.get("type", ""),
             "notes": pick.get("notes", ""),
+            "prop_bucket": pick.get("prop_bucket", ""),
             "outcome": "pending",
             "final_score": "",
             "pnl_if_bet": 0,

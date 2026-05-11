@@ -530,6 +530,22 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
     if adj_note:
         narrative += f" {adj_note}."
 
+    # Tag the pick with a {side}_{odds-tier} bucket so future audits can
+    # group prop performance cleanly without re-deriving from odds string.
+    # Aligned with the 2026-05-11 prop audit buckets: underdog (positive
+    # odds) or one of four favorite tiers.
+    if dk_odds > 0:
+        odds_tier = "underdog"
+    elif dk_odds >= -120:
+        odds_tier = "near_even_fav"
+    elif dk_odds >= -150:
+        odds_tier = "moderate_fav"
+    elif dk_odds >= -200:
+        odds_tier = "heavy_fav"
+    else:
+        odds_tier = "very_heavy_fav"
+    prop_bucket = f"{pick_side}_{odds_tier}"
+
     return {
         "sport": plugin.SPORT_DISPLAY,
         "player": prop["player"],
@@ -551,6 +567,7 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
         "sources": "The Odds API (DK), ESPN",
         "market": "Player Prop",
         "event": prop.get("event", ""),
+        "prop_bucket": prop_bucket,
         "dk_link": (
             prop.get("dk_over_link", "")
             if pick_side == "over"
