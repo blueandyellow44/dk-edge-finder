@@ -18574,5 +18574,23 @@
     "outcome": "win",
     "final_score": "VGK 3, ANA 4",
     "pnl_if_bet": 5.26
+  },
+  {
+    "scan_date": "2026-05-11",
+    "sport": "EPL",
+    "event": "Leeds United @ Tottenham Hotspur",
+    "market": "Over/Under",
+    "pick": "OVER 2.5",
+    "odds": "-125",
+    "implied": "55.6%",
+    "model": "63.7%",
+    "edge": 8.2,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only): LEE 1.2, TOT 1.9 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]

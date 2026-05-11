@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-10",
-  "scan_subtitle": "2026-05-10 \u2014 All 46 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-05-11",
+  "scan_subtitle": "Monday, May 11, 2026 \u2014 EPL (1), LA_LIGA (1), MLB (6), NBA (2), NHL (1), SERIE_A (1)",
   "bankroll": {
     "available": 497.0,
     "starting": 500.0,
@@ -14,132 +14,101 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 46,
+  "games_analyzed": 12,
   "best_bet": {
-    "title": "San Diego Padres -1.5 (155) \u2014 10.4% Edge (High Tier)",
-    "desc": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.4%): Model disagrees with market by -0.9 pts. Investigate"
+    "title": "OVER 2.5 (-125) \u2014 8.2% Edge (High Tier)",
+    "desc": "Model (DRatings only): LEE 1.2, TOT 1.9 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "MLB",
-      "event": "St. Louis Cardinals @ San Diego Padres",
-      "event_short": "STL @ SD",
-      "market": "Spread",
-      "pick": "San Diego Padres -1.5",
-      "odds": "155",
-      "implied": "39.2%",
-      "model": "49.6%",
-      "edge": 10.4,
-      "ev_per_dollar": 0.2642,
+      "sport": "EPL",
+      "event": "Leeds United @ Tottenham Hotspur",
+      "event_short": "LEE @ TOT",
+      "market": "Over/Under",
+      "pick": "OVER 2.5",
+      "odds": "-125",
+      "implied": "55.6%",
+      "model": "63.7%",
+      "edge": 8.2,
+      "ev_per_dollar": 0.1469,
       "tier": "High",
-      "bet": "$9.78",
-      "status": "LOSS",
-      "result": "STL 2, SD 3",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): STL 4.0, SD 4.6 (margin: 0.6). -0.9 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (10.4%): Model disagrees with market by -0.9 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/34125195?outcomes=0HC84715377N150_1",
-      "type": "game",
-      "start_time": "2026-05-10T20:10Z",
-      "is_favorite": true
-    },
-    {
-      "rank": 2,
-      "sport": "MLB",
-      "event": "Pittsburgh Pirates @ San Francisco Giants",
-      "event_short": "PIT @ SF",
-      "market": "Spread",
-      "pick": "Pittsburgh Pirates -1.5",
-      "odds": "160",
-      "implied": "38.5%",
-      "model": "46.8%",
-      "edge": 8.3,
-      "ev_per_dollar": 0.2165,
-      "tier": "High",
-      "bet": "$9.78",
+      "bet": "$9.94",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 4.0, SF 3.9 (margin: 0.1). -1.4 pts of cushion beyond the spread. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/34125151?outcomes=0HC84715272N150_3",
+      "notes": "Model (DRatings only): LEE 1.2, TOT 1.9 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34061966?outcomes=0OU84535353O250_1",
       "type": "game",
-      "start_time": "2026-05-10T20:05Z",
-      "is_favorite": true
-    },
-    {
-      "rank": 3,
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "event_short": "VGK @ ANA",
-      "market": "Spread",
-      "pick": "Vegas Golden Knights +1.5",
-      "odds": "-190",
-      "implied": "65.5%",
-      "model": "76.5%",
-      "edge": 11.0,
-      "ev_per_dollar": 0.167,
-      "tier": "High",
-      "bet": "$9.78",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + oddsshark + sagarin + actionnetwork): VGK 3.4, ANA 3.1 (margin: 0.3). 1.2 pts of cushion beyond the spread. \u26a0 SUSPICIOUS EDGE (11.0%): Model disagrees with market by 1.2 pts. Investigate before betting. \u26a0 Confidence: MEDIUM",
-      "sources": "DRatings only + oddsshark + sagarin + actionnetwork, ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/event/34122583",
-      "type": "game",
-      "start_time": "2026-05-11T01:30Z",
-      "is_favorite": false
+      "start_time": "2026-05-11T19:00Z"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "SA @ MIN",
-      "line": "SA -4.5",
+      "event": "DET @ CLE",
+      "line": "CLE -3.5",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NBA",
+      "event": "OKC @ LAL",
+      "line": "OKC -11.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
-      "event": "BUF @ MTL",
-      "line": "MTL -122",
+      "event": "COL @ MIN",
+      "line": "COL -142",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "ATL @ LAD",
-      "line": "LAD -143",
+      "event": "LAA @ CLE",
+      "line": "CLE -175",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "NYM @ ARI",
-      "line": "ARI -115",
+      "event": "NYY @ BAL",
+      "line": "NYY -163",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "DET @ KC",
-      "line": "KC -126",
+      "event": "TB @ TOR",
+      "line": "TOR -131",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "CLB @ NYC",
-      "line": "NYC +145",
-      "reason": "No model data"
-    },
-    {
-      "sport": "MLS",
-      "event": "ATX @ MIN",
-      "line": "MIN -165",
+      "sport": "MLB",
+      "event": "ARI @ TEX",
+      "line": "TEX -131",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "HOU @ LAFC",
-      "line": "LAFC -155",
+      "sport": "MLB",
+      "event": "SEA @ HOU",
+      "line": "SEA -143",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "SF @ LAD",
+      "line": "LAD -194",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "GIR @ RAY",
+      "line": "RAY +155",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "SERIE_A",
+      "event": "BOL @ NAP",
+      "line": "NAP -190",
       "reason": "Edge below 3% threshold"
     }
   ],
