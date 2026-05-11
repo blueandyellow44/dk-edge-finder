@@ -296,13 +296,13 @@ describe('GET /api/bankroll', () => {
     expect(body.balance_override?.note).toBe('Bumped after Saturday wins')
   })
 
-  test('profit reconciles to (override + active) - starting when override is set', async () => {
+  test('profit = override - starting when override is set, ignoring active stakes', async () => {
     // When the user has set a balance override (their actual DK balance),
-    // profit reflects DK reality: total bankroll minus starting. The paper
-    // P/L in lifetime_profit only tracks model picks, but DK includes
-    // parlays/props/in-game bets the model never saw, so the two diverge.
-    // Lifetime stats (ROI, Record) stay paper-based because they measure
-    // model-pick performance specifically.
+    // profit reflects realized DK P/L only: override - starting. Active
+    // stakes (pending KV placements) are locked stake, not realized P/L
+    // — they appear in the BalanceCard breakdown as a separate line and
+    // are excluded from "profit." Lifetime ROI and Record stay paper-
+    // based since they measure model-pick performance.
     const env = makeEnv({ bankrollJson: baseBankrollJson })
     const override = {
       schema_version: 1,
@@ -322,11 +322,76 @@ describe('GET /api/bankroll', () => {
       profit: number
       lifetime: { profit: number; roi_pct: number }
     }
-    // override 481.86 + 0 active - starting 500 = -18.14 (actual DK loss).
+    // 481.86 override - 500 starting = -18.14 (actual DK loss).
     expect(body.profit).toBeCloseTo(-18.14, 2)
     // Lifetime profit stays paper P/L from bankroll.json fixture.
     expect(body.lifetime.profit).toBe(179.34)
     expect(body.lifetime.roi_pct).toBe(35.87)
+  })
+
+  test('active stakes do not bleed into profit when override is set', async () => {
+    // Regression: earlier formula added activeStakes to the override total
+    // before subtracting starting, so placing $33 of new bets against a
+    // $498.80 override displayed "+$31.80 profit" instead of "-$1.20."
+    // Active wagers are locked stake, not realized P/L.
+    const dataJson = {
+      ...baseDataJson,
+      bets: [
+        {
+          date: '2026-05-11',
+          sport: 'NBA',
+          event: 'OKC @ LAL',
+          pick: 'SGA UNDER 4.5 Rebounds',
+          odds: '-161',
+          wager: 11,
+          outcome: 'pending',
+          pnl: 0,
+          final_score: '',
+        },
+        {
+          date: '2026-05-11',
+          sport: 'NBA',
+          event: 'DET @ CLE',
+          pick: 'Tobias Harris OVER 18.5',
+          odds: '-113',
+          wager: 11,
+          outcome: 'pending',
+          pnl: 0,
+          final_score: '',
+        },
+        {
+          date: '2026-05-11',
+          sport: 'NHL',
+          event: 'COL @ MIN',
+          pick: 'Quinn Hughes UNDER 2.5',
+          odds: '-188',
+          wager: 11,
+          outcome: 'pending',
+          pnl: 0,
+          final_score: '',
+        },
+      ],
+    }
+    const env = makeEnv({ dataJson, bankrollJson: baseBankrollJson })
+    await env.EDGE_STATE.put(
+      `balance_override:max.sheahan@icloud.com`,
+      JSON.stringify({
+        schema_version: 1,
+        email: 'max.sheahan@icloud.com',
+        amount: 498.8,
+        note: '',
+        updated_at: new Date().toISOString(),
+      }),
+    )
+
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { profit: number; available: number }
+    // 498.80 override - 500 starting = -1.20 profit. Active $33 of
+    // pending wagers does NOT add to profit.
+    expect(body.profit).toBeCloseTo(-1.2, 2)
+    // available still subtracts the active stakes from the override.
+    expect(body.available).toBeCloseTo(465.8, 2)
   })
 
   test('subtracts pending bets from available (session 14 reconcile)', async () => {

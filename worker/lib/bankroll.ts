@@ -127,15 +127,17 @@ export async function getBankrollResponse(env: Env, email: string): Promise<Bank
   const baseAvailable = userOverride ? userOverride.amount : fileCurrent
   const available = baseAvailable - activeStakes
 
-  // When a balance override is set, the user is telling us their actual DK
-  // balance — which captures untracked activity (parlays, props, in-game
-  // bets the model never saw) that diverges from paper P/L. Treat
-  // (override + active stakes) - starting as the headline "profit" so the
-  // BalanceCard math reconciles with the override. Lifetime ROI and
-  // Record stay paper-based since they measure model-pick performance
-  // specifically.
-  const totalBankroll = baseAvailable + activeStakes
-  const profit = userOverride ? totalBankroll - starting : lifetimeProfit
+  // When a balance override is set, profit = override - starting. Do NOT
+  // add active stakes back in: pending wagers are locked stake, not
+  // realized P/L. They could resolve as wins or losses. Including them in
+  // "profit" makes the headline jump positive whenever you place a few
+  // bets (e.g. $498.80 override - $500 start = -$1.20 loss; with $33
+  // pending the old formula said +$31.80 profit, which felt broken).
+  // The active stakes still appear in the BalanceCard breakdown line
+  // (+ $X in N active bets) as a separate piece of context.
+  // Lifetime ROI and Record stay paper-based — they measure model-pick
+  // performance, which has its own truth from data.json.bets[].
+  const profit = userOverride ? userOverride.amount - starting : lifetimeProfit
 
   const response: BankrollResponse = {
     available,
