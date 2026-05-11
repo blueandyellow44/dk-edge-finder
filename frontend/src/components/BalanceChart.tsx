@@ -79,6 +79,20 @@ export function BalanceChart() {
     )
   }
 
+  // Anchor the final chart point to (starting + bankroll.profit). When no
+  // override is set, bankroll.profit equals paper lifetime P/L, so the
+  // anchor equals the paper cumulative endpoint and nothing visually
+  // changes. When an override IS set, bankroll.profit reflects DK reality
+  // (override + active - starting), so the anchor pulls the line to the
+  // override-reconciled total. Without this, the headline says "-$1.20"
+  // while the line visibly slopes UP to $504.27 paper cumulative — the
+  // user reads the chart as profitable even though the math says loss.
+  const reconciledEnd = starting + bankroll.data.profit
+  series[series.length - 1] = {
+    ...series[series.length - 1],
+    balance: reconciledEnd,
+  }
+
   const xVals = series.map((p) => new Date(`${p.date}T00:00:00`).getTime())
   const xMin = xVals[0]
   const xMax = xVals[xVals.length - 1]
