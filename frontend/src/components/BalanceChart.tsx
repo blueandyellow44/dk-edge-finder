@@ -136,7 +136,16 @@ export function BalanceChart() {
   const changeClass =
     change > 0 ? 'positive' : change < 0 ? 'negative' : ''
   const changeSign = change >= 0 ? '+' : ''
-  const dayCount = series.length
+  // "Over N days" should reflect calendar span, not the count of unique
+  // dates that had bets — if there were 19 betting days inside a 56-day
+  // window, the chart was claiming a 19-day history. Use first-to-last
+  // bet date span, inclusive (a single bet day reads "over 1 day").
+  const firstMs = new Date(`${series[0].date}T00:00:00`).getTime()
+  const lastMs = new Date(`${series[series.length - 1].date}T00:00:00`).getTime()
+  const dayCount = Math.max(
+    1,
+    Math.round((lastMs - firstMs) / (1000 * 60 * 60 * 24)) + 1,
+  )
 
   return (
     <CardShell>
