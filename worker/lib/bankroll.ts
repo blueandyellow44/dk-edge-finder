@@ -135,9 +135,21 @@ export async function getBankrollResponse(env: Env, email: string): Promise<Bank
   // pending the old formula said +$31.80 profit, which felt broken).
   // The active stakes still appear in the BalanceCard breakdown line
   // (+ $X in N active bets) as a separate piece of context.
-  // Lifetime ROI and Record stay paper-based — they measure model-pick
-  // performance, which has its own truth from data.json.bets[].
   const profit = userOverride ? userOverride.amount - starting : lifetimeProfit
+
+  // Lifetime ROI tracks the same basis as the displayed profit. With an
+  // override set, paper ROI (from bankroll.json, model picks only) can
+  // contradict the headline: profit -$1.20 alongside ROI +0.4% reads as
+  // broken. Derive ROI from (profit / starting) when override is set so
+  // the two numbers always agree in sign and direction. Without an
+  // override we keep the cron-reconciled bankroll.json ROI, which is the
+  // canonical paper-trading metric. Record (W-L-P) stays paper either
+  // way — it's a count, not a money number, so it doesn't conflict.
+  const roi_pct = userOverride
+    ? starting > 0
+      ? (profit / starting) * 100
+      : 0
+    : num(file.roi_pct, 0)
 
   const response: BankrollResponse = {
     available,
@@ -149,7 +161,7 @@ export async function getBankrollResponse(env: Env, email: string): Promise<Bank
       losses: int(file.lifetime_losses, 0),
       pushes: int(file.lifetime_pushes, 0),
       profit: lifetimeProfit,
-      roi_pct: num(file.roi_pct, 0),
+      roi_pct,
     },
     balance_override,
   }

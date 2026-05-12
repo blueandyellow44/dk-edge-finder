@@ -324,8 +324,22 @@ describe('GET /api/bankroll', () => {
     }
     // 481.86 override - 500 starting = -18.14 (actual DK loss).
     expect(body.profit).toBeCloseTo(-18.14, 2)
-    // Lifetime profit stays paper P/L from bankroll.json fixture.
+    // Lifetime profit stays paper P/L from bankroll.json fixture (model
+    // picks only; not displayed directly in the BalanceCard).
     expect(body.lifetime.profit).toBe(179.34)
+    // Lifetime ROI now tracks the same basis as the displayed profit so
+    // sign matches: -18.14 / 500 * 100 = -3.628%.
+    expect(body.lifetime.roi_pct).toBeCloseTo(-3.628, 2)
+  })
+
+  test('ROI without override falls back to bankroll.json paper roi_pct', async () => {
+    // Sanity: when no override is set, lifetime.roi_pct = file.roi_pct
+    // (the cron-reconciled paper ROI). 35.87% comes straight from
+    // baseBankrollJson without recomputation.
+    const env = makeEnv({ bankrollJson: baseBankrollJson })
+    const res = await app.fetch(reqJson('/api/bankroll', { headers: AUTHED }), env)
+    expect(res.status).toBe(200)
+    const body = (await res.json()) as { lifetime: { roi_pct: number } }
     expect(body.lifetime.roi_pct).toBe(35.87)
   })
 
