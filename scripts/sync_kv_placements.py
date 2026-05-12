@@ -196,12 +196,21 @@ def main() -> int:
                 if isinstance(wager_raw, (int, float))
                 else DEFAULT_WAGER
             )
+            # Carry over pick_history's `type` ('prop' or 'game') so
+            # resolve_bets.py can route props through resolve_prop
+            # directly instead of re-deriving from the pick-string
+            # shape. Pre-existing bets without this field still grade
+            # via the pick-string heuristic in resolve_bets, so this
+            # only makes future grades cleaner.
+            bet_type_raw = ph.get("type", "")
+            bet_type = bet_type_raw if isinstance(bet_type_raw, str) else ""
 
             bets.append({
                 "date": scan_date,
                 "pick": pick,
                 "event": event,
                 "sport": sport,
+                "type": bet_type,
                 "wager": wager,
                 "odds": american,
                 "outcome": "pending",

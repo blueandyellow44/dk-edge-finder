@@ -626,6 +626,7 @@ def main():
             print(f"  Fetched {len(games)} {sport.upper()} games for {date_str}")
 
     # Resolve each pending bet
+    box_cache: dict = {}
     resolved_count = 0
     for bet in bets:
         if bet.get("outcome") != "pending":
@@ -646,10 +647,42 @@ def main():
         away_score = game["away"]["score"]
         score_str = f"{game['away']['abbr']} {away_score}, {game['home']['abbr']} {home_score}"
 
-        # Determine outcome
+        # Determine outcome.
         pick = bet["pick"]
         pick_upper = pick.strip().upper()
-        if "ML" in pick:
+
+        # Player-prop detection: pick has OVER/UNDER somewhere in the
+        # middle (preceded by a player-name prefix and followed by a stat
+        # label), NOT at the start (which would be a game-level total
+        # like "OVER 220.5"). Synced placement bets from
+        # sync_kv_placements don't carry a 'type' or 'market' field, so
+        # detection has to fall back to the pick-string shape. mirrors
+        # the dispatcher in resolve_pick_history (line 838).
+        is_prop = (
+            bet.get("type") == "prop"
+            or bet.get("market") == "Player Prop"
+            or (
+                (" OVER " in pick_upper or " UNDER " in pick_upper)
+                and not pick_upper.startswith("OVER ")
+                and not pick_upper.startswith("UNDER ")
+            )
+        )
+
+        prop_detail = ""
+        if is_prop:
+            fetcher = PROP_BOX_FETCHERS.get(sport)
+            if fetcher is None:
+                print(f"  No prop fetcher for sport: {sport}; leaving {pick} pending")
+                continue
+            event_id = game.get("event_id", "")
+            if not event_id:
+                print(f"  No event_id for {bet['event']}; leaving {pick} pending")
+                continue
+            cache_key = (sport, event_id)
+            if cache_key not in box_cache:
+                box_cache[cache_key] = fetcher(event_id)
+            outcome, prop_detail = resolve_prop(pick, box_cache[cache_key])
+        elif "ML" in pick:
             outcome = resolve_moneyline(pick, home_score, away_score, bet["event"])
         elif pick_upper.startswith("OVER ") or pick_upper.startswith("UNDER "):
             outcome = resolve_total(pick, home_score, away_score)
@@ -662,9 +695,23 @@ def main():
             print(f"  Could not determine outcome for: {pick}")
             continue
 
-        # Calculate P/L
+        # Calculate P/L. Derive decimal_odds from the bet's American odds
+        # when the legacy decimal_odds field is missing — synced
+        # placement bets from sync_kv_placements only carry the integer
+        # `odds` field. Without this, the fallback 1.909 (== -110)
+        # mis-prices every grade at a few cents off.
+        if "decimal_odds" in bet:
+            decimal_odds = bet["decimal_odds"]
+        else:
+            try:
+                dk_odds = int(bet.get("odds", -110))
+            except (ValueError, TypeError):
+                dk_odds = -110
+            decimal_odds = (
+                1 + 100 / abs(dk_odds) if dk_odds < 0 else 1 + dk_odds / 100
+            )
+
         wager = bet["wager"]
-        decimal_odds = bet.get("decimal_odds", 1.909)
         if outcome == "win":
             pnl = round(wager * (decimal_odds - 1), 2)
         elif outcome == "loss":
@@ -674,9 +721,19 @@ def main():
 
         bet["outcome"] = outcome
         bet["pnl"] = pnl
-        bet["final_score"] = score_str
+        # Surface the player's actual stat line in final_score for props
+        # so the Activity tab can show WHY the prop won/lost (game score
+        # alone is insufficient context).
+        bet["final_score"] = (
+            f"{score_str} | {prop_detail}"
+            if (is_prop and prop_detail)
+            else score_str
+        )
         resolved_count += 1
-        print(f"  {bet['event']}: {pick} → {outcome.upper()} ({score_str}) P/L: ${pnl:+.2f}")
+        print(
+            f"  {bet['event']}: {pick} → {outcome.upper()} "
+            f"({bet['final_score']}) P/L: ${pnl:+.2f}"
+        )
 
     if resolved_count == 0:
         print("No placed bets resolved (games may still be in progress or none pending).")
