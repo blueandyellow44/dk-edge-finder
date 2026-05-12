@@ -16,12 +16,36 @@
   },
   "games_analyzed": 21,
   "best_bet": {
-    "title": "Juraj Slafkovsky UNDER 0.5 Assists (-180) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Juraj Slafkovsky averages 0.2 Assists (last 10g), line is 0.5: 0.3 under with 1.1\u03c3 separation. Raw edge: 22.1% (capped at 15%). Edge capped: 22.1% \u2192 15.0%."
+    "title": "Anthony Edwards UNDER 3.5 3-PT Made (-170) \u2014 15.0% Edge (Medium Tier)",
+    "desc": "Anthony Edwards averages 2.1 3-PT Made (last 10g), line is 3.5: 1.4 under with 1.4\u03c3 separation. Raw edge: 29.0% (capped at 15%). Edge capped: 29.0% \u2192 15.0%."
   },
   "picks": [
     {
       "rank": 1,
+      "sport": "NBA",
+      "event": "Minnesota Timberwolves @ San Antonio Spurs",
+      "event_short": "Minnesota Timberwolves @ San Antonio Spurs",
+      "market": "Player Prop",
+      "pick": "Anthony Edwards UNDER 3.5 3-PT Made",
+      "odds": "-170",
+      "implied": "63.0%",
+      "model": "91.9%",
+      "edge": 15.0,
+      "ev_per_dollar": -0.081,
+      "tier": "Medium",
+      "bet": "$10.12",
+      "status": "",
+      "result": "",
+      "notes": "Anthony Edwards averages 2.1 3-PT Made (last 10g), line is 3.5: 1.4 under with 1.4\u03c3 separation. Raw edge: 29.0% (capped at 15%). Edge capped: 29.0% \u2192 15.0%.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA333466312%23596316762_13L42648Q1-1581327307Q20",
+      "type": "prop",
+      "start_time": "",
+      "prop_bucket": "under_heavy_fav"
+    },
+    {
+      "rank": 2,
       "sport": "NHL",
       "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
       "event_short": "Buffalo Sabres @ Montr\u00e9al Canadiens",
@@ -33,7 +57,7 @@
       "edge": 15.0,
       "ev_per_dollar": -0.136,
       "tier": "Medium",
-      "bet": "$9.43",
+      "bet": "$10.12",
       "status": "",
       "result": "",
       "notes": "Juraj Slafkovsky averages 0.2 Assists (last 10g), line is 0.5: 0.3 under with 1.1\u03c3 separation. Raw edge: 22.1% (capped at 15%). Edge capped: 22.1% \u2192 15.0%.",
@@ -45,7 +69,7 @@
       "prop_bucket": "under_heavy_fav"
     },
     {
-      "rank": 2,
+      "rank": 3,
       "sport": "NBA",
       "event": "Cleveland Cavaliers @ Detroit Pistons",
       "event_short": "Cleveland Cavaliers @ Detroit Pistons",
@@ -57,7 +81,7 @@
       "edge": 15.0,
       "ev_per_dollar": -0.142,
       "tier": "Medium",
-      "bet": "$9.43",
+      "bet": "$10.12",
       "status": "",
       "result": "",
       "notes": "Cade Cunningham averages 2.7 3-PT Made (last 10g), line is 1.5: 1.2 over with 1.1\u03c3 separation. Raw edge: 22.5% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 22.5% \u2192 15.0%.",
@@ -69,7 +93,7 @@
       "prop_bucket": "over_heavy_fav"
     },
     {
-      "rank": 3,
+      "rank": 4,
       "sport": "NHL",
       "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
       "event_short": "Buffalo Sabres @ Montr\u00e9al Canadiens",
@@ -81,7 +105,7 @@
       "edge": 14.4,
       "ev_per_dollar": -0.146,
       "tier": "Medium",
-      "bet": "$9.43",
+      "bet": "$10.12",
       "status": "",
       "result": "",
       "notes": "Nick Suzuki averages 0.9 Points (last 10g), line is 1.5: 0.6 under with 1.1\u03c3 separation.",
@@ -93,7 +117,7 @@
       "prop_bucket": "under_very_heavy_fav"
     },
     {
-      "rank": 4,
+      "rank": 5,
       "sport": "NBA",
       "event": "Minnesota Timberwolves @ San Antonio Spurs",
       "event_short": "Minnesota Timberwolves @ San Antonio Spurs",
@@ -105,7 +129,7 @@
       "edge": 15.0,
       "ev_per_dollar": -0.175,
       "tier": "Medium",
-      "bet": "$9.43",
+      "bet": "$10.12",
       "status": "",
       "result": "",
       "notes": "Jaden McDaniels averages 0.6 3-PT Made (last 10g), line is 1.5: 0.9 under with 0.9\u03c3 separation. Raw edge: 22.2% (capped at 15%). Edge capped: 22.2% \u2192 15.0%.",
@@ -115,37 +139,13 @@
       "type": "prop",
       "start_time": "",
       "prop_bucket": "under_heavy_fav"
-    },
-    {
-      "rank": 5,
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "event_short": "Minnesota Timberwolves @ San Antonio Spurs",
-      "market": "Player Prop",
-      "pick": "Victor Wembanyama UNDER 3.5 Assists",
-      "odds": "-173",
-      "implied": "63.4%",
-      "model": "82.2%",
-      "edge": 15.0,
-      "ev_per_dollar": -0.178,
-      "tier": "Medium",
-      "bet": "$9.41",
-      "status": "",
-      "result": "",
-      "notes": "Victor Wembanyama averages 2.1 Assists (last 10g), line is 3.5: 1.4 under with 0.9\u03c3 separation. Raw edge: 18.8% (capped at 15%). Def adj: vs MIN (114.6 PPG allowed, boost 2.4%) | Edge capped: 18.8% \u2192 15.0%.",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA333465840%23596306952_13L42648Q11701984101Q20",
-      "type": "prop",
-      "start_time": "",
-      "prop_bucket": "under_heavy_fav"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
       "event": "MIN @ SA",
-      "line": "SA -10.5",
+      "line": "SA -9.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -199,7 +199,7 @@
     {
       "sport": "MLB",
       "event": "DET @ NYM",
-      "line": "NYM -156",
+      "line": "NYM -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -229,7 +229,7 @@
     {
       "sport": "MLB",
       "event": "ARI @ TEX",
-      "line": "TEX -131",
+      "line": "TEX -126",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -267,6 +267,12 @@
       "event": "ATM @ OSA",
       "line": "OSA +155",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NBA",
+      "event": "Minnesota Timberwolves @ San Antonio Spurs",
+      "line": "Victor Wembanyama UNDER 3.5 Assists (-173)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
     },
     {
       "sport": "NBA",
@@ -309,12 +315,6 @@
       "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
       "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-154)",
       "reason": "Max 2 props per game (edge: 11.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 13.5 Rebounds (-140)",
-      "reason": "Max 2 props per game (edge: 13.4%)"
     },
     {
       "sport": "NHL",
