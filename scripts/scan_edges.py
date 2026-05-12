@@ -167,6 +167,34 @@ MLB_FAVORITE_HARD_SKIP = True
 # on 72 picks, paper P/L -$134. Falls under MIN_EDGE_HIGH (3%) without this floor.
 NHL_SPREAD_MIN_EDGE = 0.08              # 8% min for NHL run lines
 
+# Per-side spread overrides (audit 2026-05-12 against 1034 graded picks):
+#
+#   MLB Spread underdog (+1.5)  n=395  63.3% hit  +$704.14  🟢
+#   MLB Spread favorite (-1.5)  n=133  30.8% hit  -$358.74  🔴 (hard-skipped above)
+#   NHL Spread underdog (+1.5)  n=97   62.9% hit  +$235.80  🟢
+#   NHL Spread favorite (-1.5)  n=75   56.0% hit  +$342.86  🟢 (kept at 8%)
+#
+# The underdog buckets are this paper-portfolio's biggest historical winners
+# but the 8% spread floor (set 2026-05-07) was masking them — most live edges
+# on +1.5 runlines land in the 4-7% bracket. Drop the floor specifically for
+# underdog picks; favorite-side keeps the 8% floor it earned from the
+# bleeding bucket review.
+MLB_SPREAD_UNDERDOG_MIN_EDGE = 0.05     # 5% for MLB +1.5 (was 8%)
+NHL_SPREAD_UNDERDOG_MIN_EDGE = 0.06     # 6% for NHL +1.5 (was 8%)
+
+# Per-sport total floors (audit 2026-05-12):
+#
+#   NBA Over/Under  n=91  48.4% hit  -$72.81   🔴
+#   MLS Over/Under  n=86  52.3% hit  -$91.81   🔴
+#
+# Both buckets were running at the default 3% MIN_EDGE_HIGH. NBA O/U lands
+# slightly below break-even hit rate, MLS O/U is barely above and the vig
+# eats the spread. Raise so only stronger signals clear. The non-listed
+# soccer leagues (Serie A, La Liga, UCL) were profitable on small samples
+# and stay at the 3% floor.
+NBA_TOTAL_MIN_EDGE = 0.06               # 6% min for NBA totals (was 3%)
+MLS_TOTAL_MIN_EDGE = 0.06               # 6% min for MLS totals (was 3%)
+
 # Single-source Kelly penalty (25% reduction for DRatings-only picks)
 SINGLE_SOURCE_KELLY_DISCOUNT = 0.75
 
@@ -1264,20 +1292,52 @@ def discount_edge_for_sizing(raw_edge: float) -> float:
     return raw_edge
 
 
-def get_effective_min_edge(sport: str, market: str, spread_points: float, base_min_edge: float) -> float:
+def get_effective_min_edge(
+    sport: str,
+    market: str,
+    spread_points: float,
+    base_min_edge: float,
+    dk_odds: int | None = None,
+) -> float:
     """Apply sport-specific min edge overrides.
-    NBA spreads are 5-7 (41.7%) — raise threshold."""
+
+    dk_odds (positive → underdog, negative → favorite) selects between
+    the underdog and favorite floor when the sport differentiates. NBA
+    keeps a single floor regardless of side.
+    """
+    is_underdog = dk_odds is not None and dk_odds > 0
     if sport.lower() == "nba" and market.lower() in ("spread", "spreads"):
         abs_spread = abs(spread_points) if spread_points else 0
         if abs_spread > NBA_LARGE_SPREAD_THRESHOLD:
             return max(base_min_edge, NBA_LARGE_SPREAD_MIN_EDGE)
         return max(base_min_edge, NBA_SPREAD_MIN_EDGE)
-    # MLB run line: model overestimates due to right-skewed margins
+    # MLB run line: model overestimates due to right-skewed margins.
+    # Underdog +1.5 is the strategy's biggest historical winner; favorite
+    # -1.5 is hard-skipped above. Different floor by side.
     if sport.lower() == "mlb" and market.lower() in ("spread", "spreads"):
+        if is_underdog:
+            return max(base_min_edge, MLB_SPREAD_UNDERDOG_MIN_EDGE)
         return max(base_min_edge, MLB_SPREAD_MIN_EDGE)
-    # NHL run line: same shape as MLB; bleeder bucket at 5-8pp
+    # NHL run line: same shape as MLB; both sides historically profitable
+    # but underdog cluster sits below the 8% floor. Lower for underdogs.
     if sport.lower() == "nhl" and market.lower() in ("spread", "spreads"):
+        if is_underdog:
+            return max(base_min_edge, NHL_SPREAD_UNDERDOG_MIN_EDGE)
         return max(base_min_edge, NHL_SPREAD_MIN_EDGE)
+    return base_min_edge
+
+
+def get_effective_total_min_edge(sport: str, base_min_edge: float) -> float:
+    """Per-sport total floor overrides. Audit 2026-05-12 showed NBA O/U
+    and MLS O/U bleeding at the default 3% floor. Raise so only stronger
+    signals clear. Other soccer leagues stayed profitable on small
+    samples and keep the default.
+    """
+    sport_lower = sport.lower()
+    if sport_lower == "nba":
+        return max(base_min_edge, NBA_TOTAL_MIN_EDGE)
+    if sport_lower == "mls":
+        return max(base_min_edge, MLS_TOTAL_MIN_EDGE)
     return base_min_edge
 
 
@@ -1486,7 +1546,9 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
         # NBA spread calibration override (April 2026): 5% base, 8% for >12pt spreads
         spread_pts = cand.get("spread", 0)
-        min_edge = get_effective_min_edge(sport, "spread", spread_pts, min_edge)
+        min_edge = get_effective_min_edge(
+            sport, "spread", spread_pts, min_edge, dk_odds_val
+        )
 
         # NBA playoff discount (April 2026): RS-trained model overestimates
         # playoff signal. Reduce edge, raise min-edge, and hard-skip anything
@@ -1714,6 +1776,9 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     # playoff scoring. Defense ratchets up, OVER picks suffer most. Apply edge
     # reduction + extra OVER penalty + raised min-edge + hard skip on residuals.
     min_edge_total = MIN_EDGE_HIGH
+    # Per-sport total floor (audit 2026-05-12): NBA + MLS O/U historically
+    # bleeding at the default 3% floor. Raise floor on those sports.
+    min_edge_total = get_effective_total_min_edge(sport, min_edge_total)
     if sport.lower() == "nba" and is_nba_playoff_window():
         multiplier = 1.0 - NBA_PLAYOFF_EDGE_DISCOUNT
         if pick_side == "over":
