@@ -1434,6 +1434,39 @@
       "outcome": "win",
       "pnl": 9.09,
       "final_score": "PAR 1, REN 2"
+    },
+    {
+      "date": "2026-05-11",
+      "pick": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds",
+      "event": "Oklahoma City Thunder @ Los Angeles Lakers",
+      "sport": "NBA",
+      "wager": 11,
+      "odds": -161,
+      "outcome": "pending",
+      "pnl": 0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-11",
+      "pick": "Quinn Hughes UNDER 2.5 Shots on Goal",
+      "event": "Colorado Avalanche @ Minnesota Wild",
+      "sport": "NHL",
+      "wager": 11,
+      "odds": -188,
+      "outcome": "pending",
+      "pnl": 0,
+      "final_score": ""
+    },
+    {
+      "date": "2026-05-11",
+      "pick": "Tobias Harris OVER 18.5 Points",
+      "event": "Detroit Pistons @ Cleveland Cavaliers",
+      "sport": "NBA",
+      "wager": 11,
+      "odds": -113,
+      "outcome": "pending",
+      "pnl": 0,
+      "final_score": ""
     }
   ]
 }
