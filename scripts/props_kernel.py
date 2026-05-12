@@ -505,6 +505,18 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
     if edge < plugin.MIN_EDGE:
         return None
 
+    # Heavy-favorite hard cap. Reject picks priced worse than -220
+    # regardless of edge. At -245 (today's Suzuki UNDER 1.5 Points) you
+    # risk $11 to win $4.49 — one loss eats ~2.5 wins, and the model's
+    # edge has to be very accurate to overcome the juice cost. Threshold
+    # picked from 2026-05-12 audit + Max's call: in 32 graded historical
+    # props only 3 were priced ≤-180 (all wins, n=3 = noise); no
+    # historical picks priced ≤-200. This cap mostly prevents future
+    # outliers like Suzuki rather than reshaping today's mix. Re-audit
+    # quarterly and tune as the prop history grows.
+    if dk_odds <= -220:
+        return None
+
     decimal_odds = 1 + 100 / abs(dk_odds) if dk_odds < 0 else 1 + dk_odds / 100
     kelly = (edge / (decimal_odds - 1)) * plugin.KELLY_FRACTION
     kelly = min(kelly, plugin.KELLY_CAP)
