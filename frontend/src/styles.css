@@ -449,6 +449,21 @@ a {
   text-align: right;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  line-height: 1.2;
+}
+.pick-wager-amount {
+  color: var(--color-fg);
+}
+.pick-win-amount {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-positive);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 .pick-actions {
   display: flex;
@@ -1266,6 +1281,18 @@ a {
   .pick-odds::before { content: 'Odds'; }
   .pick-edge::before { content: 'Edge'; }
   .pick-wager::before { content: 'Wager'; }
+  /* Stack wager + win vertically on mobile so the new "win $X.XX" line
+     sits underneath the wager amount instead of cramming a fifth meta
+     cell onto an already-tight 375px row. Visual asymmetry vs odds/
+     edge is intentional — wager is the only cell with two values. */
+  .pick-wager {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 4px;
+    row-gap: 0;
+  }
+  .pick-win-amount { font-size: 10px; flex-basis: 100%; }
   .pick-text { font-size: 13px; word-break: break-word; }
   .pick-event { font-size: 11px; word-break: break-word; }
   .pick-details { padding: 12px 14px 14px 14px; }

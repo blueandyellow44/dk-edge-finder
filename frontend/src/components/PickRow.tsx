@@ -1,6 +1,11 @@
 import type { KeyboardEvent } from 'react'
 import type { Pick, Placement } from '../../../shared/types'
-import { formatMoney, formatPercent, formatStartTime } from '../lib/format'
+import {
+  americanWinAmount,
+  formatMoney,
+  formatPercent,
+  formatStartTime,
+} from '../lib/format'
 
 type PickRowProps = {
   pick: Pick
@@ -35,6 +40,7 @@ export function PickRow({
   const queued = placed && placement?.dispatch_status === 'queued'
   const acted = placed || skipped
   const startTime = formatStartTime(pick.start_time)
+  const winAmount = americanWinAmount(pick.odds, pick.wager)
 
   const handleRowClick = () => {
     onToggleExpand()
@@ -72,7 +78,12 @@ export function PickRow({
         <div className={`pick-edge ${tierClass(pick.tier)}`}>
           {pick.edge.toFixed(1)}%
         </div>
-        <div className="pick-wager">${formatMoney(pick.wager)}</div>
+        <div className="pick-wager">
+          <span className="pick-wager-amount">${formatMoney(pick.wager)}</span>
+          {winAmount > 0 && (
+            <span className="pick-win-amount">win ${formatMoney(winAmount)}</span>
+          )}
+        </div>
         <div className="pick-actions">
           {queued ? (
             <span className="pick-badge queued">Queued</span>
