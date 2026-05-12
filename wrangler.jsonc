@@ -18,5 +18,13 @@
       "binding": "EDGE_STATE",
       "id": "7dca36afc97d4d86bebed2e2948d6e83"
     }
-  ]
+  ],
+  // CF Cron Trigger: backup dispatcher for the Full Scan workflow when
+  // GitHub Actions cron skips a day. Fires at 15:00 UTC — two hours after
+  // the GH-scheduled 13:00 UTC scan, generous slack for the cron's
+  // documented late-firing behavior. The scheduled handler in
+  // worker/index.ts no-ops when data.json scan_date already shows today.
+  "triggers": {
+    "crons": ["0 15 * * *"]
+  }
 }
