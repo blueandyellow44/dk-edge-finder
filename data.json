@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 21,
-  "best_bet": {
-    "title": "Anthony Edwards UNDER 3.5 3-PT Made (-170) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Anthony Edwards averages 2.1 3-PT Made (last 10g), line is 3.5: 1.4 under with 1.4\u03c3 separation. Raw edge: 29.0% (capped at 15%). Edge capped: 29.0% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -151,7 +148,7 @@
     {
       "sport": "NHL",
       "event": "BUF @ MTL",
-      "line": "MTL -142",
+      "line": "MTL -148",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -169,7 +166,7 @@
     {
       "sport": "MLB",
       "event": "NYY @ BAL",
-      "line": "NYY -156",
+      "line": "NYY -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -181,19 +178,19 @@
     {
       "sport": "MLB",
       "event": "WSH @ CIN",
-      "line": "CIN -149",
+      "line": "CIN -143",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ BOS",
-      "line": "PHI -149",
+      "line": "PHI -143",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ TOR",
-      "line": "TB -120",
+      "line": "TB -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -247,13 +244,7 @@
     {
       "sport": "MLB",
       "event": "SF @ LAD",
-      "line": "LAD -314",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "LEV @ CEL",
-      "line": "CEL -115",
+      "line": "LAD -328",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -267,78 +258,6 @@
       "event": "ATM @ OSA",
       "line": "OSA +155",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 3.5 Assists (-173)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "line": "Anthony Edwards UNDER 4.5 Assists (-156)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Tobias Harris OVER 6.5 Rebounds (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Tobias Harris OVER 18.5 Points (-104)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Donovan Mitchell UNDER 3.5 Assists (-107)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "line": "De'Aaron Fox OVER 16.5 Points (-122)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Minnesota Timberwolves @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 2.5 3-PT Made (-159)",
-      "reason": "Max 2 props per game (edge: 11.4%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-154)",
-      "reason": "Max 2 props per game (edge: 11.8%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Cole Caufield UNDER 2.5 Shots on Goal (+124)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Donovan Mitchell OVER 4.5 Rebounds (-114)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Minnesota Wild @ Colorado Avalanche",
-      "line": "Kirill Kaprizov OVER 0.5 Points (-220)",
-      "reason": "Edge exists (8.1%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Minnesota Wild @ Colorado Avalanche",
-      "line": "Kirill Kaprizov UNDER 3.5 Shots on Goal (-160)",
-      "reason": "Edge exists (13.4%) but category exposure limit reached"
     }
   ],
   "bets": [
