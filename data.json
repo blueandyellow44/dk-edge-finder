@@ -45,30 +45,6 @@
       "prop_bucket": ""
     },
     {
-      "rank": 2,
-      "sport": "LA_LIGA",
-      "event": "Barcelona @ Alav\u00e9s",
-      "event_short": "BAR @ ALA",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-155",
-      "implied": "60.8%",
-      "model": "65.9%",
-      "edge": 5.1,
-      "ev_per_dollar": 0.0838,
-      "tier": "High",
-      "bet": "$10.12",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + clubelo): BAR 1.8, ALA 1.0 (total: 2.8). Line: 3.5. Cushion: 0.7 pts.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34098411?outcomes=0OU84639087U350_3",
-      "type": "game",
-      "start_time": "2026-05-13T19:30Z",
-      "prop_bucket": ""
-    },
-    {
       "rank": 3,
       "sport": "NBA",
       "event": "San Antonio Spurs @ Minnesota Timberwolves",
@@ -193,7 +169,7 @@
     {
       "sport": "NBA",
       "event": "CLE @ DET",
-      "line": "DET -4.5",
+      "line": "DET -3.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -211,25 +187,25 @@
     {
       "sport": "MLB",
       "event": "WSH @ CIN",
-      "line": "CIN -168",
+      "line": "CIN -180",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ BOS",
-      "line": "BOS -131",
+      "line": "BOS -137",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ TOR",
-      "line": "TOR -149",
+      "line": "TOR -156",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "DET @ NYM",
-      "line": "NYM -112",
+      "line": "NYM -114",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -241,13 +217,13 @@
     {
       "sport": "MLB",
       "event": "KC @ CHW",
-      "line": "KC -112",
+      "line": "KC -111",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIA @ MIN",
-      "line": "MIA -126",
+      "line": "MIA -131",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -259,13 +235,13 @@
     {
       "sport": "MLB",
       "event": "ARI @ TEX",
-      "line": "TEX -110",
+      "line": "ARI -114",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SEA @ HOU",
-      "line": "SEA -136",
+      "line": "SEA -130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -357,24 +333,6 @@
       "event": "SJ @ SEA",
       "line": "SEA -105",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "CRY @ MNC",
-      "line": "MNC -500",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "MLL @ GET",
-      "line": "GET +120",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "PSG @ RCL",
-      "line": "PSG +100",
-      "reason": "No model data"
     }
   ],
   "bets": [
