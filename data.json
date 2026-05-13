@@ -199,19 +199,7 @@
     {
       "sport": "NHL",
       "event": "MIN @ COL",
-      "line": "COL -218",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYY @ BAL",
-      "line": "NYY -168",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "LAA @ CLE",
-      "line": "CLE -163",
+      "line": "COL -230",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -271,13 +259,13 @@
     {
       "sport": "MLB",
       "event": "ARI @ TEX",
-      "line": "TEX -112",
+      "line": "TEX -110",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SEA @ HOU",
-      "line": "SEA -131",
+      "line": "SEA -136",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -378,117 +366,15 @@
     },
     {
       "sport": "LA_LIGA",
-      "event": "ATH @ ESP",
-      "line": "ESP +165",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "SEV @ VIL",
-      "line": "VIL +110",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
       "event": "MLL @ GET",
       "line": "GET +120",
       "reason": "No model data"
     },
     {
       "sport": "LIGUE_1",
-      "event": "STR @ BRE",
-      "line": "STR +150",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
       "event": "PSG @ RCL",
       "line": "PSG +100",
       "reason": "No model data"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Tobias Harris OVER 18.5 Points (-123)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Minnesota Wild @ Colorado Avalanche",
-      "line": "Kirill Kaprizov UNDER 3.5 Shots on Goal (-140)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Donovan Mitchell UNDER 3.5 Assists (-111)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Minnesota Wild @ Colorado Avalanche",
-      "line": "Quinn Hughes OVER 0.5 Assists (-154)",
-      "reason": "Max 2 props per game (edge: 13.1%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Minnesota Wild @ Colorado Avalanche",
-      "line": "Gabriel Landeskog OVER 0.5 Points (-180)",
-      "reason": "Max 2 props per game (edge: 8.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Julius Randle UNDER 1.5 3-PT Made (-165)",
-      "reason": "Max 2 props per game (edge: 10.3%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Julius Randle OVER 6.5 Rebounds (+104)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "line": "Cutter Gauthier OVER 0.5 Assists (+185)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Victor Wembanyama UNDER 2.5 3-PT Made (-194)",
-      "reason": "Max 2 props per game (edge: 5.2%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Stephon Castle UNDER 5.5 Rebounds (-142)",
-      "reason": "Max 2 props per game (edge: 11.4%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "line": "Cutter Gauthier OVER 0.5 Points (-140)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Tage Thompson OVER 0.5 Points (-200)",
-      "reason": "Edge exists (7.4%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "line": "Leo Carlsson UNDER 3.5 Shots on Goal (-180)",
-      "reason": "Edge exists (9.1%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "De'Aaron Fox OVER 16.5 Points (-121)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
