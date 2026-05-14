@@ -153,18 +153,6 @@
     },
     {
       "sport": "MLB",
-      "event": "SEA @ HOU",
-      "line": "SEA -119",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ ATH",
-      "line": "ATH -122",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "PHI @ BOS",
       "line": "BOS -112",
       "reason": "Edge below 3% threshold"
@@ -184,20 +172,8 @@
     {
       "sport": "MLB",
       "event": "SF @ LAD",
-      "line": "LAD -181",
+      "line": "LAD -186",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "RSO @ GIR",
-      "line": "GIR +105",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "OVI @ RMA",
-      "line": "RMA -425",
-      "reason": "No model data"
     }
   ],
   "bets": [
