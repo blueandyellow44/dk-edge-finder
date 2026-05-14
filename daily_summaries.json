@@ -98,5 +98,10 @@
     "summary": "The two unders carried the day with nearly identical edges (15.0%) and model confidence in the low-to-mid 80s, combining for +$12.68 and offsetting the Tobias Harris loss entirely. Harris's miss was particularly frustrating given the model's 81.5% confidence\u2014a high-conviction play that fell just short at 16 points\u2014suggesting the model may have underestimated Cleveland's defensive intensity or Detroit's offensive struggles in that matchup. The session's profitability hinged entirely on prop unders hitting decisively while the over play whiffed, a split that aligns with medium-tier conviction plays where small sample variance can swing results sharply.",
     "generated_at": "2026-05-12T15:25:14.686366+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-05-13": {
+    "summary": "The two NBA player prop losses (-$11.00 each on Mitchell and Harris) were the session killers, both falling painfully short by a single rebound despite the model's high confidence (77.7% and 77.4%), suggesting the model may be overweighting volume metrics in tight games. The MLS UNDER loss was another high-confidence whiff at -11.00, but the two wins (NHL SOG and LA Liga UNDER) only recovered $13.21 combined, leaving the day deep underwater\u2014a stark reminder that even 65-80% model confidence doesn't prevent clustering losses, especially when you're betting short-money favorites that need precision execution.",
+    "generated_at": "2026-05-14T07:44:14.489205+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
