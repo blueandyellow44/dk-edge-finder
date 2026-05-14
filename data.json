@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 16,
-  "best_bet": {
-    "title": "Donovan Mitchell UNDER 3.5 Assists (-145) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.1\u03c3 separation. Raw edge: 26.4% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 26.4% "
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -156,74 +153,38 @@
     },
     {
       "sport": "MLB",
-      "event": "COL @ PIT",
-      "line": "PIT -175",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "WSH @ CIN",
-      "line": "CIN -162",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "DET @ NYM",
-      "line": "NYM -157",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIA @ MIN",
-      "line": "MIN -126",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "SD @ MIL",
-      "line": "MIL -132",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "SEA @ HOU",
-      "line": "SEA -126",
+      "line": "SEA -119",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "STL @ ATH",
-      "line": "ATH -112",
+      "line": "ATH -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ BOS",
-      "line": "PHI -112",
+      "line": "BOS -112",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ ATL",
-      "line": "ATL -179",
+      "line": "ATL -181",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ CHW",
-      "line": "KC -136",
+      "line": "KC -137",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ LAD",
-      "line": "LAD -180",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "RAY @ VAL",
-      "line": "VAL +115",
+      "line": "LAD -181",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -237,90 +198,6 @@
       "event": "OVI @ RMA",
       "line": "RMA -425",
       "reason": "No model data"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Tage Thompson OVER 0.5 Points (-200)",
-      "reason": "Max 2 props per game (edge: 7.4%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Josh Doan OVER 0.5 Points (-110)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Jack Quinn UNDER 2.5 Shots on Goal (-135)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Julius Randle UNDER 1.5 3-PT Made (-164)",
-      "reason": "Max 2 props per game (edge: 10.5%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Josh Doan OVER 0.5 Assists (+170)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Julius Randle OVER 6.5 Rebounds (+113)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Tobias Harris OVER 6.5 Rebounds (-130)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "line": "Cutter Gauthier OVER 0.5 Assists (+185)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Victor Wembanyama UNDER 2.5 3-PT Made (-189)",
-      "reason": "Max 2 props per game (edge: 5.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Donovan Mitchell OVER 4.5 Rebounds (-116)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Stephon Castle UNDER 5.5 Rebounds (-149)",
-      "reason": "Max 2 props per game (edge: 10.2%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Cade Cunningham OVER 2.5 3-PT Made (+120)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Anaheim Ducks",
-      "line": "Leo Carlsson UNDER 3.5 Shots on Goal (-180)",
-      "reason": "Edge exists (9.1%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "De'Aaron Fox OVER 16.5 Points (-118)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
