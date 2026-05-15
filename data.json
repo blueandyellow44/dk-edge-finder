@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 18,
-  "best_bet": {
-    "title": "Cole Caufield UNDER 0.5 Assists (-195) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Cole Caufield averages 0.2 Assists (last 10g), line is 0.5: 0.3 under with 1.1\u03c3 separation. Raw edge: 20.3% (capped at 15%). Edge capped: 20.3% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -175,7 +172,7 @@
     {
       "sport": "MLB",
       "event": "CIN @ CLE",
-      "line": "CLE -137",
+      "line": "CLE -142",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -186,14 +183,8 @@
     },
     {
       "sport": "MLB",
-      "event": "NYY @ NYM",
-      "line": "NYY -157",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "MIL @ MIN",
-      "line": "MIN -110",
+      "line": "MIL -112",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -204,8 +195,14 @@
     },
     {
       "sport": "MLB",
+      "event": "NYY @ NYM",
+      "line": "NYY -157",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
       "event": "CHC @ CHW",
-      "line": "CHC -149",
+      "line": "CHC -138",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -223,19 +220,19 @@
     {
       "sport": "MLB",
       "event": "ARI @ COL",
-      "line": "ARI -126",
+      "line": "ARI -125",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "LAD @ LAA",
-      "line": "LAD -232",
+      "line": "LAD -231",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SD @ SEA",
-      "line": "SEA -136",
+      "line": "SEA -131",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -248,79 +245,7 @@
       "sport": "EPL",
       "event": "LIV @ AVL",
       "line": "LIV +145",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Lane Hutson OVER 0.5 Assists (-166)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Josh Doan OVER 0.5 Points (-115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-130)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Cade Cunningham OVER 2.5 3-PT Made (+121)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Rasmus Dahlin OVER 0.5 Points (-145)",
-      "reason": "Max 2 props per game (edge: 13.4%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Cole Caufield UNDER 3.5 Shots on Goal (-180)",
-      "reason": "Max 2 props per game (edge: 7.6%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Tobias Harris OVER 6.5 Rebounds (-107)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Victor Wembanyama UNDER 2.5 3-PT Made (-168)",
-      "reason": "Max 2 props per game (edge: 8.5%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Detroit Pistons @ Cleveland Cavaliers",
-      "line": "Donovan Mitchell OVER 4.5 Rebounds (-106)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Stephon Castle UNDER 5.5 Rebounds (-156)",
-      "reason": "Max 2 props per game (edge: 9.1%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Alex Tuch OVER 2.5 Shots on Goal (-115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Minnesota Timberwolves",
-      "line": "Julius Randle OVER 6.5 Rebounds (+102)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
+      "reason": "No model data"
     }
   ],
   "bets": [
