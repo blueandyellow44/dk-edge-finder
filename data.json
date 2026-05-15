@@ -154,7 +154,7 @@
     {
       "sport": "MLB",
       "event": "PHI @ PIT",
-      "line": "PIT -137",
+      "line": "PIT -136",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -178,13 +178,13 @@
     {
       "sport": "MLB",
       "event": "MIA @ TB",
-      "line": "TB -123",
+      "line": "TB -128",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIL @ MIN",
-      "line": "MIL -112",
+      "line": "MIN -110",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -196,13 +196,13 @@
     {
       "sport": "MLB",
       "event": "NYY @ NYM",
-      "line": "NYY -157",
+      "line": "NYY -150",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ CHW",
-      "line": "CHC -138",
+      "line": "CHC -136",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -214,7 +214,7 @@
     {
       "sport": "MLB",
       "event": "KC @ STL",
-      "line": "STL -114",
+      "line": "STL -112",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -226,7 +226,7 @@
     {
       "sport": "MLB",
       "event": "LAD @ LAA",
-      "line": "LAD -231",
+      "line": "LAD -225",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -238,14 +238,8 @@
     {
       "sport": "MLB",
       "event": "SF @ ATH",
-      "line": "ATH -136",
+      "line": "ATH -131",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "LIV @ AVL",
-      "line": "LIV +145",
-      "reason": "No model data"
     }
   ],
   "bets": [
