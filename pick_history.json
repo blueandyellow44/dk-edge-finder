@@ -19889,9 +19889,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.1\u03c3 separation. Raw edge: 31.7% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 31.7% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 115, CLE 94 | Donovan Mitchell: 3 Assists",
+    "pnl_if_bet": 8.55
   },
   {
     "scan_date": "2026-05-15",
@@ -19908,9 +19908,9 @@
     "type": "prop",
     "notes": "Tobias Harris averages 20.3 Points (last 10g), line is 17.5: 2.8 over with 0.7\u03c3 separation. Trending down (season avg: 20.9). Raw edge: 22.5% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 115, CLE 94 | Tobias Harris: 6 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-15",
@@ -19927,9 +19927,9 @@
     "type": "prop",
     "notes": "Julius Randle averages 0.9 3-PT Made (last 10g), line is 1.5: 0.6 under with 0.6\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 139, MIN 109 | Julius Randle: 0 3-PT Made",
+    "pnl_if_bet": 5.24
   },
   {
     "scan_date": "2026-05-15",
@@ -19984,9 +19984,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.1\u03c3 separation. Raw edge: 31.7% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 31.7% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 115, CLE 94 | Donovan Mitchell: 3 Assists",
+    "pnl_if_bet": 8.55
   },
   {
     "scan_date": "2026-05-15",
@@ -20003,9 +20003,9 @@
     "type": "prop",
     "notes": "Tobias Harris averages 20.3 Points (last 10g), line is 17.5: 2.8 over with 0.7\u03c3 separation. Trending down (season avg: 20.9). Raw edge: 22.5% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 115, CLE 94 | Tobias Harris: 6 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-15",
@@ -20022,9 +20022,9 @@
     "type": "prop",
     "notes": "Julius Randle averages 0.9 3-PT Made (last 10g), line is 1.5: 0.6 under with 0.6\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 139, MIN 109 | Julius Randle: 0 3-PT Made",
+    "pnl_if_bet": 5.24
   },
   {
     "scan_date": "2026-05-15",
@@ -20079,9 +20079,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.1\u03c3 separation. Raw edge: 31.7% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 31.7% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "DET 115, CLE 94 | Donovan Mitchell: 3 Assists",
+    "pnl_if_bet": 8.55
   },
   {
     "scan_date": "2026-05-15",
@@ -20098,9 +20098,9 @@
     "type": "prop",
     "notes": "Tobias Harris averages 20.3 Points (last 10g), line is 17.5: 2.8 over with 0.7\u03c3 separation. Trending down (season avg: 20.9). Raw edge: 22.5% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "DET 115, CLE 94 | Tobias Harris: 6 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-15",
@@ -20117,8 +20117,8 @@
     "type": "prop",
     "notes": "Julius Randle averages 0.9 3-PT Made (last 10g), line is 1.5: 0.6 under with 0.6\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 139, MIN 109 | Julius Randle: 0 3-PT Made",
+    "pnl_if_bet": 5.24
   }
 ]
