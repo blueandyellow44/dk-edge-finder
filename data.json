@@ -15,8 +15,35 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 38,
-  "best_bet": null,
+  "best_bet": {
+    "title": "UNDER 3.5 (100) \u2014 6.2% Edge (High Tier)",
+    "desc": "Model (DRatings only): CIN 1.0, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
+  },
   "picks": [
+    {
+      "rank": 1,
+      "sport": "MLS",
+      "event": "FC Cincinnati @ San Diego FC",
+      "event_short": "CIN @ SD",
+      "market": "Over/Under",
+      "pick": "UNDER 3.5",
+      "odds": "100",
+      "implied": "50.0%",
+      "model": "56.2%",
+      "edge": 6.2,
+      "ev_per_dollar": 0.1237,
+      "tier": "High",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): CIN 1.0, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34152126?outcomes=0OU84791968U350_3",
+      "type": "game",
+      "start_time": "2026-05-17T01:30Z",
+      "prop_bucket": ""
+    },
     {
       "rank": 1,
       "sport": "NBA",
@@ -142,31 +169,13 @@
     {
       "sport": "NHL",
       "event": "BUF @ MTL",
-      "line": "MTL -175",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TOR @ DET",
-      "line": "DET -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "KC @ STL",
-      "line": "STL -114",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "ARI @ COL",
-      "line": "ARI -144",
+      "line": "MTL -180",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BAL @ WSH",
-      "line": "WSH -112",
+      "line": "BAL -113",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -178,25 +187,25 @@
     {
       "sport": "MLB",
       "event": "MIA @ TB",
-      "line": "TB -144",
+      "line": "TB -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CIN @ CLE",
-      "line": "CLE -157",
+      "line": "CLE -156",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ CHW",
-      "line": "CHW -114",
+      "line": "CHW -112",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIL @ MIN",
-      "line": "MIL -126",
+      "line": "MIL -131",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -208,13 +217,13 @@
     {
       "sport": "MLB",
       "event": "BOS @ ATL",
-      "line": "ATL -125",
+      "line": "ATL -132",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ NYM",
-      "line": "NYY -125",
+      "line": "NYY -120",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -232,13 +241,13 @@
     {
       "sport": "MLB",
       "event": "SF @ ATH",
-      "line": "ATH -142",
+      "line": "ATH -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
       "event": "CHI @ MTL",
-      "line": "CHI +115",
+      "line": "CHI +135",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -256,7 +265,7 @@
     {
       "sport": "MLS",
       "event": "MIN @ NE",
-      "line": "NE +125",
+      "line": "NE +135",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -292,19 +301,13 @@
     {
       "sport": "MLS",
       "event": "LA @ SEA",
-      "line": "SEA -175",
+      "line": "SEA -180",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
       "event": "COL @ RSL",
       "line": "RSL -165",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLS",
-      "event": "CIN @ SD",
-      "line": "SD -110",
       "reason": "Edge below 3% threshold"
     },
     {
