@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 38,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-162) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 2.5 Rebounds (last 10g), line is 4.5: 2.0 under with 1.4\u03c3 separation. Raw edge: 29.9% (capped at 15%). Edge capped: 29.9% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -151,31 +148,31 @@
     {
       "sport": "MLB",
       "event": "TOR @ DET",
-      "line": "DET -123",
+      "line": "DET -120",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ STL",
-      "line": "STL -120",
+      "line": "STL -114",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ COL",
-      "line": "ARI -143",
+      "line": "ARI -144",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BAL @ WSH",
-      "line": "WSH -110",
+      "line": "WSH -112",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ PIT",
-      "line": "PHI -170",
+      "line": "PHI -171",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -187,13 +184,13 @@
     {
       "sport": "MLB",
       "event": "CIN @ CLE",
-      "line": "CLE -171",
+      "line": "CLE -157",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ CHW",
-      "line": "CHW -110",
+      "line": "CHW -114",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -205,13 +202,13 @@
     {
       "sport": "MLB",
       "event": "TEX @ HOU",
-      "line": "TEX -144",
+      "line": "TEX -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ ATL",
-      "line": "ATL -137",
+      "line": "ATL -125",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -223,25 +220,25 @@
     {
       "sport": "MLB",
       "event": "SD @ SEA",
-      "line": "SEA -168",
+      "line": "SEA -175",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "LAD @ LAA",
-      "line": "LAD -142",
+      "line": "LAD -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ ATH",
-      "line": "ATH -136",
+      "line": "ATH -142",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
       "event": "CHI @ MTL",
-      "line": "CHI +120",
+      "line": "CHI +115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -259,7 +256,7 @@
     {
       "sport": "MLS",
       "event": "MIN @ NE",
-      "line": "NE +120",
+      "line": "NE +125",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -271,7 +268,7 @@
     {
       "sport": "MLS",
       "event": "CLB @ PHI",
-      "line": "PHI +125",
+      "line": "PHI +130",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -301,13 +298,13 @@
     {
       "sport": "MLS",
       "event": "COL @ RSL",
-      "line": "RSL -160",
+      "line": "RSL -165",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
       "event": "CIN @ SD",
-      "line": "SD -115",
+      "line": "SD -110",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -315,66 +312,6 @@
       "event": "DAL @ SJ",
       "line": "SJ -115",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "De'Aaron Fox OVER 15.5 Points (-116)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-135)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Rasmus Dahlin OVER 0.5 Points (-145)",
-      "reason": "Max 2 props per game (edge: 13.4%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "James Harden OVER 18.5 Points (-112)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 12.5 Rebounds (+101)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 24.5 Points (-104)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Alex Tuch OVER 2.5 Shots on Goal (-115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "line": "Cade Cunningham OVER 2.5 3-PT Made (+133)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "line": "Josh Doan OVER 0.5 Points (-130)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Stephon Castle OVER 15.5 Points (-110)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
