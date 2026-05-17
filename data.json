@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-16",
-  "scan_subtitle": "2026-05-16 \u2014 All 38 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-05-17",
+  "scan_subtitle": "Sunday, May 17, 2026 \u2014 EPL (6), LA_LIGA (10), LIGUE_1 (9), MLB (15), MLS (2), NBA (1), SERIE_A (10)",
   "bankroll": {
     "available": 486.16,
     "starting": 500.0,
@@ -14,45 +14,117 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 38,
+  "games_analyzed": 53,
   "best_bet": {
-    "title": "UNDER 3.5 (100) \u2014 6.2% Edge (High Tier)",
-    "desc": "Model (DRatings only): CIN 1.0, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
+    "title": "UNDER 3.5 (-105) \u2014 16.8% Edge (High Tier)",
+    "desc": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap."
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "MLS",
-      "event": "FC Cincinnati @ San Diego FC",
-      "event_short": "CIN @ SD",
+      "sport": "LIGUE_1",
+      "event": "AS Monaco @ Strasbourg",
+      "event_short": "MON @ STR",
       "market": "Over/Under",
       "pick": "UNDER 3.5",
-      "odds": "100",
-      "implied": "50.0%",
-      "model": "56.2%",
-      "edge": 6.2,
-      "ev_per_dollar": 0.1237,
+      "odds": "-105",
+      "implied": "51.2%",
+      "model": "68.0%",
+      "edge": 16.8,
+      "ev_per_dollar": 0.3275,
       "tier": "High",
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only): CIN 1.0, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-      "sources": "DRatings only, ESPN",
+      "notes": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
+      "sources": "DRatings only + clubelo, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34152126?outcomes=0OU84791968U350_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/34135398?outcomes=0OU84744284U350_3",
       "type": "game",
-      "start_time": "2026-05-17T01:30Z",
+      "start_time": "2026-05-17T19:00Z",
       "prop_bucket": ""
     },
     {
-      "rank": 1,
+      "rank": 2,
+      "sport": "SERIE_A",
+      "event": "Lecce @ Sassuolo",
+      "event_short": "LEC @ SAS",
+      "market": "Over/Under",
+      "pick": "OVER 2.5",
+      "odds": "105",
+      "implied": "48.8%",
+      "model": "63.7%",
+      "edge": 14.9,
+      "ev_per_dollar": 0.3062,
+      "tier": "High",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + clubelo): LEC 1.4, SAS 1.7 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. \u26a0 SUSPICIOUS EDGE (14.9%): Model predicts 3.1 vs market 2.5 \u2014 0.6 pt gap.",
+      "sources": "DRatings only + clubelo, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34098395?outcomes=0OU84638519O250_1",
+      "type": "game",
+      "start_time": "2026-05-17T18:45Z",
+      "prop_bucket": ""
+    },
+    {
+      "rank": 3,
+      "sport": "MLS",
+      "event": "Portland Timbers @ Inter Miami CF",
+      "event_short": "POR @ MIA",
+      "market": "Over/Under",
+      "pick": "UNDER 4.5",
+      "odds": "-160",
+      "implied": "61.5%",
+      "model": "69.4%",
+      "edge": 7.9,
+      "ev_per_dollar": 0.1279,
+      "tier": "High",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34152129?outcomes=0OU84792052U450_3",
+      "type": "game",
+      "start_time": "2026-05-17T22:00Z",
+      "prop_bucket": ""
+    },
+    {
+      "rank": 4,
+      "sport": "EPL",
+      "event": "West Ham United @ Newcastle United",
+      "event_short": "WHU @ NEW",
+      "market": "Over/Under",
+      "pick": "UNDER 3.5",
+      "odds": "-165",
+      "implied": "62.3%",
+      "model": "70.1%",
+      "edge": 7.8,
+      "ev_per_dollar": 0.1253,
+      "tier": "High",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (clubelo): WHU 1.0, NEW 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%.",
+      "sources": "clubelo, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34097824?outcomes=0OU84636789U350_3",
+      "type": "game",
+      "start_time": "2026-05-17T16:30Z",
+      "prop_bucket": ""
+    },
+    {
+      "rank": 5,
       "sport": "NBA",
       "event": "San Antonio Spurs @ Oklahoma City Thunder",
       "event_short": "San Antonio Spurs @ Oklahoma City Thunder",
       "market": "Player Prop",
       "pick": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds",
-      "odds": "-162",
-      "implied": "61.8%",
+      "odds": "-158",
+      "implied": "61.2%",
       "model": "91.7%",
       "edge": 15.0,
       "ev_per_dollar": -0.083,
@@ -60,7 +132,7 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Shai Gilgeous-Alexander averages 2.5 Rebounds (last 10g), line is 4.5: 2.0 under with 1.4\u03c3 separation. Raw edge: 29.9% (capped at 15%). Edge capped: 29.9% \u2192 15.0%.",
+      "notes": "Shai Gilgeous-Alexander averages 2.5 Rebounds (last 10g), line is 4.5: 2.0 under with 1.4\u03c3 separation. Raw edge: 30.5% (capped at 15%). Edge capped: 30.5% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334913320%232153131525_13L42648Q1-1659398539Q20",
@@ -69,14 +141,14 @@
       "prop_bucket": "under_heavy_fav"
     },
     {
-      "rank": 2,
+      "rank": 6,
       "sport": "NBA",
       "event": "Cleveland Cavaliers @ Detroit Pistons",
       "event_short": "Cleveland Cavaliers @ Detroit Pistons",
       "market": "Player Prop",
       "pick": "Donovan Mitchell UNDER 3.5 Assists",
-      "odds": "-116",
-      "implied": "53.7%",
+      "odds": "-107",
+      "implied": "51.7%",
       "model": "88.0%",
       "edge": 15.0,
       "ev_per_dollar": -0.12,
@@ -84,7 +156,7 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 34.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 34.3% \u2192 15.0%.",
+      "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 36.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 36.3% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334870152%232152954047_13L42648Q11701984101Q20",
@@ -93,62 +165,14 @@
       "prop_bucket": "under_near_even_fav"
     },
     {
-      "rank": 3,
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "event_short": "Vegas Golden Knights @ Colorado Avalanche",
-      "market": "Player Prop",
-      "pick": "Cale Makar UNDER 1.5 Points",
-      "odds": "-215",
-      "implied": "68.3%",
-      "model": "87.8%",
-      "edge": 15.0,
-      "ev_per_dollar": -0.122,
-      "tier": "Medium",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Cale Makar averages 0.4 Points (last 10g), line is 1.5: 1.1 under with 1.2\u03c3 separation. Raw edge: 19.5% (capped at 15%). Edge capped: 19.5% \u2192 15.0%.",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334844264%232152878341_15L42133Q141536534Q20",
-      "type": "prop",
-      "start_time": "",
-      "prop_bucket": "under_very_heavy_fav"
-    },
-    {
-      "rank": 4,
-      "sport": "NHL",
-      "event": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "event_short": "Buffalo Sabres @ Montr\u00e9al Canadiens",
-      "market": "Player Prop",
-      "pick": "Cole Caufield UNDER 0.5 Assists",
-      "odds": "-195",
-      "implied": "66.1%",
-      "model": "86.4%",
-      "edge": 15.0,
-      "ev_per_dollar": -0.136,
-      "tier": "Medium",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Cole Caufield averages 0.2 Assists (last 10g), line is 0.5: 0.3 under with 1.1\u03c3 separation. Raw edge: 20.3% (capped at 15%). Edge capped: 20.3% \u2192 15.0%.",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334671682%232152177225_15L42133Q11021766805Q20",
-      "type": "prop",
-      "start_time": "",
-      "prop_bucket": "under_heavy_fav"
-    },
-    {
-      "rank": 5,
+      "rank": 7,
       "sport": "NHL",
       "event": "Vegas Golden Knights @ Colorado Avalanche",
       "event_short": "Vegas Golden Knights @ Colorado Avalanche",
       "market": "Player Prop",
       "pick": "Cale Makar UNDER 0.5 Assists",
-      "odds": "+124",
-      "implied": "44.6%",
+      "odds": "+130",
+      "implied": "43.5%",
       "model": "81.6%",
       "edge": 15.0,
       "ev_per_dollar": -0.184,
@@ -156,165 +180,351 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Cale Makar averages 0.1 Assists (last 10g), line is 0.5: 0.4 under with 0.9\u03c3 separation. Raw edge: 37.0% (capped at 15%). Edge capped: 37.0% \u2192 15.0%.",
+      "notes": "Cale Makar averages 0.1 Assists (last 10g), line is 0.5: 0.4 under with 0.9\u03c3 separation. Raw edge: 38.1% (capped at 15%). Edge capped: 38.1% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334844263%232152861870_15L42133Q11021766805Q20",
       "type": "prop",
       "start_time": "",
       "prop_bucket": "under_underdog"
+    },
+    {
+      "rank": 8,
+      "sport": "NBA",
+      "event": "Cleveland Cavaliers @ Detroit Pistons",
+      "event_short": "Cleveland Cavaliers @ Detroit Pistons",
+      "market": "Player Prop",
+      "pick": "Cade Cunningham OVER 2.5 3-PT Made",
+      "odds": "+128",
+      "implied": "43.9%",
+      "model": "81.5%",
+      "edge": 15.0,
+      "ev_per_dollar": -0.185,
+      "tier": "Medium",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Cade Cunningham averages 3.8 3-PT Made (last 10g), line is 2.5: 1.3 over with 0.9\u03c3 separation. Raw edge: 37.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 37.6% \u2192 15.0%.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334870169%232152957299_13L42648Q1-717019713Q20",
+      "type": "prop",
+      "start_time": "",
+      "prop_bucket": "over_underdog"
+    },
+    {
+      "rank": 9,
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "event_short": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "market": "Player Prop",
+      "pick": "Tage Thompson OVER 0.5 Points",
+      "odds": "-215",
+      "implied": "68.3%",
+      "model": "77.2%",
+      "edge": 8.9,
+      "ev_per_dollar": -0.228,
+      "tier": "Medium",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Tage Thompson averages 1.4 Points (last 10g), line is 0.5: 0.9 over with 0.7\u03c3 separation.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA335227177%232154413929_13L42133Q11680966517Q20",
+      "type": "prop",
+      "start_time": "",
+      "prop_bucket": "over_very_heavy_fav"
     }
   ],
   "no_edge_games": [
     {
-      "sport": "NHL",
-      "event": "BUF @ MTL",
-      "line": "MTL -180",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "BAL @ WSH",
-      "line": "BAL -113",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "PHI @ PIT",
-      "line": "PHI -171",
+      "sport": "NBA",
+      "event": "CLE @ DET",
+      "line": "DET -4.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "MIA @ TB",
-      "line": "TB -136",
+      "line": "TB -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "CIN @ CLE",
-      "line": "CLE -156",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CHC @ CHW",
-      "line": "CHW -112",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIL @ MIN",
-      "line": "MIL -131",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TEX @ HOU",
-      "line": "TEX -149",
+      "event": "BAL @ WSH",
+      "line": "BAL -126",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ ATL",
-      "line": "ATL -132",
+      "line": "ATL -163",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "PHI @ PIT",
+      "line": "PIT -143",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "CIN @ CLE",
+      "line": "CLE -168",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ NYM",
-      "line": "NYY -120",
+      "line": "NYM -121",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "SD @ SEA",
-      "line": "SEA -175",
+      "event": "TOR @ DET",
+      "line": "TOR -130",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "LAD @ LAA",
-      "line": "LAD -136",
+      "event": "CHC @ CHW",
+      "line": "CHC -131",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIL @ MIN",
+      "line": "MIL -123",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TEX @ HOU",
+      "line": "TEX -120",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "KC @ STL",
+      "line": "STL -114",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "ARI @ COL",
+      "line": "ARI -156",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ ATH",
-      "line": "ATH -136",
+      "line": "ATH -156",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "LAD @ LAA",
+      "line": "LAD -142",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "SD @ SEA",
+      "line": "SEA -168",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLS",
-      "event": "CHI @ MTL",
-      "line": "CHI +135",
+      "event": "LAFC @ NSH",
+      "line": "NSH +120",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "TOR @ CLT",
-      "line": "CLT -155",
+      "sport": "LA_LIGA",
+      "event": "CEL @ ATH",
+      "line": "ATH +120",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "STL @ DC",
-      "line": "DC +130",
+      "sport": "LA_LIGA",
+      "event": "GIR @ ATM",
+      "line": "ATM -135",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "GET @ ELC",
+      "line": "ELC +130",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "MLL @ LEV",
+      "line": "LEV +110",
       "reason": "No model data"
     },
     {
-      "sport": "MLS",
-      "event": "MIN @ NE",
-      "line": "NE +135",
+      "sport": "LA_LIGA",
+      "event": "ESP @ OSA",
+      "line": "OSA +120",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "ATL @ ORL",
-      "line": "ORL +105",
+      "sport": "LA_LIGA",
+      "event": "VIL @ RAY",
+      "line": "RAY +100",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "CLB @ PHI",
-      "line": "PHI +130",
+      "sport": "LA_LIGA",
+      "event": "ALA @ OVI",
+      "line": "ALA +100",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "NYC @ RBNY",
-      "line": "NYC +140",
+      "sport": "LA_LIGA",
+      "event": "VAL @ RSO",
+      "line": "RSO +125",
       "reason": "No model data"
     },
     {
-      "sport": "MLS",
-      "event": "SKC @ ATX",
-      "line": "ATX -175",
+      "sport": "LA_LIGA",
+      "event": "RMA @ SEV",
+      "line": "RMA +120",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LA_LIGA",
+      "event": "BET @ BAR",
+      "line": "BAR -310",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "VAN @ HOU",
-      "line": "VAN -110",
+      "sport": "SERIE_A",
+      "event": "BOL @ ATA",
+      "line": "ATA -140",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "LA @ SEA",
-      "line": "SEA -180",
+      "sport": "SERIE_A",
+      "event": "TOR @ CAG",
+      "line": "CAG +130",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "COL @ RSL",
-      "line": "RSL -165",
+      "sport": "SERIE_A",
+      "event": "CRE @ UDI",
+      "line": "UDI +140",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "DAL @ SJ",
-      "line": "SJ -115",
+      "sport": "LIGUE_1",
+      "event": "ANG @ BRE",
+      "line": "BRE -120",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "AUX @ LILL",
+      "line": "LILL -255",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "HAC @ LOR",
+      "line": "HAC +160",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "RCL @ LYON",
+      "line": "LYON -140",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "REN @ OLM",
+      "line": "OLM +105",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "TOU @ NAN",
+      "line": "NAN +160",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "METZ @ NICE",
+      "line": "NICE -310",
+      "reason": "No model data"
+    },
+    {
+      "sport": "LIGUE_1",
+      "event": "PSG @ PAR",
+      "line": "PSG -175",
+      "reason": "No model data"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Josh Doan OVER 0.5 Points (-125)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Victor Wembanyama UNDER 25.5 Points (-124)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-166)",
+      "reason": "Max 2 props per game (edge: 10.8%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Rasmus Dahlin OVER 0.5 Assists (-125)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Stephon Castle OVER 16.5 Points (-117)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Tage Thompson OVER 0.5 Assists (+110)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Alex Tuch OVER 2.5 Shots on Goal (-115)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Victor Wembanyama UNDER 12.5 Rebounds (-113)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "De'Aaron Fox OVER 15.5 Points (-117)",
+      "reason": "Edge exists (15.0%) but category exposure limit reached"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Rasmus Dahlin OVER 0.5 Points (-180)",
+      "reason": "Edge exists (11.3%) but category exposure limit reached"
     }
   ],
   "bets": [
