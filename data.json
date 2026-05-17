@@ -16,60 +16,12 @@
   },
   "games_analyzed": 53,
   "best_bet": {
-    "title": "OVER 2.5 (110) \u2014 17.2% Edge (High Tier)",
-    "desc": "Model (DRatings only): LEC 1.6, SAS 1.6 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.2%): Model predicts 3.2 vs market 2.5 \u2014 0.7 p"
+    "title": "UNDER 4.5 (-160) \u2014 7.9% Edge (High Tier)",
+    "desc": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "SERIE_A",
-      "event": "Lecce @ Sassuolo",
-      "event_short": "LEC @ SAS",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "110",
-      "implied": "47.6%",
-      "model": "64.8%",
-      "edge": 17.2,
-      "ev_per_dollar": 0.3609,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): LEC 1.6, SAS 1.6 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.2%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34098395?outcomes=0OU84638519O250_1",
-      "type": "game",
-      "start_time": "2026-05-17T18:45Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 2,
-      "sport": "LIGUE_1",
-      "event": "AS Monaco @ Strasbourg",
-      "event_short": "MON @ STR",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-105",
-      "implied": "51.2%",
-      "model": "68.0%",
-      "edge": 16.8,
-      "ev_per_dollar": 0.3275,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34135398?outcomes=0OU84744284U350_3",
-      "type": "game",
-      "start_time": "2026-05-17T19:00Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 3,
       "sport": "MLS",
       "event": "Portland Timbers @ Inter Miami CF",
       "event_short": "POR @ MIA",
@@ -222,72 +174,6 @@
     },
     {
       "sport": "MLB",
-      "event": "BAL @ WSH",
-      "line": "BAL -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "BOS @ ATL",
-      "line": "ATL -149",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "PHI @ PIT",
-      "line": "PIT -131",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CIN @ CLE",
-      "line": "CLE -161",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYY @ NYM",
-      "line": "NYM -122",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TOR @ DET",
-      "line": "TOR -126",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CHC @ CHW",
-      "line": "CHC -131",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIL @ MIN",
-      "line": "MIL -129",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TEX @ HOU",
-      "line": "TEX -126",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "KC @ STL",
-      "line": "STL -125",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "ARI @ COL",
-      "line": "ARI -136",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "SF @ ATH",
       "line": "ATH -149",
       "reason": "Edge below 3% threshold"
@@ -295,13 +181,13 @@
     {
       "sport": "MLB",
       "event": "LAD @ LAA",
-      "line": "LAD -142",
+      "line": "LAD -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SD @ SEA",
-      "line": "SEA -168",
+      "line": "SEA -162",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -309,126 +195,6 @@
       "event": "LAFC @ NSH",
       "line": "NSH +120",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "CEL @ ATH",
-      "line": "ATH +115",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "GIR @ ATM",
-      "line": "ATM -125",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "GET @ ELC",
-      "line": "ELC +140",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "MLL @ LEV",
-      "line": "LEV +110",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "ESP @ OSA",
-      "line": "OSA +115",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "VIL @ RAY",
-      "line": "RAY -105",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "ALA @ OVI",
-      "line": "ALA +105",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "VAL @ RSO",
-      "line": "RSO +140",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "RMA @ SEV",
-      "line": "RMA +100",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LA_LIGA",
-      "event": "BET @ BAR",
-      "line": "BAR -310",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "TOR @ CAG",
-      "line": "CAG +130",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "CRE @ UDI",
-      "line": "UDI +140",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "ANG @ BRE",
-      "line": "BRE -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "AUX @ LILL",
-      "line": "LILL -245",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "HAC @ LOR",
-      "line": "HAC +160",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "RCL @ LYON",
-      "line": "LYON -140",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "REN @ OLM",
-      "line": "OLM +105",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "TOU @ NAN",
-      "line": "NAN +160",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "METZ @ NICE",
-      "line": "NICE -310",
-      "reason": "No model data"
-    },
-    {
-      "sport": "LIGUE_1",
-      "event": "PSG @ PAR",
-      "line": "PSG -170",
-      "reason": "No model data"
     }
   ],
   "bets": [
