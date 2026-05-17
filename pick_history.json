@@ -20326,9 +20326,9 @@
     "type": "game",
     "notes": "Model (DRatings only): CIN 1.0, SD 1.8 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CIN 3, SD 3",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-16",
