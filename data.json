@@ -16,12 +16,36 @@
   },
   "games_analyzed": 53,
   "best_bet": {
-    "title": "UNDER 3.5 (-105) \u2014 16.8% Edge (High Tier)",
-    "desc": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap."
+    "title": "OVER 2.5 (110) \u2014 17.2% Edge (High Tier)",
+    "desc": "Model (DRatings only): LEC 1.6, SAS 1.6 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.2%): Model predicts 3.2 vs market 2.5 \u2014 0.7 p"
   },
   "picks": [
     {
       "rank": 1,
+      "sport": "SERIE_A",
+      "event": "Lecce @ Sassuolo",
+      "event_short": "LEC @ SAS",
+      "market": "Over/Under",
+      "pick": "OVER 2.5",
+      "odds": "110",
+      "implied": "47.6%",
+      "model": "64.8%",
+      "edge": 17.2,
+      "ev_per_dollar": 0.3609,
+      "tier": "High",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only): LEC 1.6, SAS 1.6 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.2%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
+      "sources": "DRatings only, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34098395?outcomes=0OU84638519O250_1",
+      "type": "game",
+      "start_time": "2026-05-17T18:45Z",
+      "prop_bucket": ""
+    },
+    {
+      "rank": 2,
       "sport": "LIGUE_1",
       "event": "AS Monaco @ Strasbourg",
       "event_short": "MON @ STR",
@@ -42,30 +66,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/34135398?outcomes=0OU84744284U350_3",
       "type": "game",
       "start_time": "2026-05-17T19:00Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 2,
-      "sport": "SERIE_A",
-      "event": "Lecce @ Sassuolo",
-      "event_short": "LEC @ SAS",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "105",
-      "implied": "48.8%",
-      "model": "63.7%",
-      "edge": 14.9,
-      "ev_per_dollar": 0.3062,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + clubelo): LEC 1.4, SAS 1.7 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. \u26a0 SUSPICIOUS EDGE (14.9%): Model predicts 3.1 vs market 2.5 \u2014 0.6 pt gap.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34098395?outcomes=0OU84638519O250_1",
-      "type": "game",
-      "start_time": "2026-05-17T18:45Z",
       "prop_bucket": ""
     },
     {
@@ -90,30 +90,6 @@
       "dk_link": "https://sportsbook.draftkings.com/event/34152129?outcomes=0OU84792052U450_3",
       "type": "game",
       "start_time": "2026-05-17T22:00Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 4,
-      "sport": "EPL",
-      "event": "West Ham United @ Newcastle United",
-      "event_short": "WHU @ NEW",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-165",
-      "implied": "62.3%",
-      "model": "70.1%",
-      "edge": 7.8,
-      "ev_per_dollar": 0.1253,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (clubelo): WHU 1.0, NEW 1.6 (total: 2.6). Line: 3.5. Cushion: 0.9 pts. Single source \u2014 clubelo. Kelly reduced 25%.",
-      "sources": "clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34097824?outcomes=0OU84636789U350_3",
-      "type": "game",
-      "start_time": "2026-05-17T16:30Z",
       "prop_bucket": ""
     },
     {
@@ -246,44 +222,38 @@
     },
     {
       "sport": "MLB",
-      "event": "MIA @ TB",
-      "line": "TB -149",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "BAL @ WSH",
-      "line": "BAL -126",
+      "line": "BAL -120",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ ATL",
-      "line": "ATL -163",
+      "line": "ATL -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ PIT",
-      "line": "PIT -143",
+      "line": "PIT -131",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CIN @ CLE",
-      "line": "CLE -168",
+      "line": "CLE -161",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ NYM",
-      "line": "NYM -121",
+      "line": "NYM -122",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TOR @ DET",
-      "line": "TOR -130",
+      "line": "TOR -126",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -295,31 +265,31 @@
     {
       "sport": "MLB",
       "event": "MIL @ MIN",
-      "line": "MIL -123",
+      "line": "MIL -129",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TEX @ HOU",
-      "line": "TEX -120",
+      "line": "TEX -126",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ STL",
-      "line": "STL -114",
+      "line": "STL -125",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ COL",
-      "line": "ARI -156",
+      "line": "ARI -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ ATH",
-      "line": "ATH -156",
+      "line": "ATH -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -343,19 +313,19 @@
     {
       "sport": "LA_LIGA",
       "event": "CEL @ ATH",
-      "line": "ATH +120",
+      "line": "ATH +115",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "GIR @ ATM",
-      "line": "ATM -135",
+      "line": "ATM -125",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "GET @ ELC",
-      "line": "ELC +130",
+      "line": "ELC +140",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -367,43 +337,37 @@
     {
       "sport": "LA_LIGA",
       "event": "ESP @ OSA",
-      "line": "OSA +120",
+      "line": "OSA +115",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "VIL @ RAY",
-      "line": "RAY +100",
+      "line": "RAY -105",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "ALA @ OVI",
-      "line": "ALA +100",
+      "line": "ALA +105",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "LA_LIGA",
       "event": "VAL @ RSO",
-      "line": "RSO +125",
+      "line": "RSO +140",
       "reason": "No model data"
     },
     {
       "sport": "LA_LIGA",
       "event": "RMA @ SEV",
-      "line": "RMA +120",
+      "line": "RMA +100",
       "reason": "No model data"
     },
     {
       "sport": "LA_LIGA",
       "event": "BET @ BAR",
       "line": "BAR -310",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "BOL @ ATA",
-      "line": "ATA -140",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -427,7 +391,7 @@
     {
       "sport": "LIGUE_1",
       "event": "AUX @ LILL",
-      "line": "LILL -255",
+      "line": "LILL -245",
       "reason": "No model data"
     },
     {
@@ -463,68 +427,8 @@
     {
       "sport": "LIGUE_1",
       "event": "PSG @ PAR",
-      "line": "PSG -175",
+      "line": "PSG -170",
       "reason": "No model data"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Josh Doan OVER 0.5 Points (-125)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 25.5 Points (-124)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-166)",
-      "reason": "Max 2 props per game (edge: 10.8%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Rasmus Dahlin OVER 0.5 Assists (-125)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Stephon Castle OVER 16.5 Points (-117)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Tage Thompson OVER 0.5 Assists (+110)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Alex Tuch OVER 2.5 Shots on Goal (-115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 12.5 Rebounds (-113)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "De'Aaron Fox OVER 15.5 Points (-117)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Rasmus Dahlin OVER 0.5 Points (-180)",
-      "reason": "Edge exists (11.3%) but category exposure limit reached"
     }
   ],
   "bets": [
