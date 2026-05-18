@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-17",
-  "scan_subtitle": "2026-05-17 \u2014 All 53 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-05-18",
+  "scan_subtitle": "Monday, May 18, 2026 \u2014 EPL (1), MLB (14), NBA (1), NHL (1)",
   "bankroll": {
     "available": 486.16,
     "starting": 500.0,
@@ -14,86 +14,38 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 53,
+  "games_analyzed": 17,
   "best_bet": {
-    "title": "UNDER 4.5 (-160) \u2014 7.9% Edge (High Tier)",
-    "desc": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%."
+    "title": "Karl-Anthony Towns OVER 4.5 Assists (-110) \u2014 15.0% Edge (Medium Tier)",
+    "desc": "Karl-Anthony Towns averages 7.2 Assists (last 10g), line is 4.5: 2.7 over with 1.0\u03c3 separation. Trending up (season avg: 6.6). Raw edge: 32.3% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boos"
   },
   "picks": [
     {
       "rank": 1,
-      "sport": "MLS",
-      "event": "Portland Timbers @ Inter Miami CF",
-      "event_short": "POR @ MIA",
-      "market": "Over/Under",
-      "pick": "UNDER 4.5",
-      "odds": "-160",
-      "implied": "61.5%",
-      "model": "69.4%",
-      "edge": 7.9,
-      "ev_per_dollar": 0.1279,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34152129?outcomes=0OU84792052U450_3",
-      "type": "game",
-      "start_time": "2026-05-17T22:00Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 5,
       "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "event_short": "San Antonio Spurs @ Oklahoma City Thunder",
+      "event": "Cleveland Cavaliers @ New York Knicks",
+      "event_short": "Cleveland Cavaliers @ New York Knicks",
       "market": "Player Prop",
-      "pick": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds",
-      "odds": "-158",
-      "implied": "61.2%",
-      "model": "91.7%",
+      "pick": "Karl-Anthony Towns OVER 4.5 Assists",
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "84.7%",
       "edge": 15.0,
-      "ev_per_dollar": -0.083,
+      "ev_per_dollar": -0.153,
       "tier": "Medium",
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Shai Gilgeous-Alexander averages 2.5 Rebounds (last 10g), line is 4.5: 2.0 under with 1.4\u03c3 separation. Raw edge: 30.5% (capped at 15%). Edge capped: 30.5% \u2192 15.0%.",
+      "notes": "Karl-Anthony Towns averages 7.2 Assists (last 10g), line is 4.5: 2.7 over with 1.0\u03c3 separation. Trending up (season avg: 6.6). Raw edge: 32.3% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 32.3% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334913320%232153131525_13L42648Q1-1659398539Q20",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334866062%232152936919_13L42648Q1738743730Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "under_heavy_fav"
+      "prop_bucket": "over_near_even_fav"
     },
     {
-      "rank": 6,
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "event_short": "Cleveland Cavaliers @ Detroit Pistons",
-      "market": "Player Prop",
-      "pick": "Donovan Mitchell UNDER 3.5 Assists",
-      "odds": "-107",
-      "implied": "51.7%",
-      "model": "88.0%",
-      "edge": 15.0,
-      "ev_per_dollar": -0.12,
-      "tier": "Medium",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 36.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 36.3% \u2192 15.0%.",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334870152%232152954047_13L42648Q11701984101Q20",
-      "type": "prop",
-      "start_time": "",
-      "prop_bucket": "under_near_even_fav"
-    },
-    {
-      "rank": 7,
+      "rank": 2,
       "sport": "NHL",
       "event": "Vegas Golden Knights @ Colorado Avalanche",
       "event_short": "Vegas Golden Knights @ Colorado Avalanche",
@@ -117,40 +69,16 @@
       "prop_bucket": "under_underdog"
     },
     {
-      "rank": 8,
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ Detroit Pistons",
-      "event_short": "Cleveland Cavaliers @ Detroit Pistons",
-      "market": "Player Prop",
-      "pick": "Cade Cunningham OVER 2.5 3-PT Made",
-      "odds": "+128",
-      "implied": "43.9%",
-      "model": "81.5%",
-      "edge": 15.0,
-      "ev_per_dollar": -0.185,
-      "tier": "Medium",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Cade Cunningham averages 3.8 3-PT Made (last 10g), line is 2.5: 1.3 over with 0.9\u03c3 separation. Raw edge: 37.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 37.6% \u2192 15.0%.",
-      "sources": "The Odds API (DK), ESPN",
-      "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334870169%232152957299_13L42648Q1-717019713Q20",
-      "type": "prop",
-      "start_time": "",
-      "prop_bucket": "over_underdog"
-    },
-    {
-      "rank": 9,
+      "rank": 3,
       "sport": "NHL",
       "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
       "event_short": "Montr\u00e9al Canadiens @ Buffalo Sabres",
       "market": "Player Prop",
       "pick": "Tage Thompson OVER 0.5 Points",
-      "odds": "-215",
-      "implied": "68.3%",
+      "odds": "-200",
+      "implied": "66.7%",
       "model": "77.2%",
-      "edge": 8.9,
+      "edge": 10.5,
       "ev_per_dollar": -0.228,
       "tier": "Medium",
       "bet": "$9.72",
@@ -162,39 +90,213 @@
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA335227177%232154413929_13L42133Q11680966517Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "over_very_heavy_fav"
+      "prop_bucket": "over_heavy_fav"
+    },
+    {
+      "rank": 4,
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "event_short": "San Antonio Spurs @ Oklahoma City Thunder",
+      "market": "Player Prop",
+      "pick": "De'Aaron Fox OVER 15.5 Points",
+      "odds": "-111",
+      "implied": "52.6%",
+      "model": "76.5%",
+      "edge": 15.0,
+      "ev_per_dollar": -0.235,
+      "tier": "Medium",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "De'Aaron Fox averages 18.9 Points (last 10g), line is 15.5: 3.4 over with 0.7\u03c3 separation. Raw edge: 23.9% (capped at 15%). Def adj: vs OKC (107.9 PPG allowed, discount 3.7%) | Edge capped: 23.9% \u2192 15.0%.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA334913591%232153121758_13L42648Q1-1402818428Q20",
+      "type": "prop",
+      "start_time": "",
+      "prop_bucket": "over_near_even_fav"
+    },
+    {
+      "rank": 5,
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "event_short": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "market": "Player Prop",
+      "pick": "Rasmus Dahlin OVER 0.5 Points",
+      "odds": "-180",
+      "implied": "64.3%",
+      "model": "75.6%",
+      "edge": 11.3,
+      "ev_per_dollar": -0.244,
+      "tier": "Medium",
+      "bet": "$9.72",
+      "status": "",
+      "result": "",
+      "notes": "Rasmus Dahlin averages 1.5 Points (last 10g), line is 0.5: 1.0 over with 0.7\u03c3 separation.",
+      "sources": "The Odds API (DK), ESPN",
+      "confidence": "MEDIUM",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA335229801%232154421593_13L42133Q11680966517Q20",
+      "type": "prop",
+      "start_time": "",
+      "prop_bucket": "over_heavy_fav"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
+      "event": "SA @ OKC",
+      "line": "OKC -6.5",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NHL",
+      "event": "MTL @ BUF",
+      "line": "BUF -118",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "ATL @ MIA",
+      "line": "MIA -114",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "BAL @ TB",
+      "line": "TB -143",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "CIN @ PHI",
+      "line": "PHI -131",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
       "event": "CLE @ DET",
-      "line": "DET -4.5",
+      "line": "DET -150",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "SF @ ATH",
-      "line": "ATH -149",
+      "event": "NYM @ WSH",
+      "line": "NYM -136",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "LAD @ LAA",
+      "event": "TOR @ NYY",
+      "line": "NYY -171",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "BOS @ KC",
+      "line": "BOS -111",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "HOU @ MIN",
+      "line": "MIN -115",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIL @ CHC",
+      "line": "CHC -168",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TEX @ COL",
+      "line": "TEX -149",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "ATH @ LAA",
+      "line": "ATH -131",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "CHW @ SEA",
+      "line": "SEA -167",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "LAD @ SD",
       "line": "LAD -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "SD @ SEA",
-      "line": "SEA -162",
+      "event": "SF @ ARI",
+      "line": "ARI -142",
       "reason": "Edge below 3% threshold"
     },
     {
-      "sport": "MLS",
-      "event": "LAFC @ NSH",
-      "line": "NSH +120",
+      "sport": "EPL",
+      "event": "BUR @ ARS",
+      "line": "ARS -1100",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Josh Doan OVER 0.5 Points (-120)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-154)",
+      "reason": "Max 2 props per game (edge: 12.6%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Rasmus Dahlin OVER 0.5 Assists (-125)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Tage Thompson OVER 0.5 Assists (+124)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
+      "line": "Alex Tuch OVER 2.5 Shots on Goal (-120)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Victor Wembanyama UNDER 12.5 Rebounds (+101)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Victor Wembanyama UNDER 24.5 Points (-110)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "San Antonio Spurs @ Oklahoma City Thunder",
+      "line": "Shai Gilgeous-Alexander UNDER 3.5 Rebounds (+126)",
+      "reason": "Edge exists (15.0%) but category exposure limit reached"
+    },
+    {
+      "sport": "NBA",
+      "event": "Cleveland Cavaliers @ New York Knicks",
+      "line": "James Harden OVER 4.5 Rebounds (-119)",
+      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
