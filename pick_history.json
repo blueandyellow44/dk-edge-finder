@@ -20440,9 +20440,9 @@
     "type": "game",
     "notes": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MON 4, STR 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20459,9 +20459,9 @@
     "type": "game",
     "notes": "Model (DRatings only + clubelo): LEC 1.4, SAS 1.7 (total: 3.1). Line: 2.5. Cushion: 0.6 pts. \u26a0 SUSPICIOUS EDGE (14.9%): Model predicts 3.1 vs market 2.5 \u2014 0.6 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LEC 3, SAS 2",
+    "pnl_if_bet": 10.5
   },
   {
     "scan_date": "2026-05-17",
@@ -20478,9 +20478,9 @@
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, MIA 2",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-17",
@@ -20535,9 +20535,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 36.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 36.3% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Donovan Mitchell: 8 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20573,9 +20573,9 @@
     "type": "prop",
     "notes": "Cade Cunningham averages 3.8 3-PT Made (last 10g), line is 2.5: 1.3 over with 0.9\u03c3 separation. Raw edge: 37.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 37.6% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Cade Cunningham: 0 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20611,9 +20611,9 @@
     "type": "game",
     "notes": "Model (DRatings only): LEC 1.6, SAS 1.6 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (17.2%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "LEC 3, SAS 2",
+    "pnl_if_bet": 11.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20630,9 +20630,9 @@
     "type": "game",
     "notes": "Model (DRatings only + clubelo): MON 1.2, STR 1.5 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. \u26a0 SUSPICIOUS EDGE (16.8%): Model predicts 2.7 vs market 3.5 \u2014 0.8 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MON 4, STR 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20649,9 +20649,9 @@
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, MIA 2",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-17",
@@ -20687,9 +20687,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 36.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 36.3% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Donovan Mitchell: 8 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20725,9 +20725,9 @@
     "type": "prop",
     "notes": "Cade Cunningham averages 3.8 3-PT Made (last 10g), line is 2.5: 1.3 over with 0.9\u03c3 separation. Raw edge: 37.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 37.6% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Cade Cunningham: 0 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20763,9 +20763,9 @@
     "type": "game",
     "notes": "Model (DRatings only): POR 0.9, MIA 2.1 (total: 3.0). Line: 4.5. Cushion: 1.5 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "POR 0, MIA 2",
+    "pnl_if_bet": 6.25
   },
   {
     "scan_date": "2026-05-17",
@@ -20801,9 +20801,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.6 Assists (last 10g), line is 3.5: 0.9 under with 1.2\u03c3 separation. Raw edge: 36.3% (capped at 15%). Def adj: vs DET (109.6 PPG allowed, discount 2.1%) | Edge capped: 36.3% \u2192 15.0%.",
     "prop_bucket": "under_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Donovan Mitchell: 8 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
@@ -20839,9 +20839,9 @@
     "type": "prop",
     "notes": "Cade Cunningham averages 3.8 3-PT Made (last 10g), line is 2.5: 1.3 over with 0.9\u03c3 separation. Raw edge: 37.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 37.6% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 125, DET 94 | Cade Cunningham: 0 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-17",
