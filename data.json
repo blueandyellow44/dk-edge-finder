@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 17,
-  "best_bet": {
-    "title": "Karl-Anthony Towns OVER 4.5 Assists (-110) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Karl-Anthony Towns averages 7.2 Assists (last 10g), line is 4.5: 2.7 over with 1.0\u03c3 separation. Trending up (season avg: 6.6). Raw edge: 32.3% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boos"
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -163,7 +160,7 @@
     {
       "sport": "MLB",
       "event": "BAL @ TB",
-      "line": "TB -143",
+      "line": "TB -144",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -181,7 +178,7 @@
     {
       "sport": "MLB",
       "event": "NYM @ WSH",
-      "line": "NYM -136",
+      "line": "NYM -132",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -199,7 +196,7 @@
     {
       "sport": "MLB",
       "event": "HOU @ MIN",
-      "line": "MIN -115",
+      "line": "MIN -119",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -223,7 +220,7 @@
     {
       "sport": "MLB",
       "event": "CHW @ SEA",
-      "line": "SEA -167",
+      "line": "SEA -163",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -241,62 +238,8 @@
     {
       "sport": "EPL",
       "event": "BUR @ ARS",
-      "line": "ARS -1100",
+      "line": "ARS -1000",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Josh Doan OVER 0.5 Points (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Rasmus Dahlin OVER 2.5 Shots on Goal (-154)",
-      "reason": "Max 2 props per game (edge: 12.6%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Rasmus Dahlin OVER 0.5 Assists (-125)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Tage Thompson OVER 0.5 Assists (+124)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Buffalo Sabres",
-      "line": "Alex Tuch OVER 2.5 Shots on Goal (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 12.5 Rebounds (+101)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Victor Wembanyama UNDER 24.5 Points (-110)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Shai Gilgeous-Alexander UNDER 3.5 Rebounds (+126)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New York Knicks",
-      "line": "James Harden OVER 4.5 Rebounds (-119)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
