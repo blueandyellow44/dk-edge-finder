@@ -160,25 +160,25 @@
     {
       "sport": "MLB",
       "event": "BAL @ TB",
-      "line": "TB -144",
+      "line": "TB -148",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CIN @ PHI",
-      "line": "PHI -131",
+      "line": "PHI -118",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "CLE @ DET",
-      "line": "DET -150",
+      "line": "DET -162",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "NYM @ WSH",
-      "line": "NYM -132",
+      "line": "NYM -123",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -214,7 +214,7 @@
     {
       "sport": "MLB",
       "event": "ATH @ LAA",
-      "line": "ATH -131",
+      "line": "ATH -135",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -226,19 +226,13 @@
     {
       "sport": "MLB",
       "event": "LAD @ SD",
-      "line": "LAD -149",
+      "line": "LAD -144",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ ARI",
       "line": "ARI -142",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "BUR @ ARS",
-      "line": "ARS -1000",
       "reason": "Edge below 3% threshold"
     }
   ],
