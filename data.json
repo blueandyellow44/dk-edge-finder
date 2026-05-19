@@ -15,35 +15,8 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 18,
-  "best_bet": {
-    "title": "OVER 2.5 (-120) \u2014 9.2% Edge (High Tier)",
-    "desc": "Model (DRatings only + clubelo): TOT 1.3, CHE 1.8 (total: 3.1). Line: 2.5. Cushion: 0.6 pts."
-  },
+  "best_bet": null,
   "picks": [
-    {
-      "rank": 1,
-      "sport": "EPL",
-      "event": "Tottenham Hotspur @ Chelsea",
-      "event_short": "TOT @ CHE",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "-120",
-      "implied": "54.5%",
-      "model": "63.7%",
-      "edge": 9.2,
-      "ev_per_dollar": 0.1679,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only + clubelo): TOT 1.3, CHE 1.8 (total: 3.1). Line: 2.5. Cushion: 0.6 pts.",
-      "sources": "DRatings only + clubelo, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34156233?outcomes=0OU84803054O250_1",
-      "type": "game",
-      "start_time": "2026-05-19T19:15Z",
-      "prop_bucket": ""
-    },
     {
       "rank": 2,
       "sport": "NBA",
@@ -169,13 +142,7 @@
     {
       "sport": "NBA",
       "event": "CLE @ NY",
-      "line": "NY -7.5",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "ATL @ MIA",
-      "line": "ATL -143",
+      "line": "NY -6.5",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -193,7 +160,7 @@
     {
       "sport": "MLB",
       "event": "CLE @ DET",
-      "line": "CLE -167",
+      "line": "CLE -163",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -235,7 +202,7 @@
     {
       "sport": "MLB",
       "event": "TEX @ COL",
-      "line": "TEX -110",
+      "line": "COL -112",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -247,7 +214,7 @@
     {
       "sport": "MLB",
       "event": "CHW @ SEA",
-      "line": "SEA -156",
+      "line": "SEA -149",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -259,14 +226,8 @@
     {
       "sport": "MLB",
       "event": "SF @ ARI",
-      "line": "ARI -122",
+      "line": "ARI -123",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "EPL",
-      "event": "MNC @ BOU",
-      "line": "MNC -150",
-      "reason": "No model data"
     }
   ],
   "bets": [
