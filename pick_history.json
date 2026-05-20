@@ -21162,9 +21162,9 @@
     "type": "game",
     "notes": "Model (DRatings only + clubelo): TOT 1.3, CHE 1.8 (total: 3.1). Line: 2.5. Cushion: 0.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOT 1, CHE 2",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-05-19",
@@ -21257,9 +21257,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 20.7 Points (last 10g), line is 15.5: 5.2 over with 0.7\u03c3 separation. Trending up (season avg: 18.6). Raw edge: 21.7% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 21.7% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, NY 115 | OG Anunoby: 13 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-19",
@@ -21276,9 +21276,9 @@
     "type": "game",
     "notes": "Model (DRatings only + clubelo): TOT 1.3, CHE 1.8 (total: 3.1). Line: 2.5. Cushion: 0.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "TOT 1, CHE 2",
+    "pnl_if_bet": 8.33
   },
   {
     "scan_date": "2026-05-19",
@@ -21371,9 +21371,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 20.7 Points (last 10g), line is 15.5: 5.2 over with 0.7\u03c3 separation. Trending up (season avg: 18.6). Raw edge: 21.7% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 21.7% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, NY 115 | OG Anunoby: 13 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-19",
@@ -21466,8 +21466,8 @@
     "type": "prop",
     "notes": "OG Anunoby averages 20.7 Points (last 10g), line is 15.5: 5.2 over with 0.7\u03c3 separation. Trending up (season avg: 18.6). Raw edge: 21.7% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 21.7% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 104, NY 115 | OG Anunoby: 13 Points",
+    "pnl_if_bet": -10.0
   }
 ]
