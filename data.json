@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 17,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-153) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 2.8 Rebounds (last 10g), line is 4.5: 1.7 under with 1.3\u03c3 separation. Raw edge: 30.0% (capped at 15%). Edge capped: 30.0% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -145,43 +142,25 @@
     {
       "sport": "NBA",
       "event": "SA @ OKC",
-      "line": "OKC -6.5",
+      "line": "OKC -7.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
       "event": "VGK @ COL",
-      "line": "COL -180",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CIN @ PHI",
-      "line": "PHI -157",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "BAL @ TB",
-      "line": "TB -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "HOU @ MIN",
-      "line": "MIN -149",
+      "line": "COL -175",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "TEX @ COL",
-      "line": "TEX -126",
+      "line": "TEX -125",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ ARI",
-      "line": "ARI -136",
+      "line": "ARI -120",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -193,7 +172,7 @@
     {
       "sport": "MLB",
       "event": "ATL @ MIA",
-      "line": "ATL -194",
+      "line": "ATL -198",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -217,7 +196,7 @@
     {
       "sport": "MLB",
       "event": "BOS @ KC",
-      "line": "KC -123",
+      "line": "KC -122",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -241,44 +220,8 @@
     {
       "sport": "MLB",
       "event": "ATH @ LAA",
-      "line": "ATH -126",
+      "line": "ATH -123",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Jalen Williams OVER 0.5 3-PT Made (-217)",
-      "reason": "Max 2 props per game (edge: 8.4%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Martin Necas OVER 0.5 Assists (-135)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Mitch Marner OVER 0.5 Assists (-140)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New York Knicks",
-      "line": "James Harden UNDER 2.5 3-PT Made (-156)",
-      "reason": "Max 2 props per game (edge: 10.2%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Stephon Castle OVER 16.5 Points (-109)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Jack Eichel OVER 0.5 Assists (-154)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
