@@ -153,14 +153,8 @@
     },
     {
       "sport": "MLB",
-      "event": "NYM @ WSH",
-      "line": "NYM -112",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "ATL @ MIA",
-      "line": "ATL -143",
+      "line": "ATL -137",
       "reason": "Edge below 3% threshold"
     },
     {
