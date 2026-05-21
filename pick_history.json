@@ -21485,9 +21485,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.8 Rebounds (last 10g), line is 4.5: 1.7 under with 1.3\u03c3 separation. Raw edge: 30.0% (capped at 15%). Edge capped: 30.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 113, OKC 122 | Shai Gilgeous-Alexander: 4 Rebounds",
+    "pnl_if_bet": 6.54
   },
   {
     "scan_date": "2026-05-20",
@@ -21561,9 +21561,9 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.3 Points (last 10g), line is 0.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 22.5% (capped at 15%). Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VGK 4, COL 2 | Pavel Dorofeyev: 1 Points",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-05-20",
@@ -21580,9 +21580,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.8 Rebounds (last 10g), line is 4.5: 1.7 under with 1.3\u03c3 separation. Raw edge: 30.0% (capped at 15%). Edge capped: 30.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 113, OKC 122 | Shai Gilgeous-Alexander: 4 Rebounds",
+    "pnl_if_bet": 6.54
   },
   {
     "scan_date": "2026-05-20",
@@ -21656,9 +21656,9 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.3 Points (last 10g), line is 0.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 22.5% (capped at 15%). Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VGK 4, COL 2 | Pavel Dorofeyev: 1 Points",
+    "pnl_if_bet": 7.69
   },
   {
     "scan_date": "2026-05-20",
@@ -21675,9 +21675,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.8 Rebounds (last 10g), line is 4.5: 1.7 under with 1.3\u03c3 separation. Raw edge: 30.0% (capped at 15%). Edge capped: 30.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "SA 113, OKC 122 | Shai Gilgeous-Alexander: 4 Rebounds",
+    "pnl_if_bet": 6.54
   },
   {
     "scan_date": "2026-05-20",
@@ -21751,8 +21751,8 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.3 Points (last 10g), line is 0.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 22.5% (capped at 15%). Edge capped: 22.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "VGK 4, COL 2 | Pavel Dorofeyev: 1 Points",
+    "pnl_if_bet": 7.69
   }
 ]
