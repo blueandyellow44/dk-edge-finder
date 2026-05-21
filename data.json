@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 9,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-158) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.2\u03c3 separation. Raw edge: 28.1% (capped at 15%). Edge capped: 28.1% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -151,19 +148,7 @@
     {
       "sport": "NHL",
       "event": "MTL @ CAR",
-      "line": "CAR -198",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CLE @ DET",
-      "line": "DET -120",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "PIT @ STL",
-      "line": "PIT -122",
+      "line": "CAR -205",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -187,38 +172,14 @@
     {
       "sport": "MLB",
       "event": "ATH @ LAA",
-      "line": "LAA -119",
+      "line": "LAA -120",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "COL @ ARI",
-      "line": "ARI -207",
+      "line": "ARI -205",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "De'Aaron Fox OVER 2.5 Rebounds (-174)",
-      "reason": "Max 2 props per game (edge: 8.5%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New York Knicks",
-      "line": "James Harden UNDER 2.5 3-PT Made (-146)",
-      "reason": "Max 2 props per game (edge: 11.8%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Mitch Marner OVER 0.5 Assists (-154)",
-      "reason": "Max 2 props per game (edge: 9.2%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Martin Necas OVER 0.5 Assists (-135)",
-      "reason": "Edge exists (15.0%) but category exposure limit reached"
     }
   ],
   "bets": [
