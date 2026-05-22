@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 18,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-141) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.2\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -151,13 +148,13 @@
     {
       "sport": "NHL",
       "event": "VGK @ COL",
-      "line": "COL -205",
+      "line": "COL -185",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "HOU @ CHC",
-      "line": "CHC -144",
+      "line": "CHC -148",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -175,13 +172,13 @@
     {
       "sport": "MLB",
       "event": "TB @ NYY",
-      "line": "NYY -157",
+      "line": "NYY -149",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "PIT @ TOR",
-      "line": "TOR -168",
+      "line": "TOR -163",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -205,7 +202,7 @@
     {
       "sport": "MLB",
       "event": "WSH @ ATL",
-      "line": "ATL -220",
+      "line": "ATL -219",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -223,13 +220,13 @@
     {
       "sport": "MLB",
       "event": "TEX @ LAA",
-      "line": "TEX -156",
+      "line": "TEX -168",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "ATH @ SD",
-      "line": "SD -132",
+      "line": "SD -131",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -241,7 +238,7 @@
     {
       "sport": "MLB",
       "event": "CHW @ SF",
-      "line": "CHW -112",
+      "line": "CHW -114",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -249,30 +246,6 @@
       "event": "ATA @ FIO",
       "line": "ATA +135",
       "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ Cleveland Cavaliers",
-      "line": "Karl-Anthony Towns OVER 4.5 Assists (+115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Martin Necas OVER 0.5 Assists (-135)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Sam Malinski UNDER 2.5 Shots on Goal (-160)",
-      "reason": "Max 2 props per game (edge: 10.9%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Colorado Avalanche",
-      "line": "Mitch Marner OVER 0.5 Assists (-154)",
-      "reason": "Max 2 props per game (edge: 9.2%)"
     }
   ],
   "bets": [
