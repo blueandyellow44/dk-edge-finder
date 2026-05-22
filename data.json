@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-21",
-  "scan_subtitle": "2026-05-21 \u2014 All 9 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-05-22",
+  "scan_subtitle": "Friday, May 22, 2026 \u2014 MLB (15), NBA (1), NHL (1), SERIE_A (1)",
   "bankroll": {
     "available": 486.16,
     "starting": 500.0,
@@ -14,8 +14,11 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 9,
-  "best_bet": null,
+  "games_analyzed": 18,
+  "best_bet": {
+    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-141) \u2014 15.0% Edge (Medium Tier)",
+    "desc": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.2\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%."
+  },
   "picks": [
     {
       "rank": 1,
@@ -24,8 +27,8 @@
       "event_short": "Oklahoma City Thunder @ San Antonio Spurs",
       "market": "Player Prop",
       "pick": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds",
-      "odds": "-158",
-      "implied": "61.2%",
+      "odds": "-141",
+      "implied": "58.5%",
       "model": "89.4%",
       "edge": 15.0,
       "ev_per_dollar": -0.106,
@@ -33,23 +36,23 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.2\u03c3 separation. Raw edge: 28.1% (capped at 15%). Edge capped: 28.1% \u2192 15.0%.",
+      "notes": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.2\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336358450%232158676967_13L42648Q1-1659398539Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "under_heavy_fav"
+      "prop_bucket": "under_moderate_fav"
     },
     {
       "rank": 2,
       "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New York Knicks",
-      "event_short": "Cleveland Cavaliers @ New York Knicks",
+      "event": "New York Knicks @ Cleveland Cavaliers",
+      "event_short": "New York Knicks @ Cleveland Cavaliers",
       "market": "Player Prop",
       "pick": "Donovan Mitchell UNDER 3.5 3-PT Made",
-      "odds": "-173",
-      "implied": "63.4%",
+      "odds": "-175",
+      "implied": "63.6%",
       "model": "83.4%",
       "edge": 15.0,
       "ev_per_dollar": -0.166,
@@ -57,37 +60,37 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.0% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.0% \u2192 15.0%.",
+      "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 19.8% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 19.8% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA335973127%232157283704_13L42648Q1-1581327307Q20",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336667019%232159825084_13L42648Q1-1581327307Q20",
       "type": "prop",
       "start_time": "",
       "prop_bucket": "under_heavy_fav"
     },
     {
       "rank": 3,
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "event_short": "Oklahoma City Thunder @ San Antonio Spurs",
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Colorado Avalanche",
+      "event_short": "Vegas Golden Knights @ Colorado Avalanche",
       "market": "Player Prop",
-      "pick": "De'Aaron Fox OVER 14.5 Points",
-      "odds": "-103",
-      "implied": "50.7%",
-      "model": "82.6%",
+      "pick": "Pavel Dorofeyev OVER 0.5 Points",
+      "odds": "-125",
+      "implied": "55.6%",
+      "model": "83.0%",
       "edge": 15.0,
-      "ev_per_dollar": -0.174,
+      "ev_per_dollar": -0.17,
       "tier": "Medium",
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "De'Aaron Fox averages 18.9 Points (last 10g), line is 14.5: 4.4 over with 0.9\u03c3 separation. Raw edge: 31.9% (capped at 15%). Def adj: vs OKC (107.9 PPG allowed, discount 3.7%) | Edge capped: 31.9% \u2192 15.0%.",
+      "notes": "Pavel Dorofeyev averages 1.3 Points (last 10g), line is 0.5: 0.8 over with 1.0\u03c3 separation. Raw edge: 27.4% (capped at 15%). Edge capped: 27.4% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336358643%232158677315_13L42648Q1-1855597963Q20",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336543287%232159341494_13L42133Q11680966517Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "over_near_even_fav"
+      "prop_bucket": "over_moderate_fav"
     },
     {
       "rank": 4,
@@ -96,8 +99,8 @@
       "event_short": "Vegas Golden Knights @ Colorado Avalanche",
       "market": "Player Prop",
       "pick": "Jack Eichel OVER 0.5 Assists",
-      "odds": "-160",
-      "implied": "61.5%",
+      "odds": "-135",
+      "implied": "57.4%",
       "model": "78.5%",
       "edge": 15.0,
       "ev_per_dollar": -0.215,
@@ -105,75 +108,171 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Jack Eichel averages 1.2 Assists (last 10g), line is 0.5: 0.7 over with 0.8\u03c3 separation. Raw edge: 17.0% (capped at 15%). Edge capped: 17.0% \u2192 15.0%.",
+      "notes": "Jack Eichel averages 1.2 Assists (last 10g), line is 0.5: 0.7 over with 0.8\u03c3 separation. Raw edge: 21.0% (capped at 15%). Edge capped: 21.0% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336543275%232159341467_13L42133Q1-2003561137Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "over_heavy_fav"
+      "prop_bucket": "over_moderate_fav"
     },
     {
       "rank": 5,
       "sport": "NBA",
-      "event": "Cleveland Cavaliers @ New York Knicks",
-      "event_short": "Cleveland Cavaliers @ New York Knicks",
+      "event": "New York Knicks @ Cleveland Cavaliers",
+      "event_short": "New York Knicks @ Cleveland Cavaliers",
       "market": "Player Prop",
-      "pick": "Karl-Anthony Towns OVER 5.5 Assists",
-      "odds": "+116",
-      "implied": "46.3%",
-      "model": "73.2%",
+      "pick": "OG Anunoby OVER 15.5 Points",
+      "odds": "-101",
+      "implied": "50.2%",
+      "model": "76.5%",
       "edge": 15.0,
-      "ev_per_dollar": -0.268,
+      "ev_per_dollar": -0.235,
       "tier": "Medium",
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Karl-Anthony Towns averages 7.1 Assists (last 10g), line is 5.5: 1.6 over with 0.6\u03c3 separation. Raw edge: 26.9% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 26.9% \u2192 15.0%.",
+      "notes": "OG Anunoby averages 19.6 Points (last 10g), line is 15.5: 4.1 over with 0.7\u03c3 separation. Raw edge: 26.2% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 26.2% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
-      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA335972745%232157287361_13L42648Q1-1820894743Q20",
+      "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA336667592%232159826816_13L42648Q1-1402818428Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "over_underdog"
+      "prop_bucket": "over_near_even_fav"
     }
   ],
   "no_edge_games": [
     {
       "sport": "NBA",
-      "event": "CLE @ NY",
-      "line": "NY -5.5",
+      "event": "OKC @ SA",
+      "line": "SA -1.5",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "NHL",
-      "event": "MTL @ CAR",
-      "line": "CAR -205",
+      "event": "VGK @ COL",
+      "line": "COL -205",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "ATL @ MIA",
-      "line": "ATL -137",
+      "event": "HOU @ CHC",
+      "line": "CHC -144",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "TOR @ NYY",
-      "line": "NYY -149",
+      "event": "CLE @ PHI",
+      "line": "PHI -186",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
-      "event": "ATH @ LAA",
-      "line": "LAA -120",
+      "event": "STL @ CIN",
+      "line": "CIN -126",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TB @ NYY",
+      "line": "NYY -157",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "PIT @ TOR",
+      "line": "TOR -168",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "MIN @ BOS",
+      "line": "BOS -156",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "NYM @ MIA",
+      "line": "MIA -114",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "DET @ BAL",
+      "line": "BAL -143",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "WSH @ ATL",
+      "line": "ATL -220",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "LAD @ MIL",
+      "line": "LAD -110",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "SEA @ KC",
+      "line": "SEA -119",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TEX @ LAA",
+      "line": "TEX -156",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "ATH @ SD",
+      "line": "SD -132",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "COL @ ARI",
-      "line": "ARI -205",
+      "line": "ARI -218",
       "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "CHW @ SF",
+      "line": "CHW -112",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "SERIE_A",
+      "event": "ATA @ FIO",
+      "line": "ATA +135",
+      "reason": "Edge below 3% threshold"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ Cleveland Cavaliers",
+      "line": "Karl-Anthony Towns OVER 4.5 Assists (+115)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Colorado Avalanche",
+      "line": "Martin Necas OVER 0.5 Assists (-135)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Colorado Avalanche",
+      "line": "Sam Malinski UNDER 2.5 Shots on Goal (-160)",
+      "reason": "Max 2 props per game (edge: 10.9%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Colorado Avalanche",
+      "line": "Mitch Marner OVER 0.5 Assists (-154)",
+      "reason": "Max 2 props per game (edge: 9.2%)"
     }
   ],
   "bets": [
