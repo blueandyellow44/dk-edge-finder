@@ -21789,9 +21789,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.0% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 93, NY 109 | Donovan Mitchell: 2 3-PT Made",
+    "pnl_if_bet": 5.78
   },
   {
     "scan_date": "2026-05-21",
@@ -21846,9 +21846,9 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 7.1 Assists (last 10g), line is 5.5: 1.6 over with 0.6\u03c3 separation. Raw edge: 26.9% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 26.9% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 93, NY 109 | Karl-Anthony Towns: 1 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-21",
@@ -21884,9 +21884,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.0% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 93, NY 109 | Donovan Mitchell: 2 3-PT Made",
+    "pnl_if_bet": 5.78
   },
   {
     "scan_date": "2026-05-21",
@@ -21941,9 +21941,9 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 7.1 Assists (last 10g), line is 5.5: 1.6 over with 0.6\u03c3 separation. Raw edge: 26.9% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 26.9% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 93, NY 109 | Karl-Anthony Towns: 1 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-21",
@@ -21979,9 +21979,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.0% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 93, NY 109 | Donovan Mitchell: 2 3-PT Made",
+    "pnl_if_bet": 5.78
   },
   {
     "scan_date": "2026-05-21",
@@ -22036,8 +22036,8 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 7.1 Assists (last 10g), line is 5.5: 1.6 over with 0.6\u03c3 separation. Raw edge: 26.9% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 26.9% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CLE 93, NY 109 | Karl-Anthony Towns: 1 Assists",
+    "pnl_if_bet": -10.0
   }
 ]
