@@ -148,13 +148,7 @@
     {
       "sport": "NHL",
       "event": "VGK @ COL",
-      "line": "COL -185",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "HOU @ CHC",
-      "line": "CHC -148",
+      "line": "COL -166",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -165,14 +159,8 @@
     },
     {
       "sport": "MLB",
-      "event": "STL @ CIN",
-      "line": "CIN -126",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "TB @ NYY",
-      "line": "NYY -149",
+      "line": "NYY -154",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -202,19 +190,19 @@
     {
       "sport": "MLB",
       "event": "WSH @ ATL",
-      "line": "ATL -219",
+      "line": "ATL -225",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "LAD @ MIL",
-      "line": "LAD -110",
+      "line": "MIL -110",
       "reason": "Edge below 3% threshold"
     },
     {
       "sport": "MLB",
       "event": "SEA @ KC",
-      "line": "SEA -119",
+      "line": "SEA -115",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -226,7 +214,7 @@
     {
       "sport": "MLB",
       "event": "ATH @ SD",
-      "line": "SD -131",
+      "line": "SD -132",
       "reason": "Edge below 3% threshold"
     },
     {
@@ -239,12 +227,6 @@
       "sport": "MLB",
       "event": "CHW @ SF",
       "line": "CHW -114",
-      "reason": "Edge below 3% threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "ATA @ FIO",
-      "line": "ATA +135",
       "reason": "Edge below 3% threshold"
     }
   ],
