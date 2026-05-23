@@ -68,46 +68,63 @@ NBA_PLAYOFF_HARD_SKIP_AT = 0.10
 # in-window NBA picks. See lessons.md root entry 2026-05-02.
 NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 
-# Per-(sport, market) probability calibration (May 2026): Platt scaling
-# (sigmoid of a*logit(p) + b) fit by Newton-Raphson on the Bernoulli
-# log-posterior under an isotropic Gaussian prior centered at the
-# identity mapping (a=1, b=0) with precision 10. The prior keeps fits
-# with weak signal from drifting into anti-predictive territory just
-# because of a thin high-confidence tail; with strong data it's
+# Per-(sport, market) probability calibration (May 2026, refit 2026-05-22):
+# Platt scaling (sigmoid of a*logit(p) + b) fit by Newton-Raphson on the
+# Bernoulli log-posterior under an isotropic Gaussian prior centered at
+# the identity mapping (a=1, b=0) with precision 10. The prior keeps
+# fits with weak signal from drifting into anti-predictive territory
+# just because of a thin high-confidence tail; with strong data it's
 # overwhelmed and the fit reproduces pure MLE.
 #
 # Calibration is applied to model_prob (the cover/over/prop probability
 # the model emits) right before edge math, after situational adjustments
 # (B2B, playoff discount, etc.).
 #
-# Fit on pick_history.json 2026-05-10 (775 Spread + 91 NBA totals + 71
-# MLS totals = 935 cover-level resolved observations; 56 below the
-# 30-obs threshold are skipped):
+# Refit history:
+# 2026-05-10: initial Platt fit shipped with (mlb, spread) at
+# a=+0.994, b=-0.358. That fit ate `pick.model` from pick_history as if
+# it were raw probability, but for 2026-05-04 onward MLB and NBA spread
+# entries had pick.model already calibrated through the OLD per-sport
+# linear (PROB_CALIBRATION at that point was MLB a=0.396 b=+0.347, NBA
+# a=0.258 b=+0.300). The new Platt then learned to undo the OLD positive
+# bias plus a residual over-confidence correction. When applied to
+# truly-raw model probabilities at scan time, that combined into a ~10pp
+# downward shift on MLB; game picks dropped from ~12/day to 0/day for
+# 11 straight days (2026-05-11 through 2026-05-22).
+#
+# 2026-05-22: refit using true raw probs. For (mlb, spread) and
+# (nba, spread) records on scan_date >= 2026-05-04, pick.model was
+# inverted through the OLD_LINEAR before fitting (r = (c - b) / a). For
+# all other (sport, market) keys, pick.model was already raw because the
+# OLD calibration never touched those buckets. Post-2026-05-10 records
+# (the buggy regime) were skipped entirely. Fitter is at
+# scripts/fit_calibration.py; rerun whenever pick_history grows by ~100
+# resolved records or a sport's sample crosses a new threshold.
+#
+# Fit on pick_history.json 2026-05-22 (1025 resolved pre-2026-05-11 obs):
 #
 #   (sport, market)        n   a       b       baseline brier  fitted brier
-#   (mlb, spread)        515  +0.994  -0.358   0.2431          0.2351
+#   (mlb, spread)        528  +0.844  -0.195   0.2374          0.2330
 #   (nba, spread)         89  +0.592  -0.506   0.3013          0.2454
-#   (nhl, spread)        171  +0.842  +0.037   0.2282          0.2268
+#   (nhl, spread)        172  +0.851  +0.040   0.2272          0.2259
 #   (nba, over/under)     91  +0.538  -0.263   0.2838          0.2560
-#   (mls, over/under)     71  +0.789  -0.323   0.2664          0.2435
+#   (mls, over/under)     86  +0.758  -0.405   0.2771          0.2446
 #
-# All slopes are non-negative (no inversion). All biases except NHL are
-# negative, reflecting that the model is on average over-confident on the
-# bet it picks. NHL's near-identity fit (a=0.84, b=+0.04) replaces the
-# previous "leave NHL un-calibrated" carve-out: the prior keeps the fit
-# from over-correcting the heavy-juice tail that broke the prior linear
-# attempt. NBA and MLS Over/Under are newly calibrated; previously the
-# totals path had no calibration step at all.
+# The (mlb, spread) bias correction (b from -0.358 to -0.195) is the
+# main fix. Other keys moved at most a hair because their pick.model
+# was already raw in the pre-fix sample. (nba, spread) is unchanged
+# because its OLD_LINEAR coverage was effectively dead (NBA model
+# squashed to near-50% by the OLD constants) so the sample stayed raw.
 #
 # Keys outside this dict (e.g. soccer leagues with <30 obs, NBA Player
 # Prop with 25 obs) fall through to identity. They auto-fit on the next
 # refit run once their sample crosses the threshold.
 PROB_CALIBRATION = {
-    ("mlb", "spread"):     {"a": 0.993764, "b": -0.358189},
-    ("mls", "over/under"): {"a": 0.788701, "b": -0.323309},
+    ("mlb", "spread"):     {"a": 0.843842, "b": -0.194991},
+    ("mls", "over/under"): {"a": 0.757821, "b": -0.404821},
     ("nba", "over/under"): {"a": 0.538304, "b": -0.263229},
     ("nba", "spread"):     {"a": 0.591943, "b": -0.505624},
-    ("nhl", "spread"):     {"a": 0.842284, "b":  0.036548},
+    ("nhl", "spread"):     {"a": 0.850454, "b":  0.039643},
 }
 
 _CALIBRATION_CLAMP_LOW = 0.000001
