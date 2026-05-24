@@ -1314,15 +1314,20 @@ def get_effective_min_edge(
     market: str,
     spread_points: float,
     base_min_edge: float,
-    dk_odds: int | None = None,
+    is_favorite: bool = False,
 ) -> float:
     """Apply sport-specific min edge overrides.
 
-    dk_odds (positive → underdog, negative → favorite) selects between
-    the underdog and favorite floor when the sport differentiates. NBA
-    keeps a single floor regardless of side.
+    is_favorite selects between underdog and favorite floors for sports
+    that differentiate (MLB, NHL spreads). NBA keeps a single floor
+    regardless of side.
+
+    is_favorite is the spread-side flag from the candidate dict, not a
+    moneyline-shaped test. MLB and NHL +1.5 runlines reliably carry
+    negative spread juice (-130 to -190) because dogs cover >60%, so
+    an odds-sign test would mis-classify those picks as favorites and
+    gate them at the 8% floor. See lessons.md 2026-05-23.
     """
-    is_underdog = dk_odds is not None and dk_odds > 0
     if sport.lower() == "nba" and market.lower() in ("spread", "spreads"):
         abs_spread = abs(spread_points) if spread_points else 0
         if abs_spread > NBA_LARGE_SPREAD_THRESHOLD:
@@ -1330,15 +1335,16 @@ def get_effective_min_edge(
         return max(base_min_edge, NBA_SPREAD_MIN_EDGE)
     # MLB run line: model overestimates due to right-skewed margins.
     # Underdog +1.5 is the strategy's biggest historical winner; favorite
-    # -1.5 is hard-skipped above. Different floor by side.
+    # -1.5 is hard-skipped above so the favorite branch is currently dead
+    # code, kept for the day MLB_FAVORITE_HARD_SKIP is flipped back off.
     if sport.lower() == "mlb" and market.lower() in ("spread", "spreads"):
-        if is_underdog:
+        if not is_favorite:
             return max(base_min_edge, MLB_SPREAD_UNDERDOG_MIN_EDGE)
         return max(base_min_edge, MLB_SPREAD_MIN_EDGE)
     # NHL run line: same shape as MLB; both sides historically profitable
     # but underdog cluster sits below the 8% floor. Lower for underdogs.
     if sport.lower() == "nhl" and market.lower() in ("spread", "spreads"):
-        if is_underdog:
+        if not is_favorite:
             return max(base_min_edge, NHL_SPREAD_UNDERDOG_MIN_EDGE)
         return max(base_min_edge, NHL_SPREAD_MIN_EDGE)
     return base_min_edge
@@ -1564,7 +1570,8 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         # NBA spread calibration override (April 2026): 5% base, 8% for >12pt spreads
         spread_pts = cand.get("spread", 0)
         min_edge = get_effective_min_edge(
-            sport, "spread", spread_pts, min_edge, dk_odds_val
+            sport, "spread", spread_pts, min_edge,
+            is_favorite=cand.get("is_favorite", False),
         )
 
         # NBA playoff discount (April 2026): RS-trained model overestimates
