@@ -22340,9 +22340,9 @@
     "type": "game",
     "notes": "Model (DRatings only): PIS 1.0, LAZ 2.2 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (13.9%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PIS 1, LAZ 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-05-23",
@@ -22359,9 +22359,9 @@
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CIN 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 2, CIN 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22378,9 +22378,9 @@
     "type": "game",
     "notes": "Model (DRatings only): RBNY 1.1, SKC 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 2, SKC 1",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-05-23",
@@ -22397,9 +22397,9 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark): OSA 1.0, GET 1.1 (total: 2.1). Line: 1.5. Cushion: 0.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OSA 0, GET 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22435,9 +22435,9 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 6.4 Assists (last 10g), line is 3.5: 2.9 over with 1.1\u03c3 separation. Raw edge: 23.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 23.6% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Karl-Anthony Towns: 7 Assists",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-05-23",
@@ -22454,9 +22454,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.4% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.4% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Donovan Mitchell: 3 3-PT Made",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-05-23",
@@ -22511,9 +22511,9 @@
     "type": "game",
     "notes": "Model (DRatings only): PIS 1.0, LAZ 2.2 (total: 3.2). Line: 2.5. Cushion: 0.7 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (13.9%): Model predicts 3.2 vs market 2.5 \u2014 0.7 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PIS 1, LAZ 2",
+    "pnl_if_bet": 9.09
   },
   {
     "scan_date": "2026-05-23",
@@ -22530,9 +22530,9 @@
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CIN 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 2, CIN 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22549,9 +22549,9 @@
     "type": "game",
     "notes": "Model (DRatings only): SJ 1.1, POR 1.2 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SJ 3, POR 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22568,9 +22568,9 @@
     "type": "game",
     "notes": "Model (DRatings only): RBNY 1.1, SKC 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 2, SKC 1",
+    "pnl_if_bet": 8.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22587,9 +22587,9 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + clubelo): OSA 1.0, GET 1.1 (total: 2.1). Line: 1.5. Cushion: 0.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OSA 0, GET 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22625,9 +22625,9 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 6.4 Assists (last 10g), line is 3.5: 2.9 over with 1.1\u03c3 separation. Raw edge: 23.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 23.6% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Karl-Anthony Towns: 7 Assists",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-05-23",
@@ -22644,9 +22644,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.4% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.4% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Donovan Mitchell: 3 3-PT Made",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-05-23",
@@ -22701,9 +22701,9 @@
     "type": "game",
     "notes": "Model (DRatings only): ORL 0.9, CIN 1.7 (total: 2.7). Line: 3.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ORL 2, CIN 6",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22720,9 +22720,9 @@
     "type": "game",
     "notes": "Model (DRatings only): RBNY 1.1, SKC 1.2 (total: 2.3). Line: 3.5. Cushion: 1.2 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "RBNY 2, SKC 1",
+    "pnl_if_bet": 8.7
   },
   {
     "scan_date": "2026-05-23",
@@ -22739,9 +22739,9 @@
     "type": "game",
     "notes": "Model (DRatings only): SJ 1.1, POR 1.2 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SJ 3, POR 1",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-23",
@@ -22777,9 +22777,9 @@
     "type": "prop",
     "notes": "Karl-Anthony Towns averages 6.4 Assists (last 10g), line is 3.5: 2.9 over with 1.1\u03c3 separation. Raw edge: 23.6% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 23.6% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Karl-Anthony Towns: 7 Assists",
+    "pnl_if_bet": 6.13
   },
   {
     "scan_date": "2026-05-23",
@@ -22796,9 +22796,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.5 3-PT Made (last 10g), line is 3.5: 1.0 under with 1.0\u03c3 separation. Raw edge: 20.4% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.4% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 121, CLE 108 | Donovan Mitchell: 3 3-PT Made",
+    "pnl_if_bet": 5.88
   },
   {
     "scan_date": "2026-05-23",
