@@ -1,5 +1,46 @@
 # DK Edge Finder — Lessons Learned
 
+## 2026-05-24 backlog: Platt (mlb, spread) has a non-monotone region in [0, 3%) calibrated edge [BACKLOG]
+**Observation:** Phase 1 backtest of 395 resolved MLB +1.5 picks, recovering raw probability by inverting each pick through the calibration regime active on its scan_date (raw / OLD_LINEAR / buggy Platt / current Platt), then re-bucketing by edge under current Platt. Bucket-wise hit rate and ROI:
+
+```
+  <0%        n=135  hit=54.1%  roi=-12.2%   correctly rejected
+  [0, 3%)    n=131  hit=67.9%  roi=+10.5%   wrongly rejected (winner bucket)
+  [3, 5%)    n= 36  hit=50.0%  roi=-11.8%   correctly rejected
+  [5, 8%)    n= 15  hit=80.0%  roi=+54.0%   kept (good)
+  [8, 15%)   n= 10  hit=80.0%  roi=+93.4%   kept (good)
+  [15%+)     n= 68  hit=73.5%  roi=+88.0%   kept (good)
+```
+
+The [<0%] and [3, 5%) buckets are correctly identified as losers, the [≥5%] buckets are correctly identified as winners — but the [0, 3%) bucket is a 67.9% / +10.5% ROI winner sandwiched in the middle. A simple floor change cannot separate it from the adjacent losers; lowering the floor to 0% would catch +$13.82 in [0, 3%) winners but also pick up -$4.23 in [3, 5%) losers (net +$9.59 across 167 added bets — marginal, not worth the noise).
+**Impact:** Forward-going, the [0, 3%) bucket represents real expected value that the current sigmoid Platt is blind to. At ~131 picks over the 395-pick sample window (Mar-May 2026), that's ~$14 of recoverable EV per equivalent window — small absolute but indicative of a calibration-shape mismatch worth fixing properly.
+**Rule:** A sigmoid Platt assumes the relationship between raw model output and true probability is monotone in logit space. The [0, 3%) anomaly suggests it isn't — there's a region where the model is systematically right but the Platt compresses too aggressively. Don't try to fix this with floor tweaks; the right tool is a different calibration family.
+**Backlog:**
+- Try **isotonic regression** in place of Platt for (mlb, spread). Isotonic is non-parametric, enforces monotonicity, and handles non-sigmoid shapes. Refit on the same training sample used for the 2026-05-22 Platt and compare bucket monotonicity.
+- Alternative: try **binned-mean** calibration (bin raw probs into 10-20 buckets, use empirical mean within each as the calibrated value). Simpler, similarly captures non-monotone shapes.
+- Alternative: try **stretched Platt** (lower the Gaussian prior precision from 10 to something like 2-3 so the fit can deviate further from identity in places where data demands it).
+- Compare candidate calibrations via 5-fold CV on Brier score AND on bucket monotonicity (per-bucket ROI ordered correctly).
+- If isotonic/binned beats Platt by ≥5pp in [0, 3%) bucket ROI, ship a replacement.
+- Sample size context: 395 resolved picks is enough for a 6-bucket comparison but tight for a 10-bin isotonic fit. May need to wait until n=500+ to do this right.
+
+## 2026-05-24 backlog: NHL +1.5 is anti-signal under every calibration regime — suspend until proper recalibration [BACKLOG]
+**Observation:** Same Phase 1 backtest, NHL +1.5 (n=97 resolved):
+
+```
+  Regime @ 5% floor   n      hit%    pnl       roi
+  RAW                 94    63.8%   -$2.29   -2.4%
+  CURRENT PLATT       73    61.6%   -$3.36   -4.6%
+```
+
+Both calibration regimes are net-losing for NHL +1.5. The current Platt for NHL was near-identity (a=0.850, b=0.040) so there's effectively no calibration in play — the model's raw output IS the bet decision. Hit rates land at 61-64% which sounds fine but the average NHL +1.5 odds in this sample carry juice around -150 to -190 (implied 60-65%), so the bar is high. The picks are coin flips at break-even pricing.
+**Impact:** NHL +1.5 picks have been ~$3 of negative expectation per window across both regimes. Small in absolute terms but the sport is structurally unprofitable in this market. The fact that no scan since 2026-05-24 produced an NHL +1.5 pick is a feature, not a bug — for the next 4 weeks until a proper NHL recalibration ships, zero is the right number.
+**Rule:** When a sport×market combination is net-negative under every available calibration AND the calibration itself is near-identity (so there's no "let me retune the Platt" lever to pull), the problem is upstream — the model's raw output. Don't ship the picks while the model is wrong. Either suspend the sport×market or replace the underlying probability source.
+**Backlog:**
+- Audit Skellam SD for NHL puck lines. GAME_SD["nhl_spread"] = 1.78 is already widened from the raw 1.274 (per the in-file comment, "Puck line underdogs historically cover 70-75%, not 87.6% as 1.274 would imply"). Check actual NHL +1.5 cover rate over a larger sample (combine pick_history.json + a season's worth of ESPN scoreboards) and see whether 1.78 is still too narrow.
+- Consider hard-suspending NHL +1.5 entirely: add `NHL_PLUS_15_HARD_SKIP = True` similar to MLB_FAVORITE_HARD_SKIP. Removes 73-94 picks per window. Forward EV improves by ~$3. Reversible the day NHL gets a proper recalibration.
+- Consider replacing the NHL probability source. Current ensemble for NHL is DRatings + OddsShark + ActionNetwork (Sagarin available). May be worth weighting Dimers higher when present, or testing a Massey replacement when their endpoint returns to 200.
+- The model is also a coin flip on NHL totals and NHL moneyline in adjacent windows — not part of this backtest but worth re-auditing while NHL is open.
+
 ## 2026-05-23: MLB/NHL +1.5 underdog floor was gated by an odds-sign test that never fires for runlines [AUTOMATE - DONE]
 **Observation:** Commit 382b05b (2026-05-12) added MLB_SPREAD_UNDERDOG_MIN_EDGE = 0.05 and NHL_SPREAD_UNDERDOG_MIN_EDGE = 0.06, intended to drop the floor for the strategy's biggest historical winner (MLB +1.5 underdogs: n=395, 63.3% hit, +$704). The implementation in get_effective_min_edge keyed `is_underdog` off `dk_odds > 0`. MLB and NHL +1.5 runline odds are reliably NEGATIVE (the last 30 MLB +1.5 picks: 24 negative, 6 positive; NHL: 27 negative, 3 positive) because dogs cover >60% so the book juices the line. The override therefore never fired for the picks it targeted; all +1.5 candidates got the 8% favorite floor instead.
 **Impact:** Zero MLB +1.5 or NHL +1.5 picks recorded in pick_history.json from 2026-05-12 through 2026-05-22. Compounded with the calibration bug (fixed in 19419cf on 2026-05-22), MLB game picks went from ~12/day to 0/day for 11 straight days. Even after the calibration fix landed, today's full-slate scan still produced 0 MLB game picks because today's strongest underdog edge (TEX@LAA, raw 0.669 → calibrated 0.599 vs implied 0.590 = +0.9%) was being measured against the 8% floor instead of the intended 5%.
