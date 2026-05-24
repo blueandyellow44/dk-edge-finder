@@ -2060,7 +2060,7 @@ def main(games_only: bool = False):
             # Check if we had model data
             aa, ha = game["away"]["abbr"], game["home"]["abbr"]
             had_model = sport_preds.get(f"{aa}@{ha}") is not None
-            reason = "Edge below 3% threshold" if had_model else "No model data"
+            reason = "Edge below sport-specific threshold" if had_model else "No model data"
 
             # Check if it was filtered by tanking (NBA only)
             if sport.lower() == "nba":
