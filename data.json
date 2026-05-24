@@ -15,59 +15,8 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 39,
-  "best_bet": {
-    "title": "OVER 2.5 (-140) \u2014 10.5% Edge (High Tier)",
-    "desc": "Model (DRatings only): CAG 0.7, MIL 2.6 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.5%): Model predicts 3.3 vs market 2.5 \u2014 0.8 p"
-  },
+  "best_bet": null,
   "picks": [
-    {
-      "rank": 1,
-      "sport": "SERIE_A",
-      "event": "Cagliari @ AC Milan",
-      "event_short": "CAG @ MIL",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "-140",
-      "implied": "58.3%",
-      "model": "68.8%",
-      "edge": 10.5,
-      "ev_per_dollar": 0.1799,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (DRatings only): CAG 0.7, MIL 2.6 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.5%): Model predicts 3.3 vs market 2.5 \u2014 0.8 pt gap.",
-      "sources": "DRatings only, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34168578?outcomes=0OU84836010O250_1",
-      "type": "game",
-      "start_time": "2026-05-24T18:45Z",
-      "prop_bucket": ""
-    },
-    {
-      "rank": 2,
-      "sport": "LA_LIGA",
-      "event": "Atl\u00e9tico Madrid @ Villarreal",
-      "event_short": "ATM @ VIL",
-      "market": "Over/Under",
-      "pick": "UNDER 3.5",
-      "odds": "-130",
-      "implied": "56.5%",
-      "model": "61.5%",
-      "edge": 5.0,
-      "ev_per_dollar": 0.088,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (oddsshark): ATM 1.6, VIL 1.4 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
-      "sources": "oddsshark, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34169957?outcomes=0OU84840073U350_3",
-      "type": "game",
-      "start_time": "2026-05-24T19:00Z",
-      "prop_bucket": ""
-    },
     {
       "rank": 5,
       "sport": "NHL",
@@ -204,68 +153,20 @@
     },
     {
       "sport": "MLB",
-      "event": "CLE @ PHI",
-      "line": "CLE -115",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ BOS",
-      "line": "BOS -180",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TB @ NYY",
-      "line": "NYY -141",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYM @ MIA",
-      "line": "MIA -131",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ CIN",
-      "line": "CIN -122",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "LAD @ MIL",
-      "line": "LAD -149",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "SEA @ KC",
-      "line": "SEA -127",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "HOU @ CHC",
-      "line": "CHC -175",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "CHW @ SF",
-      "line": "SF -119",
+      "line": "SF -124",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "WSH @ ATL",
-      "line": "ATL -163",
+      "line": "ATL -158",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "ATH @ SD",
-      "line": "SD -174",
+      "line": "SD -181",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -277,7 +178,7 @@
     {
       "sport": "MLB",
       "event": "DET @ BAL",
-      "line": "BAL -126",
+      "line": "BAL -125",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -289,43 +190,19 @@
     {
       "sport": "MLS",
       "event": "ATL @ CLB",
-      "line": "CLB -185",
+      "line": "CLB -180",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLS",
       "event": "PHI @ MIA",
-      "line": "MIA -270",
+      "line": "MIA -290",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLS",
       "event": "SEA @ LAFC",
       "line": "LAFC -110",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "COMO @ CRE",
-      "line": "COMO -210",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "ROMA @ VER",
-      "line": "ROMA -290",
-      "reason": "No model data"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "GEN @ LEC",
-      "line": "LEC -125",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "SERIE_A",
-      "event": "JUV @ TOR",
-      "line": "JUV -215",
       "reason": "Edge below sport-specific threshold"
     }
   ],
