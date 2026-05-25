@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 15,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 4.5 Rebounds (-149) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 3.0 Rebounds (last 10g), line is 4.5: 1.5 under with 1.4\u03c3 separation. Raw edge: 32.6% (capped at 15%). Edge capped: 32.6% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -157,19 +154,19 @@
     {
       "sport": "MLB",
       "event": "CHC @ PIT",
-      "line": "CHC -122",
+      "line": "CHC -125",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ BAL",
-      "line": "TB -126",
+      "line": "TB -114",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "MIN @ CHW",
-      "line": "MIN -114",
+      "line": "CHW -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -181,19 +178,19 @@
     {
       "sport": "MLB",
       "event": "NYY @ KC",
-      "line": "NYY -126",
+      "line": "NYY -137",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CIN @ NYM",
-      "line": "NYM -162",
+      "line": "NYM -143",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ SF",
-      "line": "SF -137",
+      "line": "SF -132",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -205,25 +202,25 @@
     {
       "sport": "MLB",
       "event": "PHI @ SD",
-      "line": "PHI -126",
+      "line": "PHI -119",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "HOU @ TEX",
-      "line": "TEX -136",
+      "line": "TEX -125",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "MIA @ TOR",
-      "line": "TOR -163",
+      "line": "TOR -162",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "COL @ LAD",
-      "line": "LAD -339",
+      "line": "LAD -338",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -231,30 +228,6 @@
       "event": "SEA @ ATH",
       "line": "SEA -115",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ Cleveland Cavaliers",
-      "line": "OG Anunoby OVER 15.5 Points (-106)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ Cleveland Cavaliers",
-      "line": "James Harden UNDER 6.5 Assists (-156)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ Cleveland Cavaliers",
-      "line": "Karl-Anthony Towns OVER 4.5 Assists (-153)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ Cleveland Cavaliers",
-      "line": "Mikal Bridges OVER 14.5 Points (-126)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
     }
   ],
   "bets": [
