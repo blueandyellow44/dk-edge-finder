@@ -22891,9 +22891,9 @@
     "type": "game",
     "notes": "Model (DRatings only): CAG 0.7, MIL 2.6 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.5%): Model predicts 3.3 vs market 2.5 \u2014 0.8 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAG 2, MIL 1",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-05-24",
@@ -22910,9 +22910,9 @@
     "type": "game",
     "notes": "Model (oddsshark): ATM 1.6, VIL 1.4 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATM 1, VIL 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -22929,9 +22929,9 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.4 Points (last 10g), line is 0.5: 0.9 over with 1.0\u03c3 separation. Raw edge: 26.7% (capped at 15%). Edge capped: 26.7% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Pavel Dorofeyev: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -22986,9 +22986,9 @@
     "type": "prop",
     "notes": "De'Aaron Fox averages 17.9 Points (last 10g), line is 14.5: 3.4 over with 0.7\u03c3 separation. Trending down (season avg: 18.8). Raw edge: 20.3% (capped at 15%). Def adj: vs OKC (107.9 PPG allowed, discount 3.7%) | Edge capped: 20.3% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 82, SA 103 | De'Aaron Fox: 12 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23005,9 +23005,9 @@
     "type": "prop",
     "notes": "Jack Eichel averages 1.0 Assists (last 10g), line is 0.5: 0.5 over with 0.7\u03c3 separation.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Jack Eichel: 0 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23024,9 +23024,9 @@
     "type": "game",
     "notes": "Model (DRatings only): CAG 0.7, MIL 2.6 (total: 3.3). Line: 2.5. Cushion: 0.8 pts. Single source \u2014 DRatings only. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (10.5%): Model predicts 3.3 vs market 2.5 \u2014 0.8 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAG 2, MIL 1",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-05-24",
@@ -23043,9 +23043,9 @@
     "type": "game",
     "notes": "Model (oddsshark): ATM 1.6, VIL 1.4 (total: 3.0). Line: 3.5. Cushion: 0.5 pts. Single source \u2014 oddsshark. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATM 1, VIL 5",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23062,9 +23062,9 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.4 Points (last 10g), line is 0.5: 0.9 over with 1.0\u03c3 separation. Raw edge: 26.7% (capped at 15%). Edge capped: 26.7% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Pavel Dorofeyev: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23119,9 +23119,9 @@
     "type": "prop",
     "notes": "De'Aaron Fox averages 17.9 Points (last 10g), line is 14.5: 3.4 over with 0.7\u03c3 separation. Trending down (season avg: 18.8). Raw edge: 20.3% (capped at 15%). Def adj: vs OKC (107.9 PPG allowed, discount 3.7%) | Edge capped: 20.3% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 82, SA 103 | De'Aaron Fox: 12 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23138,9 +23138,9 @@
     "type": "prop",
     "notes": "Jack Eichel averages 1.0 Assists (last 10g), line is 0.5: 0.5 over with 0.7\u03c3 separation.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Jack Eichel: 0 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23157,9 +23157,9 @@
     "type": "prop",
     "notes": "Pavel Dorofeyev averages 1.4 Points (last 10g), line is 0.5: 0.9 over with 1.0\u03c3 separation. Raw edge: 26.7% (capped at 15%). Edge capped: 26.7% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Pavel Dorofeyev: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23214,9 +23214,9 @@
     "type": "prop",
     "notes": "De'Aaron Fox averages 17.9 Points (last 10g), line is 14.5: 3.4 over with 0.7\u03c3 separation. Trending down (season avg: 18.8). Raw edge: 20.3% (capped at 15%). Def adj: vs OKC (107.9 PPG allowed, discount 3.7%) | Edge capped: 20.3% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 82, SA 103 | De'Aaron Fox: 12 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-24",
@@ -23233,8 +23233,8 @@
     "type": "prop",
     "notes": "Jack Eichel averages 1.0 Assists (last 10g), line is 0.5: 0.5 over with 0.7\u03c3 separation.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "COL 3, VGK 5 | Jack Eichel: 0 Assists",
+    "pnl_if_bet": -10.0
   }
 ]
