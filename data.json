@@ -153,42 +153,6 @@
     },
     {
       "sport": "MLB",
-      "event": "CHC @ PIT",
-      "line": "CHC -125",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "TB @ BAL",
-      "line": "TB -114",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ CHW",
-      "line": "CHW -112",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ MIL",
-      "line": "MIL -225",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYY @ KC",
-      "line": "NYY -137",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "CIN @ NYM",
-      "line": "NYM -143",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "ARI @ SF",
       "line": "SF -132",
       "reason": "Edge below sport-specific threshold"
@@ -196,13 +160,13 @@
     {
       "sport": "MLB",
       "event": "WSH @ CLE",
-      "line": "CLE -174",
+      "line": "CLE -175",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ SD",
-      "line": "PHI -119",
+      "line": "PHI -120",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -214,7 +178,7 @@
     {
       "sport": "MLB",
       "event": "MIA @ TOR",
-      "line": "TOR -162",
+      "line": "TOR -157",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -226,7 +190,7 @@
     {
       "sport": "MLB",
       "event": "SEA @ ATH",
-      "line": "SEA -115",
+      "line": "SEA -114",
       "reason": "Edge below sport-specific threshold"
     }
   ],
