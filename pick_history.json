@@ -23271,9 +23271,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 2.3 Assists (last 10g), line is 1.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 16.4% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 16.4% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 130, CLE 93 | OG Anunoby: 4 Assists",
+    "pnl_if_bet": 5.81
   },
   {
     "scan_date": "2026-05-25",
@@ -23290,9 +23290,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.7 3-PT Made (last 10g), line is 3.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 15.7% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.7% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 130, CLE 93 | Donovan Mitchell: 5 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-25",
@@ -23366,9 +23366,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 2.3 Assists (last 10g), line is 1.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 16.4% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 16.4% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 130, CLE 93 | OG Anunoby: 4 Assists",
+    "pnl_if_bet": 5.81
   },
   {
     "scan_date": "2026-05-25",
@@ -23385,9 +23385,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.7 3-PT Made (last 10g), line is 3.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 15.7% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.7% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 130, CLE 93 | Donovan Mitchell: 5 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-25",
@@ -23461,9 +23461,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 2.3 Assists (last 10g), line is 1.5: 0.8 over with 0.8\u03c3 separation. Raw edge: 16.4% (capped at 15%). Def adj: vs CLE (115.4 PPG allowed, boost 3.0%) | Edge capped: 16.4% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 130, CLE 93 | OG Anunoby: 4 Assists",
+    "pnl_if_bet": 5.81
   },
   {
     "scan_date": "2026-05-25",
@@ -23480,9 +23480,9 @@
     "type": "prop",
     "notes": "Donovan Mitchell averages 2.7 3-PT Made (last 10g), line is 3.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 15.7% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.7% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 130, CLE 93 | Donovan Mitchell: 5 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-25",
