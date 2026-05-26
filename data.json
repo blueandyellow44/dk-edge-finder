@@ -118,7 +118,7 @@
     {
       "sport": "NBA",
       "event": "SA @ OKC",
-      "line": "OKC -4.5",
+      "line": "OKC -3.5",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -130,7 +130,7 @@
     {
       "sport": "MLB",
       "event": "WSH @ CLE",
-      "line": "CLE -136",
+      "line": "CLE -137",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -142,13 +142,13 @@
     {
       "sport": "MLB",
       "event": "LAA @ DET",
-      "line": "DET -136",
+      "line": "DET -137",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ PIT",
-      "line": "PIT -136",
+      "line": "PIT -143",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -160,19 +160,19 @@
     {
       "sport": "MLB",
       "event": "MIA @ TOR",
-      "line": "TOR -144",
+      "line": "TOR -131",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CIN @ NYM",
-      "line": "CIN -131",
+      "line": "CIN -122",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "MIN @ CHW",
-      "line": "MIN -115",
+      "line": "MIN -118",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -184,25 +184,25 @@
     {
       "sport": "MLB",
       "event": "STL @ MIL",
-      "line": "MIL -191",
+      "line": "MIL -186",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "HOU @ TEX",
-      "line": "TEX -132",
+      "line": "TEX -136",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ SD",
-      "line": "SD -112",
+      "line": "PHI -110",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SEA @ ATH",
-      "line": "ATH -120",
+      "line": "ATH -115",
       "reason": "Edge below sport-specific threshold"
     },
     {
