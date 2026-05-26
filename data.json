@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 17,
-  "best_bet": {
-    "title": "Cale Makar UNDER 0.5 Assists (-105) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Cale Makar averages 0.1 Assists (last 10g), line is 0.5: 0.4 under with 1.4\u03c3 separation. Raw edge: 41.2% (capped at 15%). Edge capped: 41.2% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -187,7 +184,7 @@
     {
       "sport": "MLB",
       "event": "STL @ MIL",
-      "line": "MIL -193",
+      "line": "MIL -191",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -199,13 +196,13 @@
     {
       "sport": "MLB",
       "event": "PHI @ SD",
-      "line": "SD -114",
+      "line": "SD -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SEA @ ATH",
-      "line": "ATH -112",
+      "line": "ATH -120",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -219,42 +216,6 @@
       "event": "COL @ LAD",
       "line": "LAD -239",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NHL",
-      "event": "Colorado Avalanche @ Vegas Golden Knights",
-      "line": "Jack Eichel UNDER 1.5 Points (-195)",
-      "reason": "Max 2 props per game (edge: 8.1%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "De'Aaron Fox OVER 3.5 Rebounds (-158)",
-      "reason": "Max 2 props per game (edge: 10.1%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Colorado Avalanche @ Vegas Golden Knights",
-      "line": "Mitch Marner OVER 0.5 Assists (-160)",
-      "reason": "Max 2 props per game (edge: 9.7%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Shai Gilgeous-Alexander UNDER 3.5 Rebounds (+116)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Jared McCain UNDER 1.5 Assists (-147)",
-      "reason": "Max 2 props per game (edge: 10.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Dylan Harper OVER 3.5 Rebounds (+115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
     }
   ],
   "bets": [
