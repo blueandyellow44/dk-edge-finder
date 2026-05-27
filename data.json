@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 16,
-  "best_bet": {
-    "title": "Shai Gilgeous-Alexander UNDER 3.5 Rebounds (-101) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Shai Gilgeous-Alexander averages 2.6 Rebounds (last 10g), line is 3.5: 0.9 under with 0.9\u03c3 separation. Raw edge: 30.3% (capped at 15%). Edge capped: 30.3% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -78,44 +75,26 @@
     },
     {
       "sport": "MLB",
-      "event": "MIA @ TOR",
-      "line": "TOR -156",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "WSH @ CLE",
-      "line": "CLE -188",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ MIL",
-      "line": "MIL -175",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "SEA @ ATH",
-      "line": "SEA -126",
+      "line": "SEA -120",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ SF",
-      "line": "ARI -120",
+      "line": "ARI -114",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ SD",
-      "line": "PHI -143",
+      "line": "PHI -148",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ BAL",
-      "line": "TB -110",
+      "line": "TB -114",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -127,7 +106,7 @@
     {
       "sport": "MLB",
       "event": "CHC @ PIT",
-      "line": "PIT -122",
+      "line": "PIT -126",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -163,38 +142,8 @@
     {
       "sport": "MLB",
       "event": "COL @ LAD",
-      "line": "LAD -411",
+      "line": "LAD -424",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "Shai Gilgeous-Alexander UNDER 30.5 Points (-112)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "Dylan Harper OVER 3.5 Rebounds (-104)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 13.5 Rebounds (-136)",
-      "reason": "Max 2 props per game (edge: 14.7%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "De'Aaron Fox UNDER 1.5 3-PT Made (-187)",
-      "reason": "Max 2 props per game (edge: 6.2%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "De'Aaron Fox OVER 3.5 Rebounds (-144)",
-      "reason": "Max 2 props per game (edge: 11.0%)"
     }
   ],
   "bets": [
