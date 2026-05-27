@@ -70,31 +70,13 @@
     {
       "sport": "NHL",
       "event": "CAR @ MTL",
-      "line": "CAR -148",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "SEA @ ATH",
-      "line": "SEA -120",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "ARI @ SF",
-      "line": "ARI -114",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "PHI @ SD",
-      "line": "PHI -148",
+      "line": "CAR -155",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "TB @ BAL",
-      "line": "TB -114",
+      "line": "TB -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -112,7 +94,7 @@
     {
       "sport": "MLB",
       "event": "ATL @ BOS",
-      "line": "BOS -118",
+      "line": "BOS -115",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -124,13 +106,13 @@
     {
       "sport": "MLB",
       "event": "MIN @ CHW",
-      "line": "CHW -110",
+      "line": "CHW -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ KC",
-      "line": "NYY -157",
+      "line": "NYY -162",
       "reason": "Edge below sport-specific threshold"
     },
     {
