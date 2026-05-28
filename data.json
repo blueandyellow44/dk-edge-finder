@@ -123,12 +123,6 @@
     },
     {
       "sport": "MLB",
-      "event": "ATL @ BOS",
-      "line": "ATL -132",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "TOR @ BAL",
       "line": "BAL -131",
       "reason": "Edge below sport-specific threshold"
