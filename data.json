@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 7,
-  "best_bet": {
-    "title": "Sebastian Aho UNDER 0.5 Assists (-154) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Sebastian Aho averages 0.1 Assists (last 10g), line is 0.5: 0.4 under with 0.9\u03c3 separation. Raw edge: 21.0% (capped at 15%). Edge capped: 21.0% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -126,20 +123,8 @@
     },
     {
       "sport": "MLB",
-      "event": "LAA @ DET",
-      "line": "DET -136",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ CHW",
-      "line": "CHW -157",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "ATL @ BOS",
-      "line": "ATL -137",
+      "line": "ATL -132",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -159,42 +144,6 @@
       "event": "HOU @ TEX",
       "line": "TEX -136",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "Shai Gilgeous-Alexander UNDER 29.5 Points (-118)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Carolina Hurricanes",
-      "line": "Andrei Svechnikov OVER 2.5 Shots on Goal (-166)",
-      "reason": "Max 2 props per game (edge: 10.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "De'Aaron Fox UNDER 1.5 3-PT Made (-133)",
-      "reason": "Max 2 props per game (edge: 14.3%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "Jalen Williams OVER 12.5 Points (-122)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "Oklahoma City Thunder @ San Antonio Spurs",
-      "line": "De'Aaron Fox OVER 3.5 Rebounds (-141)",
-      "reason": "Max 2 props per game (edge: 11.5%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Montr\u00e9al Canadiens @ Carolina Hurricanes",
-      "line": "Nikolaj Ehlers OVER 0.5 Points (-135)",
-      "reason": "Max 2 props per game (edge: 12.3%)"
     }
   ],
   "bets": [
