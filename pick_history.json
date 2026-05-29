@@ -23898,9 +23898,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.6 Rebounds (last 10g), line is 3.5: 0.9 under with 0.9\u03c3 separation. Raw edge: 34.7% (capped at 15%). Edge capped: 34.7% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "OKC 91, SA 118 | Shai Gilgeous-Alexander: 1 Rebounds",
+    "pnl_if_bet": 11.8
   },
   {
     "scan_date": "2026-05-28",
@@ -23917,9 +23917,9 @@
     "type": "prop",
     "notes": "Jared McCain averages 0.7 Assists (last 10g), line is 1.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 91, SA 118 | Jared McCain: 6 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-28",
@@ -23974,9 +23974,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.6 Rebounds (last 10g), line is 3.5: 0.9 under with 0.9\u03c3 separation. Raw edge: 34.7% (capped at 15%). Edge capped: 34.7% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "OKC 91, SA 118 | Shai Gilgeous-Alexander: 1 Rebounds",
+    "pnl_if_bet": 11.8
   },
   {
     "scan_date": "2026-05-28",
@@ -23993,9 +23993,9 @@
     "type": "prop",
     "notes": "Jared McCain averages 0.7 Assists (last 10g), line is 1.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 91, SA 118 | Jared McCain: 6 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-28",
@@ -24050,9 +24050,9 @@
     "type": "prop",
     "notes": "Shai Gilgeous-Alexander averages 2.6 Rebounds (last 10g), line is 3.5: 0.9 under with 0.9\u03c3 separation. Raw edge: 34.7% (capped at 15%). Edge capped: 34.7% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "OKC 91, SA 118 | Shai Gilgeous-Alexander: 1 Rebounds",
+    "pnl_if_bet": 11.8
   },
   {
     "scan_date": "2026-05-28",
@@ -24069,9 +24069,9 @@
     "type": "prop",
     "notes": "Jared McCain averages 0.7 Assists (last 10g), line is 1.5: 0.8 under with 0.8\u03c3 separation. Raw edge: 30.9% (capped at 15%). Edge capped: 30.9% \u2192 15.0%.",
     "prop_bucket": "under_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "OKC 91, SA 118 | Jared McCain: 6 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-05-28",
