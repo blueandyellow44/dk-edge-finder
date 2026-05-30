@@ -15,35 +15,8 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 17,
-  "best_bet": {
-    "title": "OVER 2.5 (110) \u2014 22.4% Edge (High Tier)",
-    "desc": "Model (oddsshark): ARS 2.0, PSG 1.4 (total: 3.4). Line: 2.5. Cushion: 0.9 pts. Single source \u2014 oddsshark. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (22.4%): Model predicts 3.4 vs market 2.5 \u2014 0.9 pt gap."
-  },
+  "best_bet": null,
   "picks": [
-    {
-      "rank": 1,
-      "sport": "UCL",
-      "event": "Arsenal @ Paris Saint-Germain",
-      "event_short": "ARS @ PSG",
-      "market": "Over/Under",
-      "pick": "OVER 2.5",
-      "odds": "110",
-      "implied": "47.6%",
-      "model": "70.1%",
-      "edge": 22.4,
-      "ev_per_dollar": 0.4714,
-      "tier": "High",
-      "bet": "$9.72",
-      "status": "",
-      "result": "",
-      "notes": "Model (oddsshark): ARS 2.0, PSG 1.4 (total: 3.4). Line: 2.5. Cushion: 0.9 pts. Single source \u2014 oddsshark. Kelly reduced 25%. \u26a0 SUSPICIOUS EDGE (22.4%): Model predicts 3.4 vs market 2.5 \u2014 0.9 pt gap.",
-      "sources": "oddsshark, ESPN",
-      "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34113434?outcomes=0OU84681986O250_1",
-      "type": "game",
-      "start_time": "2026-05-30T16:00Z",
-      "prop_bucket": ""
-    },
     {
       "rank": 2,
       "sport": "NBA",
@@ -151,13 +124,13 @@
     {
       "sport": "MLB",
       "event": "DET @ CHW",
-      "line": "DET -115",
+      "line": "DET -121",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "MIN @ PIT",
-      "line": "PIT -144",
+      "line": "PIT -154",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -181,13 +154,13 @@
     {
       "sport": "MLB",
       "event": "LAA @ TB",
-      "line": "TB -163",
+      "line": "TB -168",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ CLE",
-      "line": "CLE -132",
+      "line": "CLE -131",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -205,13 +178,13 @@
     {
       "sport": "MLB",
       "event": "ATL @ CIN",
-      "line": "ATL -144",
+      "line": "ATL -132",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ STL",
-      "line": "CHC -144",
+      "line": "CHC -135",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -229,56 +202,14 @@
     {
       "sport": "MLB",
       "event": "ARI @ SEA",
-      "line": "SEA -144",
+      "line": "SEA -157",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ LAD",
-      "line": "LAD -131",
+      "line": "LAD -126",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Shai Gilgeous-Alexander UNDER 3.5 Rebounds (+100)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "De'Aaron Fox UNDER 1.5 3-PT Made (-156)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Dylan Harper OVER 3.5 Rebounds (-163)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Taylor Hall OVER 0.5 Points (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Nikolaj Ehlers UNDER 2.5 Shots on Goal (-140)",
-      "reason": "Max 2 props per game (edge: 12.5%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Pavel Dorofeyev OVER 0.5 Points (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ Oklahoma City Thunder",
-      "line": "Shai Gilgeous-Alexander UNDER 1.5 3-PT Made (-138)",
-      "reason": "Max 2 props per game (edge: 11.2%)"
     }
   ],
   "bets": [
