@@ -123,12 +123,6 @@
     },
     {
       "sport": "MLB",
-      "event": "DET @ CHW",
-      "line": "DET -121",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "MIN @ PIT",
       "line": "PIT -154",
       "reason": "Edge below sport-specific threshold"
@@ -136,19 +130,19 @@
     {
       "sport": "MLB",
       "event": "SD @ WSH",
-      "line": "SD -126",
+      "line": "SD -136",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "TOR @ BAL",
-      "line": "TOR -126",
+      "line": "TOR -131",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ TEX",
-      "line": "TEX -122",
+      "line": "TEX -118",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -165,12 +159,6 @@
     },
     {
       "sport": "MLB",
-      "event": "MIA @ NYM",
-      "line": "NYM -132",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "MIL @ HOU",
       "line": "MIL -117",
       "reason": "Edge below sport-specific threshold"
@@ -178,25 +166,25 @@
     {
       "sport": "MLB",
       "event": "ATL @ CIN",
-      "line": "ATL -132",
+      "line": "ATL -122",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CHC @ STL",
-      "line": "CHC -135",
+      "line": "CHC -132",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ COL",
-      "line": "SF -117",
+      "line": "SF -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ ATH",
-      "line": "NYY -155",
+      "line": "NYY -156",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -208,7 +196,7 @@
     {
       "sport": "MLB",
       "event": "PHI @ LAD",
-      "line": "LAD -126",
+      "line": "LAD -131",
       "reason": "Edge below sport-specific threshold"
     }
   ],
