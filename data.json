@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 15,
-  "best_bet": {
-    "title": "Dylan Harper OVER 3.5 Rebounds (-150) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 24.1% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 24.1% \u2192 15."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -120,20 +117,14 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "TOR @ BAL",
-      "line": "BAL -131",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "MIN @ PIT",
-      "line": "PIT -163",
+      "line": "PIT -172",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SD @ WSH",
-      "line": "SD -123",
+      "line": "SD -112",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -145,13 +136,13 @@
     {
       "sport": "MLB",
       "event": "ATL @ CIN",
-      "line": "ATL -126",
+      "line": "ATL -125",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "BOS @ CLE",
-      "line": "CLE -117",
+      "line": "CLE -118",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -169,37 +160,37 @@
     {
       "sport": "MLB",
       "event": "MIL @ HOU",
-      "line": "MIL -205",
+      "line": "MIL -193",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ TEX",
-      "line": "TEX -114",
+      "line": "TEX -115",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ COL",
-      "line": "SF -112",
+      "line": "SF -117",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "NYY @ ATH",
-      "line": "NYY -175",
+      "line": "NYY -180",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "ARI @ SEA",
-      "line": "SEA -149",
+      "line": "SEA -144",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "PHI @ LAD",
-      "line": "LAD -231",
+      "line": "LAD -238",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -207,48 +198,6 @@
       "event": "CHC @ STL",
       "line": "STL -118",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Mikal Bridges OVER 14.5 Points (-104)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Taylor Hall OVER 0.5 Points (-125)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby OVER 16.5 Points (-115)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 3.5 Assists (-176)",
-      "reason": "Max 2 props per game (edge: 7.1%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Nikolaj Ehlers UNDER 2.5 Shots on Goal (-140)",
-      "reason": "Max 2 props per game (edge: 12.5%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 28.5 Points (-119)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Pavel Dorofeyev OVER 0.5 Points (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
     }
   ],
   "bets": [
