@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-05-31",
-  "scan_subtitle": "2026-05-31 \u2014 All 15 games in progress or final \u00b7 Next scan 6 AM PT",
+  "scan_date": "2026-06-01",
+  "scan_subtitle": "Monday, June 01, 2026 \u2014 MLB (9)",
   "bankroll": {
     "available": 486.16,
     "starting": 500.0,
@@ -14,8 +14,11 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 15,
-  "best_bet": null,
+  "games_analyzed": 9,
+  "best_bet": {
+    "title": "Dylan Harper OVER 3.5 Rebounds (-143) \u2014 15.0% Edge (Medium Tier)",
+    "desc": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 25.3% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 25.3% \u2192 15."
+  },
   "picks": [
     {
       "rank": 1,
@@ -24,8 +27,8 @@
       "event_short": "New York Knicks @ San Antonio Spurs",
       "market": "Player Prop",
       "pick": "Dylan Harper OVER 3.5 Rebounds",
-      "odds": "-150",
-      "implied": "60.0%",
+      "odds": "-143",
+      "implied": "58.8%",
       "model": "84.1%",
       "edge": 15.0,
       "ev_per_dollar": -0.159,
@@ -33,7 +36,7 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 24.1% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 24.1% \u2192 15.0%.",
+      "notes": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 25.3% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 25.3% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA338984098%232168411500_13L42648Q11299195355Q20",
@@ -48,8 +51,8 @@
       "event_short": "New York Knicks @ San Antonio Spurs",
       "market": "Player Prop",
       "pick": "OG Anunoby OVER 1.5 Assists",
-      "odds": "-146",
-      "implied": "59.3%",
+      "odds": "-161",
+      "implied": "61.7%",
       "model": "82.1%",
       "edge": 15.0,
       "ev_per_dollar": -0.179,
@@ -57,13 +60,13 @@
       "bet": "$9.72",
       "status": "",
       "result": "",
-      "notes": "OG Anunoby averages 2.5 Assists (last 10g), line is 1.5: 1.0 over with 0.9\u03c3 separation. Raw edge: 22.8% (capped at 15%). Edge capped: 22.8% \u2192 15.0%.",
+      "notes": "OG Anunoby averages 2.5 Assists (last 10g), line is 1.5: 1.0 over with 0.9\u03c3 separation. Raw edge: 20.5% (capped at 15%). Edge capped: 20.5% \u2192 15.0%.",
       "sources": "The Odds API (DK), ESPN",
       "confidence": "MEDIUM",
       "dk_link": "https://sportsbook.draftkings.com/?outcomes=0QA338984513%232168409020_13L42648Q11503704237Q20",
       "type": "prop",
       "start_time": "",
-      "prop_bucket": "over_moderate_fav"
+      "prop_bucket": "over_heavy_fav"
     },
     {
       "rank": 3,
@@ -117,27 +120,105 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "NYY @ ATH",
-      "line": "NYY -175",
+      "event": "DET @ TB",
+      "line": "TB -163",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
-      "event": "ARI @ SEA",
-      "line": "SEA -144",
+      "event": "MIA @ WSH",
+      "line": "WSH -144",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
-      "event": "PHI @ LAD",
-      "line": "LAD -241",
+      "event": "KC @ CIN",
+      "line": "CIN -194",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
-      "event": "CHC @ STL",
-      "line": "STL -118",
+      "event": "CHW @ MIN",
+      "line": "MIN -156",
       "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "SF @ MIL",
+      "line": "MIL -149",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "TEX @ STL",
+      "line": "TEX -125",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "COL @ LAA",
+      "line": "LAA -205",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "LAD @ ARI",
+      "line": "LAD -167",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLB",
+      "event": "NYM @ SEA",
+      "line": "SEA -131",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ San Antonio Spurs",
+      "line": "Dylan Harper OVER 0.5 3-PT Made (-208)",
+      "reason": "Max 2 props per game (edge: 12.9%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ San Antonio Spurs",
+      "line": "OG Anunoby OVER 15.5 Points (-117)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ San Antonio Spurs",
+      "line": "Mikal Bridges OVER 14.5 Points (-109)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Carolina Hurricanes",
+      "line": "Taylor Hall OVER 0.5 Points (-125)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ San Antonio Spurs",
+      "line": "Victor Wembanyama UNDER 3.5 Assists (-176)",
+      "reason": "Max 2 props per game (edge: 7.1%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Carolina Hurricanes",
+      "line": "Nikolaj Ehlers UNDER 2.5 Shots on Goal (-140)",
+      "reason": "Max 2 props per game (edge: 12.5%)"
+    },
+    {
+      "sport": "NHL",
+      "event": "Vegas Golden Knights @ Carolina Hurricanes",
+      "line": "Pavel Dorofeyev OVER 0.5 Points (-120)",
+      "reason": "Max 2 props per game (edge: 15.0%)"
+    },
+    {
+      "sport": "NBA",
+      "event": "New York Knicks @ San Antonio Spurs",
+      "line": "Karl-Anthony Towns UNDER 17.5 Points (-123)",
+      "reason": "Max 2 props per game (edge: 14.5%)"
     }
   ],
   "bets": [
