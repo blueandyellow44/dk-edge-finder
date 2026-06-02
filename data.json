@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 16,
-  "best_bet": {
-    "title": "Dylan Harper OVER 3.5 Rebounds (-143) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 25.3% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 25.3% \u2192 15."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -127,7 +124,7 @@
     {
       "sport": "MLB",
       "event": "DET @ TB",
-      "line": "TB -144",
+      "line": "TB -149",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -145,19 +142,19 @@
     {
       "sport": "MLB",
       "event": "MIA @ WSH",
-      "line": "WSH -119",
+      "line": "WSH -120",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "CLE @ NYY",
-      "line": "NYY -252",
+      "line": "NYY -234",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "KC @ CIN",
-      "line": "CIN -125",
+      "line": "CIN -128",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -169,13 +166,13 @@
     {
       "sport": "MLB",
       "event": "CHW @ MIN",
-      "line": "CHW -126",
+      "line": "CHW -131",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLB",
       "event": "SF @ MIL",
-      "line": "MIL -273",
+      "line": "MIL -272",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -199,7 +196,7 @@
     {
       "sport": "MLB",
       "event": "COL @ LAA",
-      "line": "LAA -163",
+      "line": "LAA -168",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -213,60 +210,6 @@
       "event": "NYM @ SEA",
       "line": "SEA -149",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Dylan Harper OVER 0.5 3-PT Made (-213)",
-      "reason": "Max 2 props per game (edge: 12.4%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Karl-Anthony Towns OVER 3.5 Assists (-153)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Mikal Bridges OVER 14.5 Points (-121)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Taylor Hall OVER 0.5 Points (-125)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby OVER 16.5 Points (-106)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 3.5 Assists (-179)",
-      "reason": "Max 2 props per game (edge: 6.8%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Nikolaj Ehlers UNDER 2.5 Shots on Goal (-140)",
-      "reason": "Max 2 props per game (edge: 12.5%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Pavel Dorofeyev OVER 0.5 Points (-120)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Karl-Anthony Towns UNDER 17.5 Points (-121)",
-      "reason": "Max 2 props per game (edge: 14.9%)"
     }
   ],
   "bets": [
