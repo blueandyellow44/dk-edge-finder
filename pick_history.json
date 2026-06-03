@@ -25000,9 +25000,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 2.5 Shots on Goal (last 10g), line is 1.5: 1.0 over with 0.8\u03c3 separation.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 5, CAR 4 | Mitch Marner: 1 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-02",
@@ -25019,9 +25019,9 @@
     "type": "prop",
     "notes": "Jackson Blake averages 1.2 Points (last 10g), line is 0.5: 0.7 over with 0.6\u03c3 separation. Raw edge: 17.5% (capped at 15%). Edge capped: 17.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 5, CAR 4 | Jackson Blake: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-02",
@@ -25076,9 +25076,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 2.5 Shots on Goal (last 10g), line is 1.5: 1.0 over with 0.8\u03c3 separation.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 5, CAR 4 | Mitch Marner: 1 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-02",
@@ -25095,8 +25095,8 @@
     "type": "prop",
     "notes": "Jackson Blake averages 1.2 Points (last 10g), line is 0.5: 0.7 over with 0.6\u03c3 separation. Raw edge: 17.5% (capped at 15%). Edge capped: 17.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 5, CAR 4 | Jackson Blake: 0 Points",
+    "pnl_if_bet": -10.0
   }
 ]
