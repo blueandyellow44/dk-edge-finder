@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 # Serialize with place-bets and resolve-bets so data.json writes don't race.
 concurrency:
@@ -49,7 +50,7 @@ jobs:
         run: |
           git config user.name "DK Edge Bot"
           git config user.email "max.sheahan@icloud.com"
-          git add data.json bankroll.json pick_history.json
+          git add data.json bankroll.json pick_history.json game_log.json
           git commit -m "Game scan: $(date +%Y-%m-%d_%H%M) — games only (no props)"
           git push
           # Sync to Cloudflare deploy branch. The Cloudflare bot occasionally
@@ -63,3 +64,29 @@ jobs:
             git push origin main || true
           fi
           git push origin main:cloudflare/workers-autoconfig || true
+
+      # Visibility so a broken cron is not silently missed (the failure mode
+      # that let the local clone go 10 days stale). Opens one rolling issue
+      # labeled cron-failure and comments on it for subsequent failures; close
+      # the issue once resolved and the next failure opens a fresh one.
+      - name: Alert on cron failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `Workflow **${context.workflow}** failed.\n\nRun: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'cron-failure',
+            });
+            if (open.data.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: open.data[0].number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title: '⚠️ DK Edge cron failure', body, labels: ['cron-failure'],
+              });
+            }
