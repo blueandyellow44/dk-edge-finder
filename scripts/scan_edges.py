@@ -1513,6 +1513,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
     best = None
     best_ev = -1.0
     best_edge = -1  # tracked for downstream use; selection is via best_ev
+    # Best threshold-evaluated candidate that did NOT clear min_edge. Surfaced
+    # on the game dict for no_edge_games diagnostics so we can see HOW FAR under
+    # the floor a rejected game landed (e.g. MLB squashed into [0,3%)). Only
+    # candidates that reach the edge>=min_edge comparison are tracked; hard-skips
+    # (MLB favorites, tank teams, playoff hallucinations) are deliberately excluded.
+    best_sub = None
 
     for cand in candidates:
         pick_team = cand["team"]
@@ -1554,11 +1560,13 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         # the last thing applied to model_prob before edge math; it captures
         # the net systematic bias in the model AFTER situational adjustments.
         # See PROB_CALIBRATION dict above and lessons.md 2026-05-10.
+        raw_model_prob = model_prob  # pre-calibration, for no_edge diagnostics
         model_prob = calibrate_prob(sport, "spread", model_prob)
 
         # Calculate edge
         implied_prob = cand["implied_prob"]
         edge = model_prob - implied_prob
+        raw_edge = raw_model_prob - implied_prob  # edge if calibration were identity
 
         # Heavy juice filter: picks at -200 or worse need 5% edge, not 3%
         # Rationale: at -250, you risk $250 to win $100. A 3% edge isn't worth it.
@@ -1579,6 +1587,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         # still too-good-to-be-true after the discount.
         if sport.lower() == "nba" and is_nba_playoff_window():
             edge = edge * (1.0 - NBA_PLAYOFF_EDGE_DISCOUNT)
+            raw_edge = raw_edge * (1.0 - NBA_PLAYOFF_EDGE_DISCOUNT)  # mirror, keep calibration the only delta
             min_edge = max(min_edge, NBA_PLAYOFF_MIN_EDGE)
             if edge > NBA_PLAYOFF_HARD_SKIP_AT:
                 continue  # model is hallucinating, drop this candidate
@@ -1598,16 +1607,37 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         decimal_odds_cand = american_to_decimal(dk_odds_val)
         cand_ev = model_prob * (decimal_odds_cand - 1.0) - (1.0 - model_prob)
 
+        # Diagnostics: remember the highest-edge candidate regardless of whether
+        # it clears the floor, so a rejected game can report its real edge AND
+        # so the game_log captures the model's full assessment for calibration.
+        if best_sub is None or edge > best_sub["edge"]:
+            best_sub = {
+                "edge": edge, "raw_edge": raw_edge, "min_edge": min_edge,
+                "side": pick_side, "implied": implied_prob,
+                "model_raw": raw_model_prob, "model_cal": model_prob,
+                "pick_label": cand.get("pick_label", ""),
+            }
+
         if edge >= min_edge and cand_ev > best_ev:
             best_ev = cand_ev
             best_edge = edge
             best = {
                 "cand": cand, "model_prob": model_prob, "edge": edge,
+                "raw_edge": raw_edge, "model_raw": raw_model_prob,
                 "implied_prob": implied_prob, "tank_note": tank_note, "b2b_note": b2b_note,
                 "tank_info": tank_info,
             }
 
     if best is None:
+        if best_sub is not None:
+            game["_edge_diag"] = {"market": "spread", **best_sub}
+            game.setdefault("_assess", []).append({
+                "market": "spread", "side": best_sub["side"],
+                "pick": best_sub["pick_label"],
+                "implied": best_sub["implied"], "model_raw": best_sub["model_raw"],
+                "model_cal": best_sub["model_cal"], "edge": best_sub["edge"],
+                "raw_edge": best_sub["raw_edge"], "became_pick": False,
+            })
         return None
 
     cand = best["cand"]
@@ -1676,6 +1706,15 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         confidence = "MEDIUM" if confidence == "HIGH" else confidence
     if confidence != "HIGH":
         notes_parts.append(f"⚠ Confidence: {confidence}")
+
+    # Record the picked assessment for the game_log calibration dataset.
+    game.setdefault("_assess", []).append({
+        "market": "spread", "side": pick_side,
+        "pick": cand.get("pick_label", ""),
+        "implied": implied_prob, "model_raw": best["model_raw"],
+        "model_cal": model_prob, "edge": edge, "raw_edge": best["raw_edge"],
+        "became_pick": True,
+    })
 
     return {
         "sport": sport.upper(),
@@ -1782,6 +1821,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     # (a=+0.54, b=-0.26) and MLS Over/Under (a=+0.79, b=-0.32) are
     # currently fitted; other sports fall through to identity until they
     # cross the 30-obs threshold. Same shape as the spread path.
+    raw_model_prob = model_prob  # pre-calibration, for no_edge diagnostics
     model_prob = calibrate_prob(sport, "over/under", model_prob)
 
     # Use ACTUAL DK total odds from ESPN when available
@@ -1795,6 +1835,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
     # Calculate edge
     edge = model_prob - implied_prob
+    raw_edge = raw_model_prob - implied_prob  # edge if calibration were identity
 
     # NBA playoff discount (April 2026): RS-trained totals model overestimates
     # playoff scoring. Defense ratchets up, OVER picks suffer most. Apply edge
@@ -1808,11 +1849,28 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         if pick_side == "over":
             multiplier -= NBA_PLAYOFF_OVER_EXTRA_PENALTY
         edge = edge * multiplier
+        raw_edge = raw_edge * multiplier  # mirror, keep calibration the only delta
         min_edge_total = max(min_edge_total, NBA_PLAYOFF_MIN_EDGE)
         if edge > NBA_PLAYOFF_HARD_SKIP_AT:
             return None  # model is hallucinating playoff signal, drop the pick
 
     if edge < min_edge_total:
+        # Diagnostics: surface the total edge on the game dict for no_edge_games,
+        # but only overwrite the spread diag if this total edge is larger (the
+        # caller reports a single best edge per rejected game).
+        prior = game.get("_edge_diag")
+        if prior is None or edge > prior.get("edge", -1.0):
+            game["_edge_diag"] = {
+                "market": "total", "edge": edge, "raw_edge": raw_edge,
+                "min_edge": min_edge_total, "side": pick_side,
+            }
+        game.setdefault("_assess", []).append({
+            "market": "total", "side": pick_side,
+            "pick": f"{pick_side.upper()} {espn_total}",
+            "implied": implied_prob, "model_raw": raw_model_prob,
+            "model_cal": model_prob, "edge": edge, "raw_edge": raw_edge,
+            "became_pick": False,
+        })
         return None  # Below threshold
 
     # Flag suspicious edges — don't cap, but warn
@@ -1840,6 +1898,15 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         over_extra = f" plus {int(NBA_PLAYOFF_OVER_EXTRA_PENALTY*100)}% extra on OVER" if pick_side == "over" else ""
         notes += f" NBA PLAYOFF DISCOUNT applied (-{int(NBA_PLAYOFF_EDGE_DISCOUNT*100)}% edge{over_extra}, min {int(NBA_PLAYOFF_MIN_EDGE*100)}%). RS-trained model, treat with caution."
 
+    # Record the picked assessment for the game_log calibration dataset.
+    game.setdefault("_assess", []).append({
+        "market": "total", "side": pick_side,
+        "pick": f"{pick_side.upper()} {espn_total}",
+        "implied": implied_prob, "model_raw": raw_model_prob,
+        "model_cal": model_prob, "edge": edge, "raw_edge": raw_edge,
+        "became_pick": True,
+    })
+
     return {
         "sport": sport.upper(),
         "event": game["event_str"],
@@ -1863,6 +1930,55 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         "dk_link": game.get("dk_total_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
         "start_time": game.get("start_time", ""),
     }
+
+
+def build_analyzed_games(upcoming: list, all_predictions: dict) -> list:
+    """Serialize the model's per-game projection for EVERY analyzed game.
+
+    Edge picks already land in data.json["picks"]; no_edge_games carry only
+    the line. The predictions bot needs a model probability for games it has
+    NOT flagged so it can price Kalshi game markets against Kalshi's own
+    price (which can drift off the sharp line). This emits the model's
+    projected scores + margin + lines for every upcoming game that has a
+    prediction, keyed so the bot can match by sport + team abbreviations.
+
+    Purely additive and defensive: a malformed game is skipped, never raised,
+    so this can never break the existing picks/no_edge_games output.
+    """
+    out: list = []
+    for game in upcoming:
+        try:
+            sport = game.get("sport", "") or ""
+            home = game.get("home", {}) or {}
+            away = game.get("away", {}) or {}
+            home_abbr, away_abbr = home.get("abbr"), away.get("abbr")
+            if not home_abbr or not away_abbr:
+                continue
+            pred = (all_predictions.get(sport, {}) or {}).get(f"{away_abbr}@{home_abbr}")
+            if not pred:
+                continue  # no model projection: bot cannot price this game
+            home_score = pred.get("home_score")
+            away_score = pred.get("away_score")
+            margin = pred.get("margin")
+            if margin is None and home_score is not None and away_score is not None:
+                margin = round(float(home_score) - float(away_score), 1)
+            out.append({
+                "sport": sport.upper(),
+                "away_abbr": away_abbr,
+                "home_abbr": home_abbr,
+                "away_name": away.get("name", ""),
+                "home_name": home.get("name", ""),
+                "event_short": game.get("event_short", ""),
+                "start_time": game.get("start_time", ""),
+                "pred_away_score": away_score,
+                "pred_home_score": home_score,
+                "pred_margin": margin,
+                "home_spread": game.get("home_spread"),
+                "over_under": game.get("over_under"),
+            })
+        except Exception:
+            continue  # one bad game never sinks the array
+    return out
 
 
 # ── Main ────────────────────────────────────────────
@@ -2033,6 +2149,7 @@ def main(games_only: bool = False):
     print("\n[5] Calculating edges...")
     picks = []
     no_edge = []
+    game_log_records = []  # every (game, market) assessment, picked or not
 
     for game in upcoming:
         sport = game.get("sport", "nba")
@@ -2070,11 +2187,53 @@ def main(games_only: bool = False):
                 if tank_info and tank_info["confirmed"]:
                     reason = f"Tank penalty applied — {tank_info['reason']}"
 
-            no_edge.append({
+            entry = {
                 "sport": sport.upper(),
                 "event": game["event_short"],
                 "line": spread_str if spread_str else "N/A",
                 "reason": reason,
+            }
+            # Attach the real computed edge when we had model data. Restores the
+            # signal stripped in df35e2f, now with the actual number + the floor
+            # it failed to clear, so MLB-style sub-threshold squash is visible.
+            diag = game.get("_edge_diag")
+            if diag is not None:
+                entry["edge"] = f"{diag['edge'] * 100:.1f}%"
+                entry["min_edge"] = f"{diag['min_edge'] * 100:.1f}%"
+                entry["edge_market"] = diag["market"]
+                entry["edge_side"] = diag["side"]
+                # Raw (pre-calibration) edge + the swing calibration applied, so
+                # we can tell whether a sub-floor game would have qualified raw.
+                raw = diag.get("raw_edge")
+                if raw is not None:
+                    entry["raw_edge"] = f"{raw * 100:.1f}%"
+                    entry["calib_delta"] = f"{(diag['edge'] - raw) * 100:+.1f}pp"
+            no_edge.append(entry)
+
+        # Record every market the model assessed on this game (picked or not)
+        # for the game_log calibration dataset — this is the complete, unbiased
+        # sample the fitter needs (no_edge games included), unlike pick_history
+        # which only contains games that cleared a floor.
+        for a in game.get("_assess", []):
+            line = (game.get("odds_details", "") if a["market"] == "spread"
+                    else f"O/U {game.get('over_under', '')}")
+            game_log_records.append({
+                "scan_date": today_iso,
+                "sport": sport.upper(),
+                "event": game["event_str"],
+                "event_short": game["event_short"],
+                "market": a["market"],
+                "side": a["side"],
+                "pick": a.get("pick", ""),
+                "line": line,
+                "implied": round(a["implied"], 4),
+                "model_raw": round(a["model_raw"], 4),
+                "model_cal": round(a["model_cal"], 4),
+                "edge": round(a["edge"], 4),
+                "raw_edge": round(a["raw_edge"], 4),
+                "became_pick": a["became_pick"],
+                "outcome": "pending",
+                "final_score": "",
             })
 
     # Step 5b: Scan player props using real DK odds from The Odds API
@@ -2318,6 +2477,16 @@ def main(games_only: bool = False):
             final_picks = formatted_picks + existing_prop_picks
             print(f"  Preserved {len(existing_prop_picks)} prop picks from last full scan")
 
+    # Per-game model projections for EVERY analyzed game (not just edge picks),
+    # consumed by the predictions bot to price Kalshi game markets. Wrapped so a
+    # build failure logs and degrades to an empty array, never breaking the scan.
+    try:
+        analyzed_games = build_analyzed_games(upcoming, all_predictions)
+        print(f"  Serialized {len(analyzed_games)} analyzed game projection(s)")
+    except Exception as e:
+        print(f"  analyzed_games build failed: {e}", file=sys.stderr)
+        analyzed_games = []
+
     new_data = {
         "scan_date": today_iso,
         "scan_subtitle": subtitle,
@@ -2334,6 +2503,7 @@ def main(games_only: bool = False):
         "best_bet": best_bet,
         "picks": final_picks,
         "no_edge_games": no_edge,
+        "analyzed_games": analyzed_games,
         "bets": existing_bets,
     }
 
@@ -2341,15 +2511,28 @@ def main(games_only: bool = False):
     print(f"\nDone. {len(formatted_picks)} edges found, {len(no_edge)} games no edge.")
     print(f"Total suggested exposure: ${total_exposure:.2f} ({(total_exposure/available*100):.1f}% of bankroll)")
 
-    # Step 8: Append picks to pick_history.json for paper-trading analysis
+    # Step 8: Upsert picks into pick_history.json for paper-trading analysis.
+    # Keyed on (scan_date, sport, event, market, pick) so the 4x/day game-scan
+    # cron does NOT create duplicate rows for a pick that persists across the
+    # day's scans (the cause of the 55%-duplicate bloat). A pick already
+    # resolved earlier today is left untouched.
     HISTORY_JSON = REPO_ROOT / "pick_history.json"
     try:
         history = json.loads(HISTORY_JSON.read_text()) if HISTORY_JSON.exists() else []
     except (json.JSONDecodeError, Exception):
         history = []
 
+    def _ph_key(r):
+        return (r.get("scan_date", ""), r.get("sport", ""), r.get("event", ""),
+                r.get("market", ""), r.get("pick", ""))
+
+    ph_index = {}
+    for i, r in enumerate(history):
+        ph_index[_ph_key(r)] = i  # last occurrence wins
+
+    ph_added = ph_updated = 0
     for pick in final_picks:
-        history.append({
+        rec = {
             "scan_date": today_iso,
             "sport": pick.get("sport", ""),
             "event": pick.get("event", ""),
@@ -2367,10 +2550,57 @@ def main(games_only: bool = False):
             "outcome": "pending",
             "final_score": "",
             "pnl_if_bet": 0,
-        })
+        }
+        k = _ph_key(rec)
+        if k in ph_index:
+            existing = history[ph_index[k]]
+            if existing.get("outcome") in ("win", "loss", "push"):
+                continue  # already resolved today; never overwrite a settled row
+            rec["outcome"] = existing.get("outcome", "pending")
+            history[ph_index[k]] = rec  # refresh pending row with latest odds/model
+            ph_updated += 1
+        else:
+            ph_index[k] = len(history)
+            history.append(rec)
+            ph_added += 1
 
     HISTORY_JSON.write_text(json.dumps(history, indent=2) + "\n")
-    print(f"[8] Appended {len(final_picks)} picks to pick_history.json (total: {len(history)} tracked)")
+    print(f"[8] pick_history.json: +{ph_added} new, {ph_updated} refreshed (total: {len(history)})")
+
+    # Step 9: Upsert the complete game_log.json calibration dataset. One row per
+    # (scan_date, sport, event, market) — EVERY game surfaced, picked or not,
+    # with raw + calibrated model probability. This is the unbiased sample the
+    # fitter needs; pick_history only has games that cleared a floor.
+    GAME_LOG_JSON = REPO_ROOT / "game_log.json"
+    try:
+        game_log = json.loads(GAME_LOG_JSON.read_text()) if GAME_LOG_JSON.exists() else []
+    except (json.JSONDecodeError, Exception):
+        game_log = []
+
+    def _gl_key(r):
+        return (r.get("scan_date", ""), r.get("sport", ""), r.get("event", ""),
+                r.get("market", ""))
+
+    gl_index = {}
+    for i, r in enumerate(game_log):
+        gl_index[_gl_key(r)] = i
+
+    gl_added = gl_updated = 0
+    for rec in game_log_records:
+        k = _gl_key(rec)
+        if k in gl_index:
+            existing = game_log[gl_index[k]]
+            if existing.get("outcome") in ("win", "loss", "push"):
+                continue  # resolved; keep the settled record
+            game_log[gl_index[k]] = rec
+            gl_updated += 1
+        else:
+            gl_index[k] = len(game_log)
+            game_log.append(rec)
+            gl_added += 1
+
+    GAME_LOG_JSON.write_text(json.dumps(game_log, indent=2) + "\n")
+    print(f"[9] game_log.json: +{gl_added} new, {gl_updated} refreshed (total: {len(game_log)})")
 
 
 if __name__ == "__main__":
