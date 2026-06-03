@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 16,
-  "best_bet": {
-    "title": "Dylan Harper OVER 3.5 Rebounds (-161) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Dylan Harper averages 6.1 Rebounds (last 10g), line is 3.5: 2.6 over with 1.0\u03c3 separation. Raw edge: 22.4% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 22.4% \u2192 15."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -126,12 +123,6 @@
     },
     {
       "sport": "MLB",
-      "event": "NYM @ SEA",
-      "line": "SEA -149",
-      "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "MLB",
       "event": "SD @ PHI",
       "line": "PHI -219",
       "reason": "Edge below sport-specific threshold"
@@ -151,7 +142,7 @@
     {
       "sport": "MLB",
       "event": "KC @ CIN",
-      "line": "CIN -157",
+      "line": "CIN -162",
       "reason": "Edge below sport-specific threshold"
     },
     {
@@ -193,50 +184,8 @@
     {
       "sport": "MLB",
       "event": "LAD @ ARI",
-      "line": "LAD -198",
+      "line": "LAD -194",
       "reason": "Edge below sport-specific threshold"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Dylan Harper OVER 0.5 3-PT Made (-205)",
-      "reason": "Max 2 props per game (edge: 13.2%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Karl-Anthony Towns OVER 3.5 Assists (-155)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby OVER 15.5 Points (-119)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Mikal Bridges OVER 14.5 Points (+100)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Jackson Blake OVER 0.5 Points (-130)",
-      "reason": "Max 2 props per game (edge: 14.3%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Karl-Anthony Towns UNDER 17.5 Points (-125)",
-      "reason": "Max 2 props per game (edge: 14.1%)"
-    },
-    {
-      "sport": "NHL",
-      "event": "Vegas Golden Knights @ Carolina Hurricanes",
-      "line": "Nikolaj Ehlers UNDER 2.5 Shots on Goal (-140)",
-      "reason": "Max 2 props per game (edge: 11.1%)"
     }
   ],
   "bets": [
