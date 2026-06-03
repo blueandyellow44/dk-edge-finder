@@ -28,3 +28,6 @@ build/
 .dev.vars*
 !.dev.vars.example
 !.env.example
+
+# one-off dedup rollback snapshot (local only)
+*.prededuped.bak
