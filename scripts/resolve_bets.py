@@ -741,8 +741,9 @@ def main():
         if sync_added:
             DATA_JSON.write_text(json.dumps(data, indent=2) + "\n")
             print(f"Wrote data.json with {sync_added} synced bet(s).")
-        # Still resolve pick_history.json below — do not exit
+        # Still resolve pick_history.json + game_log.json below — do not exit
         resolve_pick_history(all_games)
+        resolve_game_log(all_games)
         return
 
     # Update bankroll
@@ -828,6 +829,8 @@ def main():
 
     # ── Resolve pick_history.json (paper-trading tracker) ──────────────
     resolve_pick_history(all_games)
+    # ── Resolve game_log.json (complete calibration dataset) ───────────
+    resolve_game_log(all_games)
 
 
 def resolve_pick_history(all_games: dict):
@@ -949,6 +952,76 @@ def resolve_pick_history(all_games: dict):
         losses = sum(1 for h in history if h.get("outcome") == "loss")
         still_pending = sum(1 for h in history if h.get("outcome") == "pending")
         print(f"\nPick history: resolved {resolved_count} paper picks. Record: {wins}W-{losses}L, {still_pending} pending (of {total} total)")
+
+
+def resolve_game_log(all_games: dict):
+    """Resolve pending rows in game_log.json — the complete per-game calibration
+    dataset (every game surfaced, picked or not). Grades the MODEL'S chosen side
+    (game_log['pick'], e.g. 'San Diego Padres +1.5' or 'OVER 8.5') against the
+    final score, reusing the same scoreboard fetch + resolvers as the pick path.
+    Game-level only (spread / total) — no prop box-score fetch needed.
+    """
+    GAME_LOG_JSON = REPO_ROOT / "game_log.json"
+    if not GAME_LOG_JSON.exists():
+        return
+    try:
+        log = json.loads(GAME_LOG_JSON.read_text())
+    except (json.JSONDecodeError, Exception):
+        return
+    if not log:
+        return
+
+    pending = [r for r in log if r.get("outcome") == "pending"]
+    if not pending:
+        return
+
+    # Fetch any (sport, date) scoreboards not already cached by the pick path.
+    for r in pending:
+        d = str(r.get("scan_date", "")).replace("-", "")
+        sport = (r.get("sport") or "nba").lower()
+        if not d:
+            continue
+        fetcher = SPORT_FETCHERS.get(sport)
+        if fetcher and (sport, d) not in all_games:
+            all_games[(sport, d)] = fetcher(d)
+
+    resolved_count = 0
+    for r in log:
+        if r.get("outcome") != "pending":
+            continue
+        sport = (r.get("sport") or "nba").lower()
+        d = str(r.get("scan_date", "")).replace("-", "")
+        game = find_game_score(all_games.get((sport, d), []), r.get("event", ""))
+        if not game or not game["is_final"]:
+            continue
+
+        home_score = game["home"]["score"]
+        away_score = game["away"]["score"]
+        score_str = f"{game['away']['abbr']} {away_score}, {game['home']['abbr']} {home_score}"
+        pick = r.get("pick", "")
+        market = (r.get("market") or "").lower()
+
+        if market == "total":
+            outcome = resolve_total(pick, home_score, away_score)
+        elif market == "spread":
+            outcome = resolve_spread(pick, home_score, away_score, r.get("event", ""))
+        else:
+            outcome = "unknown"
+
+        if outcome == "unknown":
+            continue
+
+        r["outcome"] = outcome
+        r["final_score"] = score_str
+        resolved_count += 1
+
+    if resolved_count > 0:
+        GAME_LOG_JSON.write_text(json.dumps(log, indent=2) + "\n")
+        wins = sum(1 for r in log if r.get("outcome") == "win")
+        losses = sum(1 for r in log if r.get("outcome") == "loss")
+        pushes = sum(1 for r in log if r.get("outcome") == "push")
+        still = sum(1 for r in log if r.get("outcome") == "pending")
+        print(f"Game log: resolved {resolved_count} games. Record: {wins}W-{losses}L-{pushes}P, {still} pending (of {len(log)} total)")
 
 
 if __name__ == "__main__":
