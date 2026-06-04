@@ -9,7 +9,7 @@ updates bankroll and data.json.
 import json
 import sys
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
 import urllib.request
@@ -421,6 +421,34 @@ def find_game_score(games: list[dict], event_str: str) -> Optional[dict]:
             or away_name.lower() in game["away"].get("abbr", "").lower()
         )
         if home_match and away_match:
+            return game
+    return None
+
+
+def find_final_game_window(sport: str, scan_date: str, event_str: str,
+                           all_games: dict, days: int = 2) -> Optional[dict]:
+    """Find the matchup's first FINAL game in [scan_date .. scan_date+days].
+
+    Player props are scanned for a matchup's NEXT scheduled game, which is
+    usually the following day, but the pick is stamped with scan_date. Keying
+    resolution strictly off scan_date leaves those props pending forever. This
+    searches a small forward window and returns the first final game found
+    (the next game the prop was for), fetching + caching scoreboards on demand.
+    scan_date is 'YYYY-MM-DD'. Returns None if no final game in the window.
+    """
+    try:
+        base = datetime.strptime(scan_date[:10], "%Y-%m-%d")
+    except (ValueError, TypeError):
+        return None
+    fetcher = SPORT_FETCHERS.get(sport)
+    if fetcher is None:
+        return None
+    for off in range(0, days + 1):
+        d = (base + timedelta(days=off)).strftime("%Y%m%d")
+        if (sport, d) not in all_games:
+            all_games[(sport, d)] = fetcher(d)
+        game = find_game_score(all_games[(sport, d)], event_str)
+        if game and game.get("is_final"):
             return game
     return None
 
@@ -877,20 +905,38 @@ def resolve_pick_history(all_games: dict):
             continue
 
         sport = h.get("sport", "nba").lower() if h.get("sport") else "nba"
-        d = h.get("scan_date", "").replace("-", "")
-        sport_games = all_games.get((sport, d), [])
-        game = find_game_score(sport_games, h.get("event", ""))
-        if not game or not game["is_final"]:
+        pick = h.get("pick", "")
+        pick_upper = pick.strip().upper()
+        is_prop = h.get("type") == "prop" or h.get("market") == "Player Prop"
+        prop_detail = ""
+
+        # Props resolve against the matchup's next game (usually scan_date+1), so
+        # search a forward window. Game picks are same-day; key off scan_date.
+        if is_prop:
+            game = find_final_game_window(sport, h.get("scan_date", ""), h.get("event", ""), all_games)
+        else:
+            d = h.get("scan_date", "").replace("-", "")
+            game = find_game_score(all_games.get((sport, d), []), h.get("event", ""))
+
+        if not game or not game.get("is_final"):
+            # Void aged-out phantom props (matchup never played / stale feed) so
+            # the pending backlog stops growing forever. Stable: the upsert key
+            # includes scan_date, so an old voided date is never re-emitted.
+            if is_prop:
+                try:
+                    age = (datetime.now(timezone.utc).date()
+                           - datetime.strptime(h.get("scan_date", "")[:10], "%Y-%m-%d").date()).days
+                except (ValueError, TypeError):
+                    age = 0
+                if age > 3:
+                    h["outcome"] = "void"
+                    h["final_score"] = "no final game found within 2 days of scan date"
+                    resolved_count += 1
             continue
 
         home_score = game["home"]["score"]
         away_score = game["away"]["score"]
         score_str = f"{game['away']['abbr']} {away_score}, {game['home']['abbr']} {home_score}"
-
-        pick = h.get("pick", "")
-        pick_upper = pick.strip().upper()
-        is_prop = h.get("type") == "prop" or h.get("market") == "Player Prop"
-        prop_detail = ""
 
         # Determine outcome — same logic as main resolver, with props handled first.
         # Props need a per-game box-score fetch keyed on event_id; cached above so a
@@ -917,6 +963,19 @@ def resolve_pick_history(all_games: dict):
             outcome = "unknown"
 
         if outcome == "unknown":
+            # An aged prop whose game IS final but stays ungradeable (player DNP
+            # or box-score name mismatch) would sit pending forever. Void it so
+            # the backlog drains; recent ones stay pending for a real retry.
+            if is_prop:
+                try:
+                    age = (datetime.now(timezone.utc).date()
+                           - datetime.strptime(h.get("scan_date", "")[:10], "%Y-%m-%d").date()).days
+                except (ValueError, TypeError):
+                    age = 0
+                if age > 3:
+                    h["outcome"] = "void"
+                    h["final_score"] = "game final but player line ungradeable (DNP / name mismatch)"
+                    resolved_count += 1
             continue
 
         # For props, surface the actual stat line in final_score so the activity
