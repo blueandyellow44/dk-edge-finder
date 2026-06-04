@@ -248,8 +248,8 @@
     "edge": -0.0277,
     "raw_edge": 0.0324,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "SD 4, PHI 6"
   },
   {
     "scan_date": "2026-06-04",
@@ -266,8 +266,8 @@
     "edge": 0.0003,
     "raw_edge": 0.0744,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "BAL 8, BOS 2"
   },
   {
     "scan_date": "2026-06-04",
@@ -284,8 +284,8 @@
     "edge": -0.0499,
     "raw_edge": 0.0151,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CLE 1, NYY 2"
   },
   {
     "scan_date": "2026-06-04",
@@ -313,12 +313,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Toronto Blue Jays +1.5",
-    "line": "ATL -266",
-    "implied": 0.5074,
+    "line": "ATL -261",
+    "implied": 0.5169,
     "model_raw": 0.5492,
     "model_cal": 0.4929,
-    "edge": -0.0145,
-    "raw_edge": 0.0418,
+    "edge": -0.024,
+    "raw_edge": 0.0322,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -351,10 +351,10 @@
     "pick": "Athletics +1.5",
     "line": "CHC -143",
     "implied": 0.6364,
-    "model_raw": 0.6163,
-    "model_cal": 0.551,
-    "edge": -0.0853,
-    "raw_edge": -0.0201,
+    "model_raw": 0.6151,
+    "model_cal": 0.55,
+    "edge": -0.0864,
+    "raw_edge": -0.0213,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -368,11 +368,11 @@
     "side": "home",
     "pick": "Houston Astros +1.5",
     "line": "HOU -114",
-    "implied": 0.6491,
+    "implied": 0.6503,
     "model_raw": 0.6499,
     "model_cal": 0.581,
-    "edge": -0.0681,
-    "raw_edge": 0.0008,
+    "edge": -0.0693,
+    "raw_edge": -0.0005,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -385,7 +385,7 @@
     "market": "spread",
     "side": "home",
     "pick": "Arizona Diamondbacks +1.5",
-    "line": "LAD -137",
+    "line": "LAD -143",
     "implied": 0.5781,
     "model_raw": 0.5948,
     "model_cal": 0.5322,

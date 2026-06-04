@@ -129,26 +129,14 @@
     },
     {
       "sport": "MLB",
-      "event": "SF @ MIL",
-      "line": "MIL -193",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-4.0%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "1.9%",
-      "calib_delta": "-5.9pp"
-    },
-    {
-      "sport": "MLB",
       "event": "TOR @ ATL",
-      "line": "ATL -266",
+      "line": "ATL -261",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-1.5%",
+      "edge": "-2.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "4.2%",
+      "raw_edge": "3.2%",
       "calib_delta": "-5.6pp"
     },
     {
@@ -168,11 +156,11 @@
       "event": "ATH @ CHC",
       "line": "CHC -143",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-8.5%",
+      "edge": "-8.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-2.0%",
+      "raw_edge": "-2.1%",
       "calib_delta": "-6.5pp"
     },
     {
@@ -180,17 +168,17 @@
       "event": "PIT @ HOU",
       "line": "HOU -114",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-6.8%",
+      "edge": "-6.9%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "0.1%",
+      "raw_edge": "-0.0%",
       "calib_delta": "-6.9pp"
     },
     {
       "sport": "MLB",
       "event": "LAD @ ARI",
-      "line": "LAD -137",
+      "line": "LAD -143",
       "reason": "Edge below sport-specific threshold",
       "edge": "-4.6%",
       "min_edge": "5.0%",
@@ -214,20 +202,6 @@
       "pred_margin": 0.7,
       "home_spread": -1.5,
       "over_under": 5.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "SF",
-      "home_abbr": "MIL",
-      "away_name": "San Francisco Giants",
-      "home_name": "Milwaukee Brewers",
-      "event_short": "SF @ MIL",
-      "start_time": "2026-06-04T18:10Z",
-      "pred_away_score": 3.9,
-      "pred_home_score": 4.9,
-      "pred_margin": 1.0,
-      "home_spread": -1.5,
-      "over_under": 9.0
     },
     {
       "sport": "MLB",
@@ -265,8 +239,8 @@
       "home_name": "Chicago Cubs",
       "event_short": "ATH @ CHC",
       "start_time": "2026-06-05T00:05Z",
-      "pred_away_score": 4.6,
-      "pred_home_score": 5.2,
+      "pred_away_score": 4.7,
+      "pred_home_score": 5.3,
       "pred_margin": 0.6,
       "home_spread": -1.5,
       "over_under": 10.0
