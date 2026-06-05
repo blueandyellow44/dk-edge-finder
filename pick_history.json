@@ -11403,9 +11403,9 @@
     "type": "prop",
     "notes": "Sebastian Aho averages 1.8 Shots on Goal (last 10g), line is 2.5: 0.7 under with 0.8\u03c3 separation. Raw edge: 19.3% (capped at 15%). Edge capped: 19.3% \u2192 15.0%.",
     "prop_bucket": "under_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 3, CAR 4 | Sebastian Aho: 4 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-03",
@@ -11422,9 +11422,9 @@
     "type": "prop",
     "notes": "Nikolaj Ehlers averages 1.2 Points (last 10g), line is 0.5: 0.7 over with 0.8\u03c3 separation. Raw edge: 18.9% (capped at 15%). Edge capped: 18.9% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 3, CAR 4 | Nikolaj Ehlers: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-04",
@@ -11479,9 +11479,9 @@
     "type": "prop",
     "notes": "Sebastian Aho averages 1.8 Shots on Goal (last 10g), line is 2.5: 0.7 under with 0.8\u03c3 separation. Raw edge: 19.3% (capped at 15%). Edge capped: 19.3% \u2192 15.0%.",
     "prop_bucket": "under_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 3, CAR 4 | Sebastian Aho: 4 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-04",
@@ -11498,8 +11498,8 @@
     "type": "prop",
     "notes": "Nikolaj Ehlers averages 1.2 Points (last 10g), line is 0.5: 0.7 over with 0.8\u03c3 separation. Raw edge: 18.9% (capped at 15%). Edge capped: 18.9% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VGK 3, CAR 4 | Nikolaj Ehlers: 0 Points",
+    "pnl_if_bet": -10.0
   }
 ]
