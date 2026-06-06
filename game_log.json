@@ -410,8 +410,8 @@
     "edge": -0.043,
     "raw_edge": 0.0617,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NY 105, SA 104"
   },
   {
     "scan_date": "2026-06-05",
@@ -428,8 +428,8 @@
     "edge": -0.0344,
     "raw_edge": 0.0286,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SF 18, CHC 3"
   },
   {
     "scan_date": "2026-06-05",
@@ -446,8 +446,8 @@
     "edge": -0.0448,
     "raw_edge": 0.0166,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CHW 6, PHI 8"
   },
   {
     "scan_date": "2026-06-05",
@@ -464,8 +464,8 @@
     "edge": -0.031,
     "raw_edge": 0.04,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SEA 3, DET 7"
   },
   {
     "scan_date": "2026-06-05",
@@ -482,8 +482,8 @@
     "edge": -0.0852,
     "raw_edge": -0.0201,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "BOS 5, NYY 3"
   },
   {
     "scan_date": "2026-06-05",
@@ -500,8 +500,8 @@
     "edge": -0.0816,
     "raw_edge": -0.0186,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "BAL 13, TOR 3"
   },
   {
     "scan_date": "2026-06-05",
@@ -518,8 +518,8 @@
     "edge": -0.0573,
     "raw_edge": 0.0066,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "TB 6, MIA 0"
   },
   {
     "scan_date": "2026-06-05",
@@ -536,8 +536,8 @@
     "edge": -0.0701,
     "raw_edge": -0.0036,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "PIT 3, ATL 6"
   },
   {
     "scan_date": "2026-06-05",
@@ -554,8 +554,8 @@
     "edge": 0.0011,
     "raw_edge": 0.0748,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 1, HOU 5"
   },
   {
     "scan_date": "2026-06-05",
@@ -572,8 +572,8 @@
     "edge": -0.0702,
     "raw_edge": -0.0032,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CIN 3, STL 10"
   },
   {
     "scan_date": "2026-06-05",
@@ -590,8 +590,8 @@
     "edge": -0.0089,
     "raw_edge": 0.0627,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CLE 2, TEX 3"
   },
   {
     "scan_date": "2026-06-05",
@@ -608,8 +608,8 @@
     "edge": -0.0553,
     "raw_edge": 0.017,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "KC 3, MIN 5"
   },
   {
     "scan_date": "2026-06-05",
@@ -626,8 +626,8 @@
     "edge": -0.0112,
     "raw_edge": 0.0498,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "MIL 9, COL 7"
   },
   {
     "scan_date": "2026-06-05",
@@ -644,8 +644,8 @@
     "edge": -0.0454,
     "raw_edge": 0.0275,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NYM 5, SD 0"
   },
   {
     "scan_date": "2026-06-05",
@@ -662,8 +662,8 @@
     "edge": -0.0558,
     "raw_edge": 0.0138,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "WSH 14, ARI 1"
   },
   {
     "scan_date": "2026-06-05",
@@ -680,8 +680,8 @@
     "edge": -0.0429,
     "raw_edge": 0.0185,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "LAA 0, LAD 1"
   },
   {
     "scan_date": "2026-06-05",
@@ -698,7 +698,7 @@
     "edge": -0.0496,
     "raw_edge": -0.0045,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NY 105, SA 104"
   }
 ]

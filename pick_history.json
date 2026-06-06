@@ -11441,9 +11441,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 17.0 Points (last 10g), line is 11.5: 5.5 over with 1.2\u03c3 separation. Trending down (season avg: 17.7). Raw edge: 35.6% (capped at 15%). Edge capped: 35.6% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 105, SA 104 | Mikal Bridges: 20 Points",
+    "pnl_if_bet": 8.77
   },
   {
     "scan_date": "2026-06-04",
@@ -11460,9 +11460,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 3.9 Rebounds (last 10g), line is 2.5: 1.4 over with 1.2\u03c3 separation. Raw edge: 24.7% (capped at 15%). Edge capped: 24.7% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 105, SA 104 | Mikal Bridges: 6 Rebounds",
+    "pnl_if_bet": 5.81
   },
   {
     "scan_date": "2026-06-04",
@@ -11517,9 +11517,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 17.0 Points (last 10g), line is 11.5: 5.5 over with 1.2\u03c3 separation. Trending down (season avg: 17.7). Raw edge: 32.8% (capped at 15%). Edge capped: 32.8% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "NY 105, SA 104 | Mikal Bridges: 20 Points",
+    "pnl_if_bet": 7.81
   },
   {
     "scan_date": "2026-06-05",
@@ -11536,9 +11536,9 @@
     "type": "prop",
     "notes": "Dylan Harper averages 1.1 3-PT Made (last 10g), line is 0.5: 0.6 over with 0.9\u03c3 separation. Raw edge: 17.2% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 17.2% \u2192 15.0%.",
     "prop_bucket": "over_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 105, SA 104 | Dylan Harper: 0 3-PT Made",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-05",
