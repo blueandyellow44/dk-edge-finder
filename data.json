@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 15,
-  "best_bet": {
-    "title": "Mikal Bridges OVER 12.5 Points (-124) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Mikal Bridges averages 16.6 Points (last 10g), line is 12.5: 4.1 over with 1.0\u03c3 separation. Trending down (season avg: 17.3). Raw edge: 28.5% (capped at 15%). Edge capped: 28.5% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -121,19 +118,19 @@
     {
       "sport": "MLB",
       "event": "BOS @ NYY",
-      "line": "NYY -156",
+      "line": "NYY -149",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-7.1%",
+      "edge": "-7.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-0.6%",
+      "raw_edge": "-1.0%",
       "calib_delta": "-6.6pp"
     },
     {
       "sport": "MLB",
       "event": "CHW @ PHI",
-      "line": "PHI -175",
+      "line": "PHI -173",
       "reason": "Edge below sport-specific threshold",
       "edge": "-6.8%",
       "min_edge": "5.0%",
@@ -145,49 +142,49 @@
     {
       "sport": "MLB",
       "event": "PIT @ ATL",
-      "line": "ATL -157",
+      "line": "ATL -161",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-6.1%",
+      "edge": "-5.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "0.4%",
+      "raw_edge": "1.2%",
       "calib_delta": "-6.5pp"
     },
     {
       "sport": "MLB",
       "event": "BAL @ TOR",
-      "line": "TOR -142",
+      "line": "TOR -143",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-10.6%",
+      "edge": "-11.1%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-4.2%",
+      "raw_edge": "-4.7%",
       "calib_delta": "-6.4pp"
     },
     {
       "sport": "MLB",
       "event": "SEA @ DET",
-      "line": "DET -114",
+      "line": "DET -123",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.1%",
+      "edge": "-4.2%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.1%",
+      "raw_edge": "3.0%",
       "calib_delta": "-7.2pp"
     },
     {
       "sport": "MLB",
       "event": "TB @ MIA",
-      "line": "TB -112",
+      "line": "MIA -111",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-1.4%",
+      "edge": "-2.0%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "5.9%",
+      "raw_edge": "5.3%",
       "calib_delta": "-7.3pp"
     },
     {
@@ -195,35 +192,35 @@
       "event": "ATH @ HOU",
       "line": "HOU -112",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-0.0%",
+      "edge": "-0.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "7.3%",
+      "raw_edge": "7.0%",
       "calib_delta": "-7.3pp"
     },
     {
       "sport": "MLB",
       "event": "KC @ MIN",
-      "line": "KC -114",
+      "line": "KC -122",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-5.1%",
+      "edge": "-3.9%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "1.8%",
+      "raw_edge": "3.0%",
       "calib_delta": "-6.9pp"
     },
     {
       "sport": "MLB",
       "event": "CIN @ STL",
-      "line": "STL -144",
+      "line": "STL -156",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.3%",
+      "edge": "-1.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "3.8%",
+      "raw_edge": "5.5%",
       "calib_delta": "-7.1pp"
     },
     {
@@ -231,11 +228,11 @@
       "event": "CLE @ TEX",
       "line": "TEX -144",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.4%",
+      "edge": "-3.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "3.8%",
+      "raw_edge": "3.4%",
       "calib_delta": "-7.2pp"
     },
     {
@@ -253,25 +250,25 @@
     {
       "sport": "MLB",
       "event": "WSH @ ARI",
-      "line": "ARI -136",
+      "line": "ARI -131",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-9.7%",
+      "edge": "-9.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-3.0%",
+      "raw_edge": "-3.2%",
       "calib_delta": "-6.6pp"
     },
     {
       "sport": "MLB",
       "event": "LAA @ LAD",
-      "line": "LAD -218",
+      "line": "LAD -224",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.3%",
+      "edge": "-1.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "3.7%",
+      "raw_edge": "4.3%",
       "calib_delta": "-6.0pp"
     },
     {
@@ -279,72 +276,24 @@
       "event": "NYM @ SD",
       "line": "SD -110",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-1.5%",
+      "edge": "-2.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "5.8%",
+      "raw_edge": "4.7%",
       "calib_delta": "-7.3pp"
     },
     {
       "sport": "MLB",
       "event": "SF @ CHC",
-      "line": "CHC -125",
+      "line": "CHC -132",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-7.9%",
+      "edge": "-6.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-0.8%",
-      "calib_delta": "-7.0pp"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Mikal Bridges OVER 2.5 Assists (-153)",
-      "reason": "Max 2 props per game (edge: 14.7%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Victor Wembanyama UNDER 3.5 Assists (-167)",
-      "reason": "Max 2 props per game (edge: 12.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Dylan Harper UNDER 3.5 Assists (-139)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "OG Anunoby OVER 15.5 Points (-121)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "OG Anunoby OVER 1.5 Assists (-107)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Stephon Castle OVER 4.5 Rebounds (-160)",
-      "reason": "Max 2 props per game (edge: 10.7%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Dylan Harper OVER 0.5 3-PT Made (-188)",
-      "reason": "Max 2 props per game (edge: 6.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Karl-Anthony Towns OVER 3.5 Assists (-164)",
-      "reason": "Max 2 props per game (edge: 9.7%)"
+      "raw_edge": "0.4%",
+      "calib_delta": "-7.1pp"
     }
   ],
   "analyzed_games": [
@@ -388,7 +337,7 @@
       "pred_home_score": 4.6,
       "pred_margin": 0.7,
       "home_spread": -1.5,
-      "over_under": 9.0
+      "over_under": 8.5
     },
     {
       "sport": "MLB",
@@ -402,7 +351,7 @@
       "pred_home_score": 4.4,
       "pred_margin": 0.8,
       "home_spread": -1.5,
-      "over_under": 8.5
+      "over_under": 8.0
     },
     {
       "sport": "MLB",
@@ -482,8 +431,8 @@
       "home_name": "Texas Rangers",
       "event_short": "CLE @ TEX",
       "start_time": "2026-06-07T18:35Z",
-      "pred_away_score": 3.6,
-      "pred_home_score": 3.8,
+      "pred_away_score": 3.5,
+      "pred_home_score": 3.7,
       "pred_margin": 0.2,
       "home_spread": -1.5,
       "over_under": 7.0
@@ -539,8 +488,8 @@
       "event_short": "NYM @ SD",
       "start_time": "2026-06-07T20:10Z",
       "pred_away_score": 3.9,
-      "pred_home_score": 3.9,
-      "pred_margin": -0.0,
+      "pred_home_score": 3.8,
+      "pred_margin": -0.1,
       "home_spread": 1.5,
       "over_under": 7.5
     },
@@ -552,8 +501,8 @@
       "home_name": "Chicago Cubs",
       "event_short": "SF @ CHC",
       "start_time": "2026-06-08T00:30Z",
-      "pred_away_score": 3.9,
-      "pred_home_score": 4.2,
+      "pred_away_score": 3.8,
+      "pred_home_score": 4.1,
       "pred_margin": 0.3,
       "home_spread": -1.5,
       "over_under": 8.0
