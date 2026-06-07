@@ -11555,9 +11555,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 1.1 Assists (last 10g), line is 0.5: 0.6 over with 0.6\u03c3 separation.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAR 4, VGK 5 | Mitch Marner: 1 Assists",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-06-05",
@@ -11574,9 +11574,9 @@
     "type": "prop",
     "notes": "Nikolaj Ehlers averages 1.0 Points (last 10g), line is 0.5: 0.5 over with 0.6\u03c3 separation.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CAR 4, VGK 5 | Nikolaj Ehlers: 0 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-06",
@@ -11631,9 +11631,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 1.1 Assists (last 10g), line is 0.5: 0.6 over with 0.6\u03c3 separation.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAR 4, VGK 5 | Mitch Marner: 1 Assists",
+    "pnl_if_bet": 7.14
   },
   {
     "scan_date": "2026-06-06",
@@ -11650,8 +11650,8 @@
     "type": "prop",
     "notes": "Nikolaj Ehlers averages 1.0 Points (last 10g), line is 0.5: 0.5 over with 0.6\u03c3 separation.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CAR 4, VGK 5 | Nikolaj Ehlers: 0 Points",
+    "pnl_if_bet": -10.0
   }
 ]
