@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 9,
-  "best_bet": {
-    "title": "Devin Vassell OVER 4.5 Rebounds (-137) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Devin Vassell averages 6.2 Rebounds (last 10g), line is 4.5: 1.8 over with 0.8\u03c3 separation. Trending up (season avg: 5.7). Raw edge: 20.1% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount "
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -121,14 +118,14 @@
     {
       "sport": "NBA",
       "event": "SA @ NY",
-      "line": "NY -2.5",
+      "line": "NY -1.5",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.5%",
+      "edge": "-2.9%",
       "min_edge": "8.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "2.2%",
-      "calib_delta": "-5.7pp"
+      "raw_edge": "2.9%",
+      "calib_delta": "-5.8pp"
     },
     {
       "sport": "MLB",
@@ -171,11 +168,11 @@
       "event": "PHI @ TOR",
       "line": "PHI -175",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.4%",
+      "edge": "-4.1%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "2.4%",
+      "raw_edge": "1.8%",
       "calib_delta": "-5.8pp"
     },
     {
@@ -217,74 +214,14 @@
     {
       "sport": "MLB",
       "event": "MIL @ ATH",
-      "line": "MIL -149",
+      "line": "MIL -144",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-1.9%",
+      "edge": "-2.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.3%",
+      "raw_edge": "3.8%",
       "calib_delta": "-6.2pp"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "OG Anunoby OVER 1.5 3-PT Made (-198)",
-      "reason": "Max 2 props per game (edge: 10.5%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Mikal Bridges OVER 2.5 Assists (-152)",
-      "reason": "Max 2 props per game (edge: 14.9%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Victor Wembanyama UNDER 3.5 Assists (-158)",
-      "reason": "Max 2 props per game (edge: 13.3%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Dylan Harper UNDER 3.5 Assists (-156)",
-      "reason": "Max 2 props per game (edge: 12.4%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "OG Anunoby OVER 15.5 Points (+100)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "OG Anunoby OVER 1.5 Assists (-128)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Stephon Castle OVER 4.5 Rebounds (-154)",
-      "reason": "Max 2 props per game (edge: 11.6%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Dylan Harper OVER 0.5 3-PT Made (-174)",
-      "reason": "Max 2 props per game (edge: 8.6%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Karl-Anthony Towns OVER 3.5 Assists (-144)",
-      "reason": "Max 2 props per game (edge: 12.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "San Antonio Spurs @ New York Knicks",
-      "line": "Jalen Brunson OVER 2.5 Rebounds (-165)",
-      "reason": "Max 2 props per game (edge: 7.0%)"
     }
   ],
   "analyzed_games": [
@@ -296,10 +233,10 @@
       "home_name": "New York Knicks",
       "event_short": "SA @ NY",
       "start_time": "2026-06-09T00:30Z",
-      "pred_away_score": 107.0,
-      "pred_home_score": 106.7,
-      "pred_margin": -0.3,
-      "home_spread": -2.5,
+      "pred_away_score": 106.8,
+      "pred_home_score": 106.8,
+      "pred_margin": -0.0,
+      "home_spread": -1.5,
       "over_under": 216.5
     },
     {
