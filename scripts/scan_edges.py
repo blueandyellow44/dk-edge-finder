@@ -2343,6 +2343,23 @@ def main(games_only: bool = False):
             except Exception as e:
                 print(f"  {sport.upper()} moneyline scanning error: {e}", file=sys.stderr)
 
+        # Step 5d: MLB moneyline (2-way). Same skellam model as the run line,
+        # collapsed to win/lose. Covers favorites the run line hard-skips.
+        import mlb_moneyline
+        mlb_games = [g for g in upcoming if g.get("sport", "").lower() == "mlb"]
+        if mlb_games:
+            print("\n[5d] Scanning MLB moneyline (real DK h2h odds)...")
+            try:
+                mlb_ml = mlb_moneyline.scan_mlb_moneyline(
+                    all_predictions.get("mlb", {}), mlb_games, available)
+                for mp in mlb_ml:
+                    picks.append(mp)
+                    print(f"  EDGE: {mp['pick']} ({mp['odds']}) — {mp['edge']}% edge")
+                if mlb_ml:
+                    print(f"  Found {len(mlb_ml)} MLB moneyline edge(s)")
+            except Exception as e:
+                print(f"  MLB moneyline scanning error: {e}", file=sys.stderr)
+
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
     # Split picks into game edges and prop edges, sort each by EV per dollar
     # risked (not raw edge%). Edge% alone ranks heavy-juice favorites ahead of

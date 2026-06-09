@@ -266,6 +266,22 @@ def three_way_probs(home_xg, away_xg, max_goals=15):
     return (p_home / total, p_draw / total, p_away / total)
 
 
+def two_way_win_probs(home_x, away_x, home_tie_edge=0.5):
+    """(p_home, p_away) for a no-draw sport — baseball moneyline.
+
+    A regulation tie (goal/run difference 0) is decided in extra innings, so
+    the tie mass from three_way_probs is split between the teams:
+        p_home = P(home > away) + home_tie_edge * P(tie)
+        p_away = P(away > home) + (1 - home_tie_edge) * P(tie)
+    home_tie_edge defaults to 0.5 (neutral). MLB home teams win extras only
+    marginally more often, and the home-field scoring edge is already in the
+    predicted runs, so 0.5 avoids an unvalidated parameter. p_home + p_away = 1.
+    """
+    p_home, p_tie, p_away = three_way_probs(home_x, away_x)
+    return (p_home + home_tie_edge * p_tie,
+            p_away + (1.0 - home_tie_edge) * p_tie)
+
+
 def poisson_spread_probability(predicted_away, predicted_home, spread):
     """Returns probability that home beats the spread using Skellam distribution.
 
