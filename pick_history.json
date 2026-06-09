@@ -11881,5 +11881,24 @@
     "outcome": "pending",
     "final_score": "",
     "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-06-09",
+    "sport": "MLB",
+    "event": "Milwaukee Brewers @ Athletics",
+    "market": "Over/Under",
+    "pick": "UNDER 13.0",
+    "odds": "-103",
+    "implied": "50.7%",
+    "model": "63.5%",
+    "edge": 12.7,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 5.8, ATH 5.6 (total: 11.4). Line: 13.0. Cushion: 1.6 pts. \u26a0 SUSPICIOUS EDGE (12.7%): Model predicts 11.4 vs market 13.0 \u2014 1.6 pt gap.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
