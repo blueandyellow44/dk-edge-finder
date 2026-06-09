@@ -133,40 +133,78 @@ def skellam_pmf(k, mu1, mu2):
         return 0.0
 
     log_prob += math.log(bessel_val)
-    return math.exp(log_prob)
+    p = math.exp(log_prob)
+    # A pmf term cannot exceed 1. bessel_i_n's forward recurrence is numerically
+    # unstable when its order |k| exceeds its argument 2√(μ₁μ₂), which can return
+    # a hugely inflated value in the far tail (true mass there ~0). Clamp that
+    # garbage to 0 so it cannot poison a cdf/sf sum. For in-bulk terms (all ≤1)
+    # this never fires, so run-line values are unchanged. Added 2026-06-09.
+    if not math.isfinite(p) or p > 1.0:
+        return 0.0
+    return p
+
+
+def _poisson_pmf_list(lam, n_max):
+    """[P(X=0), ..., P(X=n_max)] for X ~ Poisson(lam), via the iterative term
+    P(k) = P(k-1) * lam / k (no factorial overflow, pure stdlib)."""
+    out = [math.exp(-lam)]
+    term = out[0]
+    for i in range(1, n_max + 1):
+        term *= lam / i
+        out.append(term)
+    return out
 
 
 def skellam_cdf(k_threshold, mu1, mu2):
     """Cumulative distribution function of Skellam.
 
-    Computes P(D <= k_threshold) by summing the PMF over an appropriate range.
-    The range is determined dynamically: ±6σ from the mean covers 99.73% of
-    the probability mass (per normal approximation).
+    Computes P(D <= k_threshold) for D = X1 - X2, X1 ~ Poisson(mu1),
+    X2 ~ Poisson(mu2), by DIRECT POISSON CONVOLUTION:
+
+        P(D <= k) = Σ_{x2} P(X2 = x2) * P(X1 <= x2 + k)
+
+    Exact and numerically stable for ALL means. This replaced (2026-06-09) a
+    Bessel-summation version whose early-exit fired in the far-left tail and
+    returned 0 for low or asymmetric means — e.g. a low-scoring run line (2.7 vs
+    3.4 runs) made skellam_sf return a spurious 1.0. The Bessel recurrence
+    (bessel_i_n) is also numerically unstable when its order exceeds its
+    argument. Convolution agrees with the old version to ~1e-6 for the run-line
+    means where the old one worked (negligible vs the calibration's 4-decimal
+    use), and corrects it where it didn't.
 
     Args:
-        k_threshold: Upper limit
-        mu1, mu2: Poisson means
+        k_threshold: Upper limit (floored to an integer)
+        mu1, mu2: Poisson means (must be positive)
 
     Returns:
         P(D <= k_threshold), clamped to [0, 1]
     """
-    mean = mu1 - mu2
-    std = math.sqrt(mu1 + mu2)
+    if mu1 <= 0 or mu2 <= 0:
+        raise ValueError("Means must be positive")
 
-    # Bounds: ±6σ from mean covers 99.73% of normal distribution
-    k_min = math.floor(mean - 6 * std) - 1
-    # CRITICAL: use floor, not int. int(-1.5) = -1 (truncates toward zero)
-    # but floor(-1.5) = -2. For P(D ≤ -1.5) we need to sum up to k=-2 only.
-    k_max = math.floor(k_threshold) + 1
+    kt = math.floor(k_threshold)
+    # Cap goal counts well beyond any real game: mean + ~12σ.
+    n_max = max(20, int(mu1 + mu2 + 12 * math.sqrt(mu1 + mu2)) + 5)
 
-    result = 0.0
-    for k in range(k_min, k_max):
-        pmf_val = skellam_pmf(k, mu1, mu2)
-        result += pmf_val
-        if pmf_val < 1e-15:
-            break
+    p1 = _poisson_pmf_list(mu1, n_max)
+    p2 = _poisson_pmf_list(mu2, n_max)
 
-    return min(1.0, result)
+    # c1[m] = P(X1 <= m)
+    c1 = []
+    running = 0.0
+    for v in p1:
+        running += v
+        c1.append(running)
+
+    total = 0.0
+    for x2 in range(n_max + 1):
+        m = x2 + kt          # need X1 <= x2 + kt
+        if m < 0:
+            continue
+        cdf1 = c1[m] if m <= n_max else 1.0
+        total += p2[x2] * cdf1
+
+    return min(1.0, total)
 
 
 def skellam_sf(k_threshold, mu1, mu2):
@@ -207,17 +245,8 @@ def three_way_probs(home_xg, away_xg, max_goals=15):
     if home_xg <= 0 or away_xg <= 0:
         raise ValueError("expected goals must be positive")
 
-    def _poisson_pmf_vector(lam, n_max):
-        """[P(X=0), ..., P(X=n_max)] via iterative term (no factorial overflow)."""
-        out = [math.exp(-lam)]
-        term = out[0]
-        for i in range(1, n_max + 1):
-            term *= lam / i
-            out.append(term)
-        return out
-
-    home_p = _poisson_pmf_vector(home_xg, max_goals)
-    away_p = _poisson_pmf_vector(away_xg, max_goals)
+    home_p = _poisson_pmf_list(home_xg, max_goals)
+    away_p = _poisson_pmf_list(away_xg, max_goals)
 
     p_home = p_draw = p_away = 0.0
     for i in range(max_goals + 1):
