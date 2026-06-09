@@ -332,3 +332,7 @@ Schedule a manual calibration review on the 1st of each month. Compare: win rate
 ### Auto-settlement still broken for MLB bets [AUTOMATE]
 - March 29 MLB bets sat "pending" for 5 days until manual resolution today.
 - **Rule:** resolve_bets.py needs MLB game resolution logic. Same pattern as the totals fix from 3/22 — add it now, not later.
+
+## 2026-06-05: Verify a prop's actual game time before predicting when it resolves [MANUAL]
+- After shipping the window-search prop fix, predicted two pending props would resolve "tomorrow" because their matchup fell inside the resolution window. The matchup's game was actually scheduled two days out (Fri 6/5 8:30 PM EDT), so the props correctly stayed pending past the prediction.
+- **Rule:** A prop being inside the scan_date..scan_date+2 window does NOT mean its game has been played. Before asserting a resolution time, check the game's ESPN status (pre / in / post) and scheduled start, not just that the matchup exists in the window. The fix waiting is correct behavior, not a failure.
