@@ -62,26 +62,31 @@ ph1, _ = S.two_way_win_probs(4.3, 4.3, home_tie_edge=0.55)
 truthy("higher home_tie_edge raises home prob", ph1 > ph0)
 
 
-# ── end-to-end edge calc ──────────────────────────────────
+# ── end-to-end edge calc (with the market-anchored blend) ──
+from market_blend import blend_multiway
 game = {"home": {"abbr": "NYY", "name": "New York Yankees"},
         "away": {"abbr": "BOS", "name": "Boston Red Sox"},
         "dk_game_link": "", "start_time": ""}
-pred = {"home_score": 5.0, "away_score": 4.0, "source_label": "DRatings", "sources": 2}
-ph, pa = S.two_way_win_probs(5.0, 4.0)
-# DK underpricing the home favorite: model ~0.58, price -120 (implied .545) => +edge
-res = M.calculate_mlb_ml_edge(game, pred, {"home_ml": -120, "away_ml": +110,
+# Strong model home favorite (5.5 vs 3.5 runs) priced as a pick'em — a big
+# model-vs-market disagreement that survives the blend's shrinkage.
+pred = {"home_score": 5.5, "away_score": 3.5, "source_label": "DRatings", "sources": 2}
+ph, pa = S.two_way_win_probs(5.5, 3.5)
+bh, ba = blend_multiway([ph, pa], [+100, -120])  # what the edge calc uses
+res = M.calculate_mlb_ml_edge(game, pred, {"home_ml": +100, "away_ml": -120,
                                            "home_link": "x", "away_link": ""})
 truthy("e2e produces a pick", isinstance(res, dict))
 if isinstance(res, dict):
     truthy("e2e picks the home favorite", res["pick"] == "New York Yankees ML")
     truthy("e2e market is Moneyline", res["market"] == "Moneyline")
-    truthy("e2e logs xg + probs", res["home_xg"] == 5.0 and "p_home" in res)
-    approx("e2e model_prob == two_way home", res["model_prob"], ph, tol=1e-9)
+    truthy("e2e logs xg + probs", res["home_xg"] == 5.5 and "p_home" in res)
+    # model_prob is the BLENDED home prob, not the raw skellam one
+    approx("e2e model_prob == blended home", res["model_prob"], bh, tol=1e-9)
+    truthy("blend shrinks model toward market (blended < raw)", bh < ph)
 
-# No-edge: fairly priced => None
-none_res = M.calculate_mlb_ml_edge(game, pred, {"home_ml": -150, "away_ml": +130,
+# No-edge: home over-priced (-300) so even the strong model has no edge => None
+none_res = M.calculate_mlb_ml_edge(game, pred, {"home_ml": -300, "away_ml": +240,
                                                 "home_link": "", "away_link": ""})
-truthy("fairly-priced favorite => no pick", none_res is None)
+truthy("over-priced favorite => no pick", none_res is None)
 
 
 print(f"ran {checks} checks")

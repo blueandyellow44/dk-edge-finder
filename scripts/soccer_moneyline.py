@@ -30,6 +30,7 @@ import urllib.request
 import props_kernel  # ODDS_API_KEY, american_to_implied
 import props_soccer  # per-league PLUGINS carry ODDS_API_SPORT_KEY
 from skellam import three_way_probs
+from market_blend import blend_multiway
 
 # Min-edge floors. Draws are higher-variance / lower base rate, so they need a
 # bigger edge to clear. Tune as the pnl_if_bet record accumulates.
@@ -130,13 +131,16 @@ def fetch_h2h_odds(sport_key: str) -> list[dict]:
     return out
 
 
-def _build_pick(game, sport, pred, h2h, outcome, model_p, ml_odds, link):
+def _build_pick(game, sport, pred, h2h, outcome, probs, ml_odds, link):
     """Assemble a pick dict for one chosen 3-way outcome. Outcome is
-    'home' | 'draw' | 'away'."""
+    'home' | 'draw' | 'away'. `probs` is the (already market-blended) tuple
+    (p_home, p_draw, p_away) used for the edge decision, so notes and logged
+    probs stay consistent with it."""
     home, away = game["home"], game["away"]
     home_name, away_name = home.get("name", "?"), away.get("name", "?")
     home_xg, away_xg = pred["home_score"], pred["away_score"]
-    p_home, p_draw, p_away = three_way_probs(home_xg, away_xg)
+    p_home, p_draw, p_away = probs
+    model_p = {"home": p_home, "draw": p_draw, "away": p_away}[outcome]
 
     implied = props_kernel.american_to_implied(ml_odds)
     raw_edge = model_p - implied
@@ -208,6 +212,12 @@ def calculate_moneyline_edge(game, pred, h2h):
     except ValueError:
         return None
 
+    # Market-anchored blend: pull each outcome toward the no-vig market
+    # (2026-06-09 audit — filters adverse-selected disagreements).
+    p_home, p_draw, p_away = blend_multiway(
+        [p_home, p_draw, p_away],
+        [h2h.get("home_ml"), h2h.get("draw_ml"), h2h.get("away_ml")])
+
     candidates = [
         ("home", p_home, h2h.get("home_ml"), h2h.get("home_link"), SOCCER_ML_MIN_EDGE),
         ("draw", p_draw, h2h.get("draw_ml"), h2h.get("draw_link"), SOCCER_ML_DRAW_MIN_EDGE),
@@ -225,8 +235,9 @@ def calculate_moneyline_edge(game, pred, h2h):
 
     if best is None:
         return None
-    outcome, _edge, model_p, ml, link = best
-    return _build_pick(game, game.get("sport", "soccer"), pred, h2h, outcome, model_p, ml, link)
+    outcome, _edge, _model_p, ml, link = best
+    return _build_pick(game, game.get("sport", "soccer"), pred, h2h, outcome,
+                       (p_home, p_draw, p_away), ml, link)
 
 
 def scan_soccer_moneyline(sport, predictions, games, bankroll=500.0):

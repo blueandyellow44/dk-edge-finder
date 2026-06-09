@@ -25,6 +25,7 @@ from pathlib import Path
 from skellam import poisson_spread_probability
 from fetch_props import scan_props as scan_player_props
 from fetch_sources import fetch_all_sources
+from market_blend import blend_two_way
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -1305,38 +1306,9 @@ def american_to_implied(odds: int) -> float:
         return 100 / (odds + 100)
 
 
-# Market-anchored blend (2026-06-09 projection-quality audit). On the unbiased
-# game_log, the raw model barely beats a sharp DK line (Brier ~flat vs the
-# market) and the no-vig market is the best-calibrated single predictor. In the
-# pick sample the model's edges over the market are ~11pp too optimistic — that
-# gap is adverse selection: betting the biggest model-vs-market disagreements is
-# betting your own errors. Anchoring model_prob toward the de-vigged market for
-# the picked side shrinks those disagreements, dropping the most adverse-selected
-# picks below the edge floor. WEIGHT is a judgment call (the unbiased sample is
-# only ~72 games, Brier is flat, so it is NOT data-fit); 0.6 = 60% model / 40%
-# market, the weak Brier-optimum. Set to 1.0 to disable (pure model, prior
-# behavior). Tune via the pnl_if_bet record as data accrues.
-MARKET_BLEND_WEIGHT = 0.6
-
-
-def market_blend(model_prob: float, pick_odds, other_odds,
-                 weight: float = MARKET_BLEND_WEIGHT) -> float:
-    """Blend model_prob toward the no-vig market prob for the picked side.
-
-    Returns model_prob unchanged if weight >= 1.0 or the other-side odds are
-    missing (cannot de-vig). edge math downstream still uses the raw (vigged)
-    implied as the price, so the blend only moves the model estimate, not the
-    breakeven.
-    """
-    if weight >= 1.0 or not pick_odds or not other_odds:
-        return model_prob
-    imp_pick = american_to_implied(pick_odds)
-    imp_other = american_to_implied(other_odds)
-    s = imp_pick + imp_other
-    if s <= 0:
-        return model_prob
-    novig = imp_pick / s
-    return weight * model_prob + (1.0 - weight) * novig
+# Market-anchored blend lives in market_blend.py (shared with the moneyline
+# modules so MARKET_BLEND_WEIGHT is defined once). See blend_two_way usage below
+# in calculate_edge / calculate_total_edge.
 
 
 def calc_kelly(edge: float, decimal_odds: float, fraction: float) -> float:
@@ -1635,7 +1607,7 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
         # adverse-selected disagreements.
         spread_other_odds = (game.get("away_spread_odds") if pick_side == "home"
                              else game.get("home_spread_odds"))
-        model_prob = market_blend(model_prob, cand.get("dk_odds"), spread_other_odds)
+        model_prob = blend_two_way(model_prob, cand.get("dk_odds"), spread_other_odds)
 
         # Calculate edge
         implied_prob = cand["implied_prob"]
@@ -1912,7 +1884,7 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
     # disagreements.
     total_other_odds = (game.get("under_odds") if pick_side == "over"
                         else game.get("over_odds"))
-    model_prob = market_blend(model_prob, dk_odds, total_other_odds)
+    model_prob = blend_two_way(model_prob, dk_odds, total_other_odds)
 
     # Calculate edge
     edge = model_prob - implied_prob

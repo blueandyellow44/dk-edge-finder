@@ -23,6 +23,7 @@ forward-validated via pnl_if_bet + manual placement (DK Edge is real money).
 import props_kernel  # american_to_implied
 import soccer_moneyline as _sml  # fetch_h2h_odds, american_to_decimal, _names_match
 from skellam import two_way_win_probs
+from market_blend import blend_multiway
 
 ODDS_API_SPORT_KEY = "baseball_mlb"
 
@@ -42,6 +43,11 @@ def calculate_mlb_ml_edge(game, pred, h2h):
         p_home, p_away = two_way_win_probs(home_x, away_x)
     except ValueError:
         return None
+
+    # Market-anchored blend: pull the model toward the no-vig market (2026-06-09
+    # audit — the model barely beats a sharp line; filters adverse selection).
+    p_home, p_away = blend_multiway([p_home, p_away],
+                                    [h2h.get("home_ml"), h2h.get("away_ml")])
 
     home, away = game["home"], game["away"]
     home_name = home.get("name", "?")
