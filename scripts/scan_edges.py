@@ -1951,6 +1951,12 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
         "spread_cushion": cushion,
         "dk_link": game.get("dk_total_links", {}).get(pick_side, "") or game.get("dk_game_link", ""),
         "start_time": game.get("start_time", ""),
+        # Logging fix (2026-06-09): persist predicted team scores so totals picks
+        # become backtestable. Predicted goals were previously discarded after
+        # the scan, which is why no game-line model could be validated after the
+        # fact. Mirrors the same fields on soccer moneyline picks.
+        "home_xg": round(pred["home_score"], 3),
+        "away_xg": round(pred["away_score"], 3),
     }
 
 
@@ -2300,6 +2306,31 @@ def main(games_only: bool = False):
                     print(f"  No {sport.upper()} prop edges found")
             except Exception as e:
                 print(f"  {sport.upper()} prop scanning error: {e}", file=sys.stderr)
+
+    # Step 5c: Soccer 3-way moneyline (home/draw/away) — a CORE game-line market.
+    # Needs DK h2h prices from The Odds API (ESPN carries no soccer moneyline),
+    # so it is gated like props to the non-games-only path. One credit/league.
+    if games_only:
+        print("\n[5c] Skipping soccer moneyline (--games-only mode, no API credits used)")
+    else:
+        import soccer_moneyline
+        soccer_ml_leagues = ["mls", "epl", "la_liga", "bundesliga",
+                             "serie_a", "ligue_1", "ucl"]
+        print("\n[5c] Scanning soccer 3-way moneyline (real DK h2h odds)...")
+        for sport in soccer_ml_leagues:
+            sport_games = [g for g in upcoming if g.get("sport", "").lower() == sport]
+            if not sport_games:
+                continue
+            try:
+                ml_picks = soccer_moneyline.scan_soccer_moneyline(
+                    sport, all_predictions.get(sport, {}), sport_games, available)
+                for mp in ml_picks:
+                    picks.append(mp)
+                    print(f"  EDGE: {mp['pick']} ({mp['odds']}) — {mp['edge']}% edge")
+                if ml_picks:
+                    print(f"  Found {len(ml_picks)} {sport.upper()} moneyline edge(s)")
+            except Exception as e:
+                print(f"  {sport.upper()} moneyline scanning error: {e}", file=sys.stderr)
 
     # Step 6: Size bets with Kelly — DIVERSIFIED across game + prop categories
     # Split picks into game edges and prop edges, sort each by EV per dollar

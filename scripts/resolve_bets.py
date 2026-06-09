@@ -488,8 +488,19 @@ def resolve_spread(pick_str: str, home_score: int, away_score: int, event_str: s
 
 
 def resolve_moneyline(pick_str: str, home_score: int, away_score: int, event_str: str) -> str:
-    """Determine WIN/LOSS for a moneyline bet."""
+    """Determine WIN/LOSS for a moneyline bet.
+
+    Handles the soccer 3-way Draw outcome ("Draw ML") in addition to team
+    picks. A team ML on a drawn match correctly grades as a loss via the
+    score comparison below.
+    """
     team_name = pick_str.replace(" ML", "").strip()
+
+    # 3-way draw outcome (soccer). Order-independent, so check before parsing
+    # the event string.
+    if team_name.lower() == "draw":
+        return "win" if home_score == away_score else "loss"
+
     event_parts = event_str.split(" @ ")
     if len(event_parts) != 2:
         return "unknown"

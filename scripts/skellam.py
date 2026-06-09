@@ -184,6 +184,59 @@ def skellam_sf(k_threshold, mu1, mu2):
     return 1.0 - skellam_cdf(k_threshold, mu1, mu2)
 
 
+def three_way_probs(home_xg, away_xg, max_goals=15):
+    """(p_home, p_draw, p_away) for a 3-way soccer match.
+
+    Models each team's goals as independent Poisson — home ~ Poisson(home_xg),
+    away ~ Poisson(away_xg) — and sums the joint score matrix:
+
+        P(home win) = Σ_{i>j} P(home=i) P(away=j)
+        P(draw)     = Σ_{i=j} P(home=i) P(away=j)
+        P(away win) = Σ_{i<j} P(home=i) P(away=j)
+
+    This is the same goal-difference (Skellam) model the run/puck lines use, but
+    computed by DIRECT CONVOLUTION rather than the Bessel-based skellam_cdf path.
+    The Bessel recurrence (bessel_i_n) is numerically unstable when its order
+    exceeds its argument, which is exactly the small-mean regime of soccer xG
+    (~0.5-3); convolution is exact and stable there. O(max_goals²) ≈ 256 ops.
+
+    max_goals caps each team's goals (P(>15) is ~0 for any real xG); the result
+    is renormalized to absorb that negligible truncated tail. Raises ValueError
+    on non-positive xg.
+    """
+    if home_xg <= 0 or away_xg <= 0:
+        raise ValueError("expected goals must be positive")
+
+    def _poisson_pmf_vector(lam, n_max):
+        """[P(X=0), ..., P(X=n_max)] via iterative term (no factorial overflow)."""
+        out = [math.exp(-lam)]
+        term = out[0]
+        for i in range(1, n_max + 1):
+            term *= lam / i
+            out.append(term)
+        return out
+
+    home_p = _poisson_pmf_vector(home_xg, max_goals)
+    away_p = _poisson_pmf_vector(away_xg, max_goals)
+
+    p_home = p_draw = p_away = 0.0
+    for i in range(max_goals + 1):
+        hi = home_p[i]
+        for j in range(max_goals + 1):
+            joint = hi * away_p[j]
+            if i > j:
+                p_home += joint
+            elif i == j:
+                p_draw += joint
+            else:
+                p_away += joint
+
+    total = p_home + p_draw + p_away  # ~1 minus the truncated >max_goals tail
+    if total <= 0:
+        raise ValueError("degenerate probabilities")
+    return (p_home / total, p_draw / total, p_away / total)
+
+
 def poisson_spread_probability(predicted_away, predicted_home, spread):
     """Returns probability that home beats the spread using Skellam distribution.
 
