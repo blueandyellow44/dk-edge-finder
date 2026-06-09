@@ -640,6 +640,13 @@ def scan_props(plugin, bankroll: float = 500.0, max_lookups: int = 30,
     if game_margins is None:
         game_margins = {}
 
+    # Per-plugin hard-skip: suppress an entire sport's props before any Odds API
+    # call. Used to wind a sport down (e.g. NHL props 2026-06-09) when the kernel
+    # model is wrong for it. Reversible by flipping the plugin's HARD_SKIP flag.
+    if getattr(plugin, "HARD_SKIP", False):
+        print(f"  {plugin.SPORT_DISPLAY} props hard-skipped (plugin.HARD_SKIP=True)")
+        return []
+
     print(f"  Fetching DK {plugin.SPORT_DISPLAY} prop odds from The Odds API...")
     props = fetch_dk_prop_odds(plugin, max_events=6)
 

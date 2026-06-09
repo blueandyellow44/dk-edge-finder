@@ -60,6 +60,18 @@ PROP_SD = {
 
 COMBOS: dict[str, list[str]] = {}
 
+# Hard-skip (2026-06-09): suppress all NHL props. The shared kernel prices
+# props with a normal-CDF (props_kernel.py:471-476), which is structurally
+# wrong for low-line discrete count props (OVER 0.5 Points/Assists, 1.5 SOG):
+# a Gaussian tail off a last-10-game mean overstates the favorite side. In the
+# 2026-05-23..06-08 post-fix window NHL props went 3W-15L (16.7%), -$126
+# pnl_if_bet, with every pick pegged at the 15% edge cap (model 71-92% vs DK
+# 51-66%) — a broken model, not value. NHL is down to the Cup Final, so this is
+# a suppression, not a fix. The real fix (Poisson/empirical count model) is
+# tracked for MLB/soccer props. Flip back to False when NHL returns next season
+# AND the count model has shipped.
+HARD_SKIP = True
+
 MIN_EDGE = 0.05         # Medium tier: 5% min
 MAX_EDGE = 0.15
 KELLY_FRACTION = 0.25
