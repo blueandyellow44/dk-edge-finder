@@ -68,7 +68,7 @@ NBA_PLAYOFF_HARD_SKIP_AT = 0.10
 # in-window NBA picks. See lessons.md root entry 2026-05-02.
 NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 
-# Per-(sport, market) probability calibration (May 2026, refit 2026-05-22):
+# Per-(sport, market) probability calibration (May 2026, refit 2026-06-09):
 # Platt scaling (sigmoid of a*logit(p) + b) fit by Newton-Raphson on the
 # Bernoulli log-posterior under an isotropic Gaussian prior centered at
 # the identity mapping (a=1, b=0) with precision 10. The prior keeps
@@ -116,15 +116,37 @@ NBA_REGULAR_SEASON_SPREAD_HARD_SKIP_AT = 0.08
 # because its OLD_LINEAR coverage was effectively dead (NBA model
 # squashed to near-50% by the OLD constants) so the sample stayed raw.
 #
+# 2026-06-09: refit driven by the 2026-06-03 dedup, not by new data.
+# Until the upsert fix, the game-scan cron blind-appended up to 6x/day,
+# so the 2026-05-22 fit trained on 1025 pre-2026-05-11 obs that were
+# ~55% same-game duplicates — silently over-weighting persisted picks.
+# dedupe_pick_history.py collapsed those to 495 unique pre-2026-05-11
+# resolved obs. Re-fitting on the honest sample moved every bucket; the
+# largest moves are (nhl, spread) a 0.851->0.760 and (nba, spread)
+# b -0.506->-0.410. All five still beat baseline Brier. Post-fix data
+# (>=2026-05-23, 49 resolved) is still skipped: too thin to cross the
+# 30/bucket floor and would require inverting the current Platt (lossy
+# at the [0.05, 0.95] clamp). Fold it in on a future refit once post-fix
+# resolved count crosses ~100.
+#
+# Fit on pick_history.json 2026-06-09 (495 resolved pre-2026-05-11 obs):
+#
+#   (sport, market)        n   a       b       baseline brier  fitted brier
+#   (mlb, spread)        245  +0.808  -0.180   0.2405          0.2350
+#   (nhl, spread)         71  +0.760  +0.048   0.2448          0.2398
+#   (nba, over/under)     61  +0.617  -0.351   0.2908          0.2547
+#   (nba, spread)         52  +0.671  -0.410   0.2987          0.2518
+#   (mls, over/under)     32  +0.758  -0.304   0.2886          0.2534
+#
 # Keys outside this dict (e.g. soccer leagues with <30 obs, NBA Player
-# Prop with 25 obs) fall through to identity. They auto-fit on the next
+# Prop with 14 obs) fall through to identity. They auto-fit on the next
 # refit run once their sample crosses the threshold.
 PROB_CALIBRATION = {
-    ("mlb", "spread"):     {"a": 0.843842, "b": -0.194991},
-    ("mls", "over/under"): {"a": 0.757821, "b": -0.404821},
-    ("nba", "over/under"): {"a": 0.538304, "b": -0.263229},
-    ("nba", "spread"):     {"a": 0.591943, "b": -0.505624},
-    ("nhl", "spread"):     {"a": 0.850454, "b":  0.039643},
+    ("mlb", "spread"):     {"a": 0.807796, "b": -0.180078},
+    ("mls", "over/under"): {"a": 0.758399, "b": -0.303928},
+    ("nba", "over/under"): {"a": 0.616988, "b": -0.351088},
+    ("nba", "spread"):     {"a": 0.671028, "b": -0.409526},
+    ("nhl", "spread"):     {"a": 0.760357, "b":  0.047976},
 }
 
 _CALIBRATION_CLAMP_LOW = 0.000001
