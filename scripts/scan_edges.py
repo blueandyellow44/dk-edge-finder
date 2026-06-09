@@ -233,6 +233,8 @@ NHL_SPREAD_UNDERDOG_MIN_EDGE = 0.06     # 6% for NHL +1.5 (was 8%)
 # and stay at the 3% floor.
 NBA_TOTAL_MIN_EDGE = 0.06               # 6% min for NBA totals (was 3%)
 MLS_TOTAL_MIN_EDGE = 0.06               # 6% min for MLS totals (was 3%)
+MLB_TOTAL_MIN_EDGE = 0.06               # 6% min for MLB totals (new 2026-06-09,
+#                                         unvalidated market — conservative floor)
 
 # Single-source Kelly penalty (25% reduction for DRatings-only picks)
 SINGLE_SOURCE_KELLY_DISCOUNT = 0.75
@@ -317,9 +319,16 @@ GAME_SD = {
     # Historical +1.5 underdogs cover ~57-59%, but SD=3.30 produces 62-65% model probs.
     # Fix: widen to 2.538 * 1.8 = 4.57 (80% buffer accounts for skewness + model error).
     # At SD=4.57: +1.5 cover with 1-run cushion ≈ 58.7% — matches historical data.
-    # Totals SD: NOT measured — no published O/U margin SD for MLB
+    # Totals SD (2026-06-09): derived from the validated spread SD. Measured on
+    # 245 graded MLB games, SD(total runs)=4.245 and SD(signed margin)=4.180, a
+    # ratio of 1.016 — total and margin variance are ~equal in MLB (park/pace
+    # correlation is small). The spread effective SD 4.57 is empirically
+    # validated (1-run cushion -> 58.7% cover, matches history), so it scales to
+    # totals: 4.57 * 1.016 = 4.64. Yields ~4-6% edges on 0.5-1.0 run model
+    # disagreements. No MLB O/U bet history exists to validate directly; tune via
+    # the pnl_if_bet record as totals accrue. MEDIUM confidence.
     "mlb_spread": 4.57,
-    # "mlb_total": None,  # BLOCKED — no measured value
+    "mlb_total": 4.64,
 }
 
 # Sports with partially validated SD — edges will be labeled MEDIUM confidence
@@ -1383,6 +1392,8 @@ def get_effective_total_min_edge(sport: str, base_min_edge: float) -> float:
         return max(base_min_edge, NBA_TOTAL_MIN_EDGE)
     if sport_lower == "mls":
         return max(base_min_edge, MLS_TOTAL_MIN_EDGE)
+    if sport_lower == "mlb":
+        return max(base_min_edge, MLB_TOTAL_MIN_EDGE)
     return base_min_edge
 
 
