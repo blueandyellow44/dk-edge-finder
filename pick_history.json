@@ -11593,9 +11593,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 16.6 Points (last 10g), line is 12.5: 4.1 over with 1.0\u03c3 separation. Trending down (season avg: 17.3). Raw edge: 27.7% (capped at 15%). Edge capped: 27.7% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Mikal Bridges: 2 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-06",
@@ -11612,9 +11612,9 @@
     "type": "prop",
     "notes": "Devin Vassell averages 6.2 Rebounds (last 10g), line is 4.5: 1.8 over with 0.8\u03c3 separation. Trending up (season avg: 5.7). Raw edge: 20.4% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.4% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Devin Vassell: 4 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-06",
@@ -11669,9 +11669,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 16.6 Points (last 10g), line is 12.5: 4.1 over with 1.0\u03c3 separation. Trending down (season avg: 17.3). Raw edge: 28.5% (capped at 15%). Edge capped: 28.5% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Mikal Bridges: 2 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-07",
@@ -11688,9 +11688,9 @@
     "type": "prop",
     "notes": "Devin Vassell averages 6.2 Rebounds (last 10g), line is 4.5: 1.8 over with 0.8\u03c3 separation. Trending up (season avg: 5.7). Raw edge: 21.2% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 21.2% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Devin Vassell: 4 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-07",
@@ -11745,9 +11745,9 @@
     "type": "prop",
     "notes": "Devin Vassell averages 6.2 Rebounds (last 10g), line is 4.5: 1.8 over with 0.8\u03c3 separation. Trending up (season avg: 5.7). Raw edge: 20.1% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 20.1% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Devin Vassell: 4 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-08",
@@ -11764,9 +11764,9 @@
     "type": "prop",
     "notes": "Mikal Bridges averages 16.6 Points (last 10g), line is 13.5: 3.1 over with 0.7\u03c3 separation. Trending down (season avg: 17.3). Raw edge: 24.5% (capped at 15%). Edge capped: 24.5% \u2192 15.0%.",
     "prop_bucket": "over_near_even_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SA 115, NY 111 | Mikal Bridges: 2 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-08",
