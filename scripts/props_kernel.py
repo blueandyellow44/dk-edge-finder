@@ -389,6 +389,60 @@ def american_to_implied(odds: int) -> float:
     return 100 / (odds + 100)
 
 
+def poisson_cdf_le(m: int, lam: float) -> float:
+    """P(X <= m) for X ~ Poisson(lam). `m` is a non-negative integer.
+
+    Iterative term (term_{i} = term_{i-1} * lam / i) so there is no factorial
+    overflow and no numpy dependency. Returns 1.0 for lam <= 0 (degenerate) and
+    0.0 for m < 0.
+    """
+    if lam <= 0:
+        return 1.0
+    if m < 0:
+        return 0.0
+    term = math.exp(-lam)   # P(X = 0)
+    cdf = term
+    for i in range(1, m + 1):
+        term *= lam / i
+        cdf += term
+    return min(1.0, cdf)
+
+
+def poisson_over_under(lam: float, line: float) -> tuple[float, float]:
+    """(over_prob, under_prob) for a DK count line under Poisson(lam).
+
+    DK count props use half-integer lines (0.5, 1.5, ...), so there is no push:
+    over  = P(X >= floor(line) + 1) = 1 - P(X <= floor(line))
+    under = P(X <= floor(line)).
+    This is the correct model for low-count discrete stats (hits, shots, goals,
+    SOG) where the old normal-CDF path overstated the favorite side — a Gaussian
+    tail off a last-N-game mean is wrong when the line sits in the discrete gap
+    between 0 and 1. Validated in scripts/test_props_poisson.py (analytic) and
+    scripts/backtest_prop_model.py (NBA/NHL proxy). Rebuilt 2026-06-09.
+    """
+    m = math.floor(line)
+    under = poisson_cdf_le(m, lam)
+    over = 1.0 - under
+    return over, under
+
+
+# Poisson path coin-flip guard: replaces the normal model's |z| >= 0.5 gate.
+# Skip a prop whose favored side is within this band of 50% — no real edge,
+# just noise around the line.
+POISSON_COINFLIP_BAND = 0.06
+
+
+def resolve_distribution(plugin, stat_type: str) -> str:
+    """Distribution for a (plugin, stat): per-stat STAT_DIST override, then the
+    plugin's DEFAULT_DIST, then "normal". Plugins that declare neither (NBA,
+    NHL) keep the legacy normal-CDF path unchanged — zero regression for them.
+    """
+    per_stat = getattr(plugin, "STAT_DIST", {}) or {}
+    if stat_type in per_stat:
+        return per_stat[stat_type]
+    return getattr(plugin, "DEFAULT_DIST", "normal")
+
+
 # ── Edge calculation ──────────────────────────────────────
 
 def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
@@ -464,25 +518,43 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
         sd *= 1.25
 
     diff = our_projection - line  # positive = projected over
+    dist = resolve_distribution(plugin, stat_type)
 
-    if abs(diff) < 0.3:
-        return None  # too close to call
-
-    z = (line - our_projection) / sd
-    if abs(z) < 0.5:
-        return None  # not enough separation: noise, not signal
-
-    over_prob = 1.0 - normal_cdf(z)
-    under_prob = normal_cdf(z)
-
-    if diff > 0:
-        pick_side = "over"
-        model_prob = over_prob
-        dk_odds = prop["over_odds"]
+    if dist == "poisson":
+        # Discrete count model: lambda = projection, SD ignored. Correct for
+        # low-line count props (hits, shots, goals, SOG) where the normal path
+        # overstated the favorite side.
+        if our_projection <= 0:
+            return None  # degenerate lambda; a player projected to never record
+                         # the stat would otherwise flag UNDER at ~100%.
+        over_prob, under_prob = poisson_over_under(our_projection, line)
+        sd_p = math.sqrt(our_projection)  # Poisson SD, for the narrative only
+        sep_label = (
+            f"{abs(diff):.1f} {'over' if diff > 0 else 'under'} "
+            f"(λ={our_projection:.2f}, {abs(diff) / sd_p:.1f}σ_P separation)"
+        )
     else:
-        pick_side = "under"
-        model_prob = under_prob
-        dk_odds = prop["under_odds"]
+        if abs(diff) < 0.3:
+            return None  # too close to call
+        z = (line - our_projection) / sd
+        if abs(z) < 0.5:
+            return None  # not enough separation: noise, not signal
+        over_prob = 1.0 - normal_cdf(z)
+        under_prob = normal_cdf(z)
+        sep_label = (
+            f"{abs(diff):.1f} {'over' if diff > 0 else 'under'} "
+            f"with {abs(diff) / sd if sd > 0 else 0:.1f}σ separation"
+        )
+
+    # Pick the higher-probability side (model_prob >= 0.5 by construction).
+    if over_prob >= under_prob:
+        pick_side, model_prob, dk_odds = "over", over_prob, prop["over_odds"]
+    else:
+        pick_side, model_prob, dk_odds = "under", under_prob, prop["under_odds"]
+
+    # Poisson coin-flip guard (the normal path already gated on |z| above).
+    if dist == "poisson" and abs(model_prob - 0.5) < POISSON_COINFLIP_BAND:
+        return None
 
     adjustments: list[str] = list(pre_notes)
 
@@ -521,15 +593,11 @@ def calculate_prop_edge(plugin, prop: dict, player_stats: dict | None,
     kelly = (edge / (decimal_odds - 1)) * plugin.KELLY_FRACTION
     kelly = min(kelly, plugin.KELLY_CAP)
 
-    z_score = abs(diff) / sd if sd > 0 else 0
     adj_note = " | ".join(adjustments) if adjustments else ""
 
-    direction_word = "over" if diff > 0 else "under"
-    cushion = abs(diff)
     narrative = (
         f"{prop['player']} averages {our_projection:.1f} {stat_type} "
-        f"(last {games_sampled}g), line is {line}: {cushion:.1f} {direction_word} "
-        f"with {z_score:.1f}σ separation."
+        f"(last {games_sampled}g), line is {line}: {sep_label}."
     )
 
     if flat_projection and abs(flat_projection - our_projection) > 0.5:

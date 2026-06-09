@@ -57,6 +57,12 @@ PROP_SD = {
 
 COMBOS: dict[str, list[str]] = {}
 
+# Distribution model (2026-06-09 Poisson rebuild). Shots and Shots on Target
+# are low-count discrete stats (lines at 0.5/1.5/2.5), so both use Poisson
+# (lambda=projection); the kernel's old normal-CDF overstated the favorite
+# side on these. See scripts/backtest_prop_model.py (proxy validation).
+DEFAULT_DIST = "poisson"
+
 MIN_EDGE = 0.05
 MAX_EDGE = 0.15
 KELLY_FRACTION = 0.25
@@ -155,6 +161,7 @@ def make_league_plugin(sport_key: str, sport_display: str,
         MARKET_TO_STAT=MARKET_TO_STAT,
         PROP_SD=PROP_SD,
         COMBOS=COMBOS,
+        DEFAULT_DIST=DEFAULT_DIST,
         MIN_EDGE=MIN_EDGE,
         MAX_EDGE=MAX_EDGE,
         KELLY_FRACTION=KELLY_FRACTION,

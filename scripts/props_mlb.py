@@ -81,6 +81,19 @@ PROP_SD = {
 
 COMBOS: dict[str, list[str]] = {}
 
+# Distribution model (2026-06-09 Poisson rebuild). Low-line discrete count
+# stats are Poisson(lambda=projection); the kernel's old normal-CDF overstated
+# the favorite side on these. Pitcher Outs is the exception: at ~15-18 outs it
+# is a bounded, managerially-capped, near-bimodal quantity (starters get pulled),
+# so the normal approximation is least-bad there and Poisson's variance=mean
+# assumption is wrong. RBIs and Earned Runs are overdispersed (Poisson under-
+# covers their upper tail); they ship on Poisson now and move to negative
+# binomial in Phase 2. See scripts/backtest_prop_model.py (proxy validation).
+DEFAULT_DIST = "poisson"
+STAT_DIST = {
+    "Pitcher Outs": "normal",
+}
+
 MIN_EDGE = 0.05
 MAX_EDGE = 0.15
 KELLY_FRACTION = 0.25
