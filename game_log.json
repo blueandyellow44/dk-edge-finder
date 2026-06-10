@@ -1688,8 +1688,8 @@
     "edge": -0.0006,
     "raw_edge": 0.0772,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CIN 5, SD 3"
   },
   {
     "scan_date": "2026-06-09",
