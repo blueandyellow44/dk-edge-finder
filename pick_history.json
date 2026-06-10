@@ -11707,9 +11707,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 1.2 Assists (last 10g), line is 0.5: 0.7 over with 0.7\u03c3 separation. Raw edge: 17.0% (capped at 15%). Edge capped: 17.0% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAR 5, VGK 3 | Mitch Marner: 1 Assists",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-06-07",
@@ -11726,9 +11726,9 @@
     "type": "prop",
     "notes": "Sebastian Aho averages 1.8 Shots on Goal (last 10g), line is 2.5: 0.7 under with 0.5\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CAR 5, VGK 3 | Sebastian Aho: 3 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-08",
@@ -11783,9 +11783,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 1.2 Assists (last 10g), line is 0.5: 0.7 over with 0.7\u03c3 separation. Raw edge: 17.0% (capped at 15%). Edge capped: 17.0% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAR 5, VGK 3 | Mitch Marner: 1 Assists",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-06-08",
@@ -11802,9 +11802,9 @@
     "type": "prop",
     "notes": "Sebastian Aho averages 1.8 Shots on Goal (last 10g), line is 2.5: 0.7 under with 0.5\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CAR 5, VGK 3 | Sebastian Aho: 3 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-09",
@@ -11859,9 +11859,9 @@
     "type": "prop",
     "notes": "Mitch Marner averages 1.2 Assists (last 10g), line is 0.5: 0.7 over with 0.7\u03c3 separation. Raw edge: 17.0% (capped at 15%). Edge capped: 17.0% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CAR 5, VGK 3 | Mitch Marner: 1 Assists",
+    "pnl_if_bet": 6.9
   },
   {
     "scan_date": "2026-06-09",
@@ -11878,9 +11878,9 @@
     "type": "prop",
     "notes": "Sebastian Aho averages 1.8 Shots on Goal (last 10g), line is 2.5: 0.7 under with 0.5\u03c3 separation.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "CAR 5, VGK 3 | Sebastian Aho: 3 Shots on Goal",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-09",
@@ -11897,8 +11897,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIL 5.8, ATH 5.6 (total: 11.4). Line: 13.0. Cushion: 1.6 pts. \u26a0 SUSPICIOUS EDGE (12.7%): Model predicts 11.4 vs market 13.0 \u2014 1.6 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "MIL 5, ATH 7",
+    "pnl_if_bet": 9.71
   }
 ]
