@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 9,
-  "best_bet": {
-    "title": "Jalen Brunson OVER 3.5 Rebounds (+128) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 32.5% (capped at 15%). Edge capped: 32.5% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -73,98 +70,50 @@
     {
       "sport": "NHL",
       "event": "VGK @ CAR",
-      "line": "CAR -162",
+      "line": "CAR -148",
       "reason": "Edge below sport-specific threshold",
-      "edge": "4.9%",
+      "edge": "5.4%",
       "min_edge": "8.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "6.7%",
-      "calib_delta": "-1.8pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "ARI @ MIA",
-      "line": "MIA -131",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-6.8%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "-2.5%",
-      "calib_delta": "-4.3pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ DET",
-      "line": "DET -131",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-4.9%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "0.9%",
-      "calib_delta": "-5.9pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "STL @ NYM",
-      "line": "NYM -148",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-8.6%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "-6.9%",
-      "calib_delta": "-1.7pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "TEX @ KC",
-      "line": "KC -120",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "0.7%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "2.7%",
-      "calib_delta": "-2.1pp"
+      "raw_edge": "7.6%",
+      "calib_delta": "-2.2pp"
     },
     {
       "sport": "MLB",
       "event": "CHC @ COL",
-      "line": "CHC -155",
+      "line": "CHC -168",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.1%",
+      "edge": "-1.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.3%",
-      "calib_delta": "-6.4pp"
+      "raw_edge": "5.2%",
+      "calib_delta": "-6.6pp"
     },
     {
       "sport": "MLB",
       "event": "LAD @ PIT",
       "line": "LAD -175",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.6%",
+      "edge": "-2.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "2.7%",
-      "calib_delta": "-5.3pp"
+      "raw_edge": "3.1%",
+      "calib_delta": "-5.5pp"
     },
     {
       "sport": "MLB",
       "event": "SEA @ BAL",
       "line": "SEA -118",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.9%",
+      "edge": "-5.0%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "0.5%",
-      "calib_delta": "-5.5pp"
+      "raw_edge": "0.4%",
+      "calib_delta": "-5.4pp"
     },
     {
       "sport": "MLB",
@@ -177,36 +126,6 @@
       "edge_side": "home",
       "raw_edge": "0.0%",
       "calib_delta": "-5.1pp"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama OVER 1.5 3-PT Made (-186)",
-      "reason": "Max 2 props per game (edge: 9.8%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby UNDER 5.5 Rebounds (-135)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Stephon Castle UNDER 6.5 Assists (-117)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 11.5 Rebounds (-114)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby OVER 18.5 Points (-103)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
     }
   ],
   "analyzed_games": [
@@ -226,69 +145,13 @@
     },
     {
       "sport": "MLB",
-      "away_abbr": "ARI",
-      "home_abbr": "MIA",
-      "away_name": "Arizona Diamondbacks",
-      "home_name": "Miami Marlins",
-      "event_short": "ARI @ MIA",
-      "start_time": "2026-06-11T17:10Z",
-      "pred_away_score": 3.9,
-      "pred_home_score": 4.4,
-      "pred_margin": 0.5,
-      "home_spread": -1.5,
-      "over_under": 8.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "MIN",
-      "home_abbr": "DET",
-      "away_name": "Minnesota Twins",
-      "home_name": "Detroit Tigers",
-      "event_short": "MIN @ DET",
-      "start_time": "2026-06-11T17:10Z",
-      "pred_away_score": 4.7,
-      "pred_home_score": 4.9,
-      "pred_margin": 0.2,
-      "home_spread": -1.5,
-      "over_under": 9.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "STL",
-      "home_abbr": "NYM",
-      "away_name": "St. Louis Cardinals",
-      "home_name": "New York Mets",
-      "event_short": "STL @ NYM",
-      "start_time": "2026-06-11T17:10Z",
-      "pred_away_score": 3.8,
-      "pred_home_score": 4.9,
-      "pred_margin": 1.1,
-      "home_spread": -1.5,
-      "over_under": 9.0
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "TEX",
-      "home_abbr": "KC",
-      "away_name": "Texas Rangers",
-      "home_name": "Kansas City Royals",
-      "event_short": "TEX @ KC",
-      "start_time": "2026-06-11T18:10Z",
-      "pred_away_score": 5.0,
-      "pred_home_score": 4.8,
-      "pred_margin": -0.2,
-      "home_spread": 1.5,
-      "over_under": 10.5
-    },
-    {
-      "sport": "MLB",
       "away_abbr": "CHC",
       "home_abbr": "COL",
       "away_name": "Chicago Cubs",
       "home_name": "Colorado Rockies",
       "event_short": "CHC @ COL",
       "start_time": "2026-06-11T19:10Z",
-      "pred_away_score": 5.7,
+      "pred_away_score": 5.8,
       "pred_home_score": 4.9,
       "pred_margin": -0.8,
       "home_spread": 1.5,
@@ -316,8 +179,8 @@
       "home_name": "Baltimore Orioles",
       "event_short": "SEA @ BAL",
       "start_time": "2026-06-11T23:00Z",
-      "pred_away_score": 4.6,
-      "pred_home_score": 4.1,
+      "pred_away_score": 4.7,
+      "pred_home_score": 4.2,
       "pred_margin": -0.5,
       "home_spread": 1.5,
       "over_under": 8.5
