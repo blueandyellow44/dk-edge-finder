@@ -2221,7 +2221,7 @@
     "market": "spread",
     "side": "home",
     "pick": "Carolina Hurricanes -1.5",
-    "line": "CAR -148",
+    "line": "CAR -155",
     "implied": 0.3704,
     "model_raw": 0.4462,
     "model_cal": 0.4247,
@@ -2246,8 +2246,8 @@
     "edge": -0.0681,
     "raw_edge": -0.0248,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ARI 0, MIA 2"
   },
   {
     "scan_date": "2026-06-11",
@@ -2264,8 +2264,8 @@
     "edge": -0.0495,
     "raw_edge": 0.0093,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "MIN 0, DET 11"
   },
   {
     "scan_date": "2026-06-11",
@@ -2282,8 +2282,8 @@
     "edge": -0.0858,
     "raw_edge": -0.0689,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "STL 4, NYM 5"
   },
   {
     "scan_date": "2026-06-11",
@@ -2347,12 +2347,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Pittsburgh Pirates +1.5",
-    "line": "LAD -175",
-    "implied": 0.5238,
+    "line": "LAD -171",
+    "implied": 0.5305,
     "model_raw": 0.5552,
-    "model_cal": 0.4998,
-    "edge": -0.024,
-    "raw_edge": 0.0314,
+    "model_cal": 0.5029,
+    "edge": -0.0276,
+    "raw_edge": 0.0247,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -2365,12 +2365,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Baltimore Orioles +1.5",
-    "line": "SEA -118",
-    "implied": 0.631,
+    "line": "SEA -120",
+    "implied": 0.6283,
     "model_raw": 0.6348,
-    "model_cal": 0.5811,
-    "edge": -0.0499,
-    "raw_edge": 0.0038,
+    "model_cal": 0.5799,
+    "edge": -0.0484,
+    "raw_edge": 0.0066,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -2383,12 +2383,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Chicago White Sox +1.5",
-    "line": "ATL -119",
-    "implied": 0.6255,
-    "model_raw": 0.6259,
-    "model_cal": 0.5744,
-    "edge": -0.051,
-    "raw_edge": 0.0004,
+    "line": "ATL -124",
+    "implied": 0.6169,
+    "model_raw": 0.6121,
+    "model_cal": 0.564,
+    "edge": -0.0528,
+    "raw_edge": -0.0048,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""

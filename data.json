@@ -70,7 +70,7 @@
     {
       "sport": "NHL",
       "event": "VGK @ CAR",
-      "line": "CAR -148",
+      "line": "CAR -155",
       "reason": "Edge below sport-specific threshold",
       "edge": "5.4%",
       "min_edge": "8.0%",
@@ -81,51 +81,39 @@
     },
     {
       "sport": "MLB",
-      "event": "CHC @ COL",
-      "line": "CHC -168",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-1.4%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "5.2%",
-      "calib_delta": "-6.6pp"
-    },
-    {
-      "sport": "MLB",
       "event": "LAD @ PIT",
-      "line": "LAD -175",
+      "line": "LAD -171",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.4%",
+      "edge": "-2.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "3.1%",
-      "calib_delta": "-5.5pp"
+      "raw_edge": "2.5%",
+      "calib_delta": "-5.2pp"
     },
     {
       "sport": "MLB",
       "event": "SEA @ BAL",
-      "line": "SEA -118",
+      "line": "SEA -120",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-5.0%",
+      "edge": "-4.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "0.4%",
-      "calib_delta": "-5.4pp"
+      "raw_edge": "0.7%",
+      "calib_delta": "-5.5pp"
     },
     {
       "sport": "MLB",
       "event": "ATL @ CHW",
-      "line": "ATL -119",
+      "line": "ATL -124",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-5.1%",
+      "edge": "-5.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "0.0%",
-      "calib_delta": "-5.1pp"
+      "raw_edge": "-0.5%",
+      "calib_delta": "-4.8pp"
     }
   ],
   "analyzed_games": [
@@ -142,20 +130,6 @@
       "pred_margin": 1.2,
       "home_spread": -1.5,
       "over_under": 6.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "CHC",
-      "home_abbr": "COL",
-      "away_name": "Chicago Cubs",
-      "home_name": "Colorado Rockies",
-      "event_short": "CHC @ COL",
-      "start_time": "2026-06-11T19:10Z",
-      "pred_away_score": 5.8,
-      "pred_home_score": 4.9,
-      "pred_margin": -0.8,
-      "home_spread": 1.5,
-      "over_under": 11.0
     },
     {
       "sport": "MLB",
@@ -193,9 +167,9 @@
       "home_name": "Chicago White Sox",
       "event_short": "ATL @ CHW",
       "start_time": "2026-06-11T23:40Z",
-      "pred_away_score": 4.5,
+      "pred_away_score": 4.6,
       "pred_home_score": 3.9,
-      "pred_margin": -0.6,
+      "pred_margin": -0.7,
       "home_spread": 1.5,
       "over_under": 8.5
     }
