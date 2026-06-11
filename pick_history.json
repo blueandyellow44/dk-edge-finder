@@ -11957,5 +11957,43 @@
     "outcome": "loss",
     "final_score": "SA 106, NY 107 | Mikal Bridges: 2 Rebounds",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-06-11",
+    "sport": "NBA",
+    "event": "New York Knicks @ San Antonio Spurs",
+    "market": "Player Prop",
+    "pick": "Jalen Brunson OVER 3.5 Rebounds",
+    "odds": "+128",
+    "implied": "43.9%",
+    "model": "76.4%",
+    "edge": 15.0,
+    "tier": "Medium",
+    "confidence": "MEDIUM",
+    "type": "prop",
+    "notes": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 32.5% (capped at 15%). Edge capped: 32.5% \u2192 15.0%.",
+    "prop_bucket": "over_underdog",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-06-11",
+    "sport": "NBA",
+    "event": "New York Knicks @ San Antonio Spurs",
+    "market": "Player Prop",
+    "pick": "Dylan Harper UNDER 3.5 Assists",
+    "odds": "-148",
+    "implied": "59.7%",
+    "model": "75.5%",
+    "edge": 15.0,
+    "tier": "Medium",
+    "confidence": "MEDIUM",
+    "type": "prop",
+    "notes": "Dylan Harper averages 2.9 Assists (last 10g), line is 3.5: 0.6 under with 0.7\u03c3 separation. Raw edge: 15.8% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.8% \u2192 15.0%.",
+    "prop_bucket": "under_moderate_fav",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
