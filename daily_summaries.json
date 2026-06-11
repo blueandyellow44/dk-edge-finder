@@ -103,5 +103,10 @@
     "summary": "The two NBA player prop losses (-$11.00 each on Mitchell and Harris) were the session killers, both falling painfully short by a single rebound despite the model's high confidence (77.7% and 77.4%), suggesting the model may be overweighting volume metrics in tight games. The MLS UNDER loss was another high-confidence whiff at -11.00, but the two wins (NHL SOG and LA Liga UNDER) only recovered $13.21 combined, leaving the day deep underwater\u2014a stark reminder that even 65-80% model confidence doesn't prevent clustering losses, especially when you're betting short-money favorites that need precision execution.",
     "generated_at": "2026-05-14T07:44:14.489205+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-06-10": {
+    "summary": "The MLB under salvaged what would've been a brutal day, generating the only +10.20 profit while the two NBA props hemorrhaged $20.00 combined despite the model showing high confidence (77.5% and 83.4%)\u2014both losses landed outside their projected ranges, suggesting the model's conviction didn't translate to execution on player performance. The day exposed a confidence calibration issue: medium-tier bets with 15% edge backing and 77-83% model confidence still failed to hit, indicating either the model overestimated those probabilities or the edges weren't as reliable as flagged.",
+    "generated_at": "2026-06-11T09:13:26.797171+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
