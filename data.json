@@ -15,10 +15,7 @@
     "pending_label": "No unsettled bets"
   },
   "games_analyzed": 15,
-  "best_bet": {
-    "title": "Jalen Brunson OVER 3.5 Rebounds (+121) \u2014 15.0% Edge (Medium Tier)",
-    "desc": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 31.1% (capped at 15%). Edge capped: 31.1% \u2192 15.0%."
-  },
+  "best_bet": null,
   "picks": [
     {
       "rank": 1,
@@ -73,13 +70,13 @@
     {
       "sport": "MLB",
       "event": "MIA @ PIT",
-      "line": "PIT -143",
+      "line": "PIT -144",
       "reason": "Edge below sport-specific threshold",
       "edge": "-6.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-3.3%",
+      "raw_edge": "-3.1%",
       "calib_delta": "-3.6pp"
     },
     {
@@ -109,38 +106,38 @@
     {
       "sport": "MLB",
       "event": "DET @ CLE",
-      "line": "CLE -126",
+      "line": "CLE -131",
       "reason": "Edge below sport-specific threshold",
       "edge": "-8.2%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-5.2%",
-      "calib_delta": "-3.0pp"
+      "raw_edge": "-5.1%",
+      "calib_delta": "-3.1pp"
     },
     {
       "sport": "MLB",
       "event": "TEX @ BOS",
-      "line": "BOS -132",
+      "line": "BOS -126",
       "reason": "Edge below sport-specific threshold",
       "edge": "-6.5%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-2.0%",
-      "calib_delta": "-4.5pp"
+      "raw_edge": "-1.9%",
+      "calib_delta": "-4.6pp"
     },
     {
       "sport": "MLB",
       "event": "ARI @ CIN",
-      "line": "CIN -117",
+      "line": "CIN -115",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.4%",
+      "edge": "-3.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "3.7%",
-      "calib_delta": "-7.1pp"
+      "raw_edge": "3.0%",
+      "calib_delta": "-6.8pp"
     },
     {
       "sport": "MLB",
@@ -159,41 +156,41 @@
       "event": "NYY @ TOR",
       "line": "TOR -114",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.7%",
+      "edge": "-4.1%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "3.3%",
-      "calib_delta": "-7.0pp"
+      "raw_edge": "2.8%",
+      "calib_delta": "-6.8pp"
     },
     {
       "sport": "MLB",
       "event": "LAD @ CHW",
-      "line": "LAD -162",
+      "line": "LAD -171",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-1.8%",
+      "edge": "-0.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "5.1%",
-      "calib_delta": "-6.9pp"
+      "raw_edge": "7.3%",
+      "calib_delta": "-7.7pp"
     },
     {
       "sport": "MLB",
       "event": "PHI @ MIL",
-      "line": "MIL -252",
+      "line": "MIL -259",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.2%",
+      "edge": "-3.1%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "0.9%",
-      "calib_delta": "-4.2pp"
+      "raw_edge": "1.2%",
+      "calib_delta": "-4.3pp"
     },
     {
       "sport": "MLB",
       "event": "HOU @ KC",
-      "line": "HOU -117",
+      "line": "HOU -118",
       "reason": "Edge below sport-specific threshold",
       "edge": "-2.5%",
       "min_edge": "5.0%",
@@ -217,19 +214,19 @@
     {
       "sport": "MLB",
       "event": "TB @ LAA",
-      "line": "TB -168",
+      "line": "TB -171",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-0.5%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "0.8%",
-      "calib_delta": "-1.3pp"
+      "edge": "-0.1%",
+      "min_edge": "5.0%",
+      "edge_market": "spread",
+      "edge_side": "home",
+      "raw_edge": "7.9%",
+      "calib_delta": "-8.0pp"
     },
     {
       "sport": "MLB",
       "event": "COL @ ATH",
-      "line": "ATH -207",
+      "line": "ATH -218",
       "reason": "Edge below sport-specific threshold",
       "edge": "5.5%",
       "min_edge": "6.0%",
@@ -249,36 +246,6 @@
       "edge_side": "away",
       "raw_edge": "-1.0%",
       "calib_delta": "-5.1pp"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Dylan Harper UNDER 3.5 Assists (-159)",
-      "reason": "Max 2 props per game (edge: 14.1%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama OVER 1.5 3-PT Made (-194)",
-      "reason": "Max 2 props per game (edge: 8.9%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "OG Anunoby UNDER 5.5 Rebounds (-134)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Stephon Castle UNDER 6.5 Assists (-117)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
-    },
-    {
-      "sport": "NBA",
-      "event": "New York Knicks @ San Antonio Spurs",
-      "line": "Victor Wembanyama UNDER 11.5 Rebounds (-114)",
-      "reason": "Max 2 props per game (edge: 15.0%)"
     }
   ],
   "analyzed_games": [
@@ -322,7 +289,7 @@
       "pred_home_score": 4.6,
       "pred_margin": 0.1,
       "home_spread": -1.5,
-      "over_under": 9.5
+      "over_under": 9.0
     },
     {
       "sport": "MLB",
@@ -346,8 +313,8 @@
       "home_name": "Boston Red Sox",
       "event_short": "TEX @ BOS",
       "start_time": "2026-06-12T23:10Z",
-      "pred_away_score": 4.0,
-      "pred_home_score": 4.5,
+      "pred_away_score": 3.9,
+      "pred_home_score": 4.4,
       "pred_margin": 0.5,
       "home_spread": -1.5,
       "over_under": 8.5
@@ -486,8 +453,8 @@
       "home_name": "San Francisco Giants",
       "event_short": "CHC @ SF",
       "start_time": "2026-06-13T02:15Z",
-      "pred_away_score": 4.0,
-      "pred_home_score": 4.3,
+      "pred_away_score": 4.1,
+      "pred_home_score": 4.4,
       "pred_margin": 0.3,
       "home_spread": -1.5,
       "over_under": 8.5
