@@ -11973,9 +11973,9 @@
     "type": "prop",
     "notes": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 32.5% (capped at 15%). Edge capped: 32.5% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | Jalen Brunson: 3 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-11",
@@ -11992,9 +11992,9 @@
     "type": "prop",
     "notes": "Dylan Harper averages 2.9 Assists (last 10g), line is 3.5: 0.6 under with 0.7\u03c3 separation. Raw edge: 15.8% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.8% \u2192 15.0%.",
     "prop_bucket": "under_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | Dylan Harper: 4 Assists",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-12",
@@ -12011,9 +12011,9 @@
     "type": "prop",
     "notes": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 31.1% (capped at 15%). Edge capped: 31.1% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | Jalen Brunson: 3 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-12",
@@ -12030,9 +12030,9 @@
     "type": "prop",
     "notes": "OG Anunoby averages 21.9 Points (last 10g), line is 17.5: 4.4 over with 0.7\u03c3 separation. Trending up (season avg: 20.2). Raw edge: 20.9% (capped at 15%). Edge capped: 20.9% \u2192 15.0%.",
     "prop_bucket": "over_moderate_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | OG Anunoby: 11 Points",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-13",
@@ -12049,9 +12049,9 @@
     "type": "prop",
     "notes": "Jalen Brunson averages 4.3 Rebounds (last 10g), line is 3.5: 0.8 over with 0.7\u03c3 separation. Raw edge: 30.7% (capped at 15%). Edge capped: 30.7% \u2192 15.0%.",
     "prop_bucket": "over_underdog",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | Jalen Brunson: 3 Rebounds",
+    "pnl_if_bet": -10.0
   },
   {
     "scan_date": "2026-06-13",
@@ -12068,8 +12068,8 @@
     "type": "prop",
     "notes": "Dylan Harper averages 2.9 Assists (last 10g), line is 3.5: 0.6 under with 0.7\u03c3 separation. Raw edge: 15.0% (capped at 15%). Def adj: vs NY (110.1 PPG allowed, discount 1.7%) | Edge capped: 15.0% \u2192 15.0%.",
     "prop_bucket": "under_heavy_fav",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "NY 94, SA 90 | Dylan Harper: 4 Assists",
+    "pnl_if_bet": -10.0
   }
 ]
