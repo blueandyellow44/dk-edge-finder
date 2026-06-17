@@ -3812,8 +3812,8 @@
     "edge": -0.0494,
     "raw_edge": -0.005,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SF 7, ATL 2"
   },
   {
     "scan_date": "2026-06-16",
@@ -4064,8 +4064,8 @@
     "edge": -0.0303,
     "raw_edge": 0.033,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "NYM 9, CIN 1"
   },
   {
     "scan_date": "2026-06-17",
@@ -4082,8 +4082,8 @@
     "edge": -0.079,
     "raw_edge": -0.0525,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "KC 6, WSH 2"
   },
   {
     "scan_date": "2026-06-17",
@@ -4100,8 +4100,8 @@
     "edge": 0.0464,
     "raw_edge": 0.0925,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "KC 6, WSH 2"
   },
   {
     "scan_date": "2026-06-17",
@@ -4118,8 +4118,8 @@
     "edge": -0.0266,
     "raw_edge": 0.0533,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "MIA 12, PHI 4"
   },
   {
     "scan_date": "2026-06-17",
@@ -4136,8 +4136,8 @@
     "edge": -0.0601,
     "raw_edge": -0.0131,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "DET 2, HOU 4"
   },
   {
     "scan_date": "2026-06-17",
@@ -4235,14 +4235,14 @@
     "event": "Toronto Blue Jays @ Boston Red Sox",
     "event_short": "TOR @ BOS",
     "market": "spread",
-    "side": "away",
-    "pick": "Toronto Blue Jays +1.5",
-    "line": "BOS -131",
-    "implied": 0.6503,
-    "model_raw": 0.6564,
-    "model_cal": 0.5997,
-    "edge": -0.0506,
-    "raw_edge": 0.006,
+    "side": "home",
+    "pick": "Boston Red Sox +1.5",
+    "line": "BOS -123",
+    "implied": 0.6575,
+    "model_raw": 0.6927,
+    "model_cal": 0.6214,
+    "edge": -0.0361,
+    "raw_edge": 0.0351,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -4255,12 +4255,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Chicago White Sox +1.5",
-    "line": "NYY -186",
-    "implied": 0.5763,
+    "line": "NYY -192",
+    "implied": 0.5652,
     "model_raw": 0.5727,
-    "model_cal": 0.5289,
-    "edge": -0.0474,
-    "raw_edge": -0.0036,
+    "model_cal": 0.5246,
+    "edge": -0.0406,
+    "raw_edge": 0.0075,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -4298,8 +4298,8 @@
     "edge": -0.0474,
     "raw_edge": 0.0099,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SF 7, ATL 2"
   },
   {
     "scan_date": "2026-06-17",
@@ -4345,12 +4345,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Colorado Rockies +1.5",
-    "line": "CHC -194",
-    "implied": 0.5575,
-    "model_raw": 0.5411,
-    "model_cal": 0.5058,
-    "edge": -0.0517,
-    "raw_edge": -0.0164,
+    "line": "CHC -211",
+    "implied": 0.5327,
+    "model_raw": 0.5416,
+    "model_cal": 0.4967,
+    "edge": -0.0361,
+    "raw_edge": 0.0089,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -4363,12 +4363,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Baltimore Orioles +1.5",
-    "line": "SEA -131",
-    "implied": 0.6587,
+    "line": "SEA -132",
+    "implied": 0.6633,
     "model_raw": 0.6432,
-    "model_cal": 0.5959,
-    "edge": -0.0628,
-    "raw_edge": -0.0155,
+    "model_cal": 0.5976,
+    "edge": -0.0657,
+    "raw_edge": -0.0201,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -4399,12 +4399,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Athletics +1.5",
-    "line": "PIT -125",
-    "implied": 0.6,
+    "line": "PIT -131",
+    "implied": 0.5918,
     "model_raw": 0.6151,
-    "model_cal": 0.559,
-    "edge": -0.041,
-    "raw_edge": 0.0151,
+    "model_cal": 0.5559,
+    "edge": -0.0359,
+    "raw_edge": 0.0232,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -4416,13 +4416,13 @@
     "event_short": "PIT @ ATH",
     "market": "total",
     "side": "under",
-    "pick": "UNDER 10.0",
-    "line": "O/U 10.0",
-    "implied": 0.5122,
-    "model_raw": 0.56,
-    "model_cal": 0.532,
-    "edge": 0.0199,
-    "raw_edge": 0.0478,
+    "pick": "UNDER 10.5",
+    "line": "O/U 10.5",
+    "implied": 0.5413,
+    "model_raw": 0.5429,
+    "model_cal": 0.5327,
+    "edge": -0.0086,
+    "raw_edge": 0.0016,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
