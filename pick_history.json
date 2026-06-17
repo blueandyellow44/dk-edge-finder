@@ -12071,5 +12071,43 @@
     "outcome": "loss",
     "final_score": "NY 94, SA 90 | Dylan Harper: 4 Assists",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-06-17",
+    "sport": "MLB",
+    "event": "Cleveland Guardians @ Milwaukee Brewers",
+    "market": "Over/Under",
+    "pick": "OVER 7.5",
+    "odds": "-112",
+    "implied": "52.8%",
+    "model": "60.6%",
+    "edge": 7.8,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (oddsshark + actionnetwork): CLE 4.8, MIL 4.8 (total: 9.6). Line: 7.5. Cushion: 2.1 pts.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
+  },
+  {
+    "scan_date": "2026-06-17",
+    "sport": "MLB",
+    "event": "Los Angeles Angels @ Arizona Diamondbacks",
+    "market": "Moneyline",
+    "pick": "Los Angeles Angels ML",
+    "odds": "+141",
+    "implied": "41.5%",
+    "model": "46.6%",
+    "edge": 5.1,
+    "tier": "High",
+    "confidence": "MEDIUM",
+    "type": "game",
+    "notes": "Model (oddsshark + actionnetwork): runs ARI 4.60, LAA 4.70 -> P(home 53%, away 47%). Pick Los Angeles Angels at +141 (implied 41%).",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
