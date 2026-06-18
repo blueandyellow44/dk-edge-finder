@@ -12087,9 +12087,9 @@
     "type": "game",
     "notes": "Model (oddsshark + actionnetwork): CLE 4.8, MIL 4.8 (total: 9.6). Line: 7.5. Cushion: 2.1 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "CLE 4, MIL 9",
+    "pnl_if_bet": 8.93
   },
   {
     "scan_date": "2026-06-17",
@@ -12106,8 +12106,8 @@
     "type": "game",
     "notes": "Model (oddsshark + actionnetwork): runs ARI 4.60, LAA 4.70 -> P(home 53%, away 47%). Pick Los Angeles Angels at +141 (implied 41%).",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "LAA 1, ARI 8",
+    "pnl_if_bet": -10.0
   }
 ]
