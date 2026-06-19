@@ -4496,8 +4496,8 @@
     "edge": -0.0352,
     "raw_edge": 0.0352,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CLE 4, MIL 2"
   },
   {
     "scan_date": "2026-06-18",
@@ -4514,8 +4514,8 @@
     "edge": -0.0087,
     "raw_edge": 0.0798,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "MIN 9, TEX 3"
   },
   {
     "scan_date": "2026-06-18",
@@ -4532,8 +4532,8 @@
     "edge": -0.0437,
     "raw_edge": 0.015,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "BAL 0, SEA 3"
   },
   {
     "scan_date": "2026-06-18",
@@ -4550,8 +4550,8 @@
     "edge": -0.0315,
     "raw_edge": 0.0436,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "NYM 6, PHI 4"
   },
   {
     "scan_date": "2026-06-18",
@@ -4568,8 +4568,8 @@
     "edge": -0.0273,
     "raw_edge": 0.0356,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CHW 5, NYY 1"
   },
   {
     "scan_date": "2026-06-18",
@@ -4622,8 +4622,8 @@
     "edge": -0.0228,
     "raw_edge": 0.0583,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "STL 6, KC 14"
   },
   {
     "scan_date": "2026-06-18",
@@ -4640,8 +4640,8 @@
     "edge": -0.022,
     "raw_edge": 0.0502,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAA 0, ATH 5"
   },
   {
     "scan_date": "2026-06-18",
@@ -4658,8 +4658,8 @@
     "edge": 0.0081,
     "raw_edge": 0.0294,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "LAA 0, ATH 5"
   },
   {
     "scan_date": "2026-06-18",
@@ -4676,7 +4676,7 @@
     "edge": -0.0008,
     "raw_edge": 0.0146,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "push",
+    "final_score": "NYM 6, PHI 4"
   }
 ]
