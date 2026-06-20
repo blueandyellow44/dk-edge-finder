@@ -4892,8 +4892,8 @@
     "edge": -0.0361,
     "raw_edge": 0.0226,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "LAA 11, ATH 12"
   },
   {
     "scan_date": "2026-06-19",
@@ -4928,8 +4928,8 @@
     "edge": -0.0388,
     "raw_edge": 0.0012,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "BAL 5, LAD 6"
   },
   {
     "scan_date": "2026-06-19",
