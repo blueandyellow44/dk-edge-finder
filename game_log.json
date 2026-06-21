@@ -5306,8 +5306,8 @@
     "edge": -0.0176,
     "raw_edge": 0.0683,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "MIL 9, ATL 4"
   },
   {
     "scan_date": "2026-06-21",
@@ -5342,8 +5342,8 @@
     "edge": -0.0405,
     "raw_edge": 0.0136,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SF 1, MIA 2"
   },
   {
     "scan_date": "2026-06-21",
@@ -5360,8 +5360,8 @@
     "edge": -0.0048,
     "raw_edge": 0.008,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SF 1, MIA 2"
   },
   {
     "scan_date": "2026-06-21",
@@ -5378,8 +5378,8 @@
     "edge": -0.0734,
     "raw_edge": -0.0383,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "WSH 3, TB 4"
   },
   {
     "scan_date": "2026-06-21",
@@ -5396,8 +5396,8 @@
     "edge": -0.0502,
     "raw_edge": 0.0058,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CLE 1, HOU 2"
   },
   {
     "scan_date": "2026-06-21",
@@ -5587,12 +5587,12 @@
     "market": "spread",
     "side": "away",
     "pick": "New York Mets +1.5",
-    "line": "PHI -186",
-    "implied": 0.5868,
+    "line": "PHI -185",
+    "implied": 0.5781,
     "model_raw": 0.5891,
-    "model_cal": 0.5411,
-    "edge": -0.0457,
-    "raw_edge": 0.0023,
+    "model_cal": 0.5378,
+    "edge": -0.0403,
+    "raw_edge": 0.011,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
