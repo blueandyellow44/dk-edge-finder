@@ -12109,5 +12109,24 @@
     "outcome": "loss",
     "final_score": "LAA 1, ARI 8",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-06-23",
+    "sport": "MLB",
+    "event": "Athletics @ San Francisco Giants",
+    "market": "Over/Under",
+    "pick": "OVER 9.0",
+    "odds": "-101",
+    "implied": "50.2%",
+    "model": "59.7%",
+    "edge": 9.4,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.3, SF 5.8 (total: 11.1). Line: 9.0. Cushion: 2.1 pts.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
