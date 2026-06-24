@@ -12125,8 +12125,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.3, SF 5.8 (total: 11.1). Line: 9.0. Cushion: 2.1 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATH 1, SF 3",
+    "pnl_if_bet": -10.0
   }
 ]
