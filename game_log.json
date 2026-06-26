@@ -6962,8 +6962,8 @@
     "edge": -0.0582,
     "raw_edge": -0.0085,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 9, SF 6"
   },
   {
     "scan_date": "2026-06-25",
@@ -6980,8 +6980,8 @@
     "edge": 0.0521,
     "raw_edge": 0.1022,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 9, SF 6"
   },
   {
     "scan_date": "2026-06-25",
@@ -6998,8 +6998,8 @@
     "edge": -0.0335,
     "raw_edge": 0.0407,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "HOU 2, DET 1"
   },
   {
     "scan_date": "2026-06-25",
@@ -7016,8 +7016,8 @@
     "edge": 0.0302,
     "raw_edge": 0.0661,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "HOU 2, DET 1"
   },
   {
     "scan_date": "2026-06-25",
@@ -7034,8 +7034,8 @@
     "edge": -0.0125,
     "raw_edge": 0.0562,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "PHI 10, WSH 5"
   },
   {
     "scan_date": "2026-06-25",
@@ -7052,8 +7052,8 @@
     "edge": -0.0445,
     "raw_edge": 0.0166,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "TEX 6, TOR 5"
   },
   {
     "scan_date": "2026-06-25",
@@ -7070,8 +7070,8 @@
     "edge": -0.0221,
     "raw_edge": 0.0587,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CHC 4, NYM 3"
   },
   {
     "scan_date": "2026-06-25",
@@ -7088,8 +7088,8 @@
     "edge": -0.0304,
     "raw_edge": 0.0329,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NYY 3, BOS 6"
   },
   {
     "scan_date": "2026-06-25",
@@ -7106,8 +7106,8 @@
     "edge": 0.0154,
     "raw_edge": 0.0407,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "NYY 3, BOS 6"
   },
   {
     "scan_date": "2026-06-25",
