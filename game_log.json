@@ -7448,8 +7448,8 @@
     "edge": -0.0585,
     "raw_edge": -0.013,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATL 3, SF 1"
   },
   {
     "scan_date": "2026-06-26",
@@ -7466,8 +7466,8 @@
     "edge": 0.0163,
     "raw_edge": 0.0424,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATL 3, SF 1"
   },
   {
     "scan_date": "2026-06-26",
