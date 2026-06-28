@@ -7574,8 +7574,8 @@
     "edge": -0.0459,
     "raw_edge": -0.0005,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "TEX 7, TOR 4"
   },
   {
     "scan_date": "2026-06-27",
@@ -7592,8 +7592,8 @@
     "edge": -0.015,
     "raw_edge": 0.0702,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CIN 9, PIT 7"
   },
   {
     "scan_date": "2026-06-27",
@@ -7610,8 +7610,8 @@
     "edge": -0.0497,
     "raw_edge": 0.0089,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "PHI 2, NYM 6"
   },
   {
     "scan_date": "2026-06-27",
@@ -7628,8 +7628,8 @@
     "edge": 0.0059,
     "raw_edge": 0.0251,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "PHI 2, NYM 6"
   },
   {
     "scan_date": "2026-06-27",
@@ -7646,8 +7646,8 @@
     "edge": -0.0606,
     "raw_edge": -0.0109,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "KC 1, CHW 2"
   },
   {
     "scan_date": "2026-06-27",
@@ -7664,8 +7664,8 @@
     "edge": -0.0664,
     "raw_edge": -0.0288,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ARI 2, TB 4"
   },
   {
     "scan_date": "2026-06-27",
@@ -7682,8 +7682,8 @@
     "edge": -0.0334,
     "raw_edge": 0.0395,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "WSH 4, BAL 3"
   },
   {
     "scan_date": "2026-06-27",
@@ -7700,8 +7700,8 @@
     "edge": 0.0029,
     "raw_edge": 0.0962,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SEA 3, CLE 4"
   },
   {
     "scan_date": "2026-06-27",
@@ -7718,8 +7718,8 @@
     "edge": -0.0677,
     "raw_edge": -0.0362,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CHC 8, MIL 2"
   },
   {
     "scan_date": "2026-06-27",
@@ -7736,8 +7736,8 @@
     "edge": -0.0555,
     "raw_edge": -0.007,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 8, MIN 5"
   },
   {
     "scan_date": "2026-06-27",
@@ -7754,8 +7754,8 @@
     "edge": -0.074,
     "raw_edge": -0.042,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "MIA 5, STL 1"
   },
   {
     "scan_date": "2026-06-27",
@@ -7772,8 +7772,8 @@
     "edge": -0.0124,
     "raw_edge": 0.051,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAD 15, SD 3"
   },
   {
     "scan_date": "2026-06-27",
@@ -7790,8 +7790,8 @@
     "edge": 0.001,
     "raw_edge": 0.0168,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAD 15, SD 3"
   },
   {
     "scan_date": "2026-06-27",
@@ -7808,8 +7808,8 @@
     "edge": -0.0344,
     "raw_edge": 0.0384,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATL 0, SF 5"
   },
   {
     "scan_date": "2026-06-27",
@@ -7826,8 +7826,8 @@
     "edge": -0.0483,
     "raw_edge": 0.0096,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 2, LAA 5"
   },
   {
     "scan_date": "2026-06-27",
@@ -7844,8 +7844,8 @@
     "edge": 0.0265,
     "raw_edge": 0.0586,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATH 2, LAA 5"
   },
   {
     "scan_date": "2026-06-27",
@@ -7862,7 +7862,7 @@
     "edge": 0.0351,
     "raw_edge": 0.0731,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 8, MIN 5"
   }
 ]
