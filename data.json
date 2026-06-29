@@ -35,12 +35,12 @@
       "event": "PIT @ PHI",
       "line": "PHI -112",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.0%",
+      "edge": "-2.9%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.5%",
-      "calib_delta": "-7.5pp"
+      "raw_edge": "4.6%",
+      "calib_delta": "-7.6pp"
     },
     {
       "sport": "MLB",
@@ -93,26 +93,26 @@
     {
       "sport": "MLB",
       "event": "CIN @ MIL",
-      "line": "MIL -145",
+      "line": "MIL -137",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.9%",
+      "edge": "-5.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "0.5%",
-      "calib_delta": "-5.4pp"
+      "raw_edge": "-0.2%",
+      "calib_delta": "-5.2pp"
     },
     {
       "sport": "MLB",
       "event": "SD @ CHC",
       "line": "CHC -157",
       "reason": "Edge below sport-specific threshold",
-      "edge": "2.3%",
+      "edge": "0.8%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "5.3%",
-      "calib_delta": "-3.0pp"
+      "raw_edge": "2.9%",
+      "calib_delta": "-2.1pp"
     },
     {
       "sport": "MLB",
@@ -282,9 +282,9 @@
       "home_name": "Chicago Cubs",
       "event_short": "SD @ CHC",
       "start_time": "2026-06-30T00:05Z",
-      "pred_away_score": 5.5,
-      "pred_home_score": 6.4,
-      "pred_margin": 0.9,
+      "pred_away_score": 5.6,
+      "pred_home_score": 6.2,
+      "pred_margin": 0.6,
       "home_spread": -1.5,
       "over_under": 11.0
     },
