@@ -12144,8 +12144,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): MIA 5.5, COL 4.9 (total: 10.4). Line: 12.0. Cushion: 1.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "MIA 10, COL 7",
+    "pnl_if_bet": -10.0
   }
 ]
