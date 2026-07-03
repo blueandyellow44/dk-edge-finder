@@ -9518,8 +9518,8 @@
     "edge": -0.0362,
     "raw_edge": 0.0142,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "SD 7, LAD 12"
   },
   {
     "scan_date": "2026-07-02",
