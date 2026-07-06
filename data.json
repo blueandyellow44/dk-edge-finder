@@ -20,68 +20,56 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "PHI @ KC",
-      "line": "PHI -224",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "0.6%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "7.4%",
-      "calib_delta": "-6.8pp"
-    },
-    {
-      "sport": "MLB",
       "event": "NYY @ TB",
-      "line": "TB -112",
+      "line": "NYY -113",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.2%",
+      "edge": "-2.5%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.2%",
-      "calib_delta": "-7.5pp"
+      "raw_edge": "5.6%",
+      "calib_delta": "-8.0pp"
     },
     {
       "sport": "MLB",
       "event": "HOU @ WSH",
-      "line": "WSH -120",
+      "line": "WSH -114",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.0%",
+      "edge": "-3.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "2.8%",
-      "calib_delta": "-6.8pp"
+      "edge_side": "home",
+      "raw_edge": "3.7%",
+      "calib_delta": "-7.1pp"
     },
     {
       "sport": "MLB",
       "event": "NYM @ ATL",
       "line": "ATL -131",
       "reason": "Edge below sport-specific threshold",
-      "edge": "0.9%",
+      "edge": "1.3%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "3.0%",
-      "calib_delta": "-2.1pp"
+      "raw_edge": "3.7%",
+      "calib_delta": "-2.4pp"
     },
     {
       "sport": "MLB",
       "event": "MIL @ STL",
       "line": "STL -110",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.0%",
+      "edge": "-4.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "2.4%",
-      "calib_delta": "-6.5pp"
+      "raw_edge": "1.9%",
+      "calib_delta": "-6.3pp"
     },
     {
       "sport": "MLB",
       "event": "ARI @ SD",
-      "line": "SD -124",
+      "line": "SD -130",
       "reason": "Edge below sport-specific threshold",
       "edge": "0.2%",
       "min_edge": "6.0%",
@@ -95,41 +83,27 @@
       "event": "TOR @ SF",
       "line": "TOR -112",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.6%",
+      "edge": "-2.5%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "5.2%",
-      "calib_delta": "-7.8pp"
+      "raw_edge": "5.4%",
+      "calib_delta": "-7.9pp"
     },
     {
       "sport": "MLB",
       "event": "COL @ LAD",
-      "line": "LAD -238",
+      "line": "LAD -240",
       "reason": "Edge below sport-specific threshold",
-      "edge": "2.9%",
+      "edge": "2.5%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "6.3%",
-      "calib_delta": "-3.4pp"
+      "raw_edge": "5.6%",
+      "calib_delta": "-3.1pp"
     }
   ],
   "analyzed_games": [
-    {
-      "sport": "MLB",
-      "away_abbr": "PHI",
-      "home_abbr": "KC",
-      "away_name": "Philadelphia Phillies",
-      "home_name": "Kansas City Royals",
-      "event_short": "PHI @ KC",
-      "start_time": "2026-07-06T18:10Z",
-      "pred_away_score": 4.7,
-      "pred_home_score": 3.4,
-      "pred_margin": -1.3,
-      "home_spread": 1.5,
-      "over_under": 8.5
-    },
     {
       "sport": "MLB",
       "away_abbr": "NYY",
@@ -138,8 +112,8 @@
       "home_name": "Tampa Bay Rays",
       "event_short": "NYY @ TB",
       "start_time": "2026-07-06T22:40Z",
-      "pred_away_score": 3.7,
-      "pred_home_score": 3.6,
+      "pred_away_score": 3.8,
+      "pred_home_score": 3.8,
       "pred_margin": -0.1,
       "home_spread": 1.5,
       "over_under": 7.5
@@ -155,7 +129,7 @@
       "pred_away_score": 5.0,
       "pred_home_score": 5.0,
       "pred_margin": 0.0,
-      "home_spread": -1.5,
+      "home_spread": 1.5,
       "over_under": 10.0
     },
     {
@@ -197,7 +171,7 @@
       "pred_away_score": 4.3,
       "pred_home_score": 4.7,
       "pred_margin": 0.4,
-      "home_spread": 1.5,
+      "home_spread": -1.5,
       "over_under": 8.5
     },
     {
@@ -208,8 +182,8 @@
       "home_name": "San Francisco Giants",
       "event_short": "TOR @ SF",
       "start_time": "2026-07-07T01:45Z",
-      "pred_away_score": 4.0,
-      "pred_home_score": 3.9,
+      "pred_away_score": 3.9,
+      "pred_home_score": 3.8,
       "pred_margin": -0.1,
       "home_spread": 1.5,
       "over_under": 8.0
