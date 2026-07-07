@@ -10850,8 +10850,8 @@
     "edge": -0.0552,
     "raw_edge": -0.0384,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 7, LAD 8"
   },
   {
     "scan_date": "2026-07-06",
@@ -10868,7 +10868,7 @@
     "edge": 0.0249,
     "raw_edge": 0.0562,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 7, LAD 8"
   }
 ]
