@@ -11192,8 +11192,8 @@
     "edge": -0.0284,
     "raw_edge": 0.046,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "TOR 9, SF 3"
   },
   {
     "scan_date": "2026-07-07",
@@ -11210,8 +11210,8 @@
     "edge": -0.0103,
     "raw_edge": -0.0005,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "TOR 9, SF 3"
   },
   {
     "scan_date": "2026-07-07",
@@ -11228,8 +11228,8 @@
     "edge": -0.0327,
     "raw_edge": -0.0059,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 4, LAD 3"
   },
   {
     "scan_date": "2026-07-07",
