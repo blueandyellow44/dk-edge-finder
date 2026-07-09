@@ -9,14 +9,31 @@ disagreements). Anchoring the model toward the de-vigged market shrinks those
 disagreements so the most adverse-selected picks fall below the edge floor.
 
 Shared by scan_edges (spread/total) and the moneyline modules so the weight is
-defined once. WEIGHT is a judgment call, NOT data-fit (the unbiased sample is
-~72 games and Brier is flat); set to 1.0 to disable (pure model). Tune via the
-pnl_if_bet record.
+defined once. Set to 1.0 to disable (pure model).
+
+Per-market weights (2026-07-09, fit on the first post-blend month of game_log:
+536 resolved rows, 2026-06-10..2026-07-09): on spreads the model has no alpha —
+log-loss is minimized at w=0 (pure market) — while on totals the pure calibrated
+model BEATS the no-vig market (log-loss 0.6798 vs 0.6902, n=150, paired
+bootstrap P(model better)=0.948). Weights are pulled in from the fitted
+extremes (0/1) to 0.3/0.85 to hedge one-month overfit. Markets without an
+entry (moneyline — not yet in game_log) keep the 0.6 default until a month of
+logged assessments exists to fit them.
 """
 
 from props_kernel import american_to_implied
 
 MARKET_BLEND_WEIGHT = 0.6
+
+MARKET_BLEND_WEIGHTS = {
+    "spread": 0.3,
+    "total": 0.85,
+}
+
+
+def weight_for(market: str) -> float:
+    """Blend weight for a game_log market key ('spread', 'total', 'moneyline')."""
+    return MARKET_BLEND_WEIGHTS.get(market, MARKET_BLEND_WEIGHT)
 
 
 def blend_two_way(model_prob: float, pick_odds, other_odds,

@@ -25,7 +25,7 @@ from pathlib import Path
 from skellam import poisson_spread_probability
 from fetch_props import scan_props as scan_player_props
 from fetch_sources import fetch_all_sources
-from market_blend import blend_two_way
+from market_blend import blend_two_way, weight_for
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_JSON = REPO_ROOT / "data.json"
@@ -1604,10 +1604,12 @@ def calculate_edge(game: dict, predictions: dict, b2b_teams: set, sport: str = "
 
         # Market-anchored blend (see market_blend / 2026-06-09 audit): pull the
         # model toward the no-vig market for the picked side to filter
-        # adverse-selected disagreements.
+        # adverse-selected disagreements. Spread weight is low (market-heavy):
+        # the post-blend month showed no model alpha on spreads.
         spread_other_odds = (game.get("away_spread_odds") if pick_side == "home"
                              else game.get("home_spread_odds"))
-        model_prob = blend_two_way(model_prob, cand.get("dk_odds"), spread_other_odds)
+        model_prob = blend_two_way(model_prob, cand.get("dk_odds"), spread_other_odds,
+                                   weight=weight_for("spread"))
 
         # Calculate edge
         implied_prob = cand["implied_prob"]
@@ -1881,10 +1883,12 @@ def calculate_total_edge(game: dict, predictions: dict, sport: str = "nba") -> d
 
     # Market-anchored blend (see market_blend / 2026-06-09 audit): pull the model
     # toward the no-vig market for the picked side to filter adverse-selected
-    # disagreements.
+    # disagreements. Totals weight is high (model-heavy): the post-blend month
+    # showed the calibrated model beating the no-vig market on totals.
     total_other_odds = (game.get("under_odds") if pick_side == "over"
                         else game.get("over_odds"))
-    model_prob = blend_two_way(model_prob, dk_odds, total_other_odds)
+    model_prob = blend_two_way(model_prob, dk_odds, total_other_odds,
+                               weight=weight_for("total"))
 
     # Calculate edge
     edge = model_prob - implied_prob
