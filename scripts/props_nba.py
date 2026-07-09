@@ -75,6 +75,25 @@ COMBOS = {
     "Pts+Rebs+Asts": ["Points", "Rebounds", "Assists"],
 }
 
+# Distribution per stat (2026-07-09). NBA was left on the legacy normal-CDF
+# path when the Poisson kernel shipped for MLB/soccer (2026-06-09), and the
+# June Finals window showed exactly the predicted failure: 8 straight losses
+# on low-count props (Rebounds 3.5, Assists 3.5, 3-PT Made 1.5) carrying
+# 75-83% claimed probabilities at the 15% edge cap. Low-count NBA stats are
+# Poisson territory; a Gaussian at lambda ~2-4 leaks mass below 0 and
+# overstates the favorite side. Points and the combo stats stay normal: at
+# lambda ~15-35 the normal approximation is fine and Poisson's variance=mean
+# is far too tight for scoring (PROP_SD has Points at 8.0, Poisson would
+# imply ~4.5), and combos are sums of correlated stats, not one count.
+DEFAULT_DIST = "poisson"
+STAT_DIST = {
+    "Points": "normal",
+    "Pts+Rebs": "normal",
+    "Pts+Asts": "normal",
+    "Rebs+Asts": "normal",
+    "Pts+Rebs+Asts": "normal",
+}
+
 MIN_EDGE = 0.05         # Medium tier: 5% min
 MAX_EDGE = 0.15         # Cap at 15%. Anything higher is model overconfidence.
 KELLY_FRACTION = 0.25   # 1/4 Kelly for Medium tier

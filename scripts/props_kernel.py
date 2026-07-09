@@ -434,8 +434,9 @@ POISSON_COINFLIP_BAND = 0.06
 
 def resolve_distribution(plugin, stat_type: str) -> str:
     """Distribution for a (plugin, stat): per-stat STAT_DIST override, then the
-    plugin's DEFAULT_DIST, then "normal". Plugins that declare neither (NBA,
-    NHL) keep the legacy normal-CDF path unchanged — zero regression for them.
+    plugin's DEFAULT_DIST, then "normal". A plugin that declares neither keeps
+    the legacy normal-CDF path (as of 2026-07-09 only NHL, which is hard-skipped
+    anyway; NBA moved its low-count stats to Poisson after the June Finals 0-8).
     """
     per_stat = getattr(plugin, "STAT_DIST", {}) or {}
     if stat_type in per_stat:

@@ -107,7 +107,17 @@ truthy("MLB Hits -> poisson", K.resolve_distribution(mlb_like, "Hits") == "poiss
 truthy("MLB Pitcher Outs -> normal (override)",
        K.resolve_distribution(mlb_like, "Pitcher Outs") == "normal")
 truthy("Soccer Shots -> poisson", K.resolve_distribution(soccer_like, "Shots") == "poisson")
-truthy("NBA (no decl) -> normal", K.resolve_distribution(nba_like, "Points") == "normal")
+truthy("plugin with no decl -> normal", K.resolve_distribution(nba_like, "Points") == "normal")
+
+# Real NBA plugin (2026-07-09): low-count stats moved to Poisson after the
+# June Finals 0-8 window on the legacy normal path; Points/combos stay normal.
+import props_nba
+truthy("NBA Rebounds -> poisson", K.resolve_distribution(props_nba, "Rebounds") == "poisson")
+truthy("NBA Assists -> poisson", K.resolve_distribution(props_nba, "Assists") == "poisson")
+truthy("NBA 3-PT Made -> poisson", K.resolve_distribution(props_nba, "3-PT Made") == "poisson")
+truthy("NBA Points -> normal (override)", K.resolve_distribution(props_nba, "Points") == "normal")
+truthy("NBA Pts+Rebs+Asts -> normal (override)",
+       K.resolve_distribution(props_nba, "Pts+Rebs+Asts") == "normal")
 
 
 # ── End-to-end: calculate_prop_edge on a Poisson plugin ───
