@@ -16,8 +16,8 @@
   },
   "games_analyzed": 13,
   "best_bet": {
-    "title": "OVER 8.5 (-103) \u2014 12.7% Edge (High Tier)",
-    "desc": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (12.7%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap."
+    "title": "OVER 8.5 (-108) \u2014 17.9% Edge (High Tier)",
+    "desc": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (17.9%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap."
   },
   "picks": [
     {
@@ -27,125 +27,111 @@
       "event_short": "COL @ SF",
       "market": "Over/Under",
       "pick": "OVER 8.5",
-      "odds": "-103",
-      "implied": "50.7%",
-      "model": "63.4%",
-      "edge": 12.7,
-      "ev_per_dollar": 0.2503,
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "69.8%",
+      "edge": 17.9,
+      "ev_per_dollar": 0.3452,
       "tier": "High",
       "bet": "$9.53",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (12.7%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (17.9%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/34369817?outcomes=0OU85422716O850_1",
       "type": "game",
       "start_time": "2026-07-10T01:45Z",
       "prop_bucket": ""
+    },
+    {
+      "rank": 2,
+      "sport": "MLB",
+      "event": "Athletics @ Detroit Tigers",
+      "event_short": "ATH @ DET",
+      "market": "Over/Under",
+      "pick": "OVER 9.0",
+      "odds": "-105",
+      "implied": "51.2%",
+      "model": "62.7%",
+      "edge": 11.5,
+      "ev_per_dollar": 0.2236,
+      "tier": "High",
+      "bet": "$9.53",
+      "status": "",
+      "result": "",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.3, DET 5.5 (total: 10.8). Line: 9.0. Cushion: 1.8 pts. \u26a0 SUSPICIOUS EDGE (11.5%): Model predicts 10.8 vs market 9.0 \u2014 1.8 pt gap.",
+      "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
+      "confidence": "HIGH",
+      "dk_link": "https://sportsbook.draftkings.com/event/34369805?outcomes=0OU85422704O900_1",
+      "type": "game",
+      "start_time": "2026-07-09T22:40Z",
+      "prop_bucket": ""
     }
   ],
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "BOS @ CHW",
-      "line": "CHW -114",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-1.3%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "7.7%",
-      "calib_delta": "-9.0pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "ATH @ DET",
-      "line": "DET -131",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "1.5%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "over",
-      "raw_edge": "3.9%",
-      "calib_delta": "-2.5pp"
-    },
-    {
-      "sport": "MLB",
       "event": "SEA @ MIA",
-      "line": "SEA -127",
+      "line": "SEA -126",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.2%",
+      "edge": "-3.5%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "1.6%",
-      "calib_delta": "-5.8pp"
+      "raw_edge": "1.4%",
+      "calib_delta": "-4.9pp"
     },
     {
       "sport": "MLB",
       "event": "PHI @ CIN",
       "line": "PHI -163",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.9%",
+      "edge": "-3.2%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
       "raw_edge": "0.3%",
-      "calib_delta": "-4.3pp"
+      "calib_delta": "-3.5pp"
     },
     {
       "sport": "MLB",
       "event": "MIL @ STL",
       "line": "MIL -136",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.0%",
+      "edge": "-3.3%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
       "raw_edge": "1.5%",
-      "calib_delta": "-5.6pp"
+      "calib_delta": "-4.8pp"
     },
     {
       "sport": "MLB",
       "event": "LAA @ TEX",
       "line": "TEX -136",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.5%",
+      "edge": "-3.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
       "raw_edge": "1.9%",
-      "calib_delta": "-6.4pp"
+      "calib_delta": "-5.6pp"
     },
     {
       "sport": "MLB",
       "event": "ARI @ SD",
       "line": "SD -132",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.1%",
+      "edge": "-3.0%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
       "raw_edge": "4.4%",
-      "calib_delta": "-7.4pp"
+      "calib_delta": "-7.3pp"
     }
   ],
   "analyzed_games": [
-    {
-      "sport": "MLB",
-      "away_abbr": "BOS",
-      "home_abbr": "CHW",
-      "away_name": "Boston Red Sox",
-      "home_name": "Chicago White Sox",
-      "event_short": "BOS @ CHW",
-      "start_time": "2026-07-09T18:10Z",
-      "pred_away_score": 4.3,
-      "pred_home_score": 4.6,
-      "pred_margin": 0.3,
-      "home_spread": 1.5,
-      "over_under": 9.0
-    },
     {
       "sport": "MLB",
       "away_abbr": "ATH",
@@ -154,8 +140,8 @@
       "home_name": "Detroit Tigers",
       "event_short": "ATH @ DET",
       "start_time": "2026-07-09T22:40Z",
-      "pred_away_score": 4.7,
-      "pred_home_score": 4.9,
+      "pred_away_score": 5.3,
+      "pred_home_score": 5.5,
       "pred_margin": 0.2,
       "home_spread": -1.5,
       "over_under": 9.0
