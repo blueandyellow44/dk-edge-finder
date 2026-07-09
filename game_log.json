@@ -11696,8 +11696,8 @@
     "edge": -0.0236,
     "raw_edge": 0.0532,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATL 10, PIT 5"
   },
   {
     "scan_date": "2026-07-09",
@@ -11714,8 +11714,8 @@
     "edge": -0.0329,
     "raw_edge": 0.0353,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "KC 3, NYM 7"
   },
   {
     "scan_date": "2026-07-09",
@@ -11732,8 +11732,8 @@
     "edge": -0.0362,
     "raw_edge": 0.0299,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NYY 12, TB 4"
   },
   {
     "scan_date": "2026-07-09",
@@ -11750,8 +11750,8 @@
     "edge": 0.0024,
     "raw_edge": 0.0191,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NYY 12, TB 4"
   },
   {
     "scan_date": "2026-07-09",
@@ -11768,8 +11768,8 @@
     "edge": -0.0664,
     "raw_edge": -0.0214,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CHC 2, BAL 3"
   },
   {
     "scan_date": "2026-07-09",
@@ -11786,8 +11786,8 @@
     "edge": -0.0262,
     "raw_edge": 0.043,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CLE 5, MIN 2"
   },
   {
     "scan_date": "2026-07-09",
@@ -11815,12 +11815,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Athletics +1.5",
-    "line": "DET -131",
-    "implied": 0.6441,
-    "model_raw": 0.6564,
-    "model_cal": 0.6066,
-    "edge": -0.0375,
-    "raw_edge": 0.0122,
+    "line": "DET -132",
+    "implied": 0.6491,
+    "model_raw": 0.6593,
+    "model_cal": 0.6106,
+    "edge": -0.0385,
+    "raw_edge": 0.0102,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -11834,11 +11834,11 @@
     "side": "over",
     "pick": "OVER 9.0",
     "line": "O/U 9.0",
-    "implied": 0.5122,
-    "model_raw": 0.651,
-    "model_cal": 0.6268,
-    "edge": 0.1147,
-    "raw_edge": 0.1388,
+    "implied": 0.5238,
+    "model_raw": 0.6186,
+    "model_cal": 0.6008,
+    "edge": 0.077,
+    "raw_edge": 0.0948,
     "became_pick": true,
     "outcome": "pending",
     "final_score": ""
@@ -11869,12 +11869,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Cincinnati Reds +1.5",
-    "line": "PHI -163",
-    "implied": 0.5392,
+    "line": "PHI -168",
+    "implied": 0.5327,
     "model_raw": 0.5426,
-    "model_cal": 0.5075,
-    "edge": -0.0317,
-    "raw_edge": 0.0034,
+    "model_cal": 0.5037,
+    "edge": -0.029,
+    "raw_edge": 0.0099,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -11905,12 +11905,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Los Angeles Angels +1.5",
-    "line": "TEX -136",
-    "implied": 0.6599,
+    "line": "TEX -143",
+    "implied": 0.6516,
     "model_raw": 0.6785,
-    "model_cal": 0.6229,
-    "edge": -0.037,
-    "raw_edge": 0.0186,
+    "model_cal": 0.6176,
+    "edge": -0.034,
+    "raw_edge": 0.0269,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -11943,10 +11943,10 @@
     "pick": "Colorado Rockies +1.5",
     "line": "SF -131",
     "implied": 0.6587,
-    "model_raw": 0.6076,
-    "model_cal": 0.6036,
-    "edge": -0.0551,
-    "raw_edge": -0.0511,
+    "model_raw": 0.6523,
+    "model_cal": 0.6151,
+    "edge": -0.0436,
+    "raw_edge": -0.0064,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -11960,11 +11960,11 @@
     "side": "over",
     "pick": "OVER 8.5",
     "line": "O/U 8.5",
-    "implied": 0.5192,
+    "implied": 0.5392,
     "model_raw": 0.734,
-    "model_cal": 0.6984,
-    "edge": 0.1792,
-    "raw_edge": 0.2148,
+    "model_cal": 0.7012,
+    "edge": 0.162,
+    "raw_edge": 0.1948,
     "became_pick": true,
     "outcome": "pending",
     "final_score": ""

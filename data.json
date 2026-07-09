@@ -16,8 +16,8 @@
   },
   "games_analyzed": 13,
   "best_bet": {
-    "title": "OVER 8.5 (-108) \u2014 17.9% Edge (High Tier)",
-    "desc": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (17.9%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap."
+    "title": "OVER 8.5 (-117) \u2014 16.2% Edge (High Tier)",
+    "desc": "Model (DRatings only + oddsshark + actionnetwork): COL 5.6, SF 5.8 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (16.2%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap."
   },
   "picks": [
     {
@@ -27,16 +27,16 @@
       "event_short": "COL @ SF",
       "market": "Over/Under",
       "pick": "OVER 8.5",
-      "odds": "-108",
-      "implied": "51.9%",
-      "model": "69.8%",
-      "edge": 17.9,
-      "ev_per_dollar": 0.3452,
+      "odds": "-117",
+      "implied": "53.9%",
+      "model": "70.1%",
+      "edge": 16.2,
+      "ev_per_dollar": 0.3007,
       "tier": "High",
       "bet": "$9.53",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (17.9%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.6, SF 5.8 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (16.2%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/34369817?outcomes=0OU85422716O850_1",
@@ -51,16 +51,16 @@
       "event_short": "ATH @ DET",
       "market": "Over/Under",
       "pick": "OVER 9.0",
-      "odds": "-105",
-      "implied": "51.2%",
-      "model": "62.7%",
-      "edge": 11.5,
-      "ev_per_dollar": 0.2236,
+      "odds": "-110",
+      "implied": "52.4%",
+      "model": "60.1%",
+      "edge": 7.7,
+      "ev_per_dollar": 0.1469,
       "tier": "High",
       "bet": "$9.53",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.3, DET 5.5 (total: 10.8). Line: 9.0. Cushion: 1.8 pts. \u26a0 SUSPICIOUS EDGE (11.5%): Model predicts 10.8 vs market 9.0 \u2014 1.8 pt gap.",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.1, DET 5.3 (total: 10.4). Line: 9.0. Cushion: 1.4 pts.",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "HIGH",
       "dk_link": "https://sportsbook.draftkings.com/event/34369805?outcomes=0OU85422704O900_1",
@@ -85,14 +85,14 @@
     {
       "sport": "MLB",
       "event": "PHI @ CIN",
-      "line": "PHI -163",
+      "line": "PHI -168",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.2%",
+      "edge": "-2.9%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "0.3%",
-      "calib_delta": "-3.5pp"
+      "raw_edge": "1.0%",
+      "calib_delta": "-3.9pp"
     },
     {
       "sport": "MLB",
@@ -109,14 +109,14 @@
     {
       "sport": "MLB",
       "event": "LAA @ TEX",
-      "line": "TEX -136",
+      "line": "TEX -143",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.7%",
+      "edge": "-3.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "1.9%",
-      "calib_delta": "-5.6pp"
+      "raw_edge": "2.7%",
+      "calib_delta": "-6.1pp"
     },
     {
       "sport": "MLB",
@@ -140,8 +140,8 @@
       "home_name": "Detroit Tigers",
       "event_short": "ATH @ DET",
       "start_time": "2026-07-09T22:40Z",
-      "pred_away_score": 5.3,
-      "pred_home_score": 5.5,
+      "pred_away_score": 5.1,
+      "pred_home_score": 5.3,
       "pred_margin": 0.2,
       "home_spread": -1.5,
       "over_under": 9.0
@@ -224,9 +224,9 @@
       "home_name": "San Francisco Giants",
       "event_short": "COL @ SF",
       "start_time": "2026-07-10T01:45Z",
-      "pred_away_score": 5.4,
-      "pred_home_score": 6.0,
-      "pred_margin": 0.6,
+      "pred_away_score": 5.6,
+      "pred_home_score": 5.8,
+      "pred_margin": 0.2,
       "home_spread": -1.5,
       "over_under": 8.5
     }
