@@ -12147,5 +12147,24 @@
     "outcome": "loss",
     "final_score": "MIA 10, COL 7",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-07-09",
+    "sport": "MLB",
+    "event": "Colorado Rockies @ San Francisco Giants",
+    "market": "Over/Under",
+    "pick": "OVER 8.5",
+    "odds": "-104",
+    "implied": "51.0%",
+    "model": "63.5%",
+    "edge": 12.5,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.4, SF 6.0 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (12.5%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
