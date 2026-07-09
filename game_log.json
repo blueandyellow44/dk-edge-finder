@@ -11624,8 +11624,8 @@
     "edge": -0.0699,
     "raw_edge": -0.0342,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ARI 4, SD 10"
   },
   {
     "scan_date": "2026-07-08",
