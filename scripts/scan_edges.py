@@ -2358,7 +2358,8 @@ def main(games_only: bool = False):
                 continue
             try:
                 ml_picks = soccer_moneyline.scan_soccer_moneyline(
-                    sport, all_predictions.get(sport, {}), sport_games, available)
+                    sport, all_predictions.get(sport, {}), sport_games, available,
+                    game_log_records=game_log_records, scan_date=today_iso)
                 for mp in ml_picks:
                     picks.append(mp)
                     print(f"  EDGE: {mp['pick']} ({mp['odds']}) — {mp['edge']}% edge")
@@ -2375,7 +2376,8 @@ def main(games_only: bool = False):
             print("\n[5d] Scanning MLB moneyline (real DK h2h odds)...")
             try:
                 mlb_ml = mlb_moneyline.scan_mlb_moneyline(
-                    all_predictions.get("mlb", {}), mlb_games, available)
+                    all_predictions.get("mlb", {}), mlb_games, available,
+                    game_log_records=game_log_records, scan_date=today_iso)
                 for mp in mlb_ml:
                     picks.append(mp)
                     print(f"  EDGE: {mp['pick']} ({mp['odds']}) — {mp['edge']}% edge")

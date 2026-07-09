@@ -34,8 +34,14 @@ KELLY_FRACTION = 0.25
 KELLY_CAP = 0.02
 
 
-def calculate_mlb_ml_edge(game, pred, h2h):
-    """Best +EV 2-way moneyline pick for one MLB game, or None."""
+def calculate_mlb_ml_edge(game, pred, h2h, assess_out=None, scan_date=""):
+    """Best +EV 2-way moneyline pick for one MLB game, or None.
+
+    When assess_out is a list, appends one game_log-schema assessment row for
+    the model's best-edge side regardless of the pick floor — the unbiased
+    record the calibration fitter / blend-weight fit needs (2026-07-09; the
+    spread/total paths have logged this since 2026-06-09, moneyline never did).
+    """
     home_x, away_x = pred.get("home_score"), pred.get("away_score")
     if home_x is None or away_x is None or home_x <= 0 or away_x <= 0:
         return None
@@ -43,6 +49,7 @@ def calculate_mlb_ml_edge(game, pred, h2h):
         p_home, p_away = two_way_win_probs(home_x, away_x)
     except ValueError:
         return None
+    p_home_raw, p_away_raw = p_home, p_away  # pre-blend, for game_log model_raw
 
     # Market-anchored blend: pull the model toward the no-vig market (2026-06-09
     # audit — the model barely beats a sharp line; filters adverse selection).
@@ -54,18 +61,43 @@ def calculate_mlb_ml_edge(game, pred, h2h):
     away_name = away.get("name", "?")
 
     candidates = [
-        ("home", p_home, h2h.get("home_ml"), h2h.get("home_link"), home_name),
-        ("away", p_away, h2h.get("away_ml"), h2h.get("away_link"), away_name),
+        ("home", p_home, p_home_raw, h2h.get("home_ml"), h2h.get("home_link"), home_name),
+        ("away", p_away, p_away_raw, h2h.get("away_ml"), h2h.get("away_link"), away_name),
     ]
-    best = None
-    for outcome, model_p, ml, link, team in candidates:
+    best = None          # highest-edge side that clears the pick floor
+    best_assess = None   # highest-edge side regardless of floor (for game_log)
+    for outcome, model_p, model_p_raw, ml, link, team in candidates:
         if ml is None:
             continue
         edge = model_p - props_kernel.american_to_implied(ml)
+        if best_assess is None or edge > best_assess[1]:
+            best_assess = (outcome, edge, model_p, model_p_raw, ml, team)
         if edge < MLB_ML_MIN_EDGE:
             continue
         if best is None or edge > best[1]:
             best = (outcome, edge, model_p, ml, link, team)
+
+    if assess_out is not None and best_assess is not None:
+        a_out, a_edge, a_cal, a_raw, a_ml, a_team = best_assess
+        a_implied = props_kernel.american_to_implied(a_ml)
+        assess_out.append({
+            "scan_date": scan_date,
+            "sport": "MLB",
+            "event": f"{away_name} @ {home_name}",
+            "event_short": f"{away.get('abbr','?')} @ {home.get('abbr','?')}",
+            "market": "moneyline",
+            "side": a_out,
+            "pick": f"{a_team} ML",
+            "line": f"{a_ml:+d}",
+            "implied": round(a_implied, 4),
+            "model_raw": round(a_raw, 4),
+            "model_cal": round(a_cal, 4),
+            "edge": round(a_edge, 4),
+            "raw_edge": round(a_raw - a_implied, 4),
+            "became_pick": best is not None and best[0] == a_out,
+            "outcome": "pending",
+            "final_score": "",
+        })
 
     if best is None:
         return None
@@ -116,8 +148,12 @@ def calculate_mlb_ml_edge(game, pred, h2h):
     }
 
 
-def scan_mlb_moneyline(predictions, games, bankroll=500.0):
-    """Scan MLB games for 2-way moneyline edges. Returns a list of pick dicts."""
+def scan_mlb_moneyline(predictions, games, bankroll=500.0,
+                       game_log_records=None, scan_date=""):
+    """Scan MLB games for 2-way moneyline edges. Returns a list of pick dicts.
+
+    game_log_records: optional list to append per-game assessment rows to
+    (game_log.json schema); scan_date stamps those rows."""
     if not games:
         return []
     h2h_events = _sml.fetch_h2h_odds(ODDS_API_SPORT_KEY)
@@ -146,7 +182,9 @@ def scan_mlb_moneyline(predictions, games, bankroll=500.0):
             unmatched += 1
             continue
 
-        pick = calculate_mlb_ml_edge(game, pred, h2h)
+        pick = calculate_mlb_ml_edge(game, pred, h2h,
+                                     assess_out=game_log_records,
+                                     scan_date=scan_date)
         if pick:
             picks.append(pick)
 

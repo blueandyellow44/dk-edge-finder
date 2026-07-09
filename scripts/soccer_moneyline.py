@@ -197,12 +197,17 @@ def _build_pick(game, sport, pred, h2h, outcome, probs, ml_odds, link):
     }
 
 
-def calculate_moneyline_edge(game, pred, h2h):
+def calculate_moneyline_edge(game, pred, h2h, assess_out=None, scan_date=""):
     """Return the single best +EV 3-way pick for a game, or None.
 
     Picks the outcome with the highest positive edge that clears its floor
     (draws use a higher floor). Betting one side of a mutually-exclusive 3-way
     avoids stacking exposure on a single match.
+
+    When assess_out is a list, appends one game_log-schema assessment row for
+    the model's best-edge outcome regardless of the floors — the unbiased
+    record the calibration fitter / blend-weight fit needs (2026-07-09; the
+    spread/total paths have logged this since 2026-06-09, moneyline never did).
     """
     home_xg, away_xg = pred.get("home_score"), pred.get("away_score")
     if home_xg is None or away_xg is None or home_xg <= 0 or away_xg <= 0:
@@ -211,6 +216,7 @@ def calculate_moneyline_edge(game, pred, h2h):
         p_home, p_draw, p_away = three_way_probs(home_xg, away_xg)
     except ValueError:
         return None
+    raw_probs = {"home": p_home, "draw": p_draw, "away": p_away}  # pre-blend
 
     # Market-anchored blend: pull each outcome toward the no-vig market
     # (2026-06-09 audit — filters adverse-selected disagreements).
@@ -223,15 +229,44 @@ def calculate_moneyline_edge(game, pred, h2h):
         ("draw", p_draw, h2h.get("draw_ml"), h2h.get("draw_link"), SOCCER_ML_DRAW_MIN_EDGE),
         ("away", p_away, h2h.get("away_ml"), h2h.get("away_link"), SOCCER_ML_MIN_EDGE),
     ]
-    best = None
+    best = None          # highest-edge outcome that clears its floor
+    best_assess = None   # highest-edge outcome regardless of floors (for game_log)
     for outcome, model_p, ml, link, floor in candidates:
         if ml is None:
             continue
         edge = model_p - props_kernel.american_to_implied(ml)
+        if best_assess is None or edge > best_assess[1]:
+            best_assess = (outcome, edge, model_p, ml)
         if edge < floor:
             continue
         if best is None or edge > best[1]:
             best = (outcome, edge, model_p, ml, link)
+
+    if assess_out is not None and best_assess is not None:
+        home, away = game["home"], game["away"]
+        home_name, away_name = home.get("name", "?"), away.get("name", "?")
+        a_out, a_edge, a_cal, a_ml = best_assess
+        a_raw = raw_probs[a_out]
+        a_implied = props_kernel.american_to_implied(a_ml)
+        a_team = {"home": home_name, "away": away_name, "draw": "Draw"}[a_out]
+        assess_out.append({
+            "scan_date": scan_date,
+            "sport": game.get("sport", "soccer").upper(),
+            "event": f"{away_name} @ {home_name}",
+            "event_short": f"{away.get('abbr','?')} @ {home.get('abbr','?')}",
+            "market": "moneyline",
+            "side": a_out,
+            "pick": f"{a_team} ML",
+            "line": f"{a_ml:+d}",
+            "implied": round(a_implied, 4),
+            "model_raw": round(a_raw, 4),
+            "model_cal": round(a_cal, 4),
+            "edge": round(a_edge, 4),
+            "raw_edge": round(a_raw - a_implied, 4),
+            "became_pick": best is not None and best[0] == a_out,
+            "outcome": "pending",
+            "final_score": "",
+        })
 
     if best is None:
         return None
@@ -240,7 +275,8 @@ def calculate_moneyline_edge(game, pred, h2h):
                        (p_home, p_draw, p_away), ml, link)
 
 
-def scan_soccer_moneyline(sport, predictions, games, bankroll=500.0):
+def scan_soccer_moneyline(sport, predictions, games, bankroll=500.0,
+                          game_log_records=None, scan_date=""):
     """Scan one soccer league's games for 3-way moneyline edges.
 
     Args:
@@ -248,6 +284,8 @@ def scan_soccer_moneyline(sport, predictions, games, bankroll=500.0):
         predictions: ensemble dict keyed "AWAY@HOME" (abbrs), each carrying
                      home_score / away_score (predicted goals).
         games: upcoming game dicts for this league (from fetch_schedule_and_odds).
+        game_log_records: optional list to append per-game assessment rows to
+                     (game_log.json schema); scan_date stamps those rows.
     Returns a list of pick dicts.
     """
     plugin = props_soccer.PLUGINS.get(sport.lower())
@@ -279,7 +317,9 @@ def scan_soccer_moneyline(sport, predictions, games, bankroll=500.0):
             unmatched += 1
             continue
 
-        pick = calculate_moneyline_edge(game, pred, h2h)
+        pick = calculate_moneyline_edge(game, pred, h2h,
+                                        assess_out=game_log_records,
+                                        scan_date=scan_date)
         if pick:
             picks.append(pick)
 

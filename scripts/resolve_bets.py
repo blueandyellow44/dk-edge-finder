@@ -1027,9 +1027,10 @@ def resolve_pick_history(all_games: dict):
 def resolve_game_log(all_games: dict):
     """Resolve pending rows in game_log.json — the complete per-game calibration
     dataset (every game surfaced, picked or not). Grades the MODEL'S chosen side
-    (game_log['pick'], e.g. 'San Diego Padres +1.5' or 'OVER 8.5') against the
-    final score, reusing the same scoreboard fetch + resolvers as the pick path.
-    Game-level only (spread / total) — no prop box-score fetch needed.
+    (game_log['pick'], e.g. 'San Diego Padres +1.5', 'OVER 8.5', or 'Draw ML')
+    against the final score, reusing the same scoreboard fetch + resolvers as
+    the pick path. Game-level only (spread / total / moneyline) — no prop
+    box-score fetch needed.
     """
     GAME_LOG_JSON = REPO_ROOT / "game_log.json"
     if not GAME_LOG_JSON.exists():
@@ -1075,6 +1076,9 @@ def resolve_game_log(all_games: dict):
             outcome = resolve_total(pick, home_score, away_score)
         elif market == "spread":
             outcome = resolve_spread(pick, home_score, away_score, r.get("event", ""))
+        elif market == "moneyline":
+            # Same grader as the pick path; handles the soccer 3-way Draw.
+            outcome = resolve_moneyline(pick, home_score, away_score, r.get("event", ""))
         else:
             outcome = "unknown"
 
