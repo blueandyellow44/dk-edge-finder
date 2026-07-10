@@ -16,7 +16,7 @@
   },
   "games_analyzed": 15,
   "best_bet": {
-    "title": "UNDER 9.0 (-110) \u2014 9.1% Edge (High Tier)",
+    "title": "UNDER 9.0 (-108) \u2014 9.5% Edge (High Tier)",
     "desc": "Model (DRatings only + oddsshark + actionnetwork): ATH 3.3, CHW 4.1 (total: 7.4). Line: 9.0. Cushion: 1.6 pts."
   },
   "picks": [
@@ -27,11 +27,11 @@
       "event_short": "ATH @ CHW",
       "market": "Over/Under",
       "pick": "UNDER 9.0",
-      "odds": "-110",
-      "implied": "52.4%",
-      "model": "61.5%",
-      "edge": 9.1,
-      "ev_per_dollar": 0.1737,
+      "odds": "-108",
+      "implied": "51.9%",
+      "model": "61.4%",
+      "edge": 9.5,
+      "ev_per_dollar": 0.1826,
       "tier": "High",
       "bet": "$9.53",
       "status": "",
@@ -51,89 +51,89 @@
       "event": "MIL @ PIT",
       "line": "PIT -126",
       "reason": "Edge below sport-specific threshold",
-      "edge": "5.4%",
+      "edge": "3.8%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "6.8%",
-      "calib_delta": "-1.4pp"
+      "raw_edge": "4.9%",
+      "calib_delta": "-1.1pp"
     },
     {
       "sport": "MLB",
       "event": "PHI @ DET",
-      "line": "DET -119",
+      "line": "DET -120",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.2%",
+      "edge": "-3.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "3.6%",
-      "calib_delta": "-6.8pp"
+      "edge_side": "away",
+      "raw_edge": "2.9%",
+      "calib_delta": "-6.4pp"
     },
     {
       "sport": "MLB",
       "event": "NYY @ WSH",
       "line": "NYY -162",
       "reason": "Edge below sport-specific threshold",
-      "edge": "3.1%",
+      "edge": "3.5%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "4.1%",
+      "raw_edge": "4.5%",
       "calib_delta": "-1.0pp"
     },
     {
       "sport": "MLB",
       "event": "KC @ BAL",
-      "line": "BAL -156",
+      "line": "BAL -149",
       "reason": "Edge below sport-specific threshold",
-      "edge": "4.5%",
+      "edge": "5.4%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "5.7%",
-      "calib_delta": "-1.2pp"
+      "raw_edge": "6.8%",
+      "calib_delta": "-1.4pp"
     },
     {
       "sport": "MLB",
       "event": "CHC @ CIN",
-      "line": "CHC -114",
+      "line": "CHC -117",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.7%",
+      "edge": "-2.6%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.7%",
-      "calib_delta": "-7.5pp"
+      "raw_edge": "5.3%",
+      "calib_delta": "-7.8pp"
     },
     {
       "sport": "MLB",
       "event": "CLE @ MIA",
       "line": "MIA -122",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.6%",
+      "edge": "-3.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "2.9%",
-      "calib_delta": "-6.5pp"
+      "edge_side": "home",
+      "raw_edge": "3.5%",
+      "calib_delta": "-6.8pp"
     },
     {
       "sport": "MLB",
       "event": "SEA @ TB",
-      "line": "TB -118",
+      "line": "TB -120",
       "reason": "Edge below sport-specific threshold",
-      "edge": "2.8%",
+      "edge": "-0.2%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "3.8%",
-      "calib_delta": "-0.9pp"
+      "raw_edge": "0.2%",
+      "calib_delta": "-0.4pp"
     },
     {
       "sport": "MLB",
       "event": "BOS @ NYM",
-      "line": "NYM -148",
+      "line": "NYM -155",
       "reason": "Edge below sport-specific threshold",
       "edge": "-3.2%",
       "min_edge": "5.0%",
@@ -159,12 +159,12 @@
       "event": "LAA @ MIN",
       "line": "MIN -149",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.0%",
+      "edge": "-3.1%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "3.6%",
-      "calib_delta": "-6.6pp"
+      "raw_edge": "3.5%",
+      "calib_delta": "-6.5pp"
     },
     {
       "sport": "MLB",
@@ -183,7 +183,7 @@
       "event": "TOR @ SD",
       "line": "SD -125",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.6%",
+      "edge": "-2.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
@@ -193,14 +193,14 @@
     {
       "sport": "MLB",
       "event": "ARI @ LAD",
-      "line": "LAD -267",
+      "line": "LAD -272",
       "reason": "Edge below sport-specific threshold",
-      "edge": "2.7%",
+      "edge": "1.9%",
       "min_edge": "6.0%",
       "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "3.6%",
-      "calib_delta": "-0.9pp"
+      "edge_side": "over",
+      "raw_edge": "2.6%",
+      "calib_delta": "-0.7pp"
     },
     {
       "sport": "MLB",
@@ -224,8 +224,8 @@
       "home_name": "Pittsburgh Pirates",
       "event_short": "MIL @ PIT",
       "start_time": "2026-07-10T22:40Z",
-      "pred_away_score": 4.5,
-      "pred_home_score": 4.6,
+      "pred_away_score": 4.4,
+      "pred_home_score": 4.5,
       "pred_margin": 0.1,
       "home_spread": -1.5,
       "over_under": 8.0
@@ -241,7 +241,7 @@
       "pred_away_score": 4.5,
       "pred_home_score": 4.5,
       "pred_margin": 0.0,
-      "home_spread": 1.5,
+      "home_spread": -1.5,
       "over_under": 9.0
     },
     {
@@ -297,7 +297,7 @@
       "pred_away_score": 3.6,
       "pred_home_score": 3.6,
       "pred_margin": 0.0,
-      "home_spread": -1.5,
+      "home_spread": 1.5,
       "over_under": 7.0
     },
     {
@@ -308,8 +308,8 @@
       "home_name": "Tampa Bay Rays",
       "event_short": "SEA @ TB",
       "start_time": "2026-07-10T23:10Z",
-      "pred_away_score": 4.4,
-      "pred_home_score": 4.5,
+      "pred_away_score": 4.2,
+      "pred_home_score": 4.3,
       "pred_margin": 0.1,
       "home_spread": 1.5,
       "over_under": 8.0
@@ -406,8 +406,8 @@
       "home_name": "Los Angeles Dodgers",
       "event_short": "ARI @ LAD",
       "start_time": "2026-07-11T02:10Z",
-      "pred_away_score": 3.3,
-      "pred_home_score": 4.5,
+      "pred_away_score": 3.9,
+      "pred_home_score": 5.1,
       "pred_margin": 1.2,
       "home_spread": -1.5,
       "over_under": 8.5
