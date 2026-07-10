@@ -12185,5 +12185,24 @@
     "outcome": "loss",
     "final_score": "ATH 1, DET 4",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-07-10",
+    "sport": "MLB",
+    "event": "Athletics @ Chicago White Sox",
+    "market": "Over/Under",
+    "pick": "UNDER 9.0",
+    "odds": "-110",
+    "implied": "52.4%",
+    "model": "61.5%",
+    "edge": 9.1,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 3.3, CHW 4.1 (total: 7.4). Line: 9.0. Cushion: 1.6 pts.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
