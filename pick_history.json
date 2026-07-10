@@ -12163,9 +12163,9 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): COL 5.6, SF 5.8 (total: 11.4). Line: 8.5. Cushion: 2.9 pts. \u26a0 SUSPICIOUS EDGE (16.2%): Model predicts 11.4 vs market 8.5 \u2014 2.9 pt gap.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "COL 2, SF 8",
+    "pnl_if_bet": 8.55
   },
   {
     "scan_date": "2026-07-09",
@@ -12182,8 +12182,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 5.1, DET 5.3 (total: 10.4). Line: 9.0. Cushion: 1.4 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATH 1, DET 4",
+    "pnl_if_bet": -10.0
   }
 ]
