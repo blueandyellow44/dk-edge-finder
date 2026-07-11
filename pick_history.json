@@ -12201,8 +12201,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): ATH 3.3, CHW 4.1 (total: 7.4). Line: 9.0. Cushion: 1.6 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "ATH 1, CHW 14",
+    "pnl_if_bet": -10.0
   }
 ]
