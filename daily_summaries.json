@@ -108,5 +108,10 @@
     "summary": "The MLB under salvaged what would've been a brutal day, generating the only +10.20 profit while the two NBA props hemorrhaged $20.00 combined despite the model showing high confidence (77.5% and 83.4%)\u2014both losses landed outside their projected ranges, suggesting the model's conviction didn't translate to execution on player performance. The day exposed a confidence calibration issue: medium-tier bets with 15% edge backing and 77-83% model confidence still failed to hit, indicating either the model overestimated those probabilities or the edges weren't as reliable as flagged.",
     "generated_at": "2026-06-11T09:13:26.797171+00:00",
     "model": "claude-haiku-4-5"
+  },
+  "2026-07-10": {
+    "summary": "The lone bet\u2014an MLB Under at -108 on ATH 1, CHW 14\u2014got blown out by Chicago's 14-run explosion, a loss that wiped the $10 risked despite the model's 61.4% confidence and 9.5% edge projection. The high-confidence, high-tier rated play completely whiffed, suggesting either the model's edge calculation was off or execution factors (line movement, timing) didn't materialize as expected on what looked like a solid probability play on paper.",
+    "generated_at": "2026-07-11T07:11:46.362194+00:00",
+    "model": "claude-haiku-4-5"
   }
 }
