@@ -13478,8 +13478,8 @@
     "edge": -0.0299,
     "raw_edge": 0.0325,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "KC 2, BAL 8"
   },
   {
     "scan_date": "2026-07-12",
@@ -13496,8 +13496,8 @@
     "edge": -0.0362,
     "raw_edge": 0.0188,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "NYY 5, WSH 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13514,8 +13514,8 @@
     "edge": -0.0289,
     "raw_edge": 0.0438,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "BOS 3, NYM 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13532,8 +13532,8 @@
     "edge": -0.0183,
     "raw_edge": 0.0724,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CHC 8, CIN 4"
   },
   {
     "scan_date": "2026-07-12",
@@ -13550,8 +13550,8 @@
     "edge": -0.0243,
     "raw_edge": 0.0641,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CLE 5, MIA 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13568,8 +13568,8 @@
     "edge": -0.0268,
     "raw_edge": 0.0591,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "PHI 5, DET 0"
   },
   {
     "scan_date": "2026-07-12",
@@ -13586,8 +13586,8 @@
     "edge": -0.0385,
     "raw_edge": 0.0069,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SEA 8, TB 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13604,8 +13604,8 @@
     "edge": -0.0314,
     "raw_edge": 0.0368,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAA 2, MIN 4"
   },
   {
     "scan_date": "2026-07-12",
@@ -13622,8 +13622,8 @@
     "edge": -0.0345,
     "raw_edge": 0.0207,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATH 1, CHW 9"
   },
   {
     "scan_date": "2026-07-12",
@@ -13640,8 +13640,8 @@
     "edge": -0.0306,
     "raw_edge": 0.0398,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATL 4, STL 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13658,8 +13658,8 @@
     "edge": 0.0269,
     "raw_edge": 0.0357,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATL 4, STL 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13676,8 +13676,8 @@
     "edge": -0.0352,
     "raw_edge": 0.0175,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "HOU 5, TEX 6"
   },
   {
     "scan_date": "2026-07-12",
@@ -13694,8 +13694,8 @@
     "edge": -0.0332,
     "raw_edge": 0.0239,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "COL 1, SF 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13712,8 +13712,8 @@
     "edge": -0.0356,
     "raw_edge": -0.0239,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ARI 5, LAD 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13730,8 +13730,8 @@
     "edge": -0.0301,
     "raw_edge": 0.0318,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "TOR 4, SD 5"
   },
   {
     "scan_date": "2026-07-12",
@@ -13766,8 +13766,8 @@
     "edge": -0.0078,
     "raw_edge": 0.0004,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "KC 2, BAL 8"
   },
   {
     "scan_date": "2026-07-12",
@@ -13784,8 +13784,8 @@
     "edge": -0.001,
     "raw_edge": 0.0137,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "NYY 5, WSH 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13802,8 +13802,8 @@
     "edge": -0.0076,
     "raw_edge": 0.0033,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "BOS 3, NYM 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13820,8 +13820,8 @@
     "edge": -0.011,
     "raw_edge": -0.0044,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CHC 8, CIN 4"
   },
   {
     "scan_date": "2026-07-12",
@@ -13838,8 +13838,8 @@
     "edge": -0.0209,
     "raw_edge": -0.0188,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CLE 5, MIA 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13856,8 +13856,8 @@
     "edge": 0.0117,
     "raw_edge": 0.0341,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "PHI 5, DET 0"
   },
   {
     "scan_date": "2026-07-12",
@@ -13874,8 +13874,8 @@
     "edge": 0.0013,
     "raw_edge": 0.0153,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SEA 8, TB 2"
   },
   {
     "scan_date": "2026-07-12",
@@ -13892,8 +13892,8 @@
     "edge": 0.0021,
     "raw_edge": 0.0172,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAA 2, MIN 4"
   },
   {
     "scan_date": "2026-07-12",
@@ -13910,8 +13910,8 @@
     "edge": -0.0192,
     "raw_edge": -0.0149,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 1, CHW 9"
   },
   {
     "scan_date": "2026-07-12",
@@ -13928,8 +13928,8 @@
     "edge": -0.0091,
     "raw_edge": -0.0011,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATL 4, STL 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13946,8 +13946,8 @@
     "edge": -0.022,
     "raw_edge": -0.0229,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "HOU 5, TEX 6"
   },
   {
     "scan_date": "2026-07-12",
@@ -13964,8 +13964,8 @@
     "edge": -0.0103,
     "raw_edge": 0.0004,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "COL 1, SF 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -13982,8 +13982,8 @@
     "edge": -0.0113,
     "raw_edge": 0.0013,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ARI 5, LAD 3"
   },
   {
     "scan_date": "2026-07-12",
@@ -14000,7 +14000,7 @@
     "edge": -0.0094,
     "raw_edge": 0.0016,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "TOR 4, SD 5"
   }
 ]
