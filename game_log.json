@@ -14002,5 +14002,23 @@
     "became_pick": false,
     "outcome": "loss",
     "final_score": "TOR 4, SD 5"
+  },
+  {
+    "scan_date": "2026-07-14",
+    "sport": "MLB",
+    "event": "American All-Stars @ National All-Stars",
+    "event_short": "AL @ NL",
+    "market": "spread",
+    "side": "away",
+    "pick": "American All-Stars +1.5",
+    "line": "NL -135",
+    "implied": 0.6429,
+    "model_raw": 0.5747,
+    "model_cal": 0.5829,
+    "edge": -0.06,
+    "raw_edge": -0.0682,
+    "became_pick": false,
+    "outcome": "pending",
+    "final_score": ""
   }
 ]
