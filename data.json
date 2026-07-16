@@ -21,50 +21,50 @@
     {
       "sport": "MLB",
       "event": "NYM @ PHI",
-      "line": "PHI -139",
+      "line": "PHI -131",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.8%",
+      "edge": "-3.5%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "4.3%",
-      "calib_delta": "-7.1pp"
+      "raw_edge": "2.3%",
+      "calib_delta": "-5.8pp"
     },
     {
       "sport": "MLS",
       "event": "TOR @ MTL",
-      "line": "MTL +125",
+      "line": "MTL +130",
       "reason": "Edge below sport-specific threshold"
     },
     {
       "sport": "MLS",
       "event": "VAN @ CHI",
-      "line": "VAN +140",
+      "line": "CHI +145",
       "reason": "Edge below sport-specific threshold",
-      "edge": "4.8%",
+      "edge": "4.7%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
       "raw_edge": "18.2%",
-      "calib_delta": "-13.4pp"
+      "calib_delta": "-13.5pp"
     },
     {
       "sport": "MLS",
       "event": "SKC @ STL",
-      "line": "STL -240",
+      "line": "STL -250",
       "reason": "No model data"
     },
     {
       "sport": "MLS",
       "event": "POR @ SEA",
-      "line": "SEA -210",
+      "line": "SEA -215",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-0.1%",
+      "edge": "-0.0%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
       "raw_edge": "11.6%",
-      "calib_delta": "-11.7pp"
+      "calib_delta": "-11.6pp"
     }
   ],
   "analyzed_games": [
@@ -107,7 +107,7 @@
       "pred_away_score": 1.15,
       "pred_home_score": 1.16,
       "pred_margin": 0.0,
-      "home_spread": 0.5,
+      "home_spread": -0.5,
       "over_under": 3.5
     },
     {
