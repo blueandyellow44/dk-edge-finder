@@ -23,12 +23,12 @@
       "event": "NYM @ PHI",
       "line": "PHI -131",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.5%",
+      "edge": "-3.2%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "2.3%",
-      "calib_delta": "-5.8pp"
+      "raw_edge": "3.5%",
+      "calib_delta": "-6.6pp"
     },
     {
       "sport": "MLS",
@@ -41,12 +41,12 @@
       "event": "VAN @ CHI",
       "line": "CHI +145",
       "reason": "Edge below sport-specific threshold",
-      "edge": "4.7%",
+      "edge": "4.0%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "18.2%",
-      "calib_delta": "-13.5pp"
+      "raw_edge": "17.3%",
+      "calib_delta": "-13.4pp"
     },
     {
       "sport": "MLS",
@@ -57,7 +57,7 @@
     {
       "sport": "MLS",
       "event": "POR @ SEA",
-      "line": "SEA -215",
+      "line": "SEA -225",
       "reason": "Edge below sport-specific threshold",
       "edge": "-0.0%",
       "min_edge": "6.0%",
@@ -77,8 +77,8 @@
       "event_short": "NYM @ PHI",
       "start_time": "2026-07-16T23:00Z",
       "pred_away_score": 4.6,
-      "pred_home_score": 4.8,
-      "pred_margin": 0.2,
+      "pred_home_score": 4.7,
+      "pred_margin": 0.1,
       "home_spread": -1.5,
       "over_under": 9.5
     },
@@ -107,7 +107,7 @@
       "pred_away_score": 1.15,
       "pred_home_score": 1.16,
       "pred_margin": 0.0,
-      "home_spread": -0.5,
+      "home_spread": 0.5,
       "over_under": 3.5
     },
     {
