@@ -1,6 +1,6 @@
 {
-  "scan_date": "2026-07-15",
-  "scan_subtitle": "2026-07-15 \u2014 No games scheduled",
+  "scan_date": "2026-07-16",
+  "scan_subtitle": "Thursday, July 16, 2026 \u2014 MLB (1), MLS (4)",
   "bankroll": {
     "available": 466.36,
     "starting": 500.0,
@@ -14,37 +14,115 @@
     "pending_total": 0,
     "pending_label": "No unsettled bets"
   },
-  "games_analyzed": 1,
+  "games_analyzed": 5,
   "best_bet": null,
   "picks": [],
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "AL @ NL",
-      "line": "NL -135",
+      "event": "NYM @ PHI",
+      "line": "PHI -139",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-6.0%",
+      "edge": "-2.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-6.8%",
-      "calib_delta": "+0.8pp"
+      "raw_edge": "4.3%",
+      "calib_delta": "-7.1pp"
+    },
+    {
+      "sport": "MLS",
+      "event": "TOR @ MTL",
+      "line": "MTL +125",
+      "reason": "Edge below sport-specific threshold"
+    },
+    {
+      "sport": "MLS",
+      "event": "VAN @ CHI",
+      "line": "VAN +140",
+      "reason": "Edge below sport-specific threshold",
+      "edge": "4.8%",
+      "min_edge": "6.0%",
+      "edge_market": "total",
+      "edge_side": "under",
+      "raw_edge": "18.2%",
+      "calib_delta": "-13.4pp"
+    },
+    {
+      "sport": "MLS",
+      "event": "SKC @ STL",
+      "line": "STL -240",
+      "reason": "No model data"
+    },
+    {
+      "sport": "MLS",
+      "event": "POR @ SEA",
+      "line": "SEA -210",
+      "reason": "Edge below sport-specific threshold",
+      "edge": "-0.1%",
+      "min_edge": "6.0%",
+      "edge_market": "total",
+      "edge_side": "under",
+      "raw_edge": "11.6%",
+      "calib_delta": "-11.7pp"
     }
   ],
   "analyzed_games": [
     {
       "sport": "MLB",
-      "away_abbr": "AL",
-      "home_abbr": "NL",
-      "away_name": "American All-Stars",
-      "home_name": "National All-Stars",
-      "event_short": "AL @ NL",
-      "start_time": "2026-07-15T00:00Z",
-      "pred_away_score": 3.5,
-      "pred_home_score": 4.5,
-      "pred_margin": 1.0,
+      "away_abbr": "NYM",
+      "home_abbr": "PHI",
+      "away_name": "New York Mets",
+      "home_name": "Philadelphia Phillies",
+      "event_short": "NYM @ PHI",
+      "start_time": "2026-07-16T23:00Z",
+      "pred_away_score": 4.6,
+      "pred_home_score": 4.8,
+      "pred_margin": 0.2,
       "home_spread": -1.5,
-      "over_under": 8.0
+      "over_under": 9.5
+    },
+    {
+      "sport": "MLS",
+      "away_abbr": "TOR",
+      "home_abbr": "MTL",
+      "away_name": "Toronto FC",
+      "home_name": "CF Montr\u00e9al",
+      "event_short": "TOR @ MTL",
+      "start_time": "2026-07-16T23:30Z",
+      "pred_away_score": 0.98,
+      "pred_home_score": 1.39,
+      "pred_margin": 0.4,
+      "home_spread": -0.5,
+      "over_under": 2.5
+    },
+    {
+      "sport": "MLS",
+      "away_abbr": "VAN",
+      "home_abbr": "CHI",
+      "away_name": "Vancouver Whitecaps",
+      "home_name": "Chicago Fire FC",
+      "event_short": "VAN @ CHI",
+      "start_time": "2026-07-17T00:30Z",
+      "pred_away_score": 1.15,
+      "pred_home_score": 1.16,
+      "pred_margin": 0.0,
+      "home_spread": 0.5,
+      "over_under": 3.5
+    },
+    {
+      "sport": "MLS",
+      "away_abbr": "POR",
+      "home_abbr": "SEA",
+      "away_name": "Portland Timbers",
+      "home_name": "Seattle Sounders FC",
+      "event_short": "POR @ SEA",
+      "start_time": "2026-07-17T02:30Z",
+      "pred_away_score": 0.85,
+      "pred_home_score": 1.94,
+      "pred_margin": 1.1,
+      "home_spread": -1.5,
+      "over_under": 3.5
     }
   ],
   "bets": [
