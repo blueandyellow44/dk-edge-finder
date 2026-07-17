@@ -14072,8 +14072,8 @@
     "edge": -0.0002,
     "raw_edge": 0.1155,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "POR 5, SEA 1"
   },
   {
     "scan_date": "2026-07-16",
@@ -14108,8 +14108,8 @@
     "edge": -0.0062,
     "raw_edge": 0.0002,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "POR 5, SEA 1"
   },
   {
     "scan_date": "2026-07-16",
