@@ -12204,5 +12204,24 @@
     "outcome": "loss",
     "final_score": "ATH 1, CHW 14",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-07-18",
+    "sport": "MLB",
+    "event": "Pittsburgh Pirates @ Cleveland Guardians",
+    "market": "Over/Under",
+    "pick": "UNDER 8.0",
+    "odds": "-104",
+    "implied": "51.0%",
+    "model": "58.5%",
+    "edge": 7.5,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.6, CLE 3.2 (total: 6.8). Line: 8.0. Cushion: 1.2 pts.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
