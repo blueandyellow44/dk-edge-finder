@@ -16,8 +16,8 @@
   },
   "games_analyzed": 16,
   "best_bet": {
-    "title": "UNDER 8.0 (-104) \u2014 7.5% Edge (High Tier)",
-    "desc": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.6, CLE 3.2 (total: 6.8). Line: 8.0. Cushion: 1.2 pts."
+    "title": "UNDER 8.5 (-117) \u2014 7.1% Edge (High Tier)",
+    "desc": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.7, CLE 3.3 (total: 7.0). Line: 8.5. Cushion: 1.5 pts."
   },
   "picks": [
     {
@@ -26,20 +26,20 @@
       "event": "Pittsburgh Pirates @ Cleveland Guardians",
       "event_short": "PIT @ CLE",
       "market": "Over/Under",
-      "pick": "UNDER 8.0",
-      "odds": "-104",
-      "implied": "51.0%",
-      "model": "58.5%",
-      "edge": 7.5,
-      "ev_per_dollar": 0.1473,
+      "pick": "UNDER 8.5",
+      "odds": "-117",
+      "implied": "53.9%",
+      "model": "61.0%",
+      "edge": 7.1,
+      "ev_per_dollar": 0.1316,
       "tier": "High",
       "bet": "$9.33",
       "status": "",
       "result": "",
-      "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.6, CLE 3.2 (total: 6.8). Line: 8.0. Cushion: 1.2 pts.",
+      "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.7, CLE 3.3 (total: 7.0). Line: 8.5. Cushion: 1.5 pts.",
       "sources": "DRatings only + oddsshark + actionnetwork, ESPN",
       "confidence": "HIGH",
-      "dk_link": "https://sportsbook.draftkings.com/event/34405144?outcomes=0OU85529553U800_3",
+      "dk_link": "https://sportsbook.draftkings.com/event/34405144?outcomes=0OU85529553U850_3",
       "type": "game",
       "start_time": "2026-07-18T23:10Z",
       "prop_bucket": ""
@@ -48,111 +48,39 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "PIT @ CLE",
-      "line": "CLE -131",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "2.0%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "2.7%",
-      "calib_delta": "-0.8pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ CHC",
-      "line": "CHC -149",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "2.0%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "over",
-      "raw_edge": "2.8%",
-      "calib_delta": "-0.8pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "NYM @ PHI",
-      "line": "PHI -180",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "0.3%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "over",
-      "raw_edge": "0.8%",
-      "calib_delta": "-0.5pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "CHW @ TOR",
-      "line": "TOR -111",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "2.5%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "3.4%",
-      "calib_delta": "-0.9pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "CIN @ COL",
-      "line": "CIN -114",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-3.7%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "0.5%",
-      "calib_delta": "-4.2pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "TB @ BOS",
-      "line": "TB -110",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "0.3%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "over",
-      "raw_edge": "0.8%",
-      "calib_delta": "-0.5pp"
-    },
-    {
-      "sport": "MLB",
       "event": "TEX @ ATL",
-      "line": "ATL -114",
+      "line": "ATL -117",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.8%",
+      "edge": "-3.0%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.9%",
-      "calib_delta": "-7.7pp"
+      "raw_edge": "4.3%",
+      "calib_delta": "-7.3pp"
     },
     {
       "sport": "MLB",
       "event": "BAL @ HOU",
       "line": "HOU -110",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.8%",
+      "edge": "-2.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.9%",
-      "calib_delta": "-7.7pp"
+      "raw_edge": "5.4%",
+      "calib_delta": "-8.1pp"
     },
     {
       "sport": "MLB",
       "event": "MIA @ MIL",
-      "line": "MIL -149",
+      "line": "MIL -137",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.2%",
+      "edge": "-4.7%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-0.9%",
-      "calib_delta": "-3.4pp"
+      "raw_edge": "-2.1%",
+      "calib_delta": "-2.5pp"
     },
     {
       "sport": "MLB",
@@ -171,24 +99,24 @@
       "event": "STL @ ARI",
       "line": "ARI -120",
       "reason": "Edge below sport-specific threshold",
-      "edge": "4.5%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "over",
-      "raw_edge": "5.6%",
-      "calib_delta": "-1.2pp"
+      "edge": "-3.4%",
+      "min_edge": "5.0%",
+      "edge_market": "spread",
+      "edge_side": "home",
+      "raw_edge": "2.7%",
+      "calib_delta": "-6.2pp"
     },
     {
       "sport": "MLB",
       "event": "LAD @ NYY",
       "line": "NYY -113",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-2.9%",
+      "edge": "-3.2%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "4.4%",
-      "calib_delta": "-7.4pp"
+      "raw_edge": "3.4%",
+      "calib_delta": "-6.6pp"
     },
     {
       "sport": "MLB",
@@ -205,14 +133,14 @@
     {
       "sport": "MLB",
       "event": "WSH @ ATH",
-      "line": "WSH -115",
+      "line": "WSH -117",
       "reason": "Edge below sport-specific threshold",
-      "edge": "1.6%",
+      "edge": "2.5%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "under",
-      "raw_edge": "2.3%",
-      "calib_delta": "-0.7pp"
+      "raw_edge": "3.4%",
+      "calib_delta": "-0.9pp"
     },
     {
       "sport": "MLB",
@@ -228,90 +156,6 @@
     }
   ],
   "analyzed_games": [
-    {
-      "sport": "MLB",
-      "away_abbr": "PIT",
-      "home_abbr": "CLE",
-      "away_name": "Pittsburgh Pirates",
-      "home_name": "Cleveland Guardians",
-      "event_short": "PIT @ CLE",
-      "start_time": "2026-07-18T17:10Z",
-      "pred_away_score": 3.6,
-      "pred_home_score": 3.2,
-      "pred_margin": -0.4,
-      "home_spread": -1.5,
-      "over_under": 7.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "MIN",
-      "home_abbr": "CHC",
-      "away_name": "Minnesota Twins",
-      "home_name": "Chicago Cubs",
-      "event_short": "MIN @ CHC",
-      "start_time": "2026-07-18T18:20Z",
-      "pred_away_score": 4.3,
-      "pred_home_score": 4.8,
-      "pred_margin": 0.5,
-      "home_spread": -1.5,
-      "over_under": 8.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "NYM",
-      "home_abbr": "PHI",
-      "away_name": "New York Mets",
-      "home_name": "Philadelphia Phillies",
-      "event_short": "NYM @ PHI",
-      "start_time": "2026-07-18T19:05Z",
-      "pred_away_score": 4.1,
-      "pred_home_score": 4.9,
-      "pred_margin": 0.8,
-      "home_spread": -1.5,
-      "over_under": 8.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "CHW",
-      "home_abbr": "TOR",
-      "away_name": "Chicago White Sox",
-      "home_name": "Toronto Blue Jays",
-      "event_short": "CHW @ TOR",
-      "start_time": "2026-07-18T19:07Z",
-      "pred_away_score": 4.3,
-      "pred_home_score": 4.3,
-      "pred_margin": 0.0,
-      "home_spread": 1.5,
-      "over_under": 9.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "CIN",
-      "home_abbr": "COL",
-      "away_name": "Cincinnati Reds",
-      "home_name": "Colorado Rockies",
-      "event_short": "CIN @ COL",
-      "start_time": "2026-07-18T19:10Z",
-      "pred_away_score": 6.4,
-      "pred_home_score": 5.9,
-      "pred_margin": -0.5,
-      "home_spread": 1.5,
-      "over_under": 12.5
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "TB",
-      "home_abbr": "BOS",
-      "away_name": "Tampa Bay Rays",
-      "home_name": "Boston Red Sox",
-      "event_short": "TB @ BOS",
-      "start_time": "2026-07-18T20:10Z",
-      "pred_away_score": 5.0,
-      "pred_home_score": 5.0,
-      "pred_margin": -0.0,
-      "home_spread": 1.5,
-      "over_under": 9.5
-    },
     {
       "sport": "MLB",
       "away_abbr": "TEX",
@@ -376,8 +220,8 @@
       "home_name": "Arizona Diamondbacks",
       "event_short": "STL @ ARI",
       "start_time": "2026-07-18T20:10Z",
-      "pred_away_score": 4.8,
-      "pred_home_score": 4.8,
+      "pred_away_score": 4.7,
+      "pred_home_score": 4.7,
       "pred_margin": 0.0,
       "home_spread": 1.5,
       "over_under": 9.0
@@ -390,11 +234,11 @@
       "home_name": "Cleveland Guardians",
       "event_short": "PIT @ CLE",
       "start_time": "2026-07-18T23:10Z",
-      "pred_away_score": 3.6,
-      "pred_home_score": 3.2,
+      "pred_away_score": 3.7,
+      "pred_home_score": 3.3,
       "pred_margin": -0.4,
       "home_spread": 1.5,
-      "over_under": 8.0
+      "over_under": 8.5
     },
     {
       "sport": "MLB",
@@ -405,8 +249,8 @@
       "event_short": "LAD @ NYY",
       "start_time": "2026-07-19T00:08Z",
       "pred_away_score": 4.5,
-      "pred_home_score": 4.5,
-      "pred_margin": -0.0,
+      "pred_home_score": 4.4,
+      "pred_margin": -0.1,
       "home_spread": 1.5,
       "over_under": 9.0
     },
