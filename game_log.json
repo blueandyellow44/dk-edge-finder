@@ -15098,8 +15098,8 @@
     "edge": -0.0165,
     "raw_edge": 0.0839,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "WSH 1, ATH 15"
   },
   {
     "scan_date": "2026-07-18",
@@ -15116,8 +15116,8 @@
     "edge": -0.0055,
     "raw_edge": 0.0972,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "DET 7, LAA 0"
   },
   {
     "scan_date": "2026-07-18",
@@ -15368,8 +15368,8 @@
     "edge": -0.0099,
     "raw_edge": -0.0022,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "WSH 1, ATH 15"
   },
   {
     "scan_date": "2026-07-18",
@@ -15386,8 +15386,8 @@
     "edge": -0.0005,
     "raw_edge": 0.01,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "DET 7, LAA 0"
   },
   {
     "scan_date": "2026-07-18",
@@ -15494,7 +15494,7 @@
     "edge": 0.0249,
     "raw_edge": 0.0336,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "WSH 1, ATH 15"
   }
 ]
