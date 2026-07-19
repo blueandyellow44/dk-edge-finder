@@ -15512,8 +15512,8 @@
     "edge": -0.0317,
     "raw_edge": 0.0296,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CHW 3, TOR 0"
   },
   {
     "scan_date": "2026-07-19",
@@ -15530,8 +15530,8 @@
     "edge": -0.0231,
     "raw_edge": 0.057,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAD 8, NYY 2"
   },
   {
     "scan_date": "2026-07-19",
@@ -15548,8 +15548,8 @@
     "edge": 0.0487,
     "raw_edge": 0.0615,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "LAD 8, NYY 2"
   },
   {
     "scan_date": "2026-07-19",
@@ -15775,12 +15775,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Athletics +1.5",
-    "line": "WSH -149",
-    "implied": 0.5495,
-    "model_raw": 0.6265,
-    "model_cal": 0.536,
-    "edge": -0.0136,
-    "raw_edge": 0.0769,
+    "line": "WSH -148",
+    "implied": 0.5516,
+    "model_raw": 0.6277,
+    "model_cal": 0.537,
+    "edge": -0.0146,
+    "raw_edge": 0.0762,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -15793,12 +15793,12 @@
     "market": "spread",
     "side": "home",
     "pick": "Los Angeles Angels +1.5",
-    "line": "DET -157",
-    "implied": 0.5516,
-    "model_raw": 0.6364,
-    "model_cal": 0.5392,
-    "edge": -0.0124,
-    "raw_edge": 0.0848,
+    "line": "DET -149",
+    "implied": 0.5671,
+    "model_raw": 0.6465,
+    "model_cal": 0.5526,
+    "edge": -0.0145,
+    "raw_edge": 0.0794,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -15812,11 +15812,11 @@
     "side": "under",
     "pick": "UNDER 9.5",
     "line": "O/U 9.5",
-    "implied": 0.5495,
-    "model_raw": 0.5684,
-    "model_cal": 0.5619,
-    "edge": 0.0124,
-    "raw_edge": 0.0189,
+    "implied": 0.5434,
+    "model_raw": 0.5429,
+    "model_cal": 0.5392,
+    "edge": -0.0042,
+    "raw_edge": -0.0005,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -15830,11 +15830,11 @@
     "side": "away",
     "pick": "San Francisco Giants +1.5",
     "line": "SEA -205",
-    "implied": 0.5595,
-    "model_raw": 0.5663,
-    "model_cal": 0.5266,
-    "edge": -0.0329,
-    "raw_edge": 0.0068,
+    "implied": 0.5575,
+    "model_raw": 0.6097,
+    "model_cal": 0.5368,
+    "edge": -0.0207,
+    "raw_edge": 0.0522,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -15847,12 +15847,12 @@
     "market": "spread",
     "side": "away",
     "pick": "St. Louis Cardinals +1.5",
-    "line": "ARI -130",
-    "implied": 0.6599,
+    "line": "ARI -126",
+    "implied": 0.6644,
     "model_raw": 0.6801,
-    "model_cal": 0.6233,
-    "edge": -0.0366,
-    "raw_edge": 0.0202,
+    "model_cal": 0.6263,
+    "edge": -0.0381,
+    "raw_edge": 0.0156,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -15872,8 +15872,8 @@
     "edge": -0.012,
     "raw_edge": -0.0041,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CHW 3, TOR 0"
   },
   {
     "scan_date": "2026-07-19",
@@ -15890,8 +15890,8 @@
     "edge": -0.011,
     "raw_edge": -0.0022,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "LAD 8, NYY 2"
   },
   {
     "scan_date": "2026-07-19",
@@ -16141,6 +16141,24 @@
     "model_cal": 0.5596,
     "edge": 0.0269,
     "raw_edge": 0.0357,
+    "became_pick": false,
+    "outcome": "pending",
+    "final_score": ""
+  },
+  {
+    "scan_date": "2026-07-19",
+    "sport": "MLB",
+    "event": "Washington Nationals @ Athletics",
+    "event_short": "WSH @ ATH",
+    "market": "total",
+    "side": "under",
+    "pick": "UNDER 10.5",
+    "line": "O/U 10.5",
+    "implied": 0.5,
+    "model_raw": 0.5514,
+    "model_cal": 0.5403,
+    "edge": 0.0403,
+    "raw_edge": 0.0514,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
