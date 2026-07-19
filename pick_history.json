@@ -12239,8 +12239,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): PIT 3.7, CLE 3.3 (total: 7.0). Line: 8.5. Cushion: 1.5 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "win",
+    "final_score": "PIT 7, CLE 1",
+    "pnl_if_bet": 8.55
   }
 ]
