@@ -12242,5 +12242,24 @@
     "outcome": "win",
     "final_score": "PIT 7, CLE 1",
     "pnl_if_bet": 8.55
+  },
+  {
+    "scan_date": "2026-07-21",
+    "sport": "MLB",
+    "event": "San Francisco Giants @ Kansas City Royals",
+    "market": "Over/Under",
+    "pick": "OVER 9.0",
+    "odds": "-116",
+    "implied": "53.7%",
+    "model": "60.3%",
+    "edge": 6.6,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only + oddsshark + actionnetwork): SF 5.2, KC 5.2 (total: 10.4). Line: 9.0. Cushion: 1.4 pts.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
