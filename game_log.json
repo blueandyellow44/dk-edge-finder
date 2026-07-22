@@ -17042,8 +17042,8 @@
     "edge": -0.0315,
     "raw_edge": 0.0347,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "ATH 5, ARI 6"
   },
   {
     "scan_date": "2026-07-21",
@@ -17060,8 +17060,8 @@
     "edge": -0.0265,
     "raw_edge": 0.0599,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "CIN 4, SEA 2"
   },
   {
     "scan_date": "2026-07-21",
@@ -17312,8 +17312,8 @@
     "edge": 0.0038,
     "raw_edge": 0.0198,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ATH 5, ARI 6"
   },
   {
     "scan_date": "2026-07-21",
@@ -17330,8 +17330,8 @@
     "edge": -0.0231,
     "raw_edge": -0.0238,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "CIN 4, SEA 2"
   },
   {
     "scan_date": "2026-07-21",
