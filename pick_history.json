@@ -12261,5 +12261,24 @@
     "outcome": "loss",
     "final_score": "SF 2, KC 3",
     "pnl_if_bet": -10.0
+  },
+  {
+    "scan_date": "2026-07-22",
+    "sport": "MLS",
+    "event": "Vancouver Whitecaps @ FC Cincinnati",
+    "market": "Over/Under",
+    "pick": "UNDER 3.5",
+    "odds": "-115",
+    "implied": "53.5%",
+    "model": "59.7%",
+    "edge": 6.2,
+    "tier": "High",
+    "confidence": "HIGH",
+    "type": "game",
+    "notes": "Model (DRatings only): VAN 1.3, CIN 1.1 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
+    "prop_bucket": "",
+    "outcome": "pending",
+    "final_score": "",
+    "pnl_if_bet": 0
   }
 ]
