@@ -12258,8 +12258,8 @@
     "type": "game",
     "notes": "Model (DRatings only + oddsshark + actionnetwork): SF 5.2, KC 5.2 (total: 10.4). Line: 9.0. Cushion: 1.4 pts.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "SF 2, KC 3",
+    "pnl_if_bet": -10.0
   }
 ]
