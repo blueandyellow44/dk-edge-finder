@@ -18320,8 +18320,8 @@
     "edge": -0.0252,
     "raw_edge": 0.0127,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SD 5, ATL 6"
   },
   {
     "scan_date": "2026-07-23",
@@ -18338,8 +18338,8 @@
     "edge": 0.0107,
     "raw_edge": 0.0168,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "SD 5, ATL 6"
   },
   {
     "scan_date": "2026-07-23",
@@ -18383,14 +18383,14 @@
     "event": "Arizona Diamondbacks @ St. Louis Cardinals",
     "event_short": "ARI @ STL",
     "market": "spread",
-    "side": "away",
-    "pick": "Arizona Diamondbacks +1.5",
-    "line": "STL -122",
-    "implied": 0.6732,
-    "model_raw": 0.6673,
-    "model_cal": 0.6287,
-    "edge": -0.0445,
-    "raw_edge": -0.0059,
+    "side": "home",
+    "pick": "St. Louis Cardinals +1.5",
+    "line": "STL -115",
+    "implied": 0.6667,
+    "model_raw": 0.7401,
+    "model_cal": 0.6445,
+    "edge": -0.0222,
+    "raw_edge": 0.0734,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -18404,11 +18404,11 @@
     "side": "over",
     "pick": "OVER 7.5",
     "line": "O/U 7.5",
-    "implied": 0.505,
+    "implied": 0.5305,
     "model_raw": 0.5514,
-    "model_cal": 0.5411,
-    "edge": 0.0362,
-    "raw_edge": 0.0465,
+    "model_cal": 0.5447,
+    "edge": 0.0142,
+    "raw_edge": 0.0209,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -18421,12 +18421,12 @@
     "market": "spread",
     "side": "away",
     "pick": "Kansas City Royals +1.5",
-    "line": "DET -224",
-    "implied": 0.5215,
+    "line": "DET -237",
+    "implied": 0.5122,
     "model_raw": 0.5185,
-    "model_cal": 0.4902,
-    "edge": -0.0313,
-    "raw_edge": -0.003,
+    "model_cal": 0.4841,
+    "edge": -0.0281,
+    "raw_edge": 0.0063,
     "became_pick": false,
     "outcome": "pending",
     "final_score": ""
@@ -18464,8 +18464,8 @@
     "edge": -0.0219,
     "raw_edge": -0.0157,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "SD 5, ATL 6"
   },
   {
     "scan_date": "2026-07-23",

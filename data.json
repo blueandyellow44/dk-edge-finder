@@ -20,56 +20,30 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "TB @ TOR",
-      "line": "TB -112",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-4.4%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "home",
-      "raw_edge": "-1.5%",
-      "calib_delta": "-2.9pp"
-    },
-    {
-      "sport": "MLB",
       "event": "ARI @ STL",
-      "line": "STL -122",
+      "line": "STL -115",
       "reason": "Edge below sport-specific threshold",
-      "edge": "3.6%",
+      "edge": "1.4%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "4.6%",
-      "calib_delta": "-1.0pp"
+      "raw_edge": "2.1%",
+      "calib_delta": "-0.7pp"
     },
     {
       "sport": "MLB",
       "event": "KC @ DET",
-      "line": "DET -224",
+      "line": "DET -237",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-3.1%",
+      "edge": "-2.8%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "away",
-      "raw_edge": "-0.3%",
-      "calib_delta": "-2.8pp"
+      "raw_edge": "0.6%",
+      "calib_delta": "-3.4pp"
     }
   ],
   "analyzed_games": [
-    {
-      "sport": "MLB",
-      "away_abbr": "TB",
-      "home_abbr": "TOR",
-      "away_name": "Tampa Bay Rays",
-      "home_name": "Toronto Blue Jays",
-      "event_short": "TB @ TOR",
-      "start_time": "2026-07-23T19:07Z",
-      "pred_away_score": 4.6,
-      "pred_home_score": 4.1,
-      "pred_margin": -0.5,
-      "home_spread": 1.5,
-      "over_under": 8.5
-    },
     {
       "sport": "MLB",
       "away_abbr": "ARI",
@@ -81,7 +55,7 @@
       "pred_away_score": 3.9,
       "pred_home_score": 4.2,
       "pred_margin": 0.3,
-      "home_spread": -1.5,
+      "home_spread": 1.5,
       "over_under": 7.5
     },
     {
