@@ -12277,8 +12277,8 @@
     "type": "game",
     "notes": "Model (DRatings only): VAN 1.3, CIN 1.1 (total: 2.4). Line: 3.5. Cushion: 1.1 pts. Single source \u2014 DRatings only. Kelly reduced 25%.",
     "prop_bucket": "",
-    "outcome": "pending",
-    "final_score": "",
-    "pnl_if_bet": 0
+    "outcome": "loss",
+    "final_score": "VAN 3, CIN 4",
+    "pnl_if_bet": -10.0
   }
 ]
