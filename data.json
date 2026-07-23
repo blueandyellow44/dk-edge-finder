@@ -20,94 +20,42 @@
   "no_edge_games": [
     {
       "sport": "MLB",
-      "event": "SD @ ATL",
-      "line": "ATL -259",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "1.1%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
-      "raw_edge": "1.7%",
-      "calib_delta": "-0.6pp"
-    },
-    {
-      "sport": "MLB",
-      "event": "MIN @ CLE",
-      "line": "CLE -144",
-      "reason": "Edge below sport-specific threshold",
-      "edge": "-3.2%",
-      "min_edge": "5.0%",
-      "edge_market": "spread",
-      "edge_side": "away",
-      "raw_edge": "3.5%",
-      "calib_delta": "-6.7pp"
-    },
-    {
-      "sport": "MLB",
       "event": "TB @ TOR",
       "line": "TB -112",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-4.6%",
+      "edge": "-4.4%",
       "min_edge": "5.0%",
       "edge_market": "spread",
       "edge_side": "home",
-      "raw_edge": "-2.1%",
-      "calib_delta": "-2.5pp"
+      "raw_edge": "-1.5%",
+      "calib_delta": "-2.9pp"
     },
     {
       "sport": "MLB",
       "event": "ARI @ STL",
-      "line": "STL -125",
+      "line": "STL -122",
       "reason": "Edge below sport-specific threshold",
-      "edge": "2.0%",
+      "edge": "3.6%",
       "min_edge": "6.0%",
       "edge_market": "total",
       "edge_side": "over",
-      "raw_edge": "2.8%",
-      "calib_delta": "-0.8pp"
+      "raw_edge": "4.6%",
+      "calib_delta": "-1.0pp"
     },
     {
       "sport": "MLB",
       "event": "KC @ DET",
-      "line": "DET -217",
+      "line": "DET -224",
       "reason": "Edge below sport-specific threshold",
-      "edge": "-0.6%",
-      "min_edge": "6.0%",
-      "edge_market": "total",
-      "edge_side": "under",
+      "edge": "-3.1%",
+      "min_edge": "5.0%",
+      "edge_market": "spread",
+      "edge_side": "away",
       "raw_edge": "-0.3%",
-      "calib_delta": "-0.3pp"
+      "calib_delta": "-2.8pp"
     }
   ],
   "analyzed_games": [
-    {
-      "sport": "MLB",
-      "away_abbr": "SD",
-      "home_abbr": "ATL",
-      "away_name": "San Diego Padres",
-      "home_name": "Atlanta Braves",
-      "event_short": "SD @ ATL",
-      "start_time": "2026-07-23T16:15Z",
-      "pred_away_score": 3.0,
-      "pred_home_score": 4.5,
-      "pred_margin": 1.5,
-      "home_spread": -1.5,
-      "over_under": 8.0
-    },
-    {
-      "sport": "MLB",
-      "away_abbr": "MIN",
-      "home_abbr": "CLE",
-      "away_name": "Minnesota Twins",
-      "home_name": "Cleveland Guardians",
-      "event_short": "MIN @ CLE",
-      "start_time": "2026-07-23T17:10Z",
-      "pred_away_score": 3.7,
-      "pred_home_score": 3.9,
-      "pred_margin": 0.2,
-      "home_spread": -1.5,
-      "over_under": 7.5
-    },
     {
       "sport": "MLB",
       "away_abbr": "TB",
@@ -116,8 +64,8 @@
       "home_name": "Toronto Blue Jays",
       "event_short": "TB @ TOR",
       "start_time": "2026-07-23T19:07Z",
-      "pred_away_score": 4.5,
-      "pred_home_score": 4.0,
+      "pred_away_score": 4.6,
+      "pred_home_score": 4.1,
       "pred_margin": -0.5,
       "home_spread": 1.5,
       "over_under": 8.5
@@ -144,8 +92,8 @@
       "home_name": "Detroit Tigers",
       "event_short": "KC @ DET",
       "start_time": "2026-07-23T22:40Z",
-      "pred_away_score": 3.3,
-      "pred_home_score": 4.7,
+      "pred_away_score": 3.4,
+      "pred_home_score": 4.8,
       "pred_margin": 1.4,
       "home_spread": -1.5,
       "over_under": 8.5
