@@ -17816,8 +17816,8 @@
     "edge": -0.0482,
     "raw_edge": 0.0637,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "RSL 1, LAFC 3"
   },
   {
     "scan_date": "2026-07-22",
@@ -17834,8 +17834,8 @@
     "edge": 0.0292,
     "raw_edge": 0.1604,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "DAL 2, POR 2"
   },
   {
     "scan_date": "2026-07-22",
@@ -17978,8 +17978,8 @@
     "edge": -0.0054,
     "raw_edge": 0.0052,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "win",
+    "final_score": "DAL 2, POR 2"
   },
   {
     "scan_date": "2026-07-22",
@@ -17996,8 +17996,8 @@
     "edge": 0.0214,
     "raw_edge": 0.0692,
     "became_pick": false,
-    "outcome": "pending",
-    "final_score": ""
+    "outcome": "loss",
+    "final_score": "ORL 4, SJ 0"
   },
   {
     "scan_date": "2026-07-22",
